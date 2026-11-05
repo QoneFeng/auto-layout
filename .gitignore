@@ -1,0 +1,74 @@
+# ============================================================
+# QoneHome · 仓库忽略规则
+# 原则：源码、规则源、演示数据、文档与截图进仓库；
+#       依赖、构建产物、安装包、运行时、本机业务数据不进仓库。
+# ============================================================
+
+# ---------- 依赖 ----------
+node_modules/
+.pnpm-store/
+jspm_packages/
+web_modules/
+
+# ---------- 构建与测试产物 ----------
+dist/
+dist-ssr/
+*.tsbuildinfo
+coverage/
+*.lcov
+.nyc_output/
+
+# ---------- 桌面端打包与运行时 ----------
+# 安装包 / 便携版 / 绿色版 ZIP / 解包目录（单个文件可达数百 MB）
+release/
+# Electron 打包使用的 Node 运行时（约 87 MB，按需本地放入）
+runtime/
+.desktop-user-data/
+.workbuddy/
+HKCU/
+_to-delete-after-reboot/
+
+# ---------- 本机业务数据 ----------
+# SQLite 数据库、产品/项目/门店附件、导出文件（不对外公开）
+data/local/
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+
+# ---------- AI 任务工作文档 ----------
+# 内部需求、证据、截图脚本与历史备份，不随公开仓库发布
+AI doc/
+
+# ---------- 日志与临时文件 ----------
+*.log
+logs/
+console.log*
+_tmp/
+*.tmp
+*.temp
+*.bak
+*.orig
+
+# ---------- 环境变量与密钥 ----------
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# ---------- 缓存 ----------
+.cache/
+.parcel-cache/
+.vite/
+.eslintcache
+.stylelintcache
+
+# ---------- 系统与编辑器 ----------
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/

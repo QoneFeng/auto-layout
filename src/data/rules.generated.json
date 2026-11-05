@@ -1,0 +1,6891 @@
+[
+  {
+    "pointCode": "KT-DL-01",
+    "spaceCode": "KT",
+    "spaceName": "客厅",
+    "deviceType2": "筒灯",
+    "deviceCanonical": "筒灯",
+    "usage": "基础阵列",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "inscribedGrid",
+      "rows": 2,
+      "rowGap": 500,
+      "colGap": 800,
+      "offset": 300,
+      "raw": "最大内接矩形，双列平行长边，列间距 500"
+    },
+    "quantity": {
+      "kind": "perArea",
+      "value": 2.5,
+      "min": 2,
+      "even": true,
+      "round": "ceil",
+      "raw": "PER_AREA: even(max(2, ceil(S/2.5)))"
+    },
+    "spacing": 800,
+    "priority": "P2",
+    "collision": [
+      "BEAM",
+      "CEILING_HATCH",
+      "TV_SCREEN"
+    ],
+    "fallback": [
+      "REDUCE",
+      "SINGLE_ROW"
+    ],
+    "sourceText": "PER_AREA: even(max(2, ceil(S/2.5)))",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "KT-DL-02",
+    "spaceCode": "KT",
+    "spaceName": "客厅",
+    "deviceType2": "筒灯",
+    "deviceCanonical": "筒灯",
+    "usage": "通行补光",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "furnitureEdge",
+      "furnitureTypes": [
+        "TV"
+      ],
+      "target": "tv",
+      "raw": "沙发区与电视墙之间的通行带中轴"
+    },
+    "quantity": {
+      "kind": "perLength",
+      "value": 2.5,
+      "min": 2,
+      "even": false,
+      "round": "ceil",
+      "raw": "PER_AREA: max(2, ceil(L/2.5))，L 为通行带长度"
+    },
+    "spacing": 1000,
+    "priority": "P1",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "PER_AREA: max(2, ceil(L/2.5))，L 为通行带长度",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "KT-SP-01",
+    "spaceCode": "KT",
+    "spaceName": "客厅",
+    "deviceType2": "射灯",
+    "deviceCanonical": "射灯",
+    "usage": "电视墙洗墙",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 175,
+      "min": 0,
+      "max": 350
+    },
+    "anchor": {
+      "kind": "furnitureEdge",
+      "furnitureTypes": [
+        "tvCabinet"
+      ],
+      "target": "tvCabinet",
+      "raw": "电视墙墙面，沿墙等分"
+    },
+    "quantity": {
+      "kind": "perLength",
+      "value": 1,
+      "min": 2,
+      "even": false,
+      "round": "ceil",
+      "raw": "PER_LENGTH: max(2, ceil(W/1.0))，W 为电视墙可用宽"
+    },
+    "spacing": 800,
+    "priority": "P1",
+    "collision": [
+      "TV_SCREEN"
+    ],
+    "fallback": [
+      "ALTERNATE_DEVICE"
+    ],
+    "sourceText": "PER_LENGTH: max(2, ceil(W/1.0))，W 为电视墙可用宽",
+    "traceFlags": [
+      "OPTIONAL_OR_RANGE",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "KT-SP-02",
+    "spaceCode": "KT",
+    "spaceName": "客厅",
+    "deviceType2": "射灯",
+    "deviceCanonical": "射灯",
+    "usage": "展示/端景",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "wallOffset",
+      "offset": 250,
+      "raw": "装饰画/端景中心正上方偏墙 200~300"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 1,
+      "min": 1,
+      "raw": "PER_FURNITURE: 1/目标"
+    },
+    "spacing": 0,
+    "priority": "P2",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "PER_FURNITURE: 1/目标",
+    "traceFlags": [
+      "GENERIC_COUNT",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "KT-SP-03",
+    "spaceCode": "KT",
+    "spaceName": "客厅",
+    "deviceType2": "射灯",
+    "deviceCanonical": "射灯",
+    "usage": "沙发阅读位",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "roomCenter",
+      "raw": "沙发两端外侧 300~500，向沙发前方偏 30°~45°"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 2,
+      "min": 0,
+      "raw": "PER_FURNITURE: 0~2"
+    },
+    "spacing": 0,
+    "priority": "P2",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "ALTERNATE_DEVICE"
+    ],
+    "sourceText": "PER_FURNITURE: 0~2",
+    "traceFlags": [
+      "OPTIONAL_OR_RANGE",
+      "GENERIC_COUNT",
+      "GENERIC_ANCHOR",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "KT-TR-01",
+    "spaceCode": "KT",
+    "spaceName": "客厅",
+    "deviceType2": "磁吸轨道",
+    "deviceCanonical": "磁吸泛光灯 · 磁吸轨道",
+    "usage": "",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "furnitureEdge",
+      "furnitureTypes": [
+        "TV"
+      ],
+      "target": "tv",
+      "raw": "沿沙发长轴或电视墙平行轴，距墙 400~600"
+    },
+    "quantity": {
+      "kind": "measuredLength",
+      "measure": "track",
+      "factor": 1,
+      "raw": "PER_MEASURED_LENGTH: 布置后路径长（单条/双条按布局，按模数取整）",
+      "value": 2,
+      "min": 1,
+      "max": 2
+    },
+    "spacing": 0,
+    "priority": "P1",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "PER_MEASURED_LENGTH: 布置后路径长（单条/双条按布局，按模数取整）",
+    "traceFlags": [
+      "MEASURED_AFTER_LAYOUT",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "KT-MG-01",
+    "spaceCode": "KT",
+    "spaceName": "客厅",
+    "deviceType2": "磁吸泛光灯体",
+    "deviceCanonical": "磁吸泛光灯 · 灯体",
+    "usage": "",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "hostTrack",
+      "raw": "沿轨道等距"
+    },
+    "quantity": {
+      "kind": "perLength",
+      "value": 0.8,
+      "even": false,
+      "round": "floor",
+      "raw": "PER_LENGTH: floor(L/0.8)"
+    },
+    "spacing": 150,
+    "priority": "P3",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REDUCE"
+    ],
+    "sourceText": "PER_LENGTH: floor(L/0.8)",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "KT-MG-02",
+    "spaceCode": "KT",
+    "spaceName": "客厅",
+    "deviceType2": "磁吸格栅灯体",
+    "deviceCanonical": "磁吸格栅灯 · 灯体",
+    "usage": "",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "roomCenter",
+      "raw": "与泛光灯交错"
+    },
+    "quantity": {
+      "kind": "perLength",
+      "value": 1.2,
+      "even": false,
+      "round": "floor",
+      "raw": "PER_LENGTH: floor(L/1.2)"
+    },
+    "spacing": 150,
+    "priority": "P2",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REDUCE"
+    ],
+    "sourceText": "PER_LENGTH: floor(L/1.2)",
+    "traceFlags": [
+      "GENERIC_ANCHOR",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "KT-LS-01",
+    "spaceCode": "KT",
+    "spaceName": "客厅",
+    "deviceType2": "灯槽灯带",
+    "deviceCanonical": "灯槽灯带",
+    "usage": "",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "perimeter",
+      "offset": 100,
+      "raw": "吊顶四周灯槽（回字形/L 形）"
+    },
+    "quantity": {
+      "kind": "measuredLength",
+      "measure": "perimeter",
+      "factor": 1.05,
+      "raw": "PER_MEASURED_LENGTH: 布置后路径长 × 1.05"
+    },
+    "spacing": 0,
+    "priority": "P3",
+    "collision": [
+      "DOOR_SWING",
+      "WINDOW"
+    ],
+    "fallback": [
+      "SINGLE_SIDE"
+    ],
+    "sourceText": "PER_MEASURED_LENGTH: 布置后路径长 × 1.05",
+    "traceFlags": [
+      "MEASURED_AFTER_LAYOUT",
+      "PERIMETER",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "KT-LS-02",
+    "spaceCode": "KT",
+    "spaceName": "客厅",
+    "deviceType2": "窗帘灯带",
+    "deviceCanonical": "窗帘灯带",
+    "usage": "",
+    "mount": "BL",
+    "height": {
+      "base": "BL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "windowHead",
+      "raw": "窗帘盒内沿"
+    },
+    "quantity": {
+      "kind": "measuredLength",
+      "measure": "window",
+      "factor": 1,
+      "raw": "PER_MEASURED_LENGTH: 窗宽（布置后实测）"
+    },
+    "spacing": 0,
+    "priority": "P3",
+    "collision": [
+      "WINDOW"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "PER_MEASURED_LENGTH: 窗宽（布置后实测）",
+    "traceFlags": [
+      "MEASURED_AFTER_LAYOUT",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "KT-CB-01",
+    "spaceCode": "KT",
+    "spaceName": "客厅",
+    "deviceType2": "柜体灯带",
+    "deviceCanonical": "柜体灯带",
+    "usage": "",
+    "mount": "BL",
+    "height": {
+      "base": "BL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "furnitureEdge",
+      "furnitureTypes": [
+        "wardrobe"
+      ],
+      "target": "wardrobe",
+      "raw": "层板前沿内缩 50"
+    },
+    "quantity": {
+      "kind": "measuredLength",
+      "measure": "cabinet",
+      "factor": 1,
+      "raw": "PER_MEASURED_LENGTH: 柜内层板总长（布置后实测）"
+    },
+    "spacing": 0,
+    "priority": "P3",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "PER_MEASURED_LENGTH: 柜内层板总长（布置后实测）",
+    "traceFlags": [
+      "MEASURED_AFTER_LAYOUT",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "KT-FL-01",
+    "spaceCode": "KT",
+    "spaceName": "客厅",
+    "deviceType2": "落地灯",
+    "deviceCanonical": "落地灯",
+    "usage": "",
+    "mount": "SL",
+    "height": {
+      "base": "SL",
+      "offset": 1500,
+      "min": 1400,
+      "max": 1600
+    },
+    "anchor": {
+      "kind": "roomCenter",
+      "raw": "沙发单侧或阅读椅侧后方"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 1,
+      "min": 0,
+      "raw": "FIXED(0~1)"
+    },
+    "spacing": 0,
+    "priority": "P4",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "FIXED(0~1)",
+    "traceFlags": [
+      "OPTIONAL_OR_RANGE",
+      "GENERIC_ANCHOR",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "KT-PN-01",
+    "spaceCode": "KT",
+    "spaceName": "客厅",
+    "deviceType2": "开关面板",
+    "deviceCanonical": "开关面板",
+    "usage": "",
+    "mount": "SL",
+    "height": {
+      "base": "SL",
+      "offset": 1300
+    },
+    "anchor": {
+      "kind": "doorSideWall",
+      "offset": 175,
+      "raw": "入户门/客厅主入口内侧，开门侧墙面，距门套 150~200"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 2,
+      "min": 1,
+      "raw": "FIXED(2)（门两侧各 1）"
+    },
+    "spacing": 0,
+    "priority": "P1",
+    "collision": [
+      "DOOR_SWING"
+    ],
+    "fallback": [
+      "REDUCE"
+    ],
+    "sourceText": "FIXED(2)（门两侧各 1）",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "KT-PN-02",
+    "spaceCode": "KT",
+    "spaceName": "客厅",
+    "deviceType2": "情景面板",
+    "deviceCanonical": "情景面板",
+    "usage": "",
+    "mount": "SL",
+    "height": {
+      "base": "SL",
+      "offset": 1300
+    },
+    "anchor": {
+      "kind": "roomCenter",
+      "raw": "同上，与开关面板并排（间距 100）"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 1,
+      "min": 1,
+      "raw": "FIXED(1)"
+    },
+    "spacing": 0,
+    "priority": "P2",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REDUCE"
+    ],
+    "sourceText": "FIXED(1)",
+    "traceFlags": [
+      "GENERIC_ANCHOR",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "KT-PN-03",
+    "spaceCode": "KT",
+    "spaceName": "客厅",
+    "deviceType2": "中控屏",
+    "deviceCanonical": "中控屏",
+    "usage": "",
+    "mount": "SL",
+    "height": {
+      "base": "SL",
+      "offset": 1450,
+      "min": 1400,
+      "max": 1500
+    },
+    "anchor": {
+      "kind": "furnitureEdge",
+      "furnitureTypes": [
+        "sofa"
+      ],
+      "target": "sofa",
+      "raw": "客厅主入口或沙发正对墙面"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 1,
+      "min": 1,
+      "raw": "FIXED(1)"
+    },
+    "spacing": 0,
+    "priority": "P2",
+    "collision": [
+      "TV_SCREEN"
+    ],
+    "fallback": [
+      "ALTERNATE_DEVICE"
+    ],
+    "sourceText": "FIXED(1)",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "KT-SN-01",
+    "spaceCode": "KT",
+    "spaceName": "客厅",
+    "deviceType2": "人在传感器",
+    "deviceCanonical": "人在传感器",
+    "usage": "",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "furnitureCenter",
+      "furnitureTypes": [
+        "sofa"
+      ],
+      "target": "sofa",
+      "raw": "沙发区上方偏入口侧，覆盖沙发+茶几"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 1,
+      "min": 1,
+      "raw": "FIXED(1)"
+    },
+    "spacing": 0,
+    "priority": "P3",
+    "collision": [
+      "AC_OUTLET"
+    ],
+    "fallback": [
+      "ALTERNATE_DEVICE"
+    ],
+    "sourceText": "FIXED(1)",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "KT-SN-02",
+    "spaceCode": "KT",
+    "spaceName": "客厅",
+    "deviceType2": "光照传感器",
+    "deviceCanonical": "光照传感器",
+    "usage": "",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "roomCenter",
+      "raw": "距窗 500~800"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 1,
+      "min": 1,
+      "raw": "FIXED(1)"
+    },
+    "spacing": 0,
+    "priority": "P3",
+    "collision": [
+      "WINDOW"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "FIXED(1)",
+    "traceFlags": [
+      "GENERIC_ANCHOR",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "KT-AU-01",
+    "spaceCode": "KT",
+    "spaceName": "客厅",
+    "deviceType2": "吸顶喇叭",
+    "deviceCanonical": "吸顶喇叭",
+    "usage": "",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "longAxisLine",
+      "raw": "沙发区中轴两侧对称"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 2,
+      "min": 2,
+      "raw": "FIXED(2)"
+    },
+    "spacing": 1500,
+    "priority": "P3",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REDUCE"
+    ],
+    "sourceText": "FIXED(2)",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "KT-CV-01",
+    "spaceCode": "KT",
+    "spaceName": "客厅",
+    "deviceType2": "摄像头",
+    "deviceCanonical": "摄像头",
+    "usage": "",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "roomCenter",
+      "raw": "对准入户/客厅主通道"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 1,
+      "min": 0,
+      "raw": "FIXED(0~1)"
+    },
+    "spacing": 0,
+    "priority": "P1",
+    "collision": [
+      "DOOR_SWING"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "FIXED(0~1)",
+    "traceFlags": [
+      "OPTIONAL_OR_RANGE",
+      "GENERIC_ANCHOR",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "KT-AC-01",
+    "spaceCode": "KT",
+    "spaceName": "客厅",
+    "deviceType2": "柜式空调",
+    "deviceCanonical": "柜式空调",
+    "usage": "",
+    "mount": "SL",
+    "height": {
+      "base": "SL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "wallOffset",
+      "offset": 300,
+      "raw": "距墙 ≥100，出风不直吹沙发"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 1,
+      "min": 0,
+      "raw": "FIXED(0~1)"
+    },
+    "spacing": 0,
+    "priority": "P2",
+    "collision": [
+      "CEILING_HATCH"
+    ],
+    "fallback": [
+      "ALTERNATE_DEVICE"
+    ],
+    "sourceText": "FIXED(0~1)",
+    "traceFlags": [
+      "OPTIONAL_OR_RANGE",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "CT-PD-01",
+    "spaceCode": "CT",
+    "spaceName": "餐厅",
+    "deviceType2": "吊灯",
+    "deviceCanonical": "吊灯",
+    "usage": "餐吊",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 750,
+      "min": 700,
+      "max": 800
+    },
+    "anchor": {
+      "kind": "furnitureCenter",
+      "furnitureTypes": [
+        "diningTable"
+      ],
+      "target": "diningTable",
+      "raw": "**餐桌几何中心正上方**（不是房间中心）"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 1,
+      "min": 1,
+      "raw": "FIXED(1)"
+    },
+    "spacing": 0,
+    "priority": "P1",
+    "collision": [
+      "DOOR_SWING"
+    ],
+    "fallback": [
+      "ALTERNATE_DEVICE"
+    ],
+    "sourceText": "FIXED(1)",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "CT-DL-01",
+    "spaceCode": "CT",
+    "spaceName": "餐厅",
+    "deviceType2": "筒灯",
+    "deviceCanonical": "筒灯",
+    "usage": "",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "inscribedRectCenter",
+      "raw": "最大内接矩形，避开餐桌投影（桌外扩 300）"
+    },
+    "quantity": {
+      "kind": "perArea",
+      "value": 2.5,
+      "min": 2,
+      "even": true,
+      "round": "ceil",
+      "raw": "PER_AREA: even(max(2, ceil(S/2.5)))"
+    },
+    "spacing": 800,
+    "priority": "P1",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REDUCE"
+    ],
+    "sourceText": "PER_AREA: even(max(2, ceil(S/2.5)))",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "CT-SP-01",
+    "spaceCode": "CT",
+    "spaceName": "餐厅",
+    "deviceType2": "射灯",
+    "deviceCanonical": "射灯",
+    "usage": "餐边柜洗墙",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 150,
+      "min": 0,
+      "max": 300
+    },
+    "anchor": {
+      "kind": "furnitureEdge",
+      "furnitureTypes": [
+        "sideboard"
+      ],
+      "target": "sideboard",
+      "raw": "餐边柜前沿线"
+    },
+    "quantity": {
+      "kind": "perLength",
+      "value": 1,
+      "min": 2,
+      "even": false,
+      "round": "ceil",
+      "raw": "PER_LENGTH: max(2, ceil(W/1.0))"
+    },
+    "spacing": 800,
+    "priority": "P2",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "ALTERNATE_DEVICE"
+    ],
+    "sourceText": "PER_LENGTH: max(2, ceil(W/1.0))",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "CT-LS-01",
+    "spaceCode": "CT",
+    "spaceName": "餐厅",
+    "deviceType2": "灯槽灯带",
+    "deviceCanonical": "灯槽灯带",
+    "usage": "",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "perimeter",
+      "offset": 100,
+      "raw": "吊顶四周"
+    },
+    "quantity": {
+      "kind": "measuredLength",
+      "measure": "perimeter",
+      "factor": 1.05,
+      "raw": "PER_MEASURED_LENGTH: 布置后路径长 × 1.05"
+    },
+    "spacing": 0,
+    "priority": "P3",
+    "collision": [
+      "DOOR_SWING"
+    ],
+    "fallback": [
+      "SINGLE_SIDE"
+    ],
+    "sourceText": "PER_MEASURED_LENGTH: 布置后路径长 × 1.05",
+    "traceFlags": [
+      "MEASURED_AFTER_LAYOUT",
+      "PERIMETER",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "CT-CB-01",
+    "spaceCode": "CT",
+    "spaceName": "餐厅",
+    "deviceType2": "柜体灯带",
+    "deviceCanonical": "柜体灯带",
+    "usage": "",
+    "mount": "BL",
+    "height": {
+      "base": "BL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "furnitureEdge",
+      "furnitureTypes": [
+        "wardrobe"
+      ],
+      "target": "wardrobe",
+      "raw": "层板前沿内缩 50"
+    },
+    "quantity": {
+      "kind": "measuredLength",
+      "measure": "cabinet",
+      "factor": 1,
+      "raw": "PER_MEASURED_LENGTH: 柜内层板总长（布置后实测）"
+    },
+    "spacing": 0,
+    "priority": "P3",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "PER_MEASURED_LENGTH: 柜内层板总长（布置后实测）",
+    "traceFlags": [
+      "MEASURED_AFTER_LAYOUT",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "CT-PN-01",
+    "spaceCode": "CT",
+    "spaceName": "餐厅",
+    "deviceType2": "开关面板",
+    "deviceCanonical": "开关面板",
+    "usage": "",
+    "mount": "SL",
+    "height": {
+      "base": "SL",
+      "offset": 1300
+    },
+    "anchor": {
+      "kind": "doorSideWall",
+      "offset": 175,
+      "raw": "餐厅主入口门侧，距门套 150~200"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 2,
+      "min": 2,
+      "raw": "FIXED(2)"
+    },
+    "spacing": 0,
+    "priority": "P2",
+    "collision": [
+      "DOOR_SWING"
+    ],
+    "fallback": [
+      "REDUCE"
+    ],
+    "sourceText": "FIXED(2)",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "CT-PN-02",
+    "spaceCode": "CT",
+    "spaceName": "餐厅",
+    "deviceType2": "情景面板",
+    "deviceCanonical": "情景面板",
+    "usage": "",
+    "mount": "SL",
+    "height": {
+      "base": "SL",
+      "offset": 1300
+    },
+    "anchor": {
+      "kind": "doorSideWall",
+      "offset": 175,
+      "raw": "与开关并排"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 1,
+      "min": 0,
+      "raw": "FIXED(0~1)"
+    },
+    "spacing": 0,
+    "priority": "P2",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "FIXED(0~1)",
+    "traceFlags": [
+      "OPTIONAL_OR_RANGE",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "CT-AU-01",
+    "spaceCode": "CT",
+    "spaceName": "餐厅",
+    "deviceType2": "吸顶喇叭",
+    "deviceCanonical": "吸顶喇叭",
+    "usage": "",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "longAxisLine",
+      "raw": "餐桌中轴两侧"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 2,
+      "min": 2,
+      "raw": "FIXED(2)"
+    },
+    "spacing": 1500,
+    "priority": "P1",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REDUCE"
+    ],
+    "sourceText": "FIXED(2)",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "CT-CU-01",
+    "spaceCode": "CT",
+    "spaceName": "餐厅",
+    "deviceType2": "窗帘电机",
+    "deviceCanonical": "窗帘电机",
+    "usage": "",
+    "mount": "WL",
+    "height": {
+      "base": "WL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "windowHead",
+      "raw": "每窗 1 台，靠电机侧留 100"
+    },
+    "quantity": {
+      "kind": "perOpening",
+      "value": 1,
+      "target": "window",
+      "raw": "PER_OPENING: 1/窗"
+    },
+    "spacing": 0,
+    "priority": "P2",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REDUCE"
+    ],
+    "sourceText": "PER_OPENING: 1/窗",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "CT-AC-01",
+    "spaceCode": "CT",
+    "spaceName": "餐厅",
+    "deviceType2": "柜式空调",
+    "deviceCanonical": "柜式空调",
+    "usage": "",
+    "mount": "SL",
+    "height": {
+      "base": "SL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "wallOffset",
+      "offset": 300,
+      "raw": "同客厅"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 1,
+      "min": 0,
+      "raw": "FIXED(0~1)"
+    },
+    "spacing": 0,
+    "priority": "P2",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "FIXED(0~1)",
+    "traceFlags": [
+      "OPTIONAL_OR_RANGE",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "ZW-CL-01",
+    "spaceCode": "ZW",
+    "spaceName": "主卧",
+    "deviceType2": "吸顶灯",
+    "deviceCanonical": "吸顶灯",
+    "usage": "",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "furnitureCenter",
+      "furnitureTypes": [
+        "bed"
+      ],
+      "target": "bed",
+      "raw": "床区几何中心（床垫中心）"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 1,
+      "min": 1,
+      "raw": "FIXED(1)"
+    },
+    "spacing": 0,
+    "priority": "P2",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "ALTERNATE_DEVICE"
+    ],
+    "sourceText": "FIXED(1)",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "ZW-DL-01",
+    "spaceCode": "ZW",
+    "spaceName": "主卧",
+    "deviceType2": "筒灯",
+    "deviceCanonical": "筒灯",
+    "usage": "",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "furnitureCenter",
+      "furnitureTypes": [
+        "bed"
+      ],
+      "target": "bed",
+      "raw": "床两侧通道上方，避开床投影"
+    },
+    "quantity": {
+      "kind": "perArea",
+      "value": 2.5,
+      "min": 2,
+      "even": true,
+      "round": "ceil",
+      "raw": "PER_AREA: even(max(2, ceil(S/2.5)))"
+    },
+    "spacing": 800,
+    "priority": "P2",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REDUCE"
+    ],
+    "sourceText": "PER_AREA: even(max(2, ceil(S/2.5)))",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "ZW-SP-01",
+    "spaceCode": "ZW",
+    "spaceName": "主卧",
+    "deviceType2": "射灯",
+    "deviceCanonical": "射灯",
+    "usage": "床头阅读",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 150,
+      "min": 0,
+      "max": 300
+    },
+    "anchor": {
+      "kind": "furniturePair",
+      "furnitureTypes": [
+        "nightstand"
+      ],
+      "target": "nightstand",
+      "raw": "床头柜中心正上方"
+    },
+    "quantity": {
+      "kind": "perFurniture",
+      "value": 1,
+      "max": 2,
+      "furnitureTypes": [
+        "bed",
+        "nightstand"
+      ],
+      "min": 0,
+      "raw": "PER_FURNITURE: 1/床头柜，最多 2"
+    },
+    "spacing": 0,
+    "priority": "P1",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "ALTERNATE_DEVICE"
+    ],
+    "sourceText": "PER_FURNITURE: 1/床头柜，最多 2",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "ZW-WL-01",
+    "spaceCode": "ZW",
+    "spaceName": "主卧",
+    "deviceType2": "壁灯",
+    "deviceCanonical": "壁灯",
+    "usage": "",
+    "mount": "SL",
+    "height": {
+      "base": "SL",
+      "offset": 1000,
+      "min": 600,
+      "max": 1400
+    },
+    "anchor": {
+      "kind": "furniturePair",
+      "furnitureTypes": [
+        "nightstand"
+      ],
+      "target": "nightstand",
+      "raw": "床头柜中心正上方"
+    },
+    "quantity": {
+      "kind": "perFurniture",
+      "value": 1,
+      "max": 2,
+      "furnitureTypes": [
+        "bed",
+        "nightstand"
+      ],
+      "min": 0,
+      "raw": "PER_FURNITURE: 1/床头柜，最多 2"
+    },
+    "spacing": 0,
+    "priority": "P1",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "ALTERNATE_DEVICE"
+    ],
+    "sourceText": "PER_FURNITURE: 1/床头柜，最多 2",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "ZW-LS-01",
+    "spaceCode": "ZW",
+    "spaceName": "主卧",
+    "deviceType2": "贴墙灯带",
+    "deviceCanonical": "贴墙灯带",
+    "usage": "床头背景",
+    "mount": "BL",
+    "height": {
+      "base": "BL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "roomCenter",
+      "raw": "床头背景墙通长"
+    },
+    "quantity": {
+      "kind": "measuredLength",
+      "measure": "wall",
+      "factor": 1,
+      "raw": "PER_MEASURED_LENGTH: 背景墙宽（布置后实测）"
+    },
+    "spacing": 0,
+    "priority": "P1",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "PER_MEASURED_LENGTH: 背景墙宽（布置后实测）",
+    "traceFlags": [
+      "MEASURED_AFTER_LAYOUT",
+      "GENERIC_ANCHOR",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "ZW-LS-02",
+    "spaceCode": "ZW",
+    "spaceName": "主卧",
+    "deviceType2": "灯槽灯带",
+    "deviceCanonical": "灯槽灯带",
+    "usage": "",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "perimeter",
+      "offset": 100,
+      "raw": "吊顶四周"
+    },
+    "quantity": {
+      "kind": "measuredLength",
+      "measure": "perimeter",
+      "factor": 1.05,
+      "raw": "PER_MEASURED_LENGTH: 布置后路径长 × 1.05"
+    },
+    "spacing": 0,
+    "priority": "P3",
+    "collision": [
+      "DOOR_SWING",
+      "WINDOW"
+    ],
+    "fallback": [
+      "SINGLE_SIDE"
+    ],
+    "sourceText": "PER_MEASURED_LENGTH: 布置后路径长 × 1.05",
+    "traceFlags": [
+      "MEASURED_AFTER_LAYOUT",
+      "PERIMETER",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "ZW-LS-03",
+    "spaceCode": "ZW",
+    "spaceName": "主卧",
+    "deviceType2": "窗帘灯带",
+    "deviceCanonical": "窗帘灯带",
+    "usage": "",
+    "mount": "BL",
+    "height": {
+      "base": "BL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "windowHead",
+      "raw": "窗宽"
+    },
+    "quantity": {
+      "kind": "measuredLength",
+      "measure": "window",
+      "factor": 1,
+      "raw": "PER_MEASURED_LENGTH: 窗宽（布置后实测）"
+    },
+    "spacing": 0,
+    "priority": "P3",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "PER_MEASURED_LENGTH: 窗宽（布置后实测）",
+    "traceFlags": [
+      "MEASURED_AFTER_LAYOUT",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "ZW-CB-01",
+    "spaceCode": "ZW",
+    "spaceName": "主卧",
+    "deviceType2": "柜体灯带",
+    "deviceCanonical": "柜体灯带",
+    "usage": "",
+    "mount": "BL",
+    "height": {
+      "base": "BL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "furnitureEdge",
+      "furnitureTypes": [
+        "wardrobe"
+      ],
+      "target": "wardrobe",
+      "raw": "层板前沿内缩 50"
+    },
+    "quantity": {
+      "kind": "measuredLength",
+      "measure": "cabinet",
+      "factor": 1,
+      "raw": "PER_MEASURED_LENGTH: 柜内层板总长（布置后实测）"
+    },
+    "spacing": 0,
+    "priority": "P3",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "PER_MEASURED_LENGTH: 柜内层板总长（布置后实测）",
+    "traceFlags": [
+      "MEASURED_AFTER_LAYOUT",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "ZW-PN-01",
+    "spaceCode": "ZW",
+    "spaceName": "主卧",
+    "deviceType2": "开关面板",
+    "deviceCanonical": "开关面板",
+    "usage": "门口",
+    "mount": "SL",
+    "height": {
+      "base": "SL",
+      "offset": 1300
+    },
+    "anchor": {
+      "kind": "doorSideWall",
+      "offset": 175,
+      "raw": "卧室门内侧，开门侧墙，距门套 150~200"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 2,
+      "min": 1,
+      "raw": "FIXED(1)（单开）或 2（双开）"
+    },
+    "spacing": 0,
+    "priority": "P2",
+    "collision": [
+      "DOOR_SWING"
+    ],
+    "fallback": [
+      "REDUCE"
+    ],
+    "sourceText": "FIXED(1)（单开）或 2（双开）",
+    "traceFlags": [
+      "OPTIONAL_OR_RANGE",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "ZW-PN-02",
+    "spaceCode": "ZW",
+    "spaceName": "主卧",
+    "deviceType2": "开关面板",
+    "deviceCanonical": "开关面板",
+    "usage": "床头",
+    "mount": "SL",
+    "height": {
+      "base": "SL",
+      "offset": 750,
+      "min": 700,
+      "max": 800
+    },
+    "anchor": {
+      "kind": "furniturePair",
+      "furnitureTypes": [
+        "nightstand"
+      ],
+      "target": "nightstand",
+      "raw": "每侧床头柜上方"
+    },
+    "quantity": {
+      "kind": "perFurniture",
+      "value": 1,
+      "max": 2,
+      "furnitureTypes": [
+        "bed",
+        "nightstand"
+      ],
+      "min": 0,
+      "raw": "PER_FURNITURE: 1/床头柜"
+    },
+    "spacing": 0,
+    "priority": "P1",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REDUCE"
+    ],
+    "sourceText": "PER_FURNITURE: 1/床头柜",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "ZW-PN-03",
+    "spaceCode": "ZW",
+    "spaceName": "主卧",
+    "deviceType2": "无线开关",
+    "deviceCanonical": "无线开关",
+    "usage": "",
+    "mount": "SL",
+    "height": {
+      "base": "SL",
+      "offset": 700
+    },
+    "anchor": {
+      "kind": "furniturePair",
+      "furnitureTypes": [
+        "nightstand"
+      ],
+      "target": "nightstand",
+      "raw": "双侧床头"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 2,
+      "min": 2,
+      "raw": "FIXED(2)"
+    },
+    "spacing": 0,
+    "priority": "P1",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REDUCE"
+    ],
+    "sourceText": "FIXED(2)",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "ZW-PN-04",
+    "spaceCode": "ZW",
+    "spaceName": "主卧",
+    "deviceType2": "情景面板",
+    "deviceCanonical": "情景面板",
+    "usage": "",
+    "mount": "SL",
+    "height": {
+      "base": "SL",
+      "offset": 1300
+    },
+    "anchor": {
+      "kind": "roomCenter",
+      "raw": "与门口开关并排"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 1,
+      "min": 1,
+      "raw": "FIXED(1)"
+    },
+    "spacing": 0,
+    "priority": "P2",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "FIXED(1)",
+    "traceFlags": [
+      "GENERIC_ANCHOR",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "ZW-SN-01",
+    "spaceCode": "ZW",
+    "spaceName": "主卧",
+    "deviceType2": "人在传感器",
+    "deviceCanonical": "人在传感器",
+    "usage": "",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "roomCenter",
+      "raw": "覆盖床+通道"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 1,
+      "min": 1,
+      "raw": "FIXED(1)"
+    },
+    "spacing": 0,
+    "priority": "P3",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "ALTERNATE_DEVICE"
+    ],
+    "sourceText": "FIXED(1)",
+    "traceFlags": [
+      "GENERIC_ANCHOR",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "ZW-SN-02",
+    "spaceCode": "ZW",
+    "spaceName": "主卧",
+    "deviceType2": "温湿度传感器",
+    "deviceCanonical": "温湿度传感器",
+    "usage": "",
+    "mount": "SL",
+    "height": {
+      "base": "SL",
+      "offset": 1200
+    },
+    "anchor": {
+      "kind": "wallOffset",
+      "offset": 300,
+      "raw": "床头对侧墙"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 1,
+      "min": 1,
+      "raw": "FIXED(1)"
+    },
+    "spacing": 0,
+    "priority": "P1",
+    "collision": [
+      "AC_OUTLET"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "FIXED(1)",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "ZW-CU-01",
+    "spaceCode": "ZW",
+    "spaceName": "主卧",
+    "deviceType2": "窗帘电机",
+    "deviceCanonical": "窗帘电机",
+    "usage": "",
+    "mount": "WL",
+    "height": {
+      "base": "WL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "windowHead",
+      "raw": "每窗 1 台"
+    },
+    "quantity": {
+      "kind": "perOpening",
+      "value": 1,
+      "target": "window",
+      "raw": "PER_OPENING"
+    },
+    "spacing": 0,
+    "priority": "P2",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REDUCE"
+    ],
+    "sourceText": "PER_OPENING",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "ZW-AC-01",
+    "spaceCode": "ZW",
+    "spaceName": "主卧",
+    "deviceType2": "挂式空调",
+    "deviceCanonical": "挂式空调",
+    "usage": "",
+    "mount": "SL",
+    "height": {
+      "base": "SL",
+      "offset": 2300,
+      "min": 2200,
+      "max": 2400
+    },
+    "anchor": {
+      "kind": "wallOffset",
+      "offset": 300,
+      "raw": "床侧墙，出风不直吹床头"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 1,
+      "min": 0,
+      "raw": "FIXED(0~1)"
+    },
+    "spacing": 0,
+    "priority": "P1",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "FIXED(0~1)",
+    "traceFlags": [
+      "OPTIONAL_OR_RANGE",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "SF-CL-01",
+    "spaceCode": "SF",
+    "spaceName": "书房",
+    "deviceType2": "吸顶灯 / 面板灯",
+    "deviceCanonical": "吸顶灯;面板灯",
+    "usage": "",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "inscribedRectCenter",
+      "raw": "最大内接矩形中心"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 1,
+      "min": 1,
+      "raw": "FIXED(1)"
+    },
+    "spacing": 0,
+    "priority": "P2",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REDUCE"
+    ],
+    "sourceText": "FIXED(1)",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "SF-DL-01",
+    "spaceCode": "SF",
+    "spaceName": "书房",
+    "deviceType2": "筒灯",
+    "deviceCanonical": "筒灯",
+    "usage": "",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "roomCenter",
+      "raw": "书桌外围 + 通行区"
+    },
+    "quantity": {
+      "kind": "perArea",
+      "value": 2.5,
+      "min": 2,
+      "even": false,
+      "round": "ceil",
+      "raw": "PER_AREA: max(2, ceil(S/2.5))"
+    },
+    "spacing": 800,
+    "priority": "P1",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REDUCE"
+    ],
+    "sourceText": "PER_AREA: max(2, ceil(S/2.5))",
+    "traceFlags": [
+      "GENERIC_ANCHOR",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "SF-SP-01",
+    "spaceCode": "SF",
+    "spaceName": "书房",
+    "deviceType2": "射灯",
+    "deviceCanonical": "射灯",
+    "usage": "书柜洗墙",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 150,
+      "min": 0,
+      "max": 300
+    },
+    "anchor": {
+      "kind": "furnitureEdge",
+      "furnitureTypes": [
+        "bookshelf"
+      ],
+      "target": "bookshelf",
+      "raw": "书柜前沿线"
+    },
+    "quantity": {
+      "kind": "perLength",
+      "value": 1,
+      "min": 2,
+      "even": false,
+      "round": "ceil",
+      "raw": "PER_LENGTH: max(2, ceil(W/1.0))"
+    },
+    "spacing": 800,
+    "priority": "P2",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "ALTERNATE_DEVICE"
+    ],
+    "sourceText": "PER_LENGTH: max(2, ceil(W/1.0))",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "SF-SP-02",
+    "spaceCode": "SF",
+    "spaceName": "书房",
+    "deviceType2": "射灯",
+    "deviceCanonical": "射灯",
+    "usage": "书桌重点",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 150,
+      "min": 0,
+      "max": 300
+    },
+    "anchor": {
+      "kind": "roomCenter",
+      "raw": "书桌长边中点或两侧"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 2,
+      "min": 1,
+      "raw": "FIXED(1~2)"
+    },
+    "spacing": 0,
+    "priority": "P1",
+    "collision": [
+      "TV_SCREEN"
+    ],
+    "fallback": [
+      "ALTERNATE_DEVICE"
+    ],
+    "sourceText": "FIXED(1~2)",
+    "traceFlags": [
+      "OPTIONAL_OR_RANGE",
+      "GENERIC_ANCHOR",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "SF-TL-01",
+    "spaceCode": "SF",
+    "spaceName": "书房",
+    "deviceType2": "台灯",
+    "deviceCanonical": "台灯",
+    "usage": "",
+    "mount": "BL",
+    "height": {
+      "base": "BL",
+      "offset": 425,
+      "min": 400,
+      "max": 450
+    },
+    "anchor": {
+      "kind": "roomCenter",
+      "raw": "书桌非惯用手侧"
+    },
+    "quantity": {
+      "kind": "perFurniture",
+      "value": 1,
+      "max": 2,
+      "furnitureTypes": [
+        "desk"
+      ],
+      "min": 0,
+      "raw": "PER_FURNITURE: 1/书桌"
+    },
+    "spacing": 0,
+    "priority": "P1",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "PER_FURNITURE: 1/书桌",
+    "traceFlags": [
+      "GENERIC_ANCHOR",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "SF-CB-01",
+    "spaceCode": "SF",
+    "spaceName": "书房",
+    "deviceType2": "柜体灯带",
+    "deviceCanonical": "柜体灯带",
+    "usage": "",
+    "mount": "BL",
+    "height": {
+      "base": "BL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "furnitureEdge",
+      "furnitureTypes": [
+        "wardrobe"
+      ],
+      "target": "wardrobe",
+      "raw": "层板前沿内缩 50"
+    },
+    "quantity": {
+      "kind": "measuredLength",
+      "measure": "cabinet",
+      "factor": 1,
+      "raw": "PER_MEASURED_LENGTH: 柜内层板总长（布置后实测）"
+    },
+    "spacing": 0,
+    "priority": "P3",
+    "collision": [
+      "DOOR_SWING"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "PER_MEASURED_LENGTH: 柜内层板总长（布置后实测）",
+    "traceFlags": [
+      "MEASURED_AFTER_LAYOUT",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "SF-LS-01",
+    "spaceCode": "SF",
+    "spaceName": "书房",
+    "deviceType2": "灯槽灯带",
+    "deviceCanonical": "灯槽灯带",
+    "usage": "",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "perimeter",
+      "offset": 100,
+      "raw": "四周或单边"
+    },
+    "quantity": {
+      "kind": "measuredLength",
+      "measure": "perimeter",
+      "factor": 1.05,
+      "raw": "PER_MEASURED_LENGTH: 布置后路径长 × 1.05"
+    },
+    "spacing": 0,
+    "priority": "P3",
+    "collision": [
+      "DOOR_SWING"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "PER_MEASURED_LENGTH: 布置后路径长 × 1.05",
+    "traceFlags": [
+      "MEASURED_AFTER_LAYOUT",
+      "PERIMETER",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "SF-PN-01",
+    "spaceCode": "SF",
+    "spaceName": "书房",
+    "deviceType2": "开关面板",
+    "deviceCanonical": "开关面板",
+    "usage": "",
+    "mount": "SL",
+    "height": {
+      "base": "SL",
+      "offset": 1300
+    },
+    "anchor": {
+      "kind": "doorSideWall",
+      "offset": 175,
+      "raw": "门内侧"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 2,
+      "min": 2,
+      "raw": "FIXED(2)"
+    },
+    "spacing": 0,
+    "priority": "P2",
+    "collision": [
+      "DOOR_SWING"
+    ],
+    "fallback": [
+      "REDUCE"
+    ],
+    "sourceText": "FIXED(2)",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "SF-SN-01",
+    "spaceCode": "SF",
+    "spaceName": "书房",
+    "deviceType2": "人在传感器",
+    "deviceCanonical": "人在传感器",
+    "usage": "",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "furnitureCenter",
+      "furnitureTypes": [
+        "desk"
+      ],
+      "target": "desk",
+      "raw": "覆盖书桌+座椅"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 1,
+      "min": 1,
+      "raw": "FIXED(1)"
+    },
+    "spacing": 0,
+    "priority": "P1",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "ALTERNATE_DEVICE"
+    ],
+    "sourceText": "FIXED(1)",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "SF-SN-02",
+    "spaceCode": "SF",
+    "spaceName": "书房",
+    "deviceType2": "光照传感器",
+    "deviceCanonical": "光照传感器",
+    "usage": "",
+    "mount": "BL",
+    "height": {
+      "base": "BL",
+      "offset": 1200
+    },
+    "anchor": {
+      "kind": "roomCenter",
+      "raw": "靠窗，避免直射"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 1,
+      "min": 1,
+      "raw": "FIXED(1)"
+    },
+    "spacing": 0,
+    "priority": "P3",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "FIXED(1)",
+    "traceFlags": [
+      "GENERIC_ANCHOR",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "SF-NP-01",
+    "spaceCode": "SF",
+    "spaceName": "书房",
+    "deviceType2": "网口面板",
+    "deviceCanonical": "网口面板",
+    "usage": "",
+    "mount": "BL",
+    "height": {
+      "base": "BL",
+      "offset": 300
+    },
+    "anchor": {
+      "kind": "wallOffset",
+      "offset": 300,
+      "raw": "书桌侧墙"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 2,
+      "min": 1,
+      "raw": "FIXED(1~2)"
+    },
+    "spacing": 0,
+    "priority": "P1",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REDUCE"
+    ],
+    "sourceText": "FIXED(1~2)",
+    "traceFlags": [
+      "OPTIONAL_OR_RANGE",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "SF-CU-01",
+    "spaceCode": "SF",
+    "spaceName": "书房",
+    "deviceType2": "窗帘电机",
+    "deviceCanonical": "窗帘电机",
+    "usage": "",
+    "mount": "WL",
+    "height": {
+      "base": "WL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "windowHead",
+      "raw": "每窗 1 台"
+    },
+    "quantity": {
+      "kind": "perOpening",
+      "value": 1,
+      "target": "window",
+      "raw": "PER_OPENING"
+    },
+    "spacing": 0,
+    "priority": "P2",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REDUCE"
+    ],
+    "sourceText": "PER_OPENING",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "WS-CL-01",
+    "spaceCode": "WS",
+    "spaceName": "卧室",
+    "deviceType2": "吸顶灯",
+    "deviceCanonical": "吸顶灯",
+    "usage": "",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "furnitureCenter",
+      "furnitureTypes": [
+        "bed"
+      ],
+      "target": "bed",
+      "raw": "床垫中心正上方"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 1,
+      "min": 1,
+      "raw": "FIXED(1)"
+    },
+    "spacing": 0,
+    "priority": "P2",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REDUCE"
+    ],
+    "sourceText": "FIXED(1)",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "WS-DL-01",
+    "spaceCode": "WS",
+    "spaceName": "卧室",
+    "deviceType2": "筒灯",
+    "deviceCanonical": "筒灯",
+    "usage": "",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "furnitureCenter",
+      "furnitureTypes": [
+        "bed"
+      ],
+      "target": "bed",
+      "raw": "床两侧通道上方，避开床投影"
+    },
+    "quantity": {
+      "kind": "perArea",
+      "value": 2.5,
+      "min": 2,
+      "even": true,
+      "round": "ceil",
+      "raw": "PER_AREA: even(max(2, ceil(S/2.5)))；S≤13㎡ 时关闭"
+    },
+    "spacing": 800,
+    "priority": "P2",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REDUCE"
+    ],
+    "sourceText": "PER_AREA: even(max(2, ceil(S/2.5)))；S≤13㎡ 时关闭",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "WS-SP-01",
+    "spaceCode": "WS",
+    "spaceName": "卧室",
+    "deviceType2": "射灯",
+    "deviceCanonical": "射灯",
+    "usage": "床头阅读",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 150,
+      "min": 0,
+      "max": 300
+    },
+    "anchor": {
+      "kind": "furniturePair",
+      "furnitureTypes": [
+        "nightstand"
+      ],
+      "target": "nightstand",
+      "raw": "床头柜中心正上方"
+    },
+    "quantity": {
+      "kind": "perFurniture",
+      "value": 1,
+      "max": 2,
+      "furnitureTypes": [
+        "bed",
+        "nightstand"
+      ],
+      "min": 0,
+      "raw": "PER_FURNITURE: 1/床头柜，最多 2"
+    },
+    "spacing": 0,
+    "priority": "P1",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "ALTERNATE_DEVICE"
+    ],
+    "sourceText": "PER_FURNITURE: 1/床头柜，最多 2",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "WS-WL-01",
+    "spaceCode": "WS",
+    "spaceName": "卧室",
+    "deviceType2": "壁灯",
+    "deviceCanonical": "壁灯",
+    "usage": "",
+    "mount": "SL",
+    "height": {
+      "base": "SL",
+      "offset": 1300,
+      "min": 1200,
+      "max": 1400
+    },
+    "anchor": {
+      "kind": "furniturePair",
+      "furnitureTypes": [
+        "nightstand"
+      ],
+      "target": "nightstand",
+      "raw": "床头柜中心正上方"
+    },
+    "quantity": {
+      "kind": "perFurniture",
+      "value": 1,
+      "max": 2,
+      "furnitureTypes": [
+        "bed",
+        "nightstand"
+      ],
+      "min": 0,
+      "raw": "PER_FURNITURE: 1/床头柜，最多 2"
+    },
+    "spacing": 0,
+    "priority": "P1",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "ALTERNATE_DEVICE"
+    ],
+    "sourceText": "PER_FURNITURE: 1/床头柜，最多 2",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "WS-LS-01",
+    "spaceCode": "WS",
+    "spaceName": "卧室",
+    "deviceType2": "灯槽灯带",
+    "deviceCanonical": "灯槽灯带",
+    "usage": "",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "roomCenter",
+      "raw": "单边（床尾侧）"
+    },
+    "quantity": {
+      "kind": "measuredLength",
+      "measure": "perimeter",
+      "factor": 1.05,
+      "raw": "PER_MEASURED_LENGTH: 布置后路径长 × 1.05"
+    },
+    "spacing": 0,
+    "priority": "P3",
+    "collision": [
+      "DOOR_SWING"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "PER_MEASURED_LENGTH: 布置后路径长 × 1.05",
+    "traceFlags": [
+      "MEASURED_AFTER_LAYOUT",
+      "GENERIC_ANCHOR",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "WS-LS-02",
+    "spaceCode": "WS",
+    "spaceName": "卧室",
+    "deviceType2": "窗帘灯带",
+    "deviceCanonical": "窗帘灯带",
+    "usage": "",
+    "mount": "BL",
+    "height": {
+      "base": "BL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "windowHead",
+      "raw": "窗宽"
+    },
+    "quantity": {
+      "kind": "measuredLength",
+      "measure": "window",
+      "factor": 1,
+      "raw": "PER_MEASURED_LENGTH: 窗宽（布置后实测）"
+    },
+    "spacing": 0,
+    "priority": "P3",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "PER_MEASURED_LENGTH: 窗宽（布置后实测）",
+    "traceFlags": [
+      "MEASURED_AFTER_LAYOUT",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "WS-CB-01",
+    "spaceCode": "WS",
+    "spaceName": "卧室",
+    "deviceType2": "柜体灯带",
+    "deviceCanonical": "柜体灯带",
+    "usage": "",
+    "mount": "BL",
+    "height": {
+      "base": "BL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "furnitureEdge",
+      "furnitureTypes": [
+        "wardrobe"
+      ],
+      "target": "wardrobe",
+      "raw": "层板前沿内缩 50"
+    },
+    "quantity": {
+      "kind": "measuredLength",
+      "measure": "cabinet",
+      "factor": 1,
+      "raw": "PER_MEASURED_LENGTH: 柜内层板总长（布置后实测）"
+    },
+    "spacing": 0,
+    "priority": "P3",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "PER_MEASURED_LENGTH: 柜内层板总长（布置后实测）",
+    "traceFlags": [
+      "MEASURED_AFTER_LAYOUT",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "WS-PN-01",
+    "spaceCode": "WS",
+    "spaceName": "卧室",
+    "deviceType2": "开关面板",
+    "deviceCanonical": "开关面板",
+    "usage": "门口",
+    "mount": "SL",
+    "height": {
+      "base": "SL",
+      "offset": 1300
+    },
+    "anchor": {
+      "kind": "doorSideWall",
+      "offset": 175,
+      "raw": "门内侧，开门侧墙，距门套 150~200"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 2,
+      "min": 1,
+      "raw": "FIXED(1~2)"
+    },
+    "spacing": 0,
+    "priority": "P2",
+    "collision": [
+      "DOOR_SWING"
+    ],
+    "fallback": [
+      "REDUCE"
+    ],
+    "sourceText": "FIXED(1~2)",
+    "traceFlags": [
+      "OPTIONAL_OR_RANGE",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "WS-PN-02",
+    "spaceCode": "WS",
+    "spaceName": "卧室",
+    "deviceType2": "开关面板",
+    "deviceCanonical": "开关面板",
+    "usage": "床头",
+    "mount": "SL",
+    "height": {
+      "base": "SL",
+      "offset": 750,
+      "min": 700,
+      "max": 800
+    },
+    "anchor": {
+      "kind": "furniturePair",
+      "furnitureTypes": [
+        "nightstand"
+      ],
+      "target": "nightstand",
+      "raw": "每侧床头柜上方"
+    },
+    "quantity": {
+      "kind": "perFurniture",
+      "value": 1,
+      "max": 2,
+      "furnitureTypes": [
+        "bed",
+        "nightstand"
+      ],
+      "min": 0,
+      "raw": "PER_FURNITURE: 1/床头柜"
+    },
+    "spacing": 0,
+    "priority": "P1",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REDUCE"
+    ],
+    "sourceText": "PER_FURNITURE: 1/床头柜",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "WS-PN-03",
+    "spaceCode": "WS",
+    "spaceName": "卧室",
+    "deviceType2": "无线开关",
+    "deviceCanonical": "无线开关",
+    "usage": "",
+    "mount": "SL",
+    "height": {
+      "base": "SL",
+      "offset": 700
+    },
+    "anchor": {
+      "kind": "furniturePair",
+      "furnitureTypes": [
+        "nightstand"
+      ],
+      "target": "nightstand",
+      "raw": "双侧床头"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 2,
+      "min": 2,
+      "raw": "FIXED(2)"
+    },
+    "spacing": 0,
+    "priority": "P1",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REDUCE"
+    ],
+    "sourceText": "FIXED(2)",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "WS-SN-01",
+    "spaceCode": "WS",
+    "spaceName": "卧室",
+    "deviceType2": "人在传感器",
+    "deviceCanonical": "人在传感器",
+    "usage": "",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "roomCenter",
+      "raw": "覆盖床+通道"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 1,
+      "min": 1,
+      "raw": "FIXED(1)"
+    },
+    "spacing": 0,
+    "priority": "P3",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "ALTERNATE_DEVICE"
+    ],
+    "sourceText": "FIXED(1)",
+    "traceFlags": [
+      "GENERIC_ANCHOR",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "WS-SN-02",
+    "spaceCode": "WS",
+    "spaceName": "卧室",
+    "deviceType2": "温湿度传感器",
+    "deviceCanonical": "温湿度传感器",
+    "usage": "",
+    "mount": "SL",
+    "height": {
+      "base": "SL",
+      "offset": 1200
+    },
+    "anchor": {
+      "kind": "wallOffset",
+      "offset": 300,
+      "raw": "床头对侧墙"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 1,
+      "min": 0,
+      "raw": "FIXED(0~1)"
+    },
+    "spacing": 0,
+    "priority": "P1",
+    "collision": [
+      "AC_OUTLET"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "FIXED(0~1)",
+    "traceFlags": [
+      "OPTIONAL_OR_RANGE",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "WS-CU-01",
+    "spaceCode": "WS",
+    "spaceName": "卧室",
+    "deviceType2": "窗帘电机",
+    "deviceCanonical": "窗帘电机",
+    "usage": "",
+    "mount": "WL",
+    "height": {
+      "base": "WL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "windowHead",
+      "raw": "每窗 1 台"
+    },
+    "quantity": {
+      "kind": "perOpening",
+      "value": 1,
+      "target": "window",
+      "raw": "PER_OPENING"
+    },
+    "spacing": 0,
+    "priority": "P2",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REDUCE"
+    ],
+    "sourceText": "PER_OPENING",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "WS-AC-01",
+    "spaceCode": "WS",
+    "spaceName": "卧室",
+    "deviceType2": "挂式空调",
+    "deviceCanonical": "挂式空调",
+    "usage": "",
+    "mount": "SL",
+    "height": {
+      "base": "SL",
+      "offset": 2300,
+      "min": 2200,
+      "max": 2400
+    },
+    "anchor": {
+      "kind": "wallOffset",
+      "offset": 300,
+      "raw": "床侧墙，不直吹床头"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 1,
+      "min": 0,
+      "raw": "FIXED(0~1)"
+    },
+    "spacing": 0,
+    "priority": "P1",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "FIXED(0~1)",
+    "traceFlags": [
+      "OPTIONAL_OR_RANGE",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "LRF-CL-01",
+    "spaceCode": "LRF",
+    "spaceName": "老人房",
+    "deviceType2": "吸顶灯",
+    "deviceCanonical": "吸顶灯",
+    "usage": "",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "furnitureCenter",
+      "furnitureTypes": [
+        "bed"
+      ],
+      "target": "bed",
+      "raw": "床垫中心正上方，间接出光优先"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 1,
+      "min": 1,
+      "raw": "FIXED(1)"
+    },
+    "spacing": 0,
+    "priority": "P2",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REDUCE"
+    ],
+    "sourceText": "FIXED(1)",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "LRF-DL-01",
+    "spaceCode": "LRF",
+    "spaceName": "老人房",
+    "deviceType2": "筒灯",
+    "deviceCanonical": "筒灯",
+    "usage": "",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "furnitureCenter",
+      "furnitureTypes": [
+        "bed"
+      ],
+      "target": "bed",
+      "raw": "床两侧通道 + 起夜路径上方"
+    },
+    "quantity": {
+      "kind": "perArea",
+      "value": 2.5,
+      "min": 2,
+      "even": true,
+      "round": "ceil",
+      "raw": "PER_AREA: even(max(2, ceil(S/2.5)))"
+    },
+    "spacing": 700,
+    "priority": "P2",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REDUCE"
+    ],
+    "sourceText": "PER_AREA: even(max(2, ceil(S/2.5)))",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "LRF-WL-01",
+    "spaceCode": "LRF",
+    "spaceName": "老人房",
+    "deviceType2": "壁灯",
+    "deviceCanonical": "壁灯",
+    "usage": "",
+    "mount": "SL",
+    "height": {
+      "base": "SL",
+      "offset": 1300,
+      "min": 1200,
+      "max": 1400
+    },
+    "anchor": {
+      "kind": "furniturePair",
+      "furnitureTypes": [
+        "nightstand"
+      ],
+      "target": "nightstand",
+      "raw": "床头柜中心正上方，带夜光指示"
+    },
+    "quantity": {
+      "kind": "perFurniture",
+      "value": 1,
+      "max": 2,
+      "furnitureTypes": [
+        "bed",
+        "nightstand"
+      ],
+      "min": 0,
+      "raw": "PER_FURNITURE: 1/床头柜，最多 2"
+    },
+    "spacing": 0,
+    "priority": "P1",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "ALTERNATE_DEVICE"
+    ],
+    "sourceText": "PER_FURNITURE: 1/床头柜，最多 2",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "LRF-LS-01",
+    "spaceCode": "LRF",
+    "spaceName": "老人房",
+    "deviceType2": "贴墙灯带",
+    "deviceCanonical": "贴墙灯带",
+    "usage": "低位",
+    "mount": "SL",
+    "height": {
+      "base": "SL",
+      "offset": 150,
+      "min": 100,
+      "max": 200
+    },
+    "anchor": {
+      "kind": "pathLine",
+      "raw": "床下沿/踢脚线，沿起夜路径连续"
+    },
+    "quantity": {
+      "kind": "measuredLength",
+      "measure": "path",
+      "factor": 1,
+      "raw": "PER_MEASURED_LENGTH: 起夜路径长（布置后实测）"
+    },
+    "spacing": 0,
+    "priority": "P3",
+    "collision": [
+      "DOOR_SWING"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "PER_MEASURED_LENGTH: 起夜路径长（布置后实测）",
+    "traceFlags": [
+      "MEASURED_AFTER_LAYOUT",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "LRF-LS-02",
+    "spaceCode": "LRF",
+    "spaceName": "老人房",
+    "deviceType2": "灯槽灯带",
+    "deviceCanonical": "灯槽灯带",
+    "usage": "",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "roomCenter",
+      "raw": "只做间接反射"
+    },
+    "quantity": {
+      "kind": "measuredLength",
+      "measure": "perimeter",
+      "factor": 1.05,
+      "raw": "PER_MEASURED_LENGTH: 布置后路径长 × 1.05"
+    },
+    "spacing": 0,
+    "priority": "P3",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "PER_MEASURED_LENGTH: 布置后路径长 × 1.05",
+    "traceFlags": [
+      "MEASURED_AFTER_LAYOUT",
+      "GENERIC_ANCHOR",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "LRF-CB-01",
+    "spaceCode": "LRF",
+    "spaceName": "老人房",
+    "deviceType2": "柜体灯带",
+    "deviceCanonical": "柜体灯带",
+    "usage": "",
+    "mount": "BL",
+    "height": {
+      "base": "BL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "furnitureEdge",
+      "furnitureTypes": [
+        "wardrobe"
+      ],
+      "target": "wardrobe",
+      "raw": "层板前沿内缩 50"
+    },
+    "quantity": {
+      "kind": "measuredLength",
+      "measure": "cabinet",
+      "factor": 1,
+      "raw": "PER_MEASURED_LENGTH: 柜内层板总长（布置后实测）"
+    },
+    "spacing": 0,
+    "priority": "P3",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "PER_MEASURED_LENGTH: 柜内层板总长（布置后实测）",
+    "traceFlags": [
+      "MEASURED_AFTER_LAYOUT",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "LRF-PN-01",
+    "spaceCode": "LRF",
+    "spaceName": "老人房",
+    "deviceType2": "开关面板",
+    "deviceCanonical": "开关面板",
+    "usage": "门口",
+    "mount": "SL",
+    "height": {
+      "base": "SL",
+      "offset": 1300
+    },
+    "anchor": {
+      "kind": "doorSideWall",
+      "offset": 175,
+      "raw": "门内侧，开门侧墙"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 2,
+      "min": 1,
+      "raw": "FIXED(1~2)"
+    },
+    "spacing": 0,
+    "priority": "P2",
+    "collision": [
+      "DOOR_SWING"
+    ],
+    "fallback": [
+      "REDUCE"
+    ],
+    "sourceText": "FIXED(1~2)",
+    "traceFlags": [
+      "OPTIONAL_OR_RANGE",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "LRF-PN-02",
+    "spaceCode": "LRF",
+    "spaceName": "老人房",
+    "deviceType2": "开关面板",
+    "deviceCanonical": "开关面板",
+    "usage": "床头",
+    "mount": "SL",
+    "height": {
+      "base": "SL",
+      "offset": 750,
+      "min": 700,
+      "max": 800
+    },
+    "anchor": {
+      "kind": "furniturePair",
+      "furnitureTypes": [
+        "nightstand"
+      ],
+      "target": "nightstand",
+      "raw": "每侧床头柜上方，大字/背光"
+    },
+    "quantity": {
+      "kind": "perFurniture",
+      "value": 1,
+      "max": 2,
+      "furnitureTypes": [
+        "bed",
+        "nightstand"
+      ],
+      "min": 0,
+      "raw": "PER_FURNITURE: 1/床头柜"
+    },
+    "spacing": 0,
+    "priority": "P1",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REDUCE"
+    ],
+    "sourceText": "PER_FURNITURE: 1/床头柜",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "LRF-PN-03",
+    "spaceCode": "LRF",
+    "spaceName": "老人房",
+    "deviceType2": "无线开关",
+    "deviceCanonical": "无线开关",
+    "usage": "",
+    "mount": "SL",
+    "height": {
+      "base": "SL",
+      "offset": 700
+    },
+    "anchor": {
+      "kind": "furniturePair",
+      "furnitureTypes": [
+        "nightstand"
+      ],
+      "target": "nightstand",
+      "raw": "双侧床头，带夜光"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 2,
+      "min": 2,
+      "raw": "FIXED(2)"
+    },
+    "spacing": 0,
+    "priority": "P1",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REDUCE"
+    ],
+    "sourceText": "FIXED(2)",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "LRF-SN-01",
+    "spaceCode": "LRF",
+    "spaceName": "老人房",
+    "deviceType2": "人体传感器",
+    "deviceCanonical": "人体传感器",
+    "usage": "",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "furnitureCenter",
+      "furnitureTypes": [
+        "bed"
+      ],
+      "target": "bed",
+      "raw": "床侧 1 + 门口 1，覆盖起夜路径"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 2,
+      "min": 2,
+      "raw": "FIXED(2)"
+    },
+    "spacing": 0,
+    "priority": "P3",
+    "collision": [
+      "DOOR_SWING"
+    ],
+    "fallback": [
+      "REDUCE"
+    ],
+    "sourceText": "FIXED(2)",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "LRF-SN-02",
+    "spaceCode": "LRF",
+    "spaceName": "老人房",
+    "deviceType2": "温湿度传感器",
+    "deviceCanonical": "温湿度传感器",
+    "usage": "",
+    "mount": "SL",
+    "height": {
+      "base": "SL",
+      "offset": 1200
+    },
+    "anchor": {
+      "kind": "wallOffset",
+      "offset": 300,
+      "raw": "床头对侧墙"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 1,
+      "min": 1,
+      "raw": "FIXED(1)"
+    },
+    "spacing": 0,
+    "priority": "P1",
+    "collision": [
+      "AC_OUTLET"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "FIXED(1)",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "LRF-SN-03",
+    "spaceCode": "LRF",
+    "spaceName": "老人房",
+    "deviceType2": "光照传感器",
+    "deviceCanonical": "光照传感器",
+    "usage": "",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "roomCenter",
+      "raw": "距窗 500~800"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 1,
+      "min": 0,
+      "raw": "FIXED(0~1)"
+    },
+    "spacing": 0,
+    "priority": "P3",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "FIXED(0~1)",
+    "traceFlags": [
+      "OPTIONAL_OR_RANGE",
+      "GENERIC_ANCHOR",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "LRF-CU-01",
+    "spaceCode": "LRF",
+    "spaceName": "老人房",
+    "deviceType2": "窗帘电机",
+    "deviceCanonical": "窗帘电机",
+    "usage": "",
+    "mount": "WL",
+    "height": {
+      "base": "WL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "windowHead",
+      "raw": "每窗 1 台"
+    },
+    "quantity": {
+      "kind": "perOpening",
+      "value": 1,
+      "target": "window",
+      "raw": "PER_OPENING"
+    },
+    "spacing": 0,
+    "priority": "P2",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REDUCE"
+    ],
+    "sourceText": "PER_OPENING",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "LRF-AC-01",
+    "spaceCode": "LRF",
+    "spaceName": "老人房",
+    "deviceType2": "挂式空调",
+    "deviceCanonical": "挂式空调",
+    "usage": "",
+    "mount": "SL",
+    "height": {
+      "base": "SL",
+      "offset": 2300,
+      "min": 2200,
+      "max": 2400
+    },
+    "anchor": {
+      "kind": "wallOffset",
+      "offset": 300,
+      "raw": "床侧墙，不直吹床头"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 1,
+      "min": 0,
+      "raw": "FIXED(0~1)"
+    },
+    "spacing": 0,
+    "priority": "P1",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "FIXED(0~1)",
+    "traceFlags": [
+      "OPTIONAL_OR_RANGE",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "XHF-CL-01",
+    "spaceCode": "XHF",
+    "spaceName": "儿童房",
+    "deviceType2": "吸顶灯",
+    "deviceCanonical": "吸顶灯",
+    "usage": "",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "roomCenter",
+      "raw": "护眼主灯，色温可调，显色 ≥Ra90"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 1,
+      "min": 1,
+      "raw": "FIXED(1)"
+    },
+    "spacing": 0,
+    "priority": "P2",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REDUCE"
+    ],
+    "sourceText": "FIXED(1)",
+    "traceFlags": [
+      "GENERIC_ANCHOR",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "XHF-DL-01",
+    "spaceCode": "XHF",
+    "spaceName": "儿童房",
+    "deviceType2": "筒灯",
+    "deviceCanonical": "筒灯",
+    "usage": "",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "roomCenter",
+      "raw": "床侧通道 + 玩耍区外围"
+    },
+    "quantity": {
+      "kind": "perArea",
+      "value": 2.5,
+      "min": 2,
+      "even": true,
+      "round": "ceil",
+      "raw": "PER_AREA: even(max(2, ceil(S/2.5)))"
+    },
+    "spacing": 800,
+    "priority": "P2",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REDUCE"
+    ],
+    "sourceText": "PER_AREA: even(max(2, ceil(S/2.5)))",
+    "traceFlags": [
+      "GENERIC_ANCHOR",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "XHF-SP-01",
+    "spaceCode": "XHF",
+    "spaceName": "儿童房",
+    "deviceType2": "射灯",
+    "deviceCanonical": "射灯",
+    "usage": "",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 150,
+      "min": 0,
+      "max": 300
+    },
+    "anchor": {
+      "kind": "roomCenter",
+      "raw": "仅书桌/展示目标"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 2,
+      "min": 0,
+      "raw": "FIXED(0~2)"
+    },
+    "spacing": 0,
+    "priority": "P1",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "FIXED(0~2)",
+    "traceFlags": [
+      "OPTIONAL_OR_RANGE",
+      "GENERIC_ANCHOR",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "XHF-TL-01",
+    "spaceCode": "XHF",
+    "spaceName": "儿童房",
+    "deviceType2": "台灯",
+    "deviceCanonical": "台灯",
+    "usage": "",
+    "mount": "BL",
+    "height": {
+      "base": "BL",
+      "offset": 425,
+      "min": 400,
+      "max": 450
+    },
+    "anchor": {
+      "kind": "roomCenter",
+      "raw": "学习桌非惯用手侧，护眼型"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 1,
+      "min": 1,
+      "raw": "PER_FURNITURE: 1/学习桌"
+    },
+    "spacing": 0,
+    "priority": "P2",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "PER_FURNITURE: 1/学习桌",
+    "traceFlags": [
+      "GENERIC_COUNT",
+      "GENERIC_ANCHOR",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "XHF-LS-01",
+    "spaceCode": "XHF",
+    "spaceName": "儿童房",
+    "deviceType2": "贴墙灯带",
+    "deviceCanonical": "贴墙灯带",
+    "usage": "低位",
+    "mount": "SL",
+    "height": {
+      "base": "SL",
+      "offset": 150,
+      "min": 100,
+      "max": 200
+    },
+    "anchor": {
+      "kind": "roomCenter",
+      "raw": "床下沿或踢脚，兼作夜灯"
+    },
+    "quantity": {
+      "kind": "measuredLength",
+      "measure": "path",
+      "factor": 1,
+      "raw": "PER_MEASURED_LENGTH: 路径长（布置后实测）"
+    },
+    "spacing": 0,
+    "priority": "P3",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "PER_MEASURED_LENGTH: 路径长（布置后实测）",
+    "traceFlags": [
+      "MEASURED_AFTER_LAYOUT",
+      "GENERIC_ANCHOR",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "XHF-CB-01",
+    "spaceCode": "XHF",
+    "spaceName": "儿童房",
+    "deviceType2": "柜体灯带",
+    "deviceCanonical": "柜体灯带",
+    "usage": "",
+    "mount": "BL",
+    "height": {
+      "base": "BL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "furnitureEdge",
+      "furnitureTypes": [
+        "wardrobe"
+      ],
+      "target": "wardrobe",
+      "raw": "层板前沿内缩 50"
+    },
+    "quantity": {
+      "kind": "measuredLength",
+      "measure": "cabinet",
+      "factor": 1,
+      "raw": "PER_MEASURED_LENGTH: 柜内层板总长（布置后实测）"
+    },
+    "spacing": 0,
+    "priority": "P3",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "PER_MEASURED_LENGTH: 柜内层板总长（布置后实测）",
+    "traceFlags": [
+      "MEASURED_AFTER_LAYOUT",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "XHF-PN-01",
+    "spaceCode": "XHF",
+    "spaceName": "儿童房",
+    "deviceType2": "开关面板",
+    "deviceCanonical": "开关面板",
+    "usage": "门口",
+    "mount": "SL",
+    "height": {
+      "base": "SL",
+      "offset": 1300
+    },
+    "anchor": {
+      "kind": "doorSideWall",
+      "offset": 175,
+      "raw": "门内侧，开门侧墙"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 2,
+      "min": 1,
+      "raw": "FIXED(1~2)"
+    },
+    "spacing": 0,
+    "priority": "P2",
+    "collision": [
+      "DOOR_SWING"
+    ],
+    "fallback": [
+      "REDUCE"
+    ],
+    "sourceText": "FIXED(1~2)",
+    "traceFlags": [
+      "OPTIONAL_OR_RANGE",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "XHF-PN-02",
+    "spaceCode": "XHF",
+    "spaceName": "儿童房",
+    "deviceType2": "无线开关",
+    "deviceCanonical": "无线开关",
+    "usage": "",
+    "mount": "SL",
+    "height": {
+      "base": "SL",
+      "offset": 950,
+      "min": 900,
+      "max": 1000
+    },
+    "anchor": {
+      "kind": "roomCenter",
+      "raw": "床头单侧，儿童可及"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 1,
+      "min": 1,
+      "raw": "FIXED(1)"
+    },
+    "spacing": 0,
+    "priority": "P1",
+    "collision": [
+      "DOOR_SWING"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "FIXED(1)",
+    "traceFlags": [
+      "GENERIC_ANCHOR",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "XHF-SN-01",
+    "spaceCode": "XHF",
+    "spaceName": "儿童房",
+    "deviceType2": "人体传感器",
+    "deviceCanonical": "人体传感器",
+    "usage": "",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "roomCenter",
+      "raw": "门口 + 床侧"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 2,
+      "min": 2,
+      "raw": "FIXED(2)"
+    },
+    "spacing": 0,
+    "priority": "P3",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REDUCE"
+    ],
+    "sourceText": "FIXED(2)",
+    "traceFlags": [
+      "GENERIC_ANCHOR",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "XHF-SN-02",
+    "spaceCode": "XHF",
+    "spaceName": "儿童房",
+    "deviceType2": "温湿度传感器",
+    "deviceCanonical": "温湿度传感器",
+    "usage": "",
+    "mount": "SL",
+    "height": {
+      "base": "SL",
+      "offset": 1200
+    },
+    "anchor": {
+      "kind": "roomCenter",
+      "raw": "远离空调/窗"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 1,
+      "min": 0,
+      "raw": "FIXED(0~1)"
+    },
+    "spacing": 0,
+    "priority": "P3",
+    "collision": [
+      "AC_OUTLET"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "FIXED(0~1)",
+    "traceFlags": [
+      "OPTIONAL_OR_RANGE",
+      "GENERIC_ANCHOR",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "XHF-CU-01",
+    "spaceCode": "XHF",
+    "spaceName": "儿童房",
+    "deviceType2": "窗帘电机",
+    "deviceCanonical": "窗帘电机",
+    "usage": "",
+    "mount": "WL",
+    "height": {
+      "base": "WL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "windowHead",
+      "raw": "每窗 1 台"
+    },
+    "quantity": {
+      "kind": "perOpening",
+      "value": 1,
+      "target": "window",
+      "raw": "PER_OPENING"
+    },
+    "spacing": 0,
+    "priority": "P2",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REDUCE"
+    ],
+    "sourceText": "PER_OPENING",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "XHF-AC-01",
+    "spaceCode": "XHF",
+    "spaceName": "儿童房",
+    "deviceType2": "挂式空调",
+    "deviceCanonical": "挂式空调",
+    "usage": "",
+    "mount": "SL",
+    "height": {
+      "base": "SL",
+      "offset": 2300,
+      "min": 2200,
+      "max": 2400
+    },
+    "anchor": {
+      "kind": "wallOffset",
+      "offset": 300,
+      "raw": "床侧墙，不直吹床与书桌"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 1,
+      "min": 0,
+      "raw": "FIXED(0~1)"
+    },
+    "spacing": 0,
+    "priority": "P1",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "FIXED(0~1)",
+    "traceFlags": [
+      "OPTIONAL_OR_RANGE",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "XCW-DL-01",
+    "spaceCode": "XCW",
+    "spaceName": "玄关",
+    "deviceType2": "筒灯",
+    "deviceCanonical": "筒灯",
+    "usage": "",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "doorSideWall",
+      "offset": 175,
+      "raw": "门内侧 1.2m 范围 + 换鞋区上方"
+    },
+    "quantity": {
+      "kind": "perArea",
+      "value": 2.5,
+      "min": 2,
+      "even": false,
+      "round": "ceil",
+      "raw": "PER_AREA: max(2, ceil(S/2.5))，最小 2"
+    },
+    "spacing": 800,
+    "priority": "P2",
+    "collision": [
+      "DOOR_SWING"
+    ],
+    "fallback": [
+      "REDUCE"
+    ],
+    "sourceText": "PER_AREA: max(2, ceil(S/2.5))，最小 2",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "XCW-SP-01",
+    "spaceCode": "XCW",
+    "spaceName": "玄关",
+    "deviceType2": "射灯",
+    "deviceCanonical": "射灯",
+    "usage": "端景/挂画",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 150,
+      "min": 0,
+      "max": 300
+    },
+    "anchor": {
+      "kind": "wallOffset",
+      "offset": 250,
+      "raw": "端景中心正上方"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 1,
+      "min": 1,
+      "raw": "PER_FURNITURE: 1/目标"
+    },
+    "spacing": 0,
+    "priority": "P2",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "PER_FURNITURE: 1/目标",
+    "traceFlags": [
+      "GENERIC_COUNT",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "XCW-CB-01",
+    "spaceCode": "XCW",
+    "spaceName": "玄关",
+    "deviceType2": "柜体灯带",
+    "deviceCanonical": "柜体灯带",
+    "usage": "鞋柜",
+    "mount": "BL",
+    "height": {
+      "base": "BL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "furnitureEdge",
+      "furnitureTypes": [
+        "wardrobe"
+      ],
+      "target": "wardrobe",
+      "raw": "层板前沿内缩 50；镂空区上沿"
+    },
+    "quantity": {
+      "kind": "measuredLength",
+      "measure": "cabinet",
+      "factor": 1,
+      "raw": "PER_MEASURED_LENGTH: 柜内层板总长 + 镂空宽（布置后实测）"
+    },
+    "spacing": 0,
+    "priority": "P1",
+    "collision": [
+      "DOOR_SWING"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "PER_MEASURED_LENGTH: 柜内层板总长 + 镂空宽（布置后实测）",
+    "traceFlags": [
+      "MEASURED_AFTER_LAYOUT",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "XCW-LS-01",
+    "spaceCode": "XCW",
+    "spaceName": "玄关",
+    "deviceType2": "贴墙灯带",
+    "deviceCanonical": "贴墙灯带",
+    "usage": "踢脚/感应",
+    "mount": "SL",
+    "height": {
+      "base": "SL",
+      "offset": 125,
+      "min": 100,
+      "max": 150
+    },
+    "anchor": {
+      "kind": "pathLine",
+      "raw": "入户到客厅路径"
+    },
+    "quantity": {
+      "kind": "measuredLength",
+      "measure": "path",
+      "factor": 1,
+      "raw": "PER_MEASURED_LENGTH: 路径长（布置后实测）"
+    },
+    "spacing": 0,
+    "priority": "P1",
+    "collision": [
+      "DOOR_SWING"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "PER_MEASURED_LENGTH: 路径长（布置后实测）",
+    "traceFlags": [
+      "MEASURED_AFTER_LAYOUT",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "XCW-PN-01",
+    "spaceCode": "XCW",
+    "spaceName": "玄关",
+    "deviceType2": "开关面板",
+    "deviceCanonical": "开关面板",
+    "usage": "",
+    "mount": "SL",
+    "height": {
+      "base": "SL",
+      "offset": 1300
+    },
+    "anchor": {
+      "kind": "doorSideWall",
+      "offset": 175,
+      "raw": "入户门内侧，开门侧，距门套 150~200"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 2,
+      "min": 1,
+      "raw": "FIXED(1~2)"
+    },
+    "spacing": 0,
+    "priority": "P1",
+    "collision": [
+      "DOOR_SWING"
+    ],
+    "fallback": [
+      "REDUCE"
+    ],
+    "sourceText": "FIXED(1~2)",
+    "traceFlags": [
+      "OPTIONAL_OR_RANGE",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "XCW-PN-02",
+    "spaceCode": "XCW",
+    "spaceName": "玄关",
+    "deviceType2": "情景面板",
+    "deviceCanonical": "情景面板",
+    "usage": "回家/离家",
+    "mount": "SL",
+    "height": {
+      "base": "SL",
+      "offset": 1300
+    },
+    "anchor": {
+      "kind": "doorSideWall",
+      "offset": 175,
+      "raw": "与开关并排"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 1,
+      "min": 1,
+      "raw": "FIXED(1)"
+    },
+    "spacing": 0,
+    "priority": "P2",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REDUCE"
+    ],
+    "sourceText": "FIXED(1)",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "XCW-PN-03",
+    "spaceCode": "XCW",
+    "spaceName": "玄关",
+    "deviceType2": "中控屏",
+    "deviceCanonical": "中控屏",
+    "usage": "",
+    "mount": "SL",
+    "height": {
+      "base": "SL",
+      "offset": 1450,
+      "min": 1400,
+      "max": 1500
+    },
+    "anchor": {
+      "kind": "wallOffset",
+      "offset": 300,
+      "raw": "玄关主墙面，正对入户"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 1,
+      "min": 1,
+      "raw": "FIXED(1)"
+    },
+    "spacing": 0,
+    "priority": "P1",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "ALTERNATE_DEVICE"
+    ],
+    "sourceText": "FIXED(1)",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "XCW-SN-01",
+    "spaceCode": "XCW",
+    "spaceName": "玄关",
+    "deviceType2": "人体传感器",
+    "deviceCanonical": "人体传感器",
+    "usage": "",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "roomCenter",
+      "raw": "覆盖入户 3m 范围"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 1,
+      "min": 1,
+      "raw": "FIXED(1)"
+    },
+    "spacing": 0,
+    "priority": "P1",
+    "collision": [
+      "DOOR_SWING"
+    ],
+    "fallback": [
+      "ALTERNATE_DEVICE"
+    ],
+    "sourceText": "FIXED(1)",
+    "traceFlags": [
+      "GENERIC_ANCHOR",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "XCW-SN-02",
+    "spaceCode": "XCW",
+    "spaceName": "玄关",
+    "deviceType2": "光照传感器",
+    "deviceCanonical": "光照传感器",
+    "usage": "",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "roomCenter",
+      "raw": "感知入户自然光"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 1,
+      "min": 0,
+      "raw": "FIXED(0~1)"
+    },
+    "spacing": 0,
+    "priority": "P1",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "FIXED(0~1)",
+    "traceFlags": [
+      "OPTIONAL_OR_RANGE",
+      "GENERIC_ANCHOR",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "XCW-LK-01",
+    "spaceCode": "XCW",
+    "spaceName": "玄关",
+    "deviceType2": "智能门锁",
+    "deviceCanonical": "智能门锁",
+    "usage": "",
+    "mount": "SL",
+    "height": {
+      "base": "SL",
+      "offset": 1050,
+      "min": 1000,
+      "max": 1100
+    },
+    "anchor": {
+      "kind": "doorSideWall",
+      "offset": 175,
+      "raw": "门扇外侧"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 1,
+      "min": 1,
+      "raw": "FIXED(1)"
+    },
+    "spacing": 0,
+    "priority": "P2",
+    "collision": [
+      "DOOR_SWING"
+    ],
+    "fallback": [
+      "REDUCE"
+    ],
+    "sourceText": "FIXED(1)",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "XCW-CV-01",
+    "spaceCode": "XCW",
+    "spaceName": "玄关",
+    "deviceType2": "摄像头",
+    "deviceCanonical": "摄像头",
+    "usage": "",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "doorSideWall",
+      "offset": 175,
+      "raw": "对准入户门内侧"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 1,
+      "min": 0,
+      "raw": "FIXED(0~1)"
+    },
+    "spacing": 0,
+    "priority": "P1",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "FIXED(0~1)",
+    "traceFlags": [
+      "OPTIONAL_OR_RANGE",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "XCW-AU-01",
+    "spaceCode": "XCW",
+    "spaceName": "玄关",
+    "deviceType2": "吸顶喇叭",
+    "deviceCanonical": "吸顶喇叭",
+    "usage": "",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "longAxisLine",
+      "raw": "玄关中轴"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 1,
+      "min": 0,
+      "raw": "FIXED(0~1)"
+    },
+    "spacing": 0,
+    "priority": "P3",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "FIXED(0~1)",
+    "traceFlags": [
+      "OPTIONAL_OR_RANGE",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "CF-PL-01",
+    "spaceCode": "CF",
+    "spaceName": "厨房",
+    "deviceType2": "面板灯",
+    "deviceCanonical": "面板灯",
+    "usage": "",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "longAxisLine",
+      "raw": "厨房主通道中轴"
+    },
+    "quantity": {
+      "kind": "perArea",
+      "value": 5,
+      "min": 1,
+      "even": false,
+      "round": "ceil",
+      "raw": "PER_AREA: max(1, ceil(S/5))"
+    },
+    "spacing": 0,
+    "priority": "P2",
+    "collision": [
+      "STOVE"
+    ],
+    "fallback": [
+      "REDUCE"
+    ],
+    "sourceText": "PER_AREA: max(1, ceil(S/5))",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "CF-DL-01",
+    "spaceCode": "CF",
+    "spaceName": "厨房",
+    "deviceType2": "筒灯",
+    "deviceCanonical": "筒灯",
+    "usage": "",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "furnitureCenter",
+      "furnitureTypes": [
+        "kitchenCounter"
+      ],
+      "target": "kitchenCounter",
+      "raw": "操作台前 300~500（人站位上方偏台面）"
+    },
+    "quantity": {
+      "kind": "perFurniture",
+      "value": 1,
+      "max": 4,
+      "furnitureTypes": [
+        "kitchenCounter"
+      ],
+      "raw": "PER_LENGTH: max(2, ceil(台面长/1.5))"
+    },
+    "spacing": 1200,
+    "priority": "P2",
+    "collision": [
+      "STOVE"
+    ],
+    "fallback": [
+      "REDUCE"
+    ],
+    "sourceText": "PER_LENGTH: max(2, ceil(台面长/1.5))",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "CF-CB-01",
+    "spaceCode": "CF",
+    "spaceName": "厨房",
+    "deviceType2": "柜体灯带",
+    "deviceCanonical": "柜体灯带",
+    "usage": "吊柜下",
+    "mount": "BL",
+    "height": {
+      "base": "BL",
+      "offset": 50
+    },
+    "anchor": {
+      "kind": "furnitureEdge",
+      "furnitureTypes": [
+        "upperCabinet"
+      ],
+      "target": "upperCabinet",
+      "raw": "吊柜下沿通长"
+    },
+    "quantity": {
+      "kind": "measuredLength",
+      "measure": "cabinet",
+      "factor": 1,
+      "raw": "PER_MEASURED_LENGTH: 吊柜长度（布置后实测）"
+    },
+    "spacing": 0,
+    "priority": "P3",
+    "collision": [
+      "STOVE"
+    ],
+    "fallback": [
+      "REMOVE",
+      "ALTERNATE_DEVICE"
+    ],
+    "sourceText": "PER_MEASURED_LENGTH: 吊柜长度（布置后实测）",
+    "traceFlags": [
+      "MEASURED_AFTER_LAYOUT",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "CF-SP-01",
+    "spaceCode": "CF",
+    "spaceName": "厨房",
+    "deviceType2": "射灯",
+    "deviceCanonical": "射灯",
+    "usage": "水槽/备餐",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "furnitureEdge",
+      "furnitureTypes": [
+        "kitchenCounter"
+      ],
+      "target": "kitchenCounter",
+      "raw": "水槽前沿、备餐区"
+    },
+    "quantity": {
+      "kind": "perFurniture",
+      "value": 1,
+      "max": 4,
+      "furnitureTypes": [
+        "kitchenCounter"
+      ],
+      "raw": "PER_FURNITURE: 1/水槽 + 0~1/备餐区"
+    },
+    "spacing": 0,
+    "priority": "P1",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REDUCE"
+    ],
+    "sourceText": "PER_FURNITURE: 1/水槽 + 0~1/备餐区",
+    "traceFlags": [
+      "OPTIONAL_OR_RANGE",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "CF-GR-01",
+    "spaceCode": "CF",
+    "spaceName": "厨房",
+    "deviceType2": "格栅灯",
+    "deviceCanonical": "格栅灯",
+    "usage": "",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "longAxisLine",
+      "raw": "长条形厨房中轴"
+    },
+    "quantity": {
+      "kind": "perLength",
+      "value": 2,
+      "min": 1,
+      "even": false,
+      "round": "ceil",
+      "raw": "PER_LENGTH: max(1, ceil(L/2))"
+    },
+    "spacing": 0,
+    "priority": "P2",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REDUCE"
+    ],
+    "sourceText": "PER_LENGTH: max(1, ceil(L/2))",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "CF-PN-01",
+    "spaceCode": "CF",
+    "spaceName": "厨房",
+    "deviceType2": "开关面板",
+    "deviceCanonical": "开关面板",
+    "usage": "",
+    "mount": "SL",
+    "height": {
+      "base": "SL",
+      "offset": 1300
+    },
+    "anchor": {
+      "kind": "doorSideWall",
+      "offset": 175,
+      "raw": "厨房门内侧，开门侧"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 2,
+      "min": 2,
+      "raw": "FIXED(2)"
+    },
+    "spacing": 0,
+    "priority": "P2",
+    "collision": [
+      "DOOR_SWING",
+      "STOVE"
+    ],
+    "fallback": [
+      "REDUCE"
+    ],
+    "sourceText": "FIXED(2)",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "CF-SN-01",
+    "spaceCode": "CF",
+    "spaceName": "厨房",
+    "deviceType2": "人体传感器",
+    "deviceCanonical": "人体传感器",
+    "usage": "",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "furnitureCenter",
+      "furnitureTypes": [
+        "kitchenCounter"
+      ],
+      "target": "kitchenCounter",
+      "raw": "覆盖操作区"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 1,
+      "min": 1,
+      "raw": "FIXED(1)"
+    },
+    "spacing": 0,
+    "priority": "P3",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "ALTERNATE_DEVICE"
+    ],
+    "sourceText": "FIXED(1)",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "CF-SN-02",
+    "spaceCode": "CF",
+    "spaceName": "厨房",
+    "deviceType2": "温湿度传感器",
+    "deviceCanonical": "温湿度传感器",
+    "usage": "",
+    "mount": "SL",
+    "height": {
+      "base": "SL",
+      "offset": 1500
+    },
+    "anchor": {
+      "kind": "roomCenter",
+      "raw": "厨房对角"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 1,
+      "min": 0,
+      "raw": "FIXED(0~1)"
+    },
+    "spacing": 0,
+    "priority": "P3",
+    "collision": [
+      "STOVE"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "FIXED(0~1)",
+    "traceFlags": [
+      "OPTIONAL_OR_RANGE",
+      "GENERIC_ANCHOR",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "CF-CU-01",
+    "spaceCode": "CF",
+    "spaceName": "厨房",
+    "deviceType2": "窗帘电机",
+    "deviceCanonical": "窗帘电机",
+    "usage": "",
+    "mount": "WL",
+    "height": {
+      "base": "WL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "windowHead",
+      "raw": "每窗"
+    },
+    "quantity": {
+      "kind": "perOpening",
+      "value": 1,
+      "target": "window",
+      "raw": "PER_OPENING"
+    },
+    "spacing": 0,
+    "priority": "P2",
+    "collision": [
+      "STOVE"
+    ],
+    "fallback": [
+      "REDUCE"
+    ],
+    "sourceText": "PER_OPENING",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "CF-AC-01",
+    "spaceCode": "CF",
+    "spaceName": "厨房",
+    "deviceType2": "挂式空调",
+    "deviceCanonical": "挂式空调",
+    "usage": "",
+    "mount": "SL",
+    "height": {
+      "base": "SL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "roomCenter",
+      "raw": "厨房通常不配"
+    },
+    "quantity": {
+      "kind": "generic",
+      "value": 1,
+      "raw": "—"
+    },
+    "spacing": 0,
+    "priority": "P2",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REDUCE"
+    ],
+    "sourceText": "—",
+    "traceFlags": [
+      "GENERIC_COUNT",
+      "GENERIC_ANCHOR",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "WSJ-PL-01",
+    "spaceCode": "WSJ",
+    "spaceName": "卫生间",
+    "deviceType2": "面板灯",
+    "deviceCanonical": "面板灯",
+    "usage": "",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "inscribedRectCenter",
+      "raw": "干区最大内接矩形中心"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 1,
+      "min": 1,
+      "raw": "FIXED(1)"
+    },
+    "spacing": 0,
+    "priority": "P2",
+    "collision": [
+      "WET_ZONE"
+    ],
+    "fallback": [
+      "REDUCE"
+    ],
+    "sourceText": "FIXED(1)",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "WSJ-DL-01",
+    "spaceCode": "WSJ",
+    "spaceName": "卫生间",
+    "deviceType2": "筒灯",
+    "deviceCanonical": "筒灯",
+    "usage": "",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "furnitureCenter",
+      "furnitureTypes": [
+        "shower"
+      ],
+      "target": "shower",
+      "raw": "淋浴区/浴缸上方（防潮型）"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 1,
+      "min": 1,
+      "raw": "PER_FURNITURE: 1/湿区"
+    },
+    "spacing": 0,
+    "priority": "P1",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "PER_FURNITURE: 1/湿区",
+    "traceFlags": [
+      "GENERIC_COUNT",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "WSJ-SP-01",
+    "spaceCode": "WSJ",
+    "spaceName": "卫生间",
+    "deviceType2": "射灯",
+    "deviceCanonical": "射灯",
+    "usage": "镜前",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 150,
+      "min": 0,
+      "max": 300
+    },
+    "anchor": {
+      "kind": "furnitureCenter",
+      "furnitureTypes": [
+        "vanity"
+      ],
+      "target": "vanity",
+      "raw": "浴室柜中心正上方"
+    },
+    "quantity": {
+      "kind": "perFurniture",
+      "value": 1,
+      "max": 2,
+      "furnitureTypes": [
+        "vanity"
+      ],
+      "min": 0,
+      "raw": "PER_FURNITURE: 1/浴室柜"
+    },
+    "spacing": 0,
+    "priority": "P1",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "ALTERNATE_DEVICE"
+    ],
+    "sourceText": "PER_FURNITURE: 1/浴室柜",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "WSJ-SP-02",
+    "spaceCode": "WSJ",
+    "spaceName": "卫生间",
+    "deviceType2": "射灯",
+    "deviceCanonical": "射灯",
+    "usage": "马桶",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "furnitureCenter",
+      "furnitureTypes": [
+        "toilet"
+      ],
+      "target": "toilet",
+      "raw": "马桶正上方偏前"
+    },
+    "quantity": {
+      "kind": "perFurniture",
+      "value": 1,
+      "max": 2,
+      "furnitureTypes": [
+        "toilet"
+      ],
+      "min": 0,
+      "raw": "PER_FURNITURE: 1/马桶"
+    },
+    "spacing": 0,
+    "priority": "P1",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "PER_FURNITURE: 1/马桶",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "WSJ-SP-03",
+    "spaceCode": "WSJ",
+    "spaceName": "卫生间",
+    "deviceType2": "射灯",
+    "deviceCanonical": "射灯",
+    "usage": "淋浴",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "furnitureCenter",
+      "furnitureTypes": [
+        "shower"
+      ],
+      "target": "shower",
+      "raw": "淋浴区中心"
+    },
+    "quantity": {
+      "kind": "perFurniture",
+      "value": 1,
+      "max": 2,
+      "furnitureTypes": [
+        "shower"
+      ],
+      "min": 0,
+      "raw": "PER_FURNITURE: 1/淋浴房"
+    },
+    "spacing": 0,
+    "priority": "P1",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REDUCE"
+    ],
+    "sourceText": "PER_FURNITURE: 1/淋浴房",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "WSJ-CB-01",
+    "spaceCode": "WSJ",
+    "spaceName": "卫生间",
+    "deviceType2": "柜体灯带",
+    "deviceCanonical": "柜体灯带",
+    "usage": "镜柜",
+    "mount": "BL",
+    "height": {
+      "base": "BL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "furnitureEdge",
+      "furnitureTypes": [
+        "wardrobe",
+        "vanity"
+      ],
+      "target": "wardrobe",
+      "raw": "层板前沿 + 镜柜下沿"
+    },
+    "quantity": {
+      "kind": "measuredLength",
+      "measure": "cabinet",
+      "factor": 1,
+      "raw": "PER_MEASURED_LENGTH: 镜柜宽（布置后实测）"
+    },
+    "spacing": 0,
+    "priority": "P3",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "PER_MEASURED_LENGTH: 镜柜宽（布置后实测）",
+    "traceFlags": [
+      "MEASURED_AFTER_LAYOUT",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "WSJ-LS-01",
+    "spaceCode": "WSJ",
+    "spaceName": "卫生间",
+    "deviceType2": "灯槽灯带",
+    "deviceCanonical": "灯槽灯带",
+    "usage": "",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "perimeter",
+      "offset": 100,
+      "raw": "干区四周"
+    },
+    "quantity": {
+      "kind": "measuredLength",
+      "measure": "perimeter",
+      "factor": 1.05,
+      "raw": "PER_MEASURED_LENGTH: 布置后路径长 × 1.05"
+    },
+    "spacing": 0,
+    "priority": "P3",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "PER_MEASURED_LENGTH: 布置后路径长 × 1.05",
+    "traceFlags": [
+      "MEASURED_AFTER_LAYOUT",
+      "PERIMETER",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "WSJ-PN-01",
+    "spaceCode": "WSJ",
+    "spaceName": "卫生间",
+    "deviceType2": "开关面板",
+    "deviceCanonical": "开关面板",
+    "usage": "",
+    "mount": "SL",
+    "height": {
+      "base": "SL",
+      "offset": 1300
+    },
+    "anchor": {
+      "kind": "doorSideWall",
+      "offset": 175,
+      "raw": "卫生间门外，开门侧"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 2,
+      "min": 2,
+      "raw": "FIXED(2)（门外）"
+    },
+    "spacing": 0,
+    "priority": "P2",
+    "collision": [
+      "DOOR_SWING"
+    ],
+    "fallback": [
+      "REDUCE"
+    ],
+    "sourceText": "FIXED(2)（门外）",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "WSJ-SN-01",
+    "spaceCode": "WSJ",
+    "spaceName": "卫生间",
+    "deviceType2": "人体传感器",
+    "deviceCanonical": "人体传感器",
+    "usage": "",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "furnitureCenter",
+      "furnitureTypes": [
+        "toilet",
+        "shower"
+      ],
+      "target": "toilet",
+      "raw": "覆盖马桶/淋浴"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 1,
+      "min": 1,
+      "raw": "FIXED(1)"
+    },
+    "spacing": 0,
+    "priority": "P1",
+    "collision": [
+      "WET_ZONE"
+    ],
+    "fallback": [
+      "ALTERNATE_DEVICE"
+    ],
+    "sourceText": "FIXED(1)",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "WSJ-SN-02",
+    "spaceCode": "WSJ",
+    "spaceName": "卫生间",
+    "deviceType2": "温湿度传感器",
+    "deviceCanonical": "温湿度传感器",
+    "usage": "",
+    "mount": "SL",
+    "height": {
+      "base": "SL",
+      "offset": 1500
+    },
+    "anchor": {
+      "kind": "roomCenter",
+      "raw": "干区"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 1,
+      "min": 1,
+      "raw": "FIXED(1)"
+    },
+    "spacing": 0,
+    "priority": "P3",
+    "collision": [
+      "WET_ZONE"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "FIXED(1)",
+    "traceFlags": [
+      "GENERIC_ANCHOR",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "WSJ-AU-01",
+    "spaceCode": "WSJ",
+    "spaceName": "卫生间",
+    "deviceType2": "吸顶喇叭",
+    "deviceCanonical": "吸顶喇叭",
+    "usage": "",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "roomCenter",
+      "raw": "干区中心"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 1,
+      "min": 0,
+      "raw": "FIXED(0~1)"
+    },
+    "spacing": 0,
+    "priority": "P3",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "FIXED(0~1)",
+    "traceFlags": [
+      "OPTIONAL_OR_RANGE",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "WSJ-CU-01",
+    "spaceCode": "WSJ",
+    "spaceName": "卫生间",
+    "deviceType2": "卷帘电机",
+    "deviceCanonical": "卷帘电机",
+    "usage": "",
+    "mount": "WL",
+    "height": {
+      "base": "WL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "windowHead",
+      "raw": "每窗"
+    },
+    "quantity": {
+      "kind": "perOpening",
+      "value": 1,
+      "target": "window",
+      "raw": "PER_OPENING"
+    },
+    "spacing": 0,
+    "priority": "P2",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REDUCE"
+    ],
+    "sourceText": "PER_OPENING",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "GDYT-DL-01",
+    "spaceCode": "GDYT",
+    "spaceName": "过道",
+    "deviceType2": "筒灯一字组",
+    "deviceCanonical": "筒灯一字组",
+    "usage": "",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "longAxisLine",
+      "raw": "过道中心线"
+    },
+    "quantity": {
+      "kind": "perLength",
+      "value": 1.5,
+      "min": 2,
+      "even": false,
+      "round": "ceil",
+      "raw": "PER_LENGTH: max(2, ceil(L/1.5))"
+    },
+    "spacing": 1200,
+    "priority": "P2",
+    "collision": [
+      "DOOR_SWING"
+    ],
+    "fallback": [
+      "REDUCE"
+    ],
+    "sourceText": "PER_LENGTH: max(2, ceil(L/1.5))",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "GDYT-SP-01",
+    "spaceCode": "GDYT",
+    "spaceName": "过道",
+    "deviceType2": "射灯一字组",
+    "deviceCanonical": "射灯一字组",
+    "usage": "端景",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 150,
+      "min": 0,
+      "max": 300
+    },
+    "anchor": {
+      "kind": "wallOffset",
+      "offset": 250,
+      "raw": "端景/挂画"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 1,
+      "min": 1,
+      "raw": "PER_FURNITURE: 1/端景"
+    },
+    "spacing": 0,
+    "priority": "P2",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "PER_FURNITURE: 1/端景",
+    "traceFlags": [
+      "GENERIC_COUNT",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "GDYT-LS-01",
+    "spaceCode": "GDYT",
+    "spaceName": "过道",
+    "deviceType2": "贴墙灯带",
+    "deviceCanonical": "贴墙灯带",
+    "usage": "踢脚",
+    "mount": "SL",
+    "height": {
+      "base": "SL",
+      "offset": 125,
+      "min": 100,
+      "max": 150
+    },
+    "anchor": {
+      "kind": "roomCenter",
+      "raw": "过道单侧或双侧"
+    },
+    "quantity": {
+      "kind": "measuredLength",
+      "measure": "path",
+      "factor": 1,
+      "raw": "PER_MEASURED_LENGTH: 过道长（布置后实测）"
+    },
+    "spacing": 0,
+    "priority": "P3",
+    "collision": [
+      "DOOR_SWING"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "PER_MEASURED_LENGTH: 过道长（布置后实测）",
+    "traceFlags": [
+      "MEASURED_AFTER_LAYOUT",
+      "GENERIC_ANCHOR",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "GDYT-LS-02",
+    "spaceCode": "GDYT",
+    "spaceName": "过道",
+    "deviceType2": "灯槽灯带",
+    "deviceCanonical": "灯槽灯带",
+    "usage": "",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "roomCenter",
+      "raw": "单边"
+    },
+    "quantity": {
+      "kind": "measuredLength",
+      "measure": "path",
+      "factor": 1,
+      "raw": "PER_MEASURED_LENGTH: 过道长（布置后实测）"
+    },
+    "spacing": 0,
+    "priority": "P3",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "PER_MEASURED_LENGTH: 过道长（布置后实测）",
+    "traceFlags": [
+      "MEASURED_AFTER_LAYOUT",
+      "GENERIC_ANCHOR",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "GDYT-PN-01",
+    "spaceCode": "GDYT",
+    "spaceName": "过道",
+    "deviceType2": "开关面板",
+    "deviceCanonical": "开关面板",
+    "usage": "",
+    "mount": "SL",
+    "height": {
+      "base": "SL",
+      "offset": 1300
+    },
+    "anchor": {
+      "kind": "doorSideWall",
+      "offset": 175,
+      "raw": "过道两端门侧"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 2,
+      "min": 1,
+      "raw": "FIXED(1~2)"
+    },
+    "spacing": 0,
+    "priority": "P2",
+    "collision": [
+      "DOOR_SWING"
+    ],
+    "fallback": [
+      "REDUCE"
+    ],
+    "sourceText": "FIXED(1~2)",
+    "traceFlags": [
+      "OPTIONAL_OR_RANGE",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "GDYT-PN-02",
+    "spaceCode": "GDYT",
+    "spaceName": "过道",
+    "deviceType2": "无线开关",
+    "deviceCanonical": "无线开关",
+    "usage": "",
+    "mount": "SL",
+    "height": {
+      "base": "SL",
+      "offset": 1300
+    },
+    "anchor": {
+      "kind": "roomCenter",
+      "raw": "过道中部"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 1,
+      "min": 0,
+      "raw": "FIXED(0~1)"
+    },
+    "spacing": 0,
+    "priority": "P4",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "FIXED(0~1)",
+    "traceFlags": [
+      "OPTIONAL_OR_RANGE",
+      "GENERIC_ANCHOR",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "GDYT-SN-01",
+    "spaceCode": "GDYT",
+    "spaceName": "过道",
+    "deviceType2": "人体传感器",
+    "deviceCanonical": "人体传感器",
+    "usage": "",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "roomCenter",
+      "raw": "覆盖全段（长过道每 6m 1 个）"
+    },
+    "quantity": {
+      "kind": "perLength",
+      "value": 6,
+      "min": 1,
+      "even": false,
+      "round": "ceil",
+      "raw": "PER_LENGTH: max(1, ceil(L/6))"
+    },
+    "spacing": 0,
+    "priority": "P3",
+    "collision": [
+      "BEAM"
+    ],
+    "fallback": [
+      "REDUCE"
+    ],
+    "sourceText": "PER_LENGTH: max(1, ceil(L/6))",
+    "traceFlags": [
+      "GENERIC_ANCHOR",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "GDYT-AU-01",
+    "spaceCode": "GDYT",
+    "spaceName": "过道",
+    "deviceType2": "吸顶喇叭",
+    "deviceCanonical": "吸顶喇叭",
+    "usage": "",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "longAxisLine",
+      "raw": "过道中轴"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 1,
+      "min": 0,
+      "raw": "FIXED(0~1)"
+    },
+    "spacing": 0,
+    "priority": "P3",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "FIXED(0~1)",
+    "traceFlags": [
+      "OPTIONAL_OR_RANGE",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "GDYT-CV-01",
+    "spaceCode": "GDYT",
+    "spaceName": "过道",
+    "deviceType2": "摄像头",
+    "deviceCanonical": "摄像头",
+    "usage": "",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "roomCenter",
+      "raw": "对准过道"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 1,
+      "min": 0,
+      "raw": "FIXED(0~1)"
+    },
+    "spacing": 0,
+    "priority": "P3",
+    "collision": [
+      "DOOR_SWING"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "FIXED(0~1)",
+    "traceFlags": [
+      "OPTIONAL_OR_RANGE",
+      "GENERIC_ANCHOR",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "YT-DL-01",
+    "spaceCode": "YT",
+    "spaceName": "阳台",
+    "deviceType2": "筒灯 / 筒灯一字组",
+    "deviceCanonical": "筒灯;筒灯一字组",
+    "usage": "",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "longAxisLine",
+      "raw": "阳台中心线或长边中轴"
+    },
+    "quantity": {
+      "kind": "perLength",
+      "value": 1.5,
+      "min": 2,
+      "even": false,
+      "round": "ceil",
+      "raw": "PER_LENGTH: max(2, ceil(L/1.5))"
+    },
+    "spacing": 1200,
+    "priority": "P2",
+    "collision": [
+      "DRYING_RACK"
+    ],
+    "fallback": [
+      "REDUCE"
+    ],
+    "sourceText": "PER_LENGTH: max(2, ceil(L/1.5))",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "YT-PL-01",
+    "spaceCode": "YT",
+    "spaceName": "阳台",
+    "deviceType2": "面板灯",
+    "deviceCanonical": "面板灯",
+    "usage": "",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "roomCenter",
+      "raw": "休闲区中心"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 1,
+      "min": 0,
+      "raw": "FIXED(0~1)"
+    },
+    "spacing": 0,
+    "priority": "P2",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "FIXED(0~1)",
+    "traceFlags": [
+      "OPTIONAL_OR_RANGE",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "YT-LS-01",
+    "spaceCode": "YT",
+    "spaceName": "阳台",
+    "deviceType2": "灯槽灯带 / 直线灯带",
+    "deviceCanonical": "灯槽灯带;直线灯带",
+    "usage": "",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "roomCenter",
+      "raw": "窗侧单边"
+    },
+    "quantity": {
+      "kind": "measuredLength",
+      "measure": "window",
+      "factor": 1,
+      "raw": "PER_MEASURED_LENGTH: 窗宽/阳台长（布置后实测）"
+    },
+    "spacing": 0,
+    "priority": "P3",
+    "collision": [
+      "DRYING_RACK"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "PER_MEASURED_LENGTH: 窗宽/阳台长（布置后实测）",
+    "traceFlags": [
+      "MEASURED_AFTER_LAYOUT",
+      "GENERIC_ANCHOR",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "YT-CB-01",
+    "spaceCode": "YT",
+    "spaceName": "阳台",
+    "deviceType2": "柜体灯带",
+    "deviceCanonical": "柜体灯带",
+    "usage": "洗衣机柜",
+    "mount": "BL",
+    "height": {
+      "base": "BL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "furnitureEdge",
+      "furnitureTypes": [
+        "wardrobe"
+      ],
+      "target": "wardrobe",
+      "raw": "层板前沿"
+    },
+    "quantity": {
+      "kind": "measuredLength",
+      "measure": "cabinet",
+      "factor": 1,
+      "raw": "PER_MEASURED_LENGTH: 柜内层板总长（布置后实测）"
+    },
+    "spacing": 0,
+    "priority": "P3",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "PER_MEASURED_LENGTH: 柜内层板总长（布置后实测）",
+    "traceFlags": [
+      "MEASURED_AFTER_LAYOUT",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "YT-PN-01",
+    "spaceCode": "YT",
+    "spaceName": "阳台",
+    "deviceType2": "开关面板",
+    "deviceCanonical": "开关面板",
+    "usage": "",
+    "mount": "SL",
+    "height": {
+      "base": "SL",
+      "offset": 1300
+    },
+    "anchor": {
+      "kind": "doorSideWall",
+      "offset": 175,
+      "raw": "阳台门内侧，开门侧"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 2,
+      "min": 2,
+      "raw": "FIXED(2)"
+    },
+    "spacing": 0,
+    "priority": "P2",
+    "collision": [
+      "DOOR_SWING"
+    ],
+    "fallback": [
+      "REDUCE"
+    ],
+    "sourceText": "FIXED(2)",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "YT-SN-01",
+    "spaceCode": "YT",
+    "spaceName": "阳台",
+    "deviceType2": "人体传感器",
+    "deviceCanonical": "人体传感器",
+    "usage": "",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "roomCenter",
+      "raw": "覆盖晾晒/洗衣区"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 1,
+      "min": 1,
+      "raw": "FIXED(1)"
+    },
+    "spacing": 0,
+    "priority": "P3",
+    "collision": [
+      "DRYING_RACK"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "FIXED(1)",
+    "traceFlags": [
+      "GENERIC_ANCHOR",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "YT-CU-01",
+    "spaceCode": "YT",
+    "spaceName": "阳台",
+    "deviceType2": "窗帘电机 / 卷帘电机",
+    "deviceCanonical": "窗帘电机;卷帘电机",
+    "usage": "",
+    "mount": "WL",
+    "height": {
+      "base": "WL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "windowHead",
+      "raw": "每窗"
+    },
+    "quantity": {
+      "kind": "perOpening",
+      "value": 1,
+      "target": "window",
+      "raw": "PER_OPENING"
+    },
+    "spacing": 0,
+    "priority": "P2",
+    "collision": [
+      "DRYING_RACK"
+    ],
+    "fallback": [
+      "REDUCE"
+    ],
+    "sourceText": "PER_OPENING",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "YT-AC-01",
+    "spaceCode": "YT",
+    "spaceName": "阳台",
+    "deviceType2": "挂式空调",
+    "deviceCanonical": "挂式空调",
+    "usage": "",
+    "mount": "SL",
+    "height": {
+      "base": "SL",
+      "offset": 2200
+    },
+    "anchor": {
+      "kind": "wallOffset",
+      "offset": 300,
+      "raw": "休闲区侧墙"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 1,
+      "min": 0,
+      "raw": "FIXED(0~1)"
+    },
+    "spacing": 0,
+    "priority": "P2",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "FIXED(0~1)",
+    "traceFlags": [
+      "OPTIONAL_OR_RANGE",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "YMJ-DL-01",
+    "spaceCode": "YMJ",
+    "spaceName": "衣帽间",
+    "deviceType2": "筒灯一字组",
+    "deviceCanonical": "筒灯一字组",
+    "usage": "",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "furnitureCenter",
+      "furnitureTypes": [
+        "wardrobe"
+      ],
+      "target": "wardrobe",
+      "raw": "柜体前通道中心线"
+    },
+    "quantity": {
+      "kind": "perLength",
+      "value": 1.5,
+      "min": 2,
+      "even": false,
+      "round": "ceil",
+      "raw": "PER_LENGTH: max(2, ceil(L/1.5))"
+    },
+    "spacing": 1200,
+    "priority": "P2",
+    "collision": [
+      "DOOR_SWING"
+    ],
+    "fallback": [
+      "REDUCE"
+    ],
+    "sourceText": "PER_LENGTH: max(2, ceil(L/1.5))",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "YMJ-SP-01",
+    "spaceCode": "YMJ",
+    "spaceName": "衣帽间",
+    "deviceType2": "射灯",
+    "deviceCanonical": "射灯",
+    "usage": "柜体洗墙",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 150,
+      "min": 0,
+      "max": 300
+    },
+    "anchor": {
+      "kind": "furnitureEdge",
+      "furnitureTypes": [
+        "wardrobe"
+      ],
+      "target": "wardrobe",
+      "raw": "柜体前沿线"
+    },
+    "quantity": {
+      "kind": "perLength",
+      "value": 1,
+      "min": 2,
+      "even": false,
+      "round": "ceil",
+      "raw": "PER_LENGTH: max(2, ceil(W/1.0))"
+    },
+    "spacing": 800,
+    "priority": "P2",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "ALTERNATE_DEVICE"
+    ],
+    "sourceText": "PER_LENGTH: max(2, ceil(W/1.0))",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "YMJ-CB-01",
+    "spaceCode": "YMJ",
+    "spaceName": "衣帽间",
+    "deviceType2": "柜体灯带",
+    "deviceCanonical": "柜体灯带",
+    "usage": "",
+    "mount": "BL",
+    "height": {
+      "base": "BL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "furnitureCenter",
+      "furnitureTypes": [
+        "wardrobe"
+      ],
+      "target": "wardrobe",
+      "raw": "层板前沿内缩 50；挂衣杆上方"
+    },
+    "quantity": {
+      "kind": "measuredLength",
+      "measure": "cabinet",
+      "factor": 1,
+      "raw": "PER_MEASURED_LENGTH: 柜内层板总长 + 挂衣杆长（布置后实测）"
+    },
+    "spacing": 0,
+    "priority": "P3",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "PER_MEASURED_LENGTH: 柜内层板总长 + 挂衣杆长（布置后实测）",
+    "traceFlags": [
+      "MEASURED_AFTER_LAYOUT",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "YMJ-LS-01",
+    "spaceCode": "YMJ",
+    "spaceName": "衣帽间",
+    "deviceType2": "灯槽灯带",
+    "deviceCanonical": "灯槽灯带",
+    "usage": "",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "perimeter",
+      "offset": 100,
+      "raw": "中岛上方或四周"
+    },
+    "quantity": {
+      "kind": "measuredLength",
+      "measure": "perimeter",
+      "factor": 1.05,
+      "raw": "PER_MEASURED_LENGTH: 布置后路径长 × 1.05"
+    },
+    "spacing": 0,
+    "priority": "P3",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "PER_MEASURED_LENGTH: 布置后路径长 × 1.05",
+    "traceFlags": [
+      "MEASURED_AFTER_LAYOUT",
+      "PERIMETER",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "YMJ-SP-02",
+    "spaceCode": "YMJ",
+    "spaceName": "衣帽间",
+    "deviceType2": "射灯",
+    "deviceCanonical": "射灯",
+    "usage": "镜前",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "furnitureCenter",
+      "furnitureTypes": [
+        "vanity"
+      ],
+      "target": "vanity",
+      "raw": "穿衣镜中心"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 1,
+      "min": 1,
+      "raw": "PER_FURNITURE: 1/镜"
+    },
+    "spacing": 0,
+    "priority": "P2",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "ALTERNATE_DEVICE"
+    ],
+    "sourceText": "PER_FURNITURE: 1/镜",
+    "traceFlags": [
+      "GENERIC_COUNT",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "YMJ-PN-01",
+    "spaceCode": "YMJ",
+    "spaceName": "衣帽间",
+    "deviceType2": "开关面板",
+    "deviceCanonical": "开关面板",
+    "usage": "",
+    "mount": "SL",
+    "height": {
+      "base": "SL",
+      "offset": 1300
+    },
+    "anchor": {
+      "kind": "doorSideWall",
+      "offset": 175,
+      "raw": "入口门内侧"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 2,
+      "min": 1,
+      "raw": "FIXED(1~2)"
+    },
+    "spacing": 0,
+    "priority": "P2",
+    "collision": [
+      "DOOR_SWING"
+    ],
+    "fallback": [
+      "REDUCE"
+    ],
+    "sourceText": "FIXED(1~2)",
+    "traceFlags": [
+      "OPTIONAL_OR_RANGE",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "YMJ-PN-02",
+    "spaceCode": "YMJ",
+    "spaceName": "衣帽间",
+    "deviceType2": "情景面板",
+    "deviceCanonical": "情景面板",
+    "usage": "",
+    "mount": "SL",
+    "height": {
+      "base": "SL",
+      "offset": 1300
+    },
+    "anchor": {
+      "kind": "doorSideWall",
+      "offset": 175,
+      "raw": "与开关并排"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 1,
+      "min": 0,
+      "raw": "FIXED(0~1)"
+    },
+    "spacing": 0,
+    "priority": "P2",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "FIXED(0~1)",
+    "traceFlags": [
+      "OPTIONAL_OR_RANGE",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "YMJ-SN-01",
+    "spaceCode": "YMJ",
+    "spaceName": "衣帽间",
+    "deviceType2": "人在传感器",
+    "deviceCanonical": "人在传感器",
+    "usage": "",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "roomCenter",
+      "raw": "覆盖通道"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 1,
+      "min": 1,
+      "raw": "FIXED(1)"
+    },
+    "spacing": 0,
+    "priority": "P3",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "ALTERNATE_DEVICE"
+    ],
+    "sourceText": "FIXED(1)",
+    "traceFlags": [
+      "GENERIC_ANCHOR",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "YMJ-SN-02",
+    "spaceCode": "YMJ",
+    "spaceName": "衣帽间",
+    "deviceType2": "温湿度传感器",
+    "deviceCanonical": "温湿度传感器",
+    "usage": "",
+    "mount": "SL",
+    "height": {
+      "base": "SL",
+      "offset": 1500
+    },
+    "anchor": {
+      "kind": "roomCenter",
+      "raw": "远离门/窗"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 1,
+      "min": 0,
+      "raw": "FIXED(0~1)"
+    },
+    "spacing": 0,
+    "priority": "P3",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "FIXED(0~1)",
+    "traceFlags": [
+      "OPTIONAL_OR_RANGE",
+      "GENERIC_ANCHOR",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "WSWSJ-PL-01",
+    "spaceCode": "WSWSJ",
+    "spaceName": "卧室卫生间",
+    "deviceType2": "面板灯",
+    "deviceCanonical": "面板灯",
+    "usage": "",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "inscribedRectCenter",
+      "raw": "干区最大内接矩形中心"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 1,
+      "min": 1,
+      "raw": "FIXED(1)"
+    },
+    "spacing": 0,
+    "priority": "P2",
+    "collision": [
+      "WET_ZONE"
+    ],
+    "fallback": [
+      "REDUCE"
+    ],
+    "sourceText": "FIXED(1)",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "WSWSJ-DL-01",
+    "spaceCode": "WSWSJ",
+    "spaceName": "卧室卫生间",
+    "deviceType2": "筒灯",
+    "deviceCanonical": "筒灯",
+    "usage": "",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "furnitureCenter",
+      "furnitureTypes": [
+        "shower"
+      ],
+      "target": "shower",
+      "raw": "淋浴区/浴缸上方（防潮型）"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 1,
+      "min": 1,
+      "raw": "PER_FURNITURE: 1/湿区"
+    },
+    "spacing": 0,
+    "priority": "P1",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "PER_FURNITURE: 1/湿区",
+    "traceFlags": [
+      "GENERIC_COUNT",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "WSWSJ-SP-01",
+    "spaceCode": "WSWSJ",
+    "spaceName": "卧室卫生间",
+    "deviceType2": "射灯",
+    "deviceCanonical": "射灯",
+    "usage": "镜前",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 150,
+      "min": 0,
+      "max": 300
+    },
+    "anchor": {
+      "kind": "furnitureCenter",
+      "furnitureTypes": [
+        "vanity"
+      ],
+      "target": "vanity",
+      "raw": "浴室柜中心正上方"
+    },
+    "quantity": {
+      "kind": "perFurniture",
+      "value": 1,
+      "max": 2,
+      "furnitureTypes": [
+        "vanity"
+      ],
+      "min": 0,
+      "raw": "PER_FURNITURE: 1/浴室柜"
+    },
+    "spacing": 0,
+    "priority": "P1",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "ALTERNATE_DEVICE"
+    ],
+    "sourceText": "PER_FURNITURE: 1/浴室柜",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "WSWSJ-SP-02",
+    "spaceCode": "WSWSJ",
+    "spaceName": "卧室卫生间",
+    "deviceType2": "射灯",
+    "deviceCanonical": "射灯",
+    "usage": "梳妆",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 150,
+      "min": 0,
+      "max": 300
+    },
+    "anchor": {
+      "kind": "furnitureCenter",
+      "furnitureTypes": [
+        "vanity"
+      ],
+      "target": "vanity",
+      "raw": "梳妆台中心正上方，显色 ≥Ra90"
+    },
+    "quantity": {
+      "kind": "perFurniture",
+      "value": 1,
+      "max": 4,
+      "furnitureTypes": [
+        "vanity"
+      ],
+      "raw": "PER_FURNITURE: 1/梳妆台"
+    },
+    "spacing": 0,
+    "priority": "P2",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REDUCE"
+    ],
+    "sourceText": "PER_FURNITURE: 1/梳妆台",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "WSWSJ-SP-03",
+    "spaceCode": "WSWSJ",
+    "spaceName": "卧室卫生间",
+    "deviceType2": "射灯",
+    "deviceCanonical": "射灯",
+    "usage": "马桶",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "furnitureCenter",
+      "furnitureTypes": [
+        "toilet"
+      ],
+      "target": "toilet",
+      "raw": "马桶正上方偏前"
+    },
+    "quantity": {
+      "kind": "perFurniture",
+      "value": 1,
+      "max": 2,
+      "furnitureTypes": [
+        "toilet"
+      ],
+      "min": 0,
+      "raw": "PER_FURNITURE: 1/马桶"
+    },
+    "spacing": 0,
+    "priority": "P1",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "PER_FURNITURE: 1/马桶",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "WSWSJ-CB-01",
+    "spaceCode": "WSWSJ",
+    "spaceName": "卧室卫生间",
+    "deviceType2": "柜体灯带",
+    "deviceCanonical": "柜体灯带",
+    "usage": "镜柜",
+    "mount": "BL",
+    "height": {
+      "base": "BL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "furnitureEdge",
+      "furnitureTypes": [
+        "wardrobe",
+        "vanity"
+      ],
+      "target": "wardrobe",
+      "raw": "层板前沿 + 镜柜下沿"
+    },
+    "quantity": {
+      "kind": "measuredLength",
+      "measure": "cabinet",
+      "factor": 1,
+      "raw": "PER_MEASURED_LENGTH: 镜柜宽（布置后实测）"
+    },
+    "spacing": 0,
+    "priority": "P3",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "PER_MEASURED_LENGTH: 镜柜宽（布置后实测）",
+    "traceFlags": [
+      "MEASURED_AFTER_LAYOUT",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "WSWSJ-CB-02",
+    "spaceCode": "WSWSJ",
+    "spaceName": "卧室卫生间",
+    "deviceType2": "柜体灯带",
+    "deviceCanonical": "柜体灯带",
+    "usage": "梳妆台",
+    "mount": "BL",
+    "height": {
+      "base": "BL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "furnitureEdge",
+      "furnitureTypes": [
+        "wardrobe"
+      ],
+      "target": "wardrobe",
+      "raw": "层板前沿内缩 50"
+    },
+    "quantity": {
+      "kind": "measuredLength",
+      "measure": "cabinet",
+      "factor": 1,
+      "raw": "PER_MEASURED_LENGTH: 柜内层板总长（布置后实测）"
+    },
+    "spacing": 0,
+    "priority": "P3",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "PER_MEASURED_LENGTH: 柜内层板总长（布置后实测）",
+    "traceFlags": [
+      "MEASURED_AFTER_LAYOUT",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "WSWSJ-LS-01",
+    "spaceCode": "WSWSJ",
+    "spaceName": "卧室卫生间",
+    "deviceType2": "贴墙灯带",
+    "deviceCanonical": "贴墙灯带",
+    "usage": "起夜低位",
+    "mount": "SL",
+    "height": {
+      "base": "SL",
+      "offset": 150,
+      "min": 100,
+      "max": 200
+    },
+    "anchor": {
+      "kind": "pathLine",
+      "raw": "门洞到主卧路径"
+    },
+    "quantity": {
+      "kind": "measuredLength",
+      "measure": "path",
+      "factor": 1,
+      "raw": "PER_MEASURED_LENGTH: 路径长（布置后实测）"
+    },
+    "spacing": 0,
+    "priority": "P3",
+    "collision": [
+      "DOOR_SWING"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "PER_MEASURED_LENGTH: 路径长（布置后实测）",
+    "traceFlags": [
+      "MEASURED_AFTER_LAYOUT",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "WSWSJ-PN-01",
+    "spaceCode": "WSWSJ",
+    "spaceName": "卧室卫生间",
+    "deviceType2": "开关面板",
+    "deviceCanonical": "开关面板",
+    "usage": "",
+    "mount": "SL",
+    "height": {
+      "base": "SL",
+      "offset": 1300
+    },
+    "anchor": {
+      "kind": "doorSideWall",
+      "offset": 175,
+      "raw": "卫生间门外，开门侧"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 2,
+      "min": 2,
+      "raw": "FIXED(2)"
+    },
+    "spacing": 0,
+    "priority": "P2",
+    "collision": [
+      "DOOR_SWING"
+    ],
+    "fallback": [
+      "REDUCE"
+    ],
+    "sourceText": "FIXED(2)",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "WSWSJ-SN-01",
+    "spaceCode": "WSWSJ",
+    "spaceName": "卧室卫生间",
+    "deviceType2": "人体传感器",
+    "deviceCanonical": "人体传感器",
+    "usage": "",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "furnitureCenter",
+      "furnitureTypes": [
+        "toilet",
+        "shower"
+      ],
+      "target": "toilet",
+      "raw": "覆盖马桶/淋浴"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 1,
+      "min": 1,
+      "raw": "FIXED(1)"
+    },
+    "spacing": 0,
+    "priority": "P1",
+    "collision": [
+      "WET_ZONE"
+    ],
+    "fallback": [
+      "ALTERNATE_DEVICE"
+    ],
+    "sourceText": "FIXED(1)",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "WSWSJ-SN-02",
+    "spaceCode": "WSWSJ",
+    "spaceName": "卧室卫生间",
+    "deviceType2": "温湿度传感器",
+    "deviceCanonical": "温湿度传感器",
+    "usage": "",
+    "mount": "SL",
+    "height": {
+      "base": "SL",
+      "offset": 1500
+    },
+    "anchor": {
+      "kind": "roomCenter",
+      "raw": "干区"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 1,
+      "min": 1,
+      "raw": "FIXED(1)"
+    },
+    "spacing": 0,
+    "priority": "P3",
+    "collision": [
+      "WET_ZONE"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "FIXED(1)",
+    "traceFlags": [
+      "GENERIC_ANCHOR",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "WSWSJ-AU-01",
+    "spaceCode": "WSWSJ",
+    "spaceName": "卧室卫生间",
+    "deviceType2": "吸顶喇叭",
+    "deviceCanonical": "吸顶喇叭",
+    "usage": "",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "roomCenter",
+      "raw": "干区中心"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 1,
+      "min": 0,
+      "raw": "FIXED(0~1)"
+    },
+    "spacing": 0,
+    "priority": "P3",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "FIXED(0~1)",
+    "traceFlags": [
+      "OPTIONAL_OR_RANGE",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "WSWSJ-CU-01",
+    "spaceCode": "WSWSJ",
+    "spaceName": "卧室卫生间",
+    "deviceType2": "卷帘电机",
+    "deviceCanonical": "卷帘电机",
+    "usage": "",
+    "mount": "WL",
+    "height": {
+      "base": "WL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "windowHead",
+      "raw": "每窗"
+    },
+    "quantity": {
+      "kind": "perOpening",
+      "value": 1,
+      "target": "window",
+      "raw": "PER_OPENING"
+    },
+    "spacing": 0,
+    "priority": "P2",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REDUCE"
+    ],
+    "sourceText": "PER_OPENING",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "CS-PD-01",
+    "spaceCode": "CS",
+    "spaceName": "茶室",
+    "deviceType2": "吊灯",
+    "deviceCanonical": "吊灯",
+    "usage": "",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 800,
+      "min": 750,
+      "max": 850
+    },
+    "anchor": {
+      "kind": "furnitureCenter",
+      "furnitureTypes": [
+        "teaTable"
+      ],
+      "target": "teaTable",
+      "raw": "**茶台几何中心正上方**"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 1,
+      "min": 1,
+      "raw": "FIXED(1)"
+    },
+    "spacing": 0,
+    "priority": "P1",
+    "collision": [
+      "DOOR_SWING"
+    ],
+    "fallback": [
+      "REDUCE"
+    ],
+    "sourceText": "FIXED(1)",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "CS-SP-01",
+    "spaceCode": "CS",
+    "spaceName": "茶室",
+    "deviceType2": "射灯",
+    "deviceCanonical": "射灯",
+    "usage": "茶台重点",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 150,
+      "min": 0,
+      "max": 300
+    },
+    "anchor": {
+      "kind": "roomCenter",
+      "raw": "茶台长边中点/两侧"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 2,
+      "min": 1,
+      "raw": "FIXED(1~2)"
+    },
+    "spacing": 0,
+    "priority": "P1",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REDUCE"
+    ],
+    "sourceText": "FIXED(1~2)",
+    "traceFlags": [
+      "OPTIONAL_OR_RANGE",
+      "GENERIC_ANCHOR",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "CS-SP-02",
+    "spaceCode": "CS",
+    "spaceName": "茶室",
+    "deviceType2": "射灯",
+    "deviceCanonical": "射灯",
+    "usage": "博古架洗墙",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 150,
+      "min": 0,
+      "max": 300
+    },
+    "anchor": {
+      "kind": "furnitureEdge",
+      "furnitureTypes": [
+        "displayCabinet"
+      ],
+      "target": "displayCabinet",
+      "raw": "博古架前沿线"
+    },
+    "quantity": {
+      "kind": "perLength",
+      "value": 1,
+      "min": 2,
+      "even": false,
+      "round": "ceil",
+      "raw": "PER_LENGTH: max(2, ceil(W/1.0))"
+    },
+    "spacing": 800,
+    "priority": "P2",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REDUCE"
+    ],
+    "sourceText": "PER_LENGTH: max(2, ceil(W/1.0))",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "CS-LS-01",
+    "spaceCode": "CS",
+    "spaceName": "茶室",
+    "deviceType2": "灯槽灯带",
+    "deviceCanonical": "灯槽灯带",
+    "usage": "",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "perimeter",
+      "offset": 100,
+      "raw": "四周或单边"
+    },
+    "quantity": {
+      "kind": "measuredLength",
+      "measure": "perimeter",
+      "factor": 1.05,
+      "raw": "PER_MEASURED_LENGTH: 布置后路径长 × 1.05"
+    },
+    "spacing": 0,
+    "priority": "P3",
+    "collision": [
+      "DOOR_SWING"
+    ],
+    "fallback": [
+      "SINGLE_SIDE"
+    ],
+    "sourceText": "PER_MEASURED_LENGTH: 布置后路径长 × 1.05",
+    "traceFlags": [
+      "MEASURED_AFTER_LAYOUT",
+      "PERIMETER",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "CS-CB-01",
+    "spaceCode": "CS",
+    "spaceName": "茶室",
+    "deviceType2": "柜体灯带",
+    "deviceCanonical": "柜体灯带",
+    "usage": "",
+    "mount": "BL",
+    "height": {
+      "base": "BL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "furnitureEdge",
+      "furnitureTypes": [
+        "wardrobe"
+      ],
+      "target": "wardrobe",
+      "raw": "层板前沿内缩 50"
+    },
+    "quantity": {
+      "kind": "measuredLength",
+      "measure": "cabinet",
+      "factor": 1,
+      "raw": "PER_MEASURED_LENGTH: 柜内层板总长（布置后实测）"
+    },
+    "spacing": 0,
+    "priority": "P3",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "PER_MEASURED_LENGTH: 柜内层板总长（布置后实测）",
+    "traceFlags": [
+      "MEASURED_AFTER_LAYOUT",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "CS-WL-01",
+    "spaceCode": "CS",
+    "spaceName": "茶室",
+    "deviceType2": "壁灯",
+    "deviceCanonical": "壁灯",
+    "usage": "",
+    "mount": "SL",
+    "height": {
+      "base": "SL",
+      "offset": 1300,
+      "min": 1200,
+      "max": 1400
+    },
+    "anchor": {
+      "kind": "roomCenter",
+      "raw": "背景墙两侧对称"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 2,
+      "min": 0,
+      "raw": "FIXED(0~2)"
+    },
+    "spacing": 0,
+    "priority": "P4",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "FIXED(0~2)",
+    "traceFlags": [
+      "OPTIONAL_OR_RANGE",
+      "GENERIC_ANCHOR",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "CS-PN-01",
+    "spaceCode": "CS",
+    "spaceName": "茶室",
+    "deviceType2": "开关面板",
+    "deviceCanonical": "开关面板",
+    "usage": "",
+    "mount": "SL",
+    "height": {
+      "base": "SL",
+      "offset": 1300
+    },
+    "anchor": {
+      "kind": "doorSideWall",
+      "offset": 175,
+      "raw": "茶室门内侧"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 2,
+      "min": 1,
+      "raw": "FIXED(1~2)"
+    },
+    "spacing": 0,
+    "priority": "P2",
+    "collision": [
+      "DOOR_SWING"
+    ],
+    "fallback": [
+      "REDUCE"
+    ],
+    "sourceText": "FIXED(1~2)",
+    "traceFlags": [
+      "OPTIONAL_OR_RANGE",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "CS-PN-02",
+    "spaceCode": "CS",
+    "spaceName": "茶室",
+    "deviceType2": "情景面板",
+    "deviceCanonical": "情景面板",
+    "usage": "茶叙/待客",
+    "mount": "SL",
+    "height": {
+      "base": "SL",
+      "offset": 1300
+    },
+    "anchor": {
+      "kind": "doorSideWall",
+      "offset": 175,
+      "raw": "与开关并排"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 1,
+      "min": 1,
+      "raw": "FIXED(1)"
+    },
+    "spacing": 0,
+    "priority": "P2",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "FIXED(1)",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "CS-PN-03",
+    "spaceCode": "CS",
+    "spaceName": "茶室",
+    "deviceType2": "中控屏",
+    "deviceCanonical": "中控屏",
+    "usage": "",
+    "mount": "SL",
+    "height": {
+      "base": "SL",
+      "offset": 1400
+    },
+    "anchor": {
+      "kind": "wallOffset",
+      "offset": 300,
+      "raw": "茶室主墙面"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 1,
+      "min": 0,
+      "raw": "FIXED(0~1)"
+    },
+    "spacing": 0,
+    "priority": "P2",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REMOVE"
+    ],
+    "sourceText": "FIXED(0~1)",
+    "traceFlags": [
+      "OPTIONAL_OR_RANGE",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "CS-SN-01",
+    "spaceCode": "CS",
+    "spaceName": "茶室",
+    "deviceType2": "人在传感器",
+    "deviceCanonical": "人在传感器",
+    "usage": "",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "furnitureCenter",
+      "furnitureTypes": [
+        "teaTable"
+      ],
+      "target": "teaTable",
+      "raw": "覆盖茶台+坐席"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 1,
+      "min": 1,
+      "raw": "FIXED(1)"
+    },
+    "spacing": 0,
+    "priority": "P1",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "ALTERNATE_DEVICE"
+    ],
+    "sourceText": "FIXED(1)",
+    "traceFlags": []
+  },
+  {
+    "pointCode": "CS-AU-01",
+    "spaceCode": "CS",
+    "spaceName": "茶室",
+    "deviceType2": "吸顶喇叭",
+    "deviceCanonical": "吸顶喇叭",
+    "usage": "",
+    "mount": "CL",
+    "height": {
+      "base": "CL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "longAxisLine",
+      "raw": "茶室中轴两侧"
+    },
+    "quantity": {
+      "kind": "fixed",
+      "value": 2,
+      "min": 0,
+      "raw": "FIXED(0~2)"
+    },
+    "spacing": 1500,
+    "priority": "P3",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REDUCE"
+    ],
+    "sourceText": "FIXED(0~2)",
+    "traceFlags": [
+      "OPTIONAL_OR_RANGE",
+      "DEMO_DEFAULT"
+    ]
+  },
+  {
+    "pointCode": "CS-CU-01",
+    "spaceCode": "CS",
+    "spaceName": "茶室",
+    "deviceType2": "窗帘电机",
+    "deviceCanonical": "窗帘电机",
+    "usage": "",
+    "mount": "WL",
+    "height": {
+      "base": "WL",
+      "offset": 0
+    },
+    "anchor": {
+      "kind": "windowHead",
+      "raw": "每窗"
+    },
+    "quantity": {
+      "kind": "perOpening",
+      "value": 1,
+      "target": "window",
+      "raw": "PER_OPENING"
+    },
+    "spacing": 0,
+    "priority": "P2",
+    "collision": [
+      "NONE"
+    ],
+    "fallback": [
+      "REDUCE"
+    ],
+    "sourceText": "PER_OPENING",
+    "traceFlags": []
+  }
+]

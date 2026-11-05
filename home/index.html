@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#eef6fd">
+<title>全屋智能空间点位 · Demo 入口</title>
+<style>
+:root{
+  /* Admin UI V1.0 令牌 */
+  --accent:#1687f5;--accent-hover:#0b73db;--accent-soft:#eaf5ff;--accent-soft-2:#f0f8ff;
+  --surface:#fff;--surface-subtle:#f6f9fc;--surface-hover:#f8fbfe;
+  --page-bg:#eef6fd;--line:#e4eaf1;--line-soft:#edf1f5;
+  --text:#243447;--text-strong:#2d4054;--text-body:#526579;--muted:#7b8794;--faint:#91a0ae;
+  --success:#388157;--success-bg:#eaf8ef;--warning:#b27414;--warning-bg:#fff5df;
+  --danger:#cf5f50;--price:#e26b2b;
+  --radius:6px;--shadow-card:0 1px 2px rgba(32,55,77,.03);--shadow-pop:0 18px 54px rgba(26,58,91,.18);
+  /* 兼容旧变量 */
+  --bg:var(--page-bg);--paper:var(--surface-subtle);--card:var(--surface);--ink:var(--text);--green:var(--success);
+  --amber:var(--warning);--teal:var(--accent);--shadow:0 8px 24px rgba(26,58,91,.10);
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%}
+body{
+  background:
+    radial-gradient(circle at 12% 6%,rgba(22,135,245,.10),transparent 34rem),
+    radial-gradient(circle at 88% 94%,rgba(22,135,245,.06),transparent 30rem),
+    var(--bg);
+  color:var(--ink);font:14px/1.65 -apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  -webkit-text-size-adjust:100%;padding:44px 22px 32px;display:flex;justify-content:center;
+}
+.wrap{width:100%;max-width:1120px}
+.top{display:flex;align-items:flex-start;gap:16px;margin-bottom:34px}
+.mark{flex:0 0 auto;width:52px;height:52px;border-radius:14px;background:var(--accent);color:#fff;display:grid;place-items:center;
+  box-shadow:0 10px 24px rgba(140,90,50,.28)}
+.mark svg{width:28px;height:28px}
+h1{font-size:26px;line-height:1.25;margin:0 0 6px;letter-spacing:.01em}
+.lede{margin:0;color:var(--muted);font-size:13.5px;max-width:760px}
+.status{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:3px 9px;border:1px solid var(--line);border-radius:999px;
+  background:rgba(255,255,255,.55);color:var(--muted);font-size:11.5px}
+.pill.link{color:var(--accent);border-color:#d9b08a;background:#fff6ea;text-decoration:none;font-weight:600}
+.pill.link:hover{background:#ffeeda}
+.dot{width:7px;height:7px;border-radius:50%;background:#b9b0a3}
+.dot.ok{background:var(--green);box-shadow:0 0 0 3px rgba(63,122,88,.12)}
+.dot.warn{background:var(--amber)}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:18px}
+.card{grid-column:span 6;display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:18px;
+  padding:22px 22px 18px;text-decoration:none;color:inherit;position:relative;overflow:hidden;min-height:250px;
+  transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease}
+.card:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:#cdbca4}
+.card:focus-visible{outline:3px solid rgba(181,101,58,.35);outline-offset:3px}
+.card.wide{grid-column:span 12;min-height:0}
+.card::before{content:"";position:absolute;inset:0 0 auto 0;height:4px;background:var(--accent);opacity:.85}
+.card.teal::before{background:var(--teal)}
+.card.amber::before{background:var(--amber)}
+.card.green::before{background:var(--green)}
+.kicker{display:flex;align-items:center;gap:8px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.kicker b{font-weight:700;color:var(--accent)}
+.teal .kicker b{color:var(--teal)}.amber .kicker b{color:var(--amber)}.green .kicker b{color:var(--green)}
+h2{font-size:19px;line-height:1.3;margin:9px 0 8px}
+.desc{margin:0 0 14px;color:var(--muted);font-size:13px;max-width:560px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 18px}
+.chip{padding:3px 8px;border-radius:6px;background:#f1ebe1;color:#6d6255;font-size:11px}
+.cta{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:10px;font-weight:700;font-size:13.5px;color:var(--accent)}
+.teal .cta{color:var(--teal)}.amber .cta{color:#9a6a13}.green .cta{color:var(--green)}
+.cta span{display:inline-flex;align-items:center;gap:7px;transition:gap .18s ease}
+.card:hover .cta span{gap:12px}
+.arrow{font-size:16px;line-height:1}
+.card.wide .body{display:grid;grid-template-columns:1.35fr .65fr;gap:22px;align-items:center}
+.thumb{border:1px solid var(--line);border-radius:14px;background:#f7f1e7;padding:10px;color:#8a7a66}
+.thumb svg{width:100%;height:auto;display:block}
+.thumb.space-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:14px;align-content:center}
+.thumb.space-grid span{display:block;padding:6px 4px;border:1px solid #e3d7c5;border-radius:6px;background:#fffdf8;color:#7b6b58;font-size:11px;text-align:center;white-space:nowrap}
+.codebox{font:12px/1.8 ui-monospace,SFMono-Regular,Consolas,"Liberation Mono",monospace;color:#5f5548;padding:16px}
+.codebox b{display:block;color:#3f7a58;font-size:11px;letter-spacing:.08em;margin-bottom:8px}
+.codebox div{display:flex;justify-content:space-between;gap:12px;border-bottom:1px dashed #e3d9c9;padding:4px 0}
+.codebox div:last-child{border-bottom:0}
+.codebox span{color:#8a8174}
+.meta{margin-top:26px;border-top:1px solid var(--line);padding-top:16px;color:var(--muted);font-size:12px}
+.meta table{width:100%;border-collapse:collapse}
+.meta th,.meta td{text-align:left;padding:5px 10px 5px 0;border-bottom:1px solid #ece5d9;font-weight:400}
+.meta th{color:#6f6559;font-weight:600;white-space:nowrap}
+.meta code{background:#efe8dc;border-radius:5px;padding:1px 6px;font-size:11.5px;color:#5c5146}
+.foot{display:flex;flex-wrap:wrap;gap:10px 22px;justify-content:space-between;margin-top:22px;color:var(--muted);font-size:11.5px}
+.foot b{color:#6f6559}
+@media (max-width:860px){
+  body{padding:28px 16px 24px}
+  .card{grid-column:span 12}
+  .card.wide .body{grid-template-columns:1fr}
+  .thumb{display:none}
+  h1{font-size:22px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{transition:none!important;scroll-behavior:auto!important}
+}
+
+/* ===== Admin UI V1.0 主题层：入口页与后台使用同一套视觉语言 ===== */
+.wrap{max-width:1180px}
+.top{gap:18px;margin-bottom:30px;align-items:center}
+.mark{width:50px;height:50px;border-radius:10px;background:var(--accent);box-shadow:0 8px 20px rgba(22,135,245,.22)}
+h1{font-size:24px;font-weight:600;color:var(--text-strong);letter-spacing:0}
+.lede{color:var(--text-body);font-size:13px}
+.status{gap:8px;margin-top:12px}
+.pill{background:var(--surface);border-color:var(--line);color:var(--muted);font-size:11.5px}
+.pill.link{color:var(--accent);border-color:#cfe5f7;background:var(--accent-soft)}
+.pill.link:hover{background:#dcefff}
+.dot{background:var(--faint)}
+.dot.ok{background:var(--success);box-shadow:0 0 0 3px rgba(56,129,87,.12)}
+.dot.warn{background:var(--warning)}
+.grid{gap:16px}
+.card{
+  border-radius:var(--radius);border-color:var(--line);background:var(--surface);
+  padding:20px;box-shadow:var(--shadow-card);min-height:238px;
+}
+.card:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(26,58,91,.08);border-color:#cfe5f7}
+.card:focus-visible{outline:3px solid rgba(22,135,245,.28);outline-offset:2px}
+.card::before{height:3px;background:var(--accent);opacity:1}
+.card.teal::before,.card.amber::before,.card.green::before{background:var(--accent)}
+.kicker{font-size:11px;color:var(--muted);letter-spacing:.1em}
+.kicker b,.teal .kicker b,.amber .kicker b,.green .kicker b{color:var(--accent)}
+h2{font-size:18px;font-weight:600;color:var(--text-strong);margin:10px 0 8px}
+.desc{color:var(--text-body);font-size:12.5px;margin-bottom:14px}
+.chip{background:var(--surface-subtle);border:1px solid var(--line-soft);color:var(--text-body);font-size:11px;border-radius:4px}
+.cta,.teal .cta,.amber .cta,.green .cta{color:var(--accent);font-size:13px;font-weight:600}
+.cta small{color:var(--muted);font-weight:400;font-size:11px}
+.thumb{border-color:var(--line);border-radius:var(--radius);background:var(--surface-subtle);color:var(--faint)}
+.thumb.space-grid span{border-color:var(--line);background:var(--surface);color:var(--text-body);border-radius:4px}
+.codebox{color:var(--text-body);background:var(--surface-subtle);border-radius:var(--radius)}
+.codebox b{color:var(--accent)}
+.codebox div{border-bottom:1px dashed var(--line)}
+.codebox span{color:var(--muted)}
+.meta{border-top-color:var(--line)}
+.meta th,.meta td{border-bottom:1px solid var(--line-soft)}
+.meta th{color:var(--text-strong)}
+.meta code{background:var(--surface-subtle);color:var(--text-body)}
+.foot{color:var(--muted)}
+.foot b{color:var(--text-body)}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <header class="top">
+    <div class="mark" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10.5V20h13v-9.5"/><path d="M9.5 20v-5h5v5"/>
+      </svg>
+    </div>
+    <div>
+      <h1>全屋智能空间点位 · Demo 入口</h1>
+      <p class="lede">一个服务、一个端口，用目录区分场景。首页只做导航，规则执行、2D/3D 户型、报价与设备状态都在各自工作台里。</p>
+      <div class="status" aria-live="polite">
+        <span class="pill"><i class="dot ok" id="api-dot"></i><span id="api-state">API 检查中</span></span>
+        <span class="pill" id="meta-rules">183 条点位规则</span>
+        <span class="pill">15 类空间</span>
+        <span class="pill">55 个旧分类 · V2.2 产品族显示</span>
+      </div>
+    </div>
+  </header>
+
+  <section class="grid" aria-label="Demo 入口">
+    <a class="card green wide" href="./admin/">
+      <div class="body">
+        <div>
+          <div class="kicker"><b>00 / 后台</b><span>单机版门店工作台</span></div>
+          <h2>智能家电门店后台</h2>
+          <p class="desc">管理客户、项目和本地产品库。数据保存在本机 SQLite，后台可以直接进入户型设计、报价和智能布点工作台。</p>
+          <div class="chips"><span class="chip">客户管理</span><span class="chip">项目管理</span><span class="chip">产品库</span><span class="chip">本地备份</span></div>
+          <div class="cta"><span>打开门店后台 <b class="arrow">→</b></span><small>./admin/</small></div>
+        </div>
+        <div class="thumb codebox" aria-hidden="true"><b>LOCAL STORE</b><div><code>SQLite</code><span>本地数据</span></div><div><code>Project</code><span>方案入口</span></div><div><code>Catalog</code><span>产品目录</span></div><div><code>Backup</code><span>可迁移</span></div></div>
+      </div>
+    </a>
+    <a class="card wide" href="./app/">
+      <div class="body">
+        <div>
+          <div class="kicker"><b>01 / 主线</b><span>floorplan-3d 底座 + 智能布点</span></div>
+          <h2>智能布点工作台</h2>
+          <p class="desc">先选产品与数量，再一键布点；按 183 条空间规则落位，逐台解释“命中了什么、为什么这么放”。候选不足的设备保留为待处理，不会被强行塞到房间中心。</p>
+          <div class="chips">
+            <span class="chip">2D 平面</span><span class="chip">3D 场景</span><span class="chip">报价行对账</span>
+            <span class="chip">规则归因</span><span class="chip">锁定 / 人工调整</span>
+          </div>
+          <div class="cta"><span>打开 2D 工作台 <b class="arrow">→</b></span><small>./app/</small></div>
+        </div>
+        <div class="thumb" aria-hidden="true">
+          <svg viewBox="0 0 420 230" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="18" y="18" width="384" height="194" rx="8" opacity=".35"/>
+            <path d="M118 18v80h-44v66h44v66M118 98h130v66H118M248 18v80h93M248 164v48h93v-48"/>
+            <rect x="132" y="108" width="102" height="44" rx="6" fill="#fdfaf3"/>
+            <circle cx="150" cy="130" r="5"/><circle cx="180" cy="130" r="5"/><circle cx="210" cy="130" r="5"/>
+            <rect x="270" y="36" width="54" height="44" rx="6" fill="#fdfaf3"/>
+            <circle cx="297" cy="58" r="9" opacity=".6"/>
+            <path d="M148 187h68M182 169v36" opacity=".55"/>
+            <path d="M336 30v164" stroke-dasharray="4 4" opacity=".35"/>
+            <text x="30" y="42" font-size="11" fill="currentColor" stroke="none" opacity=".65">客厅</text>
+            <text x="280" y="100" font-size="11" fill="currentColor" stroke="none" opacity=".65">主卧</text>
+            <text x="30" y="200" font-size="11" fill="currentColor" stroke="none" opacity=".65">183 rules · 15 spaces</text>
+          </svg>
+        </div>
+      </div>
+    </a>
+
+    <a class="card wide" href="./app/space.html">
+      <div class="body">
+        <div>
+          <div class="kicker"><b>02 / 空间维度</b><span>复用底座 · 单空间工作台</span></div>
+          <h2>按空间布置</h2>
+          <p class="desc">从 15 类空间中选择一种，在只属于该空间的工作台里布置。每个空间类型自带默认家具，智能设备从设备库单独添加，规则只按当前空间匹配。</p>
+          <div class="chips">
+            <span class="chip">15 类空间</span><span class="chip">默认家具</span>
+            <span class="chip">智能设备独立</span><span class="chip">单空间套餐</span>
+          </div>
+          <div class="cta"><span>打开按空间布置 <b class="arrow">→</b></span><small>./app/space.html</small></div>
+        </div>
+        <div class="thumb space-grid" aria-hidden="true">
+          <span>客厅</span><span>餐厅</span><span>主卧</span>
+          <span>书房</span><span>卧室</span><span>老人房</span>
+          <span>儿童房</span><span>玄关</span><span>厨房</span>
+          <span>卫生间</span><span>过道</span><span>阳台</span>
+          <span>衣帽间</span><span>卧室卫生间</span><span>茶室</span>
+        </div>
+      </div>
+    </a>
+
+    <a class="card teal" href="./app/?view=3d&amp;package=1">
+      <div class="kicker"><b>03 / 3D</b><span>示意级场景</span></div>
+      <h2>3D 场景与套餐演示</h2>
+      <p class="desc">直接进入 3D 视角并生成整套演示套餐。墙体、家具、设备与灯光同源，待处理设备不会伪装成已安装实体。</p>
+      <div class="chips"><span class="chip">3D 场景</span><span class="chip">整套套餐</span><span class="chip">昼夜灯光</span></div>
+      <div class="cta"><span>进入 3D 演示 <b class="arrow">→</b></span><small>./app/?view=3d</small></div>
+    </a>
+
+    <a class="card amber" href="./legacy/">
+      <div class="kicker"><b>04 / Vue 版</b><span>15 空间 / 三室两厅</span></div>
+      <h2>Vue 工作台</h2>
+      <p class="desc">保留的 Vue 版工作台，可在 15 空间大户型与三室两厅之间切换，用于对照规则、设备清单与 3D 视角的早期实现。</p>
+      <div class="chips"><span class="chip">15 空间</span><span class="chip">三室两厅</span><span class="chip">规则双维度</span></div>
+      <div class="cta"><span>打开 Vue 版 <b class="arrow">→</b></span><small>./legacy/</small></div>
+    </a>
+
+    <a class="card green wide" href="./api/health">
+      <div class="body">
+        <div>
+          <div class="kicker"><b>05 / API</b><span>Fastify 服务</span></div>
+          <h2>接口与规则元数据</h2>
+          <p class="desc">统一服务同时提供健康检查、规则元数据与方案保存/读取接口。首页状态点会实时检查 <code>/api/health</code>，不需要单独记 API 端口。</p>
+          <div class="chips"><span class="chip">/api/health</span><span class="chip">/api/meta</span><span class="chip">/api/projects</span></div>
+          <div class="cta"><span>查看 API 状态 <b class="arrow">→</b></span><small>./api/health</small></div>
+        </div>
+        <div class="thumb codebox" aria-hidden="true">
+          <b>同源接口</b>
+          <div><code>GET /api/health</code><span>服务状态</span></div>
+          <div><code>GET /api/meta</code><span>183 条规则</span></div>
+          <div><code>GET /api/projects</code><span>已存方案</span></div>
+          <div><code>PUT /api/projects/:id</code><span>保存方案</span></div>
+        </div>
+      </div>
+    </a>
+  </section>
+
+  <section class="meta" aria-label="目录说明">
+    <table>
+      <tr><th>目录</th><td><code>/</code> 首页</td><td><code>/admin/</code> 门店后台</td><td><code>/app/</code> 智能布点底座版</td><td><code>/legacy/</code> Vue 版</td><td><code>/api/</code> 接口</td></tr>
+      <tr><th>启动</th><td colspan="4"><code>npm run start</code> 启动统一服务；单独调试底座版仍可用 <code>npm run app</code>（8001）。</td></tr>
+    </table>
+  </section>
+
+  <footer class="foot">
+    <span><b>全屋智能空间点位 Demo</b> · 规则版本 2026-10-21-V1</span>
+    <span>入口按目录区分，不使用多个端口</span>
+  </footer>
+</main>
+<script>
+(() => {
+  const dot = document.getElementById('api-dot');
+  const state = document.getElementById('api-state');
+  const rules = document.getElementById('meta-rules');
+  fetch('./api/health')
+    .then(r => r.ok ? r.json() : Promise.reject(new Error('HTTP ' + r.status)))
+    .then(d => {
+      dot.classList.add('ok');
+      state.textContent = 'API 正常 · ' + (d.service || 'auto-layout-api');
+    })
+    .catch(() => {
+      dot.classList.remove('ok');
+      dot.classList.add('warn');
+      state.textContent = 'API 未连接（静态预览）';
+    });
+  fetch('./api/meta')
+    .then(r => r.ok ? r.json() : Promise.reject(new Error('HTTP ' + r.status)))
+    .then(d => {
+      if (d.ruleCount) rules.textContent = d.ruleCount + ' 条点位规则';
+    })
+    .catch(() => {});
+})();
+</script>
+</body>
+</html>

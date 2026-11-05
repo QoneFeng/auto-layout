@@ -1,0 +1,2749 @@
+{
+  "id": "demo-15spaces",
+  "name": "15 空间演示户型",
+  "units": "mm",
+  "width": 19000,
+  "height": 12000,
+  "ceilingHeight": 2800,
+  "rooms": [
+    {
+      "id": "entry",
+      "name": "玄关",
+      "spaceCode": "XCW",
+      "polygon": [
+        [
+          0,
+          0
+        ],
+        [
+          3000,
+          0
+        ],
+        [
+          3000,
+          3600
+        ],
+        [
+          0,
+          3600
+        ]
+      ],
+      "mode": "NO_MAIN",
+      "tags": [],
+      "ceilingHeight": 2800
+    },
+    {
+      "id": "living",
+      "name": "客厅",
+      "spaceCode": "KT",
+      "polygon": [
+        [
+          3000,
+          0
+        ],
+        [
+          9000,
+          0
+        ],
+        [
+          9000,
+          3600
+        ],
+        [
+          3000,
+          3600
+        ]
+      ],
+      "mode": "MIXED",
+      "tags": [],
+      "ceilingHeight": 2800
+    },
+    {
+      "id": "balcony",
+      "name": "阳台",
+      "spaceCode": "YT",
+      "polygon": [
+        [
+          9000,
+          0
+        ],
+        [
+          15000,
+          0
+        ],
+        [
+          15000,
+          3600
+        ],
+        [
+          9000,
+          3600
+        ]
+      ],
+      "mode": "NO_MAIN",
+      "tags": [],
+      "ceilingHeight": 2800
+    },
+    {
+      "id": "bedroom",
+      "name": "卧室",
+      "spaceCode": "WS",
+      "polygon": [
+        [
+          15000,
+          0
+        ],
+        [
+          19000,
+          0
+        ],
+        [
+          19000,
+          3600
+        ],
+        [
+          15000,
+          3600
+        ]
+      ],
+      "mode": "MAIN",
+      "tags": [],
+      "ceilingHeight": 2800
+    },
+    {
+      "id": "tea",
+      "name": "茶室",
+      "spaceCode": "CS",
+      "polygon": [
+        [
+          0,
+          3600
+        ],
+        [
+          3500,
+          3600
+        ],
+        [
+          3500,
+          7200
+        ],
+        [
+          0,
+          7200
+        ]
+      ],
+      "mode": "MAIN",
+      "tags": [],
+      "ceilingHeight": 2800
+    },
+    {
+      "id": "dining",
+      "name": "餐厅",
+      "spaceCode": "CT",
+      "polygon": [
+        [
+          3500,
+          3600
+        ],
+        [
+          8000,
+          3600
+        ],
+        [
+          8000,
+          7200
+        ],
+        [
+          3500,
+          7200
+        ]
+      ],
+      "mode": "MAIN",
+      "tags": [],
+      "ceilingHeight": 2800
+    },
+    {
+      "id": "kitchen",
+      "name": "厨房",
+      "spaceCode": "CF",
+      "polygon": [
+        [
+          8000,
+          3600
+        ],
+        [
+          12000,
+          3600
+        ],
+        [
+          12000,
+          7200
+        ],
+        [
+          8000,
+          7200
+        ]
+      ],
+      "mode": "NO_MAIN",
+      "tags": [],
+      "ceilingHeight": 2800
+    },
+    {
+      "id": "bath",
+      "name": "卫生间",
+      "spaceCode": "WSJ",
+      "polygon": [
+        [
+          12000,
+          3600
+        ],
+        [
+          15000,
+          3600
+        ],
+        [
+          15000,
+          7200
+        ],
+        [
+          12000,
+          7200
+        ]
+      ],
+      "mode": "NO_MAIN",
+      "tags": [],
+      "ceilingHeight": 2800
+    },
+    {
+      "id": "hall",
+      "name": "过道",
+      "spaceCode": "GDYT",
+      "polygon": [
+        [
+          15000,
+          3600
+        ],
+        [
+          19000,
+          3600
+        ],
+        [
+          19000,
+          7200
+        ],
+        [
+          15000,
+          7200
+        ]
+      ],
+      "mode": "NO_MAIN",
+      "tags": [],
+      "ceilingHeight": 2800
+    },
+    {
+      "id": "elder",
+      "name": "老人房",
+      "spaceCode": "LRF",
+      "polygon": [
+        [
+          0,
+          7200
+        ],
+        [
+          3500,
+          7200
+        ],
+        [
+          3500,
+          12000
+        ],
+        [
+          0,
+          12000
+        ]
+      ],
+      "mode": "MAIN",
+      "tags": [],
+      "ceilingHeight": 2800
+    },
+    {
+      "id": "kids",
+      "name": "儿童房",
+      "spaceCode": "XHF",
+      "polygon": [
+        [
+          3500,
+          7200
+        ],
+        [
+          7000,
+          7200
+        ],
+        [
+          7000,
+          12000
+        ],
+        [
+          3500,
+          12000
+        ]
+      ],
+      "mode": "MAIN",
+      "tags": [],
+      "ceilingHeight": 2800
+    },
+    {
+      "id": "master",
+      "name": "主卧",
+      "spaceCode": "ZW",
+      "polygon": [
+        [
+          7000,
+          7200
+        ],
+        [
+          11500,
+          7200
+        ],
+        [
+          11500,
+          12000
+        ],
+        [
+          7000,
+          12000
+        ]
+      ],
+      "mode": "MIXED",
+      "tags": [],
+      "ceilingHeight": 2800
+    },
+    {
+      "id": "masterBath",
+      "name": "卧室卫生间",
+      "spaceCode": "WSWSJ",
+      "polygon": [
+        [
+          11500,
+          7200
+        ],
+        [
+          14000,
+          7200
+        ],
+        [
+          14000,
+          12000
+        ],
+        [
+          11500,
+          12000
+        ]
+      ],
+      "mode": "NO_MAIN",
+      "tags": [],
+      "ceilingHeight": 2800
+    },
+    {
+      "id": "closet",
+      "name": "衣帽间",
+      "spaceCode": "YMJ",
+      "polygon": [
+        [
+          14000,
+          7200
+        ],
+        [
+          16500,
+          7200
+        ],
+        [
+          16500,
+          12000
+        ],
+        [
+          14000,
+          12000
+        ]
+      ],
+      "mode": "NO_MAIN",
+      "tags": [],
+      "ceilingHeight": 2800
+    },
+    {
+      "id": "study",
+      "name": "书房",
+      "spaceCode": "SF",
+      "polygon": [
+        [
+          16500,
+          7200
+        ],
+        [
+          19000,
+          7200
+        ],
+        [
+          19000,
+          12000
+        ],
+        [
+          16500,
+          12000
+        ]
+      ],
+      "mode": "MIXED",
+      "tags": [],
+      "ceilingHeight": 2800
+    }
+  ],
+  "walls": [
+    {
+      "id": "w1",
+      "a": [
+        0,
+        0
+      ],
+      "b": [
+        3000,
+        0
+      ],
+      "thickness": 180,
+      "height": 2800,
+      "type": "exterior"
+    },
+    {
+      "id": "w2",
+      "a": [
+        3000,
+        0
+      ],
+      "b": [
+        3000,
+        3600
+      ],
+      "thickness": 180,
+      "height": 2800,
+      "type": "partition"
+    },
+    {
+      "id": "w3",
+      "a": [
+        3000,
+        3600
+      ],
+      "b": [
+        0,
+        3600
+      ],
+      "thickness": 180,
+      "height": 2800,
+      "type": "partition"
+    },
+    {
+      "id": "w4",
+      "a": [
+        0,
+        3600
+      ],
+      "b": [
+        0,
+        0
+      ],
+      "thickness": 180,
+      "height": 2800,
+      "type": "exterior"
+    },
+    {
+      "id": "w5",
+      "a": [
+        3000,
+        0
+      ],
+      "b": [
+        9000,
+        0
+      ],
+      "thickness": 180,
+      "height": 2800,
+      "type": "exterior"
+    },
+    {
+      "id": "w6",
+      "a": [
+        9000,
+        0
+      ],
+      "b": [
+        9000,
+        3600
+      ],
+      "thickness": 180,
+      "height": 2800,
+      "type": "partition"
+    },
+    {
+      "id": "w7",
+      "a": [
+        9000,
+        3600
+      ],
+      "b": [
+        3000,
+        3600
+      ],
+      "thickness": 180,
+      "height": 2800,
+      "type": "partition"
+    },
+    {
+      "id": "w8",
+      "a": [
+        9000,
+        0
+      ],
+      "b": [
+        15000,
+        0
+      ],
+      "thickness": 180,
+      "height": 2800,
+      "type": "exterior"
+    },
+    {
+      "id": "w9",
+      "a": [
+        15000,
+        0
+      ],
+      "b": [
+        15000,
+        3600
+      ],
+      "thickness": 180,
+      "height": 2800,
+      "type": "partition"
+    },
+    {
+      "id": "w10",
+      "a": [
+        15000,
+        3600
+      ],
+      "b": [
+        9000,
+        3600
+      ],
+      "thickness": 180,
+      "height": 2800,
+      "type": "partition"
+    },
+    {
+      "id": "w11",
+      "a": [
+        15000,
+        0
+      ],
+      "b": [
+        19000,
+        0
+      ],
+      "thickness": 180,
+      "height": 2800,
+      "type": "exterior"
+    },
+    {
+      "id": "w12",
+      "a": [
+        19000,
+        0
+      ],
+      "b": [
+        19000,
+        3600
+      ],
+      "thickness": 180,
+      "height": 2800,
+      "type": "exterior"
+    },
+    {
+      "id": "w13",
+      "a": [
+        19000,
+        3600
+      ],
+      "b": [
+        15000,
+        3600
+      ],
+      "thickness": 180,
+      "height": 2800,
+      "type": "partition"
+    },
+    {
+      "id": "w14",
+      "a": [
+        0,
+        3600
+      ],
+      "b": [
+        3500,
+        3600
+      ],
+      "thickness": 180,
+      "height": 2800,
+      "type": "partition"
+    },
+    {
+      "id": "w15",
+      "a": [
+        3500,
+        3600
+      ],
+      "b": [
+        3500,
+        7200
+      ],
+      "thickness": 180,
+      "height": 2800,
+      "type": "partition"
+    },
+    {
+      "id": "w16",
+      "a": [
+        3500,
+        7200
+      ],
+      "b": [
+        0,
+        7200
+      ],
+      "thickness": 180,
+      "height": 2800,
+      "type": "partition"
+    },
+    {
+      "id": "w17",
+      "a": [
+        0,
+        7200
+      ],
+      "b": [
+        0,
+        3600
+      ],
+      "thickness": 180,
+      "height": 2800,
+      "type": "exterior"
+    },
+    {
+      "id": "w18",
+      "a": [
+        3500,
+        3600
+      ],
+      "b": [
+        8000,
+        3600
+      ],
+      "thickness": 180,
+      "height": 2800,
+      "type": "partition"
+    },
+    {
+      "id": "w19",
+      "a": [
+        8000,
+        3600
+      ],
+      "b": [
+        8000,
+        7200
+      ],
+      "thickness": 180,
+      "height": 2800,
+      "type": "partition"
+    },
+    {
+      "id": "w20",
+      "a": [
+        8000,
+        7200
+      ],
+      "b": [
+        3500,
+        7200
+      ],
+      "thickness": 180,
+      "height": 2800,
+      "type": "partition"
+    },
+    {
+      "id": "w21",
+      "a": [
+        8000,
+        3600
+      ],
+      "b": [
+        12000,
+        3600
+      ],
+      "thickness": 180,
+      "height": 2800,
+      "type": "partition"
+    },
+    {
+      "id": "w22",
+      "a": [
+        12000,
+        3600
+      ],
+      "b": [
+        12000,
+        7200
+      ],
+      "thickness": 180,
+      "height": 2800,
+      "type": "partition"
+    },
+    {
+      "id": "w23",
+      "a": [
+        12000,
+        7200
+      ],
+      "b": [
+        8000,
+        7200
+      ],
+      "thickness": 180,
+      "height": 2800,
+      "type": "partition"
+    },
+    {
+      "id": "w24",
+      "a": [
+        12000,
+        3600
+      ],
+      "b": [
+        15000,
+        3600
+      ],
+      "thickness": 180,
+      "height": 2800,
+      "type": "partition"
+    },
+    {
+      "id": "w25",
+      "a": [
+        15000,
+        3600
+      ],
+      "b": [
+        15000,
+        7200
+      ],
+      "thickness": 180,
+      "height": 2800,
+      "type": "partition"
+    },
+    {
+      "id": "w26",
+      "a": [
+        15000,
+        7200
+      ],
+      "b": [
+        12000,
+        7200
+      ],
+      "thickness": 180,
+      "height": 2800,
+      "type": "partition"
+    },
+    {
+      "id": "w27",
+      "a": [
+        19000,
+        3600
+      ],
+      "b": [
+        19000,
+        7200
+      ],
+      "thickness": 180,
+      "height": 2800,
+      "type": "exterior"
+    },
+    {
+      "id": "w28",
+      "a": [
+        19000,
+        7200
+      ],
+      "b": [
+        15000,
+        7200
+      ],
+      "thickness": 180,
+      "height": 2800,
+      "type": "partition"
+    },
+    {
+      "id": "w29",
+      "a": [
+        3500,
+        7200
+      ],
+      "b": [
+        3500,
+        12000
+      ],
+      "thickness": 180,
+      "height": 2800,
+      "type": "partition"
+    },
+    {
+      "id": "w30",
+      "a": [
+        3500,
+        12000
+      ],
+      "b": [
+        0,
+        12000
+      ],
+      "thickness": 180,
+      "height": 2800,
+      "type": "exterior"
+    },
+    {
+      "id": "w31",
+      "a": [
+        0,
+        12000
+      ],
+      "b": [
+        0,
+        7200
+      ],
+      "thickness": 180,
+      "height": 2800,
+      "type": "exterior"
+    },
+    {
+      "id": "w32",
+      "a": [
+        3500,
+        7200
+      ],
+      "b": [
+        7000,
+        7200
+      ],
+      "thickness": 180,
+      "height": 2800,
+      "type": "partition"
+    },
+    {
+      "id": "w33",
+      "a": [
+        7000,
+        7200
+      ],
+      "b": [
+        7000,
+        12000
+      ],
+      "thickness": 180,
+      "height": 2800,
+      "type": "partition"
+    },
+    {
+      "id": "w34",
+      "a": [
+        7000,
+        12000
+      ],
+      "b": [
+        3500,
+        12000
+      ],
+      "thickness": 180,
+      "height": 2800,
+      "type": "exterior"
+    },
+    {
+      "id": "w35",
+      "a": [
+        7000,
+        7200
+      ],
+      "b": [
+        11500,
+        7200
+      ],
+      "thickness": 180,
+      "height": 2800,
+      "type": "partition"
+    },
+    {
+      "id": "w36",
+      "a": [
+        11500,
+        7200
+      ],
+      "b": [
+        11500,
+        12000
+      ],
+      "thickness": 180,
+      "height": 2800,
+      "type": "partition"
+    },
+    {
+      "id": "w37",
+      "a": [
+        11500,
+        12000
+      ],
+      "b": [
+        7000,
+        12000
+      ],
+      "thickness": 180,
+      "height": 2800,
+      "type": "exterior"
+    },
+    {
+      "id": "w38",
+      "a": [
+        11500,
+        7200
+      ],
+      "b": [
+        14000,
+        7200
+      ],
+      "thickness": 180,
+      "height": 2800,
+      "type": "partition"
+    },
+    {
+      "id": "w39",
+      "a": [
+        14000,
+        7200
+      ],
+      "b": [
+        14000,
+        12000
+      ],
+      "thickness": 180,
+      "height": 2800,
+      "type": "partition"
+    },
+    {
+      "id": "w40",
+      "a": [
+        14000,
+        12000
+      ],
+      "b": [
+        11500,
+        12000
+      ],
+      "thickness": 180,
+      "height": 2800,
+      "type": "exterior"
+    },
+    {
+      "id": "w41",
+      "a": [
+        14000,
+        7200
+      ],
+      "b": [
+        16500,
+        7200
+      ],
+      "thickness": 180,
+      "height": 2800,
+      "type": "partition"
+    },
+    {
+      "id": "w42",
+      "a": [
+        16500,
+        7200
+      ],
+      "b": [
+        16500,
+        12000
+      ],
+      "thickness": 180,
+      "height": 2800,
+      "type": "partition"
+    },
+    {
+      "id": "w43",
+      "a": [
+        16500,
+        12000
+      ],
+      "b": [
+        14000,
+        12000
+      ],
+      "thickness": 180,
+      "height": 2800,
+      "type": "exterior"
+    },
+    {
+      "id": "w44",
+      "a": [
+        16500,
+        7200
+      ],
+      "b": [
+        19000,
+        7200
+      ],
+      "thickness": 180,
+      "height": 2800,
+      "type": "partition"
+    },
+    {
+      "id": "w45",
+      "a": [
+        19000,
+        7200
+      ],
+      "b": [
+        19000,
+        12000
+      ],
+      "thickness": 180,
+      "height": 2800,
+      "type": "exterior"
+    },
+    {
+      "id": "w46",
+      "a": [
+        19000,
+        12000
+      ],
+      "b": [
+        16500,
+        12000
+      ],
+      "thickness": 180,
+      "height": 2800,
+      "type": "exterior"
+    }
+  ],
+  "openings": [
+    {
+      "id": "o1",
+      "type": "door",
+      "wallId": "w2",
+      "start": 1350,
+      "width": 900,
+      "height": 2100,
+      "hinge": "start",
+      "swing": "inside"
+    },
+    {
+      "id": "o2",
+      "type": "sliding",
+      "wallId": "w6",
+      "start": 1080.0000000000002,
+      "width": 1800,
+      "height": 2400,
+      "hinge": "start",
+      "swing": "inside"
+    },
+    {
+      "id": "o3",
+      "type": "door",
+      "wallId": "w9",
+      "start": 1350,
+      "width": 900,
+      "height": 2100,
+      "hinge": "start",
+      "swing": "inside"
+    },
+    {
+      "id": "o4",
+      "type": "sliding",
+      "wallId": "w7",
+      "start": 1900,
+      "width": 2200,
+      "height": 2400,
+      "hinge": "start",
+      "swing": "inside"
+    },
+    {
+      "id": "o5",
+      "type": "door",
+      "wallId": "w15",
+      "start": 1350,
+      "width": 900,
+      "height": 2100,
+      "hinge": "start",
+      "swing": "inside"
+    },
+    {
+      "id": "o6",
+      "type": "door",
+      "wallId": "w19",
+      "start": 1350,
+      "width": 900,
+      "height": 2100,
+      "hinge": "start",
+      "swing": "inside"
+    },
+    {
+      "id": "o7",
+      "type": "door",
+      "wallId": "w22",
+      "start": 1375,
+      "width": 850,
+      "height": 2100,
+      "hinge": "start",
+      "swing": "inside"
+    },
+    {
+      "id": "o8",
+      "type": "door",
+      "wallId": "w25",
+      "start": 1375,
+      "width": 850,
+      "height": 2100,
+      "hinge": "start",
+      "swing": "inside"
+    },
+    {
+      "id": "o9",
+      "type": "door",
+      "wallId": "w13",
+      "start": 1550,
+      "width": 900,
+      "height": 2100,
+      "hinge": "start",
+      "swing": "inside"
+    },
+    {
+      "id": "o10",
+      "type": "door",
+      "wallId": "w28",
+      "start": 550,
+      "width": 900,
+      "height": 2100,
+      "hinge": "start",
+      "swing": "inside"
+    },
+    {
+      "id": "o11",
+      "type": "door",
+      "wallId": "w28",
+      "start": 2350,
+      "width": 900,
+      "height": 2100,
+      "hinge": "start",
+      "swing": "inside"
+    },
+    {
+      "id": "o12",
+      "type": "door",
+      "wallId": "w36",
+      "start": 1735,
+      "width": 850,
+      "height": 2100,
+      "hinge": "start",
+      "swing": "inside"
+    },
+    {
+      "id": "o13",
+      "type": "door",
+      "wallId": "w39",
+      "start": 1735,
+      "width": 850,
+      "height": 2100,
+      "hinge": "start",
+      "swing": "inside"
+    },
+    {
+      "id": "o14",
+      "type": "door",
+      "wallId": "w33",
+      "start": 1710,
+      "width": 900,
+      "height": 2100,
+      "hinge": "start",
+      "swing": "inside"
+    },
+    {
+      "id": "o15",
+      "type": "door",
+      "wallId": "w29",
+      "start": 1710,
+      "width": 900,
+      "height": 2100,
+      "hinge": "start",
+      "swing": "inside"
+    },
+    {
+      "id": "o16",
+      "type": "door",
+      "wallId": "w16",
+      "start": 1300,
+      "width": 900,
+      "height": 2100,
+      "hinge": "start",
+      "swing": "inside"
+    },
+    {
+      "id": "o17",
+      "type": "door",
+      "wallId": "w20",
+      "start": 1800,
+      "width": 900,
+      "height": 2100,
+      "hinge": "start",
+      "swing": "inside"
+    },
+    {
+      "id": "o18",
+      "type": "door",
+      "wallId": "w26",
+      "start": 1075,
+      "width": 850,
+      "height": 2100,
+      "hinge": "start",
+      "swing": "inside"
+    },
+    {
+      "id": "o19",
+      "type": "window",
+      "wallId": "w30",
+      "start": 325,
+      "width": 1800,
+      "height": 1500,
+      "sill": 900,
+      "hinge": "start",
+      "swing": "inside"
+    },
+    {
+      "id": "o20",
+      "type": "window",
+      "wallId": "w34",
+      "start": 850,
+      "width": 1800,
+      "height": 1500,
+      "sill": 900,
+      "hinge": "start",
+      "swing": "inside"
+    },
+    {
+      "id": "o21",
+      "type": "window",
+      "wallId": "w37",
+      "start": 1250,
+      "width": 2000,
+      "height": 1500,
+      "sill": 900,
+      "hinge": "start",
+      "swing": "inside"
+    },
+    {
+      "id": "o22",
+      "type": "window",
+      "wallId": "w40",
+      "start": 350,
+      "width": 1800,
+      "height": 1500,
+      "sill": 900,
+      "hinge": "start",
+      "swing": "inside"
+    },
+    {
+      "id": "o23",
+      "type": "window",
+      "wallId": "w43",
+      "start": 400,
+      "width": 1700,
+      "height": 1500,
+      "sill": 900,
+      "hinge": "start",
+      "swing": "inside"
+    },
+    {
+      "id": "o24",
+      "type": "window",
+      "wallId": "w46",
+      "start": 500,
+      "width": 1500,
+      "height": 1500,
+      "sill": 900,
+      "hinge": "start",
+      "swing": "inside"
+    },
+    {
+      "id": "o25",
+      "type": "window",
+      "wallId": "w17",
+      "start": 900,
+      "width": 1800,
+      "height": 1500,
+      "sill": 900,
+      "hinge": "start",
+      "swing": "inside"
+    },
+    {
+      "id": "o26",
+      "type": "window",
+      "wallId": "w5",
+      "start": 1800,
+      "width": 2400,
+      "height": 1500,
+      "sill": 900,
+      "hinge": "start",
+      "swing": "inside"
+    },
+    {
+      "id": "o27",
+      "type": "window",
+      "wallId": "w8",
+      "start": 1500,
+      "width": 3000,
+      "height": 1500,
+      "sill": 900,
+      "hinge": "start",
+      "swing": "inside"
+    },
+    {
+      "id": "o28",
+      "type": "window",
+      "wallId": "w11",
+      "start": 900,
+      "width": 2200,
+      "height": 1500,
+      "sill": 900,
+      "hinge": "start",
+      "swing": "inside"
+    }
+  ],
+  "furniture": [
+    {
+      "id": "f1",
+      "type": "shoeCabinet",
+      "roomId": "entry",
+      "rect": [
+        250,
+        250,
+        1200,
+        400
+      ],
+      "rotation": 0,
+      "height": 1100
+    },
+    {
+      "id": "f2",
+      "type": "bench",
+      "roomId": "entry",
+      "rect": [
+        300,
+        2900,
+        900,
+        400
+      ],
+      "rotation": 0,
+      "height": 450
+    },
+    {
+      "id": "f3",
+      "type": "sofa",
+      "roomId": "living",
+      "rect": [
+        3600,
+        500,
+        2600,
+        850
+      ],
+      "rotation": 0,
+      "height": 800
+    },
+    {
+      "id": "f4",
+      "type": "coffeeTable",
+      "roomId": "living",
+      "rect": [
+        5700,
+        1728,
+        1200,
+        600
+      ],
+      "rotation": 0,
+      "height": 400
+    },
+    {
+      "id": "f5",
+      "type": "tvCabinet",
+      "roomId": "living",
+      "rect": [
+        8500,
+        700,
+        400,
+        1980.0000000000002
+      ],
+      "rotation": 0,
+      "height": 450
+    },
+    {
+      "id": "f6",
+      "type": "tv",
+      "roomId": "living",
+      "rect": [
+        8460,
+        900,
+        80,
+        1440
+      ],
+      "rotation": 0,
+      "height": 1100
+    },
+    {
+      "id": "f7",
+      "type": "rug",
+      "roomId": "living",
+      "rect": [
+        4320,
+        900,
+        3000,
+        1800
+      ],
+      "rotation": 0,
+      "height": 20
+    },
+    {
+      "id": "f8",
+      "type": "washingMachine",
+      "roomId": "balcony",
+      "rect": [
+        14250,
+        250,
+        600,
+        600
+      ],
+      "rotation": 0,
+      "height": 850
+    },
+    {
+      "id": "f9",
+      "type": "dryingRack",
+      "roomId": "balcony",
+      "rect": [
+        9300,
+        2700,
+        1800,
+        500
+      ],
+      "rotation": 0,
+      "height": 1800
+    },
+    {
+      "id": "f10",
+      "type": "chair",
+      "roomId": "balcony",
+      "rect": [
+        9400,
+        350,
+        500,
+        500
+      ],
+      "rotation": 0,
+      "height": 450
+    },
+    {
+      "id": "f11",
+      "type": "bed",
+      "roomId": "master",
+      "rect": [
+        8350,
+        9650,
+        1800,
+        2000
+      ],
+      "rotation": 0,
+      "height": 500
+    },
+    {
+      "id": "f12",
+      "type": "nightstand",
+      "roomId": "master",
+      "rect": [
+        7900,
+        11200,
+        400,
+        400
+      ],
+      "rotation": 0,
+      "height": 500
+    },
+    {
+      "id": "f13",
+      "type": "nightstand",
+      "roomId": "master",
+      "rect": [
+        10200,
+        11200,
+        400,
+        400
+      ],
+      "rotation": 0,
+      "height": 500
+    },
+    {
+      "id": "f14",
+      "type": "wardrobe",
+      "roomId": "master",
+      "rect": [
+        10850,
+        7500,
+        600,
+        2000
+      ],
+      "rotation": 0,
+      "height": 2200
+    },
+    {
+      "id": "f15",
+      "type": "dresser",
+      "roomId": "master",
+      "rect": [
+        7250,
+        7450,
+        1200,
+        450
+      ],
+      "rotation": 0,
+      "height": 750
+    },
+    {
+      "id": "f16",
+      "type": "bed",
+      "roomId": "bedroom",
+      "rect": [
+        16100,
+        1250,
+        1800,
+        2000
+      ],
+      "rotation": 0,
+      "height": 500
+    },
+    {
+      "id": "f17",
+      "type": "nightstand",
+      "roomId": "bedroom",
+      "rect": [
+        15650,
+        2800,
+        400,
+        400
+      ],
+      "rotation": 0,
+      "height": 500
+    },
+    {
+      "id": "f18",
+      "type": "nightstand",
+      "roomId": "bedroom",
+      "rect": [
+        17950,
+        2800,
+        400,
+        400
+      ],
+      "rotation": 0,
+      "height": 500
+    },
+    {
+      "id": "f19",
+      "type": "wardrobe",
+      "roomId": "bedroom",
+      "rect": [
+        18350,
+        300,
+        600,
+        2000
+      ],
+      "rotation": 0,
+      "height": 2200
+    },
+    {
+      "id": "f20",
+      "type": "bed",
+      "roomId": "elder",
+      "rect": [
+        850,
+        9650,
+        1800,
+        2000
+      ],
+      "rotation": 0,
+      "height": 500
+    },
+    {
+      "id": "f21",
+      "type": "nightstand",
+      "roomId": "elder",
+      "rect": [
+        400,
+        11200,
+        400,
+        400
+      ],
+      "rotation": 0,
+      "height": 500
+    },
+    {
+      "id": "f22",
+      "type": "nightstand",
+      "roomId": "elder",
+      "rect": [
+        2700,
+        11200,
+        400,
+        400
+      ],
+      "rotation": 0,
+      "height": 500
+    },
+    {
+      "id": "f23",
+      "type": "wardrobe",
+      "roomId": "elder",
+      "rect": [
+        2850,
+        7500,
+        600,
+        2000
+      ],
+      "rotation": 0,
+      "height": 2200
+    },
+    {
+      "id": "f24",
+      "type": "bed",
+      "roomId": "kids",
+      "rect": [
+        4350,
+        9650,
+        1800,
+        2000
+      ],
+      "rotation": 0,
+      "height": 500
+    },
+    {
+      "id": "f25",
+      "type": "nightstand",
+      "roomId": "kids",
+      "rect": [
+        3900,
+        11200,
+        400,
+        400
+      ],
+      "rotation": 0,
+      "height": 500
+    },
+    {
+      "id": "f26",
+      "type": "nightstand",
+      "roomId": "kids",
+      "rect": [
+        6200,
+        11200,
+        400,
+        400
+      ],
+      "rotation": 0,
+      "height": 500
+    },
+    {
+      "id": "f27",
+      "type": "wardrobe",
+      "roomId": "kids",
+      "rect": [
+        6350,
+        7500,
+        600,
+        2000
+      ],
+      "rotation": 0,
+      "height": 2200
+    },
+    {
+      "id": "f28",
+      "type": "desk",
+      "roomId": "kids",
+      "rect": [
+        3750,
+        11300,
+        1200,
+        550
+      ],
+      "rotation": 0,
+      "height": 750
+    },
+    {
+      "id": "f29",
+      "type": "chair",
+      "roomId": "kids",
+      "rect": [
+        4150,
+        10850,
+        450,
+        450
+      ],
+      "rotation": 0,
+      "height": 450
+    },
+    {
+      "id": "f30",
+      "type": "teaTable",
+      "roomId": "tea",
+      "rect": [
+        1050,
+        4680,
+        1200,
+        700
+      ],
+      "rotation": 0,
+      "height": 450
+    },
+    {
+      "id": "f31",
+      "type": "chair",
+      "roomId": "tea",
+      "rect": [
+        525,
+        4680,
+        450,
+        450
+      ],
+      "rotation": 0,
+      "height": 450
+    },
+    {
+      "id": "f32",
+      "type": "chair",
+      "roomId": "tea",
+      "rect": [
+        2450,
+        4680,
+        450,
+        450
+      ],
+      "rotation": 0,
+      "height": 450
+    },
+    {
+      "id": "f33",
+      "type": "displayCabinet",
+      "roomId": "tea",
+      "rect": [
+        3050,
+        3850,
+        350,
+        1800
+      ],
+      "rotation": 0,
+      "height": 2000
+    },
+    {
+      "id": "f34",
+      "type": "diningTable",
+      "roomId": "dining",
+      "rect": [
+        4490,
+        4608,
+        1600,
+        900
+      ],
+      "rotation": 0,
+      "height": 750
+    },
+    {
+      "id": "f35",
+      "type": "chair",
+      "roomId": "dining",
+      "rect": [
+        4625,
+        4320,
+        420,
+        420
+      ],
+      "rotation": 0,
+      "height": 450
+    },
+    {
+      "id": "f36",
+      "type": "chair",
+      "roomId": "dining",
+      "rect": [
+        4625,
+        5832,
+        420,
+        420
+      ],
+      "rotation": 0,
+      "height": 450
+    },
+    {
+      "id": "f37",
+      "type": "chair",
+      "roomId": "dining",
+      "rect": [
+        5105,
+        4320,
+        420,
+        420
+      ],
+      "rotation": 0,
+      "height": 450
+    },
+    {
+      "id": "f38",
+      "type": "chair",
+      "roomId": "dining",
+      "rect": [
+        5105,
+        5832,
+        420,
+        420
+      ],
+      "rotation": 0,
+      "height": 450
+    },
+    {
+      "id": "f39",
+      "type": "chair",
+      "roomId": "dining",
+      "rect": [
+        5585,
+        4320,
+        420,
+        420
+      ],
+      "rotation": 0,
+      "height": 450
+    },
+    {
+      "id": "f40",
+      "type": "chair",
+      "roomId": "dining",
+      "rect": [
+        5585,
+        5832,
+        420,
+        420
+      ],
+      "rotation": 0,
+      "height": 450
+    },
+    {
+      "id": "f41",
+      "type": "sideboard",
+      "roomId": "dining",
+      "rect": [
+        7500,
+        4000,
+        400,
+        1600
+      ],
+      "rotation": 0,
+      "height": 850
+    },
+    {
+      "id": "f42",
+      "type": "kitchenCounter",
+      "roomId": "kitchen",
+      "rect": [
+        8150,
+        6450,
+        3700,
+        600
+      ],
+      "rotation": 0,
+      "height": 850
+    },
+    {
+      "id": "f43",
+      "type": "kitchenCounter",
+      "roomId": "kitchen",
+      "rect": [
+        8150,
+        3750,
+        600,
+        2700
+      ],
+      "rotation": 0,
+      "height": 850
+    },
+    {
+      "id": "f44",
+      "type": "upperCabinet",
+      "roomId": "kitchen",
+      "rect": [
+        8150,
+        6800,
+        3700,
+        320
+      ],
+      "rotation": 0,
+      "height": 1600
+    },
+    {
+      "id": "f45",
+      "type": "sink",
+      "roomId": "kitchen",
+      "rect": [
+        9400,
+        6480,
+        750,
+        480
+      ],
+      "rotation": 0,
+      "height": 850
+    },
+    {
+      "id": "f46",
+      "type": "stove",
+      "roomId": "kitchen",
+      "rect": [
+        10720,
+        6480,
+        700,
+        480
+      ],
+      "rotation": 0,
+      "height": 850
+    },
+    {
+      "id": "f47",
+      "type": "fridge",
+      "roomId": "kitchen",
+      "rect": [
+        11150,
+        3800,
+        650,
+        650
+      ],
+      "rotation": 0,
+      "height": 1800
+    },
+    {
+      "id": "f48",
+      "type": "toilet",
+      "roomId": "bath",
+      "rect": [
+        14400,
+        3950,
+        420,
+        650
+      ],
+      "rotation": 0,
+      "height": 750
+    },
+    {
+      "id": "f49",
+      "type": "vanity",
+      "roomId": "bath",
+      "rect": [
+        12250,
+        6400,
+        1400,
+        500
+      ],
+      "rotation": 0,
+      "height": 850
+    },
+    {
+      "id": "f50",
+      "type": "mirror",
+      "roomId": "bath",
+      "rect": [
+        12350,
+        6420,
+        1200,
+        60
+      ],
+      "rotation": 0,
+      "height": 1800
+    },
+    {
+      "id": "f51",
+      "type": "shower",
+      "roomId": "bath",
+      "rect": [
+        12250,
+        3850,
+        1100,
+        1100
+      ],
+      "rotation": 0,
+      "height": 2200
+    },
+    {
+      "id": "f52",
+      "type": "console",
+      "roomId": "hall",
+      "rect": [
+        18600,
+        4860,
+        350,
+        900
+      ],
+      "rotation": 0,
+      "height": 800
+    },
+    {
+      "id": "f53",
+      "type": "toilet",
+      "roomId": "masterBath",
+      "rect": [
+        13400,
+        7550,
+        420,
+        650
+      ],
+      "rotation": 0,
+      "height": 750
+    },
+    {
+      "id": "f54",
+      "type": "vanity",
+      "roomId": "masterBath",
+      "rect": [
+        11750,
+        11200,
+        1400,
+        500
+      ],
+      "rotation": 0,
+      "height": 850
+    },
+    {
+      "id": "f55",
+      "type": "mirror",
+      "roomId": "masterBath",
+      "rect": [
+        11850,
+        11220,
+        1200,
+        60
+      ],
+      "rotation": 0,
+      "height": 1800
+    },
+    {
+      "id": "f56",
+      "type": "shower",
+      "roomId": "masterBath",
+      "rect": [
+        11750,
+        7450,
+        1100,
+        1100
+      ],
+      "rotation": 0,
+      "height": 2200
+    },
+    {
+      "id": "f57",
+      "type": "dresser",
+      "roomId": "masterBath",
+      "rect": [
+        13100,
+        11250,
+        700,
+        450
+      ],
+      "rotation": 0,
+      "height": 750
+    },
+    {
+      "id": "f58",
+      "type": "wardrobe",
+      "roomId": "closet",
+      "rect": [
+        14150,
+        7350,
+        600,
+        4500
+      ],
+      "rotation": 0,
+      "height": 2200
+    },
+    {
+      "id": "f59",
+      "type": "wardrobe",
+      "roomId": "closet",
+      "rect": [
+        15750,
+        7350,
+        600,
+        4500
+      ],
+      "rotation": 0,
+      "height": 2200
+    },
+    {
+      "id": "f60",
+      "type": "island",
+      "roomId": "closet",
+      "rect": [
+        14875,
+        8880,
+        900,
+        500
+      ],
+      "rotation": 0,
+      "height": 900
+    },
+    {
+      "id": "f61",
+      "type": "mirror",
+      "roomId": "closet",
+      "rect": [
+        15125,
+        11600,
+        500,
+        60
+      ],
+      "rotation": 0,
+      "height": 1800
+    },
+    {
+      "id": "f62",
+      "type": "desk",
+      "roomId": "study",
+      "rect": [
+        16750,
+        11200,
+        1500,
+        600
+      ],
+      "rotation": 0,
+      "height": 750
+    },
+    {
+      "id": "f63",
+      "type": "chair",
+      "roomId": "study",
+      "rect": [
+        17150,
+        10750,
+        450,
+        450
+      ],
+      "rotation": 0,
+      "height": 450
+    },
+    {
+      "id": "f64",
+      "type": "bookshelf",
+      "roomId": "study",
+      "rect": [
+        18550,
+        7450,
+        350,
+        1800
+      ],
+      "rotation": 0,
+      "height": 2200
+    }
+  ],
+  "devices": [
+    {
+      "id": "manual-1792491971768-9rruc",
+      "ruleCode": "XHF-SP-01",
+      "deviceKey": "射灯一字组",
+      "deviceType2": "射灯一字组",
+      "category1": "灯光",
+      "roomId": "kids",
+      "roomName": "儿童房",
+      "position": {
+        "x": 5250,
+        "y": 9600,
+        "z": 2650
+      },
+      "rotation": 0,
+      "mount": "CL",
+      "priority": "P1",
+      "visual": "array",
+      "glow": "point",
+      "size": {
+        "width": 1200,
+        "depth": 120
+      },
+      "status": "placed",
+      "source": "manual",
+      "locked": false,
+      "trace": {
+        "anchor": "roomCenter",
+        "candidateRank": 1,
+        "fallbackStep": 0,
+        "confidence": 0.9,
+        "notes": [
+          "EXISTING_DEVICE_PLACEMENT",
+          "OPTIONAL_OR_RANGE",
+          "GENERIC_ANCHOR",
+          "DEMO_DEFAULT"
+        ],
+        "warnings": []
+      }
+    },
+    {
+      "id": "manual-1792492032780-ef69c",
+      "ruleCode": "ZW-SP-01",
+      "deviceKey": "射灯",
+      "deviceType2": "射灯",
+      "category1": "灯光",
+      "roomId": "master",
+      "roomName": "主卧",
+      "position": {
+        "x": 8100,
+        "y": 11400,
+        "z": 2650
+      },
+      "rotation": 0,
+      "mount": "CL",
+      "priority": "P1",
+      "visual": "point",
+      "glow": "fan",
+      "size": {
+        "width": 80,
+        "depth": 75
+      },
+      "status": "placed",
+      "source": "manual",
+      "locked": false,
+      "trace": {
+        "anchor": "furniturePair",
+        "candidateRank": 1,
+        "fallbackStep": 0,
+        "confidence": 0.9,
+        "notes": [
+          "EXISTING_DEVICE_PLACEMENT"
+        ],
+        "warnings": []
+      }
+    },
+    {
+      "id": "manual-1792492034679-c8c63",
+      "ruleCode": "ZW-SP-01",
+      "deviceKey": "射灯",
+      "deviceType2": "射灯",
+      "category1": "灯光",
+      "roomId": "master",
+      "roomName": "主卧",
+      "position": {
+        "x": 10400,
+        "y": 11400,
+        "z": 2650
+      },
+      "rotation": 0,
+      "mount": "CL",
+      "priority": "P1",
+      "visual": "point",
+      "glow": "fan",
+      "size": {
+        "width": 80,
+        "depth": 75
+      },
+      "status": "placed",
+      "source": "manual",
+      "locked": false,
+      "trace": {
+        "anchor": "furniturePair",
+        "candidateRank": 2,
+        "fallbackStep": 0,
+        "confidence": 0.9,
+        "notes": [
+          "EXISTING_DEVICE_PLACEMENT"
+        ],
+        "warnings": []
+      }
+    },
+    {
+      "id": "manual-1792492036465-rvc6h",
+      "ruleCode": "MANUAL",
+      "deviceKey": "射灯",
+      "deviceType2": "射灯",
+      "category1": "灯光",
+      "roomId": "master",
+      "roomName": "主卧",
+      "position": {
+        "x": 9657,
+        "y": 10127,
+        "z": 2750
+      },
+      "rotation": 0,
+      "mount": "CL",
+      "priority": "P4",
+      "visual": "point",
+      "glow": "fan",
+      "size": {
+        "width": 75,
+        "depth": 75
+      },
+      "status": "fallback",
+      "source": "manual",
+      "locked": false,
+      "trace": {
+        "anchor": "roomCenter",
+        "candidateRank": 0,
+        "fallbackStep": 1,
+        "confidence": 0.45,
+        "notes": [
+          "EXISTING_DEVICE_PLACEMENT",
+          "NO_AVAILABLE_CANDIDATE"
+        ],
+        "warnings": [
+          "候选点不足，已按房间中心兜底"
+        ]
+      }
+    },
+    {
+      "id": "manual-1792492041487-9xnun",
+      "ruleCode": "KT-SP-01",
+      "deviceKey": "射灯",
+      "deviceType2": "射灯",
+      "category1": "灯光",
+      "roomId": "living",
+      "roomName": "客厅",
+      "position": {
+        "x": 8320,
+        "y": 1195,
+        "z": 2625
+      },
+      "rotation": 0,
+      "mount": "CL",
+      "priority": "P1",
+      "visual": "point",
+      "glow": "fan",
+      "size": {
+        "width": 80,
+        "depth": 75
+      },
+      "status": "placed",
+      "source": "manual",
+      "locked": false,
+      "trace": {
+        "anchor": "furnitureEdge",
+        "candidateRank": 1,
+        "fallbackStep": 0,
+        "confidence": 0.9,
+        "notes": [
+          "EXISTING_DEVICE_PLACEMENT",
+          "OPTIONAL_OR_RANGE",
+          "DEMO_DEFAULT"
+        ],
+        "warnings": []
+      }
+    },
+    {
+      "id": "manual-1792492043378-obdf2",
+      "ruleCode": "KT-SP-01",
+      "deviceKey": "射灯",
+      "deviceType2": "射灯",
+      "category1": "灯光",
+      "roomId": "living",
+      "roomName": "客厅",
+      "position": {
+        "x": 8320,
+        "y": 2185,
+        "z": 2625
+      },
+      "rotation": 0,
+      "mount": "CL",
+      "priority": "P1",
+      "visual": "point",
+      "glow": "fan",
+      "size": {
+        "width": 80,
+        "depth": 75
+      },
+      "status": "placed",
+      "source": "manual",
+      "locked": false,
+      "trace": {
+        "anchor": "furnitureEdge",
+        "candidateRank": 2,
+        "fallbackStep": 0,
+        "confidence": 0.9,
+        "notes": [
+          "EXISTING_DEVICE_PLACEMENT",
+          "OPTIONAL_OR_RANGE",
+          "DEMO_DEFAULT"
+        ],
+        "warnings": []
+      }
+    },
+    {
+      "id": "manual-1792492048506-ti10x",
+      "ruleCode": "XCW-SN-01",
+      "deviceKey": "人体传感器",
+      "deviceType2": "人体传感器",
+      "category1": "环境",
+      "roomId": "entry",
+      "roomName": "玄关",
+      "position": {
+        "x": 1500,
+        "y": 1800,
+        "z": 2800
+      },
+      "rotation": 0,
+      "mount": "CL",
+      "priority": "P1",
+      "visual": "none",
+      "glow": "none",
+      "size": {
+        "width": 180,
+        "depth": 180
+      },
+      "status": "placed",
+      "source": "manual",
+      "locked": false,
+      "trace": {
+        "anchor": "roomCenter",
+        "candidateRank": 1,
+        "fallbackStep": 0,
+        "confidence": 0.9,
+        "notes": [
+          "EXISTING_DEVICE_PLACEMENT",
+          "GENERIC_ANCHOR",
+          "DEMO_DEFAULT"
+        ],
+        "warnings": []
+      }
+    },
+    {
+      "id": "manual-1792492052652-h4d1c",
+      "ruleCode": "KT-SN-01",
+      "deviceKey": "人在传感器",
+      "deviceType2": "人在传感器",
+      "category1": "环境",
+      "roomId": "living",
+      "roomName": "客厅",
+      "position": {
+        "x": 4900,
+        "y": 925,
+        "z": 2800
+      },
+      "rotation": 0,
+      "mount": "CL",
+      "priority": "P3",
+      "visual": "none",
+      "glow": "none",
+      "size": {
+        "width": 180,
+        "depth": 180
+      },
+      "status": "manual",
+      "source": "manual",
+      "locked": false,
+      "trace": {
+        "anchor": "furnitureCenter",
+        "candidateRank": 1,
+        "fallbackStep": 0,
+        "confidence": 0.9,
+        "notes": [
+          "EXISTING_DEVICE_PLACEMENT"
+        ],
+        "warnings": []
+      }
+    },
+    {
+      "id": "manual-1792492055575-05xxj",
+      "ruleCode": "EXISTING-GENERIC",
+      "deviceKey": "蓝牙 Mesh 网关",
+      "deviceType2": "蓝牙 Mesh 网关",
+      "category1": "网络",
+      "roomId": "living",
+      "roomName": "客厅",
+      "position": {
+        "x": 6000,
+        "y": 1800,
+        "z": 2800
+      },
+      "rotation": 0,
+      "mount": "CL",
+      "priority": "P3",
+      "visual": "none",
+      "glow": "none",
+      "size": {
+        "width": 180,
+        "depth": 180
+      },
+      "status": "placed",
+      "source": "manual",
+      "locked": false,
+      "trace": {
+        "anchor": "roomCenter",
+        "candidateRank": 1,
+        "fallbackStep": 0,
+        "confidence": 0.9,
+        "notes": [
+          "EXISTING_DEVICE_PLACEMENT",
+          "NO_RULE_FALLBACK"
+        ],
+        "warnings": []
+      }
+    },
+    {
+      "id": "manual-1792492057341-k2ira",
+      "ruleCode": "MANUAL",
+      "deviceKey": "Mesh 路由器",
+      "deviceType2": "Mesh 路由器",
+      "category1": "网络",
+      "roomId": "living",
+      "roomName": "客厅",
+      "position": {
+        "x": 5403,
+        "y": 2348,
+        "z": 2750
+      },
+      "rotation": 0,
+      "mount": "CL",
+      "priority": "P4",
+      "visual": "none",
+      "glow": "none",
+      "size": {
+        "width": 180,
+        "depth": 180
+      },
+      "status": "fallback",
+      "source": "manual",
+      "locked": false,
+      "trace": {
+        "anchor": "roomCenter",
+        "candidateRank": 0,
+        "fallbackStep": 1,
+        "confidence": 0.45,
+        "notes": [
+          "EXISTING_DEVICE_PLACEMENT",
+          "NO_AVAILABLE_CANDIDATE"
+        ],
+        "warnings": [
+          "候选点不足，已按房间中心兜底"
+        ]
+      }
+    },
+    {
+      "id": "manual-1792492060362-bf3ro",
+      "ruleCode": "MANUAL",
+      "deviceKey": "弱电箱 · 箱体",
+      "deviceType2": "弱电箱 · 箱体",
+      "category1": "网络",
+      "roomId": "entry",
+      "roomName": "玄关",
+      "position": {
+        "x": 1115,
+        "y": 2153,
+        "z": 2750
+      },
+      "rotation": 0,
+      "mount": "SL",
+      "priority": "P4",
+      "visual": "none",
+      "glow": "none",
+      "size": {
+        "width": 180,
+        "depth": 180
+      },
+      "status": "fallback",
+      "source": "manual",
+      "locked": false,
+      "trace": {
+        "anchor": "roomCenter",
+        "candidateRank": 0,
+        "fallbackStep": 1,
+        "confidence": 0.45,
+        "notes": [
+          "EXISTING_DEVICE_PLACEMENT",
+          "NO_AVAILABLE_CANDIDATE"
+        ],
+        "warnings": [
+          "候选点不足，已按房间中心兜底"
+        ]
+      }
+    },
+    {
+      "id": "manual-1792492062934-x0iz4",
+      "ruleCode": "MANUAL",
+      "deviceKey": "面板 AP",
+      "deviceType2": "面板 AP",
+      "category1": "网络",
+      "roomId": "entry",
+      "roomName": "玄关",
+      "position": {
+        "x": 1115,
+        "y": 2153,
+        "z": 2750
+      },
+      "rotation": 0,
+      "mount": "SL",
+      "priority": "P4",
+      "visual": "none",
+      "glow": "none",
+      "size": {
+        "width": 180,
+        "depth": 180
+      },
+      "status": "fallback",
+      "source": "manual",
+      "locked": false,
+      "trace": {
+        "anchor": "roomCenter",
+        "candidateRank": 0,
+        "fallbackStep": 1,
+        "confidence": 0.45,
+        "notes": [
+          "EXISTING_DEVICE_PLACEMENT",
+          "NO_AVAILABLE_CANDIDATE"
+        ],
+        "warnings": [
+          "候选点不足，已按房间中心兜底"
+        ]
+      }
+    },
+    {
+      "id": "manual-1792492079014-gdxqt",
+      "ruleCode": "MANUAL",
+      "deviceKey": "射灯",
+      "deviceType2": "射灯",
+      "category1": "灯光",
+      "roomId": "master",
+      "roomName": "主卧",
+      "position": {
+        "x": 8505,
+        "y": 9471,
+        "z": 2750
+      },
+      "rotation": 0,
+      "mount": "CL",
+      "priority": "P4",
+      "visual": "point",
+      "glow": "fan",
+      "size": {
+        "width": 75,
+        "depth": 75
+      },
+      "status": "fallback",
+      "source": "manual",
+      "locked": false,
+      "trace": {
+        "anchor": "roomCenter",
+        "candidateRank": 0,
+        "fallbackStep": 1,
+        "confidence": 0.45,
+        "notes": [
+          "EXISTING_DEVICE_PLACEMENT",
+          "NO_AVAILABLE_CANDIDATE"
+        ],
+        "warnings": [
+          "候选点不足，已按房间中心兜底"
+        ]
+      }
+    },
+    {
+      "id": "manual-1792492082758-n64ik",
+      "ruleCode": "MANUAL",
+      "deviceKey": "射灯",
+      "deviceType2": "射灯",
+      "category1": "灯光",
+      "roomId": "master",
+      "roomName": "主卧",
+      "position": {
+        "x": 9962,
+        "y": 9142,
+        "z": 2750
+      },
+      "rotation": 0,
+      "mount": "CL",
+      "priority": "P4",
+      "visual": "point",
+      "glow": "fan",
+      "size": {
+        "width": 75,
+        "depth": 75
+      },
+      "status": "fallback",
+      "source": "manual",
+      "locked": false,
+      "trace": {
+        "anchor": "roomCenter",
+        "candidateRank": 0,
+        "fallbackStep": 1,
+        "confidence": 0.45,
+        "notes": [
+          "EXISTING_DEVICE_PLACEMENT",
+          "NO_AVAILABLE_CANDIDATE"
+        ],
+        "warnings": [
+          "候选点不足，已按房间中心兜底"
+        ]
+      }
+    },
+    {
+      "id": "manual-1792492085637-iz43m",
+      "ruleCode": "MANUAL",
+      "deviceKey": "射灯",
+      "deviceType2": "射灯",
+      "category1": "灯光",
+      "roomId": "master",
+      "roomName": "主卧",
+      "position": {
+        "x": 9012,
+        "y": 10505,
+        "z": 2750
+      },
+      "rotation": 0,
+      "mount": "CL",
+      "priority": "P4",
+      "visual": "point",
+      "glow": "fan",
+      "size": {
+        "width": 75,
+        "depth": 75
+      },
+      "status": "fallback",
+      "source": "manual",
+      "locked": false,
+      "trace": {
+        "anchor": "roomCenter",
+        "candidateRank": 0,
+        "fallbackStep": 1,
+        "confidence": 0.45,
+        "notes": [
+          "EXISTING_DEVICE_PLACEMENT",
+          "NO_AVAILABLE_CANDIDATE"
+        ],
+        "warnings": [
+          "候选点不足，已按房间中心兜底"
+        ]
+      }
+    }
+  ],
+  "wholeHouseDevices": [],
+  "ruleVersion": "2026-10-19-V1",
+  "engineVersion": "0.1.0",
+  "seed": "demo-15spaces-001"
+}

@@ -1,0 +1,542 @@
+[
+  {
+    "spaceCode": "KT",
+    "spaceName": "客厅",
+    "source": "simulated_survey",
+    "assumption": true,
+    "ac": {
+      "present": true,
+      "type": "cabinet",
+      "width": 520,
+      "depth": 520,
+      "height": 1800,
+      "z0": 0,
+      "z1": 1800,
+      "wall": "west",
+      "along": 0.82,
+      "clearance": 120
+    },
+    "curtainBox": {
+      "present": true,
+      "depth": 240,
+      "z0": 2380,
+      "z1": 2800,
+      "clearance": 50
+    },
+    "accessPanel": {
+      "present": true,
+      "width": 600,
+      "depth": 600,
+      "z0": 2750,
+      "z1": 2800,
+      "clearance": 300,
+      "rx": 0.12,
+      "ry": 0.18
+    },
+    "note": "演示实测：柜机 520×520×1800，窗帘盒 240mm，检修口靠西侧墙角。"
+  },
+  {
+    "spaceCode": "CT",
+    "spaceName": "餐厅",
+    "source": "simulated_survey",
+    "assumption": true,
+    "ac": {
+      "present": true,
+      "type": "wall",
+      "width": 900,
+      "depth": 230,
+      "height": 280,
+      "z0": 2300,
+      "z1": 2580,
+      "wall": "east",
+      "along": 0.18,
+      "clearance": 100
+    },
+    "curtainBox": {
+      "present": true,
+      "depth": 240,
+      "z0": 2380,
+      "z1": 2800,
+      "clearance": 50
+    },
+    "accessPanel": {
+      "present": true,
+      "width": 600,
+      "depth": 600,
+      "z0": 2750,
+      "z1": 2800,
+      "clearance": 300,
+      "rx": 0.86,
+      "ry": 0.18
+    },
+    "note": "演示实测：挂机 900×230×280，窗帘盒 240mm，检修口靠东侧墙角。"
+  },
+  {
+    "spaceCode": "ZW",
+    "spaceName": "主卧",
+    "source": "simulated_survey",
+    "assumption": true,
+    "ac": {
+      "present": true,
+      "type": "wall",
+      "width": 900,
+      "depth": 230,
+      "height": 280,
+      "z0": 2300,
+      "z1": 2580,
+      "wall": "east",
+      "along": 0.78,
+      "clearance": 100
+    },
+    "curtainBox": {
+      "present": true,
+      "depth": 220,
+      "z0": 2400,
+      "z1": 2800,
+      "clearance": 50
+    },
+    "accessPanel": {
+      "present": false,
+      "width": 600,
+      "depth": 600,
+      "z0": 2750,
+      "z1": 2800,
+      "clearance": 300,
+      "rx": 0.8,
+      "ry": 0.2
+    },
+    "note": "演示实测：主卧挂机 900×230×280，窗帘盒 220mm，无独立检修口。"
+  },
+  {
+    "spaceCode": "SF",
+    "spaceName": "书房",
+    "source": "simulated_survey",
+    "assumption": true,
+    "ac": {
+      "present": true,
+      "type": "wall",
+      "width": 900,
+      "depth": 230,
+      "height": 280,
+      "z0": 2300,
+      "z1": 2580,
+      "wall": "west",
+      "along": 0.16,
+      "clearance": 100
+    },
+    "curtainBox": {
+      "present": true,
+      "depth": 220,
+      "z0": 2400,
+      "z1": 2800,
+      "clearance": 50
+    },
+    "accessPanel": {
+      "present": false,
+      "width": 600,
+      "depth": 600,
+      "z0": 2750,
+      "z1": 2800,
+      "clearance": 300,
+      "rx": 0.2,
+      "ry": 0.2
+    },
+    "note": "演示实测：书房挂机靠西墙，窗帘盒 220mm，无独立检修口。"
+  },
+  {
+    "spaceCode": "WS",
+    "spaceName": "卧室",
+    "source": "simulated_survey",
+    "assumption": true,
+    "ac": {
+      "present": true,
+      "type": "wall",
+      "width": 900,
+      "depth": 230,
+      "height": 280,
+      "z0": 2300,
+      "z1": 2580,
+      "wall": "east",
+      "along": 0.8,
+      "clearance": 100
+    },
+    "curtainBox": {
+      "present": true,
+      "depth": 220,
+      "z0": 2400,
+      "z1": 2800,
+      "clearance": 50
+    },
+    "accessPanel": {
+      "present": false,
+      "width": 600,
+      "depth": 600,
+      "z0": 2750,
+      "z1": 2800,
+      "clearance": 300,
+      "rx": 0.8,
+      "ry": 0.2
+    },
+    "note": "演示实测：卧室挂机靠东墙，窗帘盒 220mm。"
+  },
+  {
+    "spaceCode": "LRF",
+    "spaceName": "老人房",
+    "source": "simulated_survey",
+    "assumption": true,
+    "ac": {
+      "present": true,
+      "type": "wall",
+      "width": 900,
+      "depth": 230,
+      "height": 280,
+      "z0": 2300,
+      "z1": 2580,
+      "wall": "west",
+      "along": 0.8,
+      "clearance": 100
+    },
+    "curtainBox": {
+      "present": true,
+      "depth": 220,
+      "z0": 2400,
+      "z1": 2800,
+      "clearance": 50
+    },
+    "accessPanel": {
+      "present": false,
+      "width": 600,
+      "depth": 600,
+      "z0": 2750,
+      "z1": 2800,
+      "clearance": 300,
+      "rx": 0.2,
+      "ry": 0.2
+    },
+    "note": "演示实测：老人房挂机靠西墙，窗帘盒 220mm。"
+  },
+  {
+    "spaceCode": "XHF",
+    "spaceName": "儿童房",
+    "source": "simulated_survey",
+    "assumption": true,
+    "ac": {
+      "present": true,
+      "type": "wall",
+      "width": 900,
+      "depth": 230,
+      "height": 280,
+      "z0": 2300,
+      "z1": 2580,
+      "wall": "east",
+      "along": 0.2,
+      "clearance": 100
+    },
+    "curtainBox": {
+      "present": true,
+      "depth": 220,
+      "z0": 2400,
+      "z1": 2800,
+      "clearance": 50
+    },
+    "accessPanel": {
+      "present": false,
+      "width": 600,
+      "depth": 600,
+      "z0": 2750,
+      "z1": 2800,
+      "clearance": 300,
+      "rx": 0.8,
+      "ry": 0.2
+    },
+    "note": "演示实测：儿童房挂机靠东墙，窗帘盒 220mm。"
+  },
+  {
+    "spaceCode": "XCW",
+    "spaceName": "玄关",
+    "source": "simulated_survey",
+    "assumption": true,
+    "ac": {
+      "present": false,
+      "type": null,
+      "width": 0,
+      "depth": 0,
+      "height": 0,
+      "z0": 0,
+      "z1": 0,
+      "wall": null,
+      "along": 0,
+      "clearance": 100
+    },
+    "curtainBox": {
+      "present": true,
+      "depth": 180,
+      "z0": 2400,
+      "z1": 2800,
+      "clearance": 50
+    },
+    "accessPanel": {
+      "present": true,
+      "width": 600,
+      "depth": 600,
+      "z0": 2750,
+      "z1": 2800,
+      "clearance": 300,
+      "rx": 0.18,
+      "ry": 0.18
+    },
+    "note": "演示实测：玄关窗帘盒 180mm，检修口靠入口墙角；无空调。"
+  },
+  {
+    "spaceCode": "CF",
+    "spaceName": "厨房",
+    "source": "simulated_survey",
+    "assumption": true,
+    "ac": {
+      "present": false,
+      "type": null,
+      "width": 0,
+      "depth": 0,
+      "height": 0,
+      "z0": 0,
+      "z1": 0,
+      "wall": null,
+      "along": 0,
+      "clearance": 100
+    },
+    "curtainBox": {
+      "present": true,
+      "depth": 180,
+      "z0": 2400,
+      "z1": 2800,
+      "clearance": 50
+    },
+    "accessPanel": {
+      "present": true,
+      "width": 600,
+      "depth": 600,
+      "z0": 2750,
+      "z1": 2800,
+      "clearance": 300,
+      "rx": 0.84,
+      "ry": 0.84
+    },
+    "note": "演示实测：厨房窗帘盒 180mm，检修口靠灶台侧墙角；无空调。"
+  },
+  {
+    "spaceCode": "WSJ",
+    "spaceName": "卫生间",
+    "source": "simulated_survey",
+    "assumption": true,
+    "ac": {
+      "present": false,
+      "type": null,
+      "width": 0,
+      "depth": 0,
+      "height": 0,
+      "z0": 0,
+      "z1": 0,
+      "wall": null,
+      "along": 0,
+      "clearance": 100
+    },
+    "curtainBox": {
+      "present": true,
+      "depth": 160,
+      "z0": 2400,
+      "z1": 2800,
+      "clearance": 50
+    },
+    "accessPanel": {
+      "present": true,
+      "width": 600,
+      "depth": 600,
+      "z0": 2750,
+      "z1": 2800,
+      "clearance": 300,
+      "rx": 0.18,
+      "ry": 0.82
+    },
+    "note": "演示实测：卫生间窗帘盒 160mm，检修口靠马桶侧；无空调。"
+  },
+  {
+    "spaceCode": "GDYT",
+    "spaceName": "过道",
+    "source": "simulated_survey",
+    "assumption": true,
+    "ac": {
+      "present": false,
+      "type": null,
+      "width": 0,
+      "depth": 0,
+      "height": 0,
+      "z0": 0,
+      "z1": 0,
+      "wall": null,
+      "along": 0,
+      "clearance": 100
+    },
+    "curtainBox": {
+      "present": false,
+      "depth": 0,
+      "z0": 0,
+      "z1": 0,
+      "clearance": 50
+    },
+    "accessPanel": {
+      "present": true,
+      "width": 600,
+      "depth": 600,
+      "z0": 2750,
+      "z1": 2800,
+      "clearance": 300,
+      "rx": 0.72,
+      "ry": 0.45
+    },
+    "note": "演示实测：过道检修口居中偏东；无窗、无空调。"
+  },
+  {
+    "spaceCode": "YT",
+    "spaceName": "阳台",
+    "source": "simulated_survey",
+    "assumption": true,
+    "ac": {
+      "present": false,
+      "type": null,
+      "width": 0,
+      "depth": 0,
+      "height": 0,
+      "z0": 0,
+      "z1": 0,
+      "wall": null,
+      "along": 0,
+      "clearance": 100
+    },
+    "curtainBox": {
+      "present": true,
+      "depth": 200,
+      "z0": 2400,
+      "z1": 2800,
+      "clearance": 50
+    },
+    "accessPanel": {
+      "present": true,
+      "width": 600,
+      "depth": 600,
+      "z0": 2750,
+      "z1": 2800,
+      "clearance": 300,
+      "rx": 0.15,
+      "ry": 0.5
+    },
+    "note": "演示实测：阳台窗帘盒 200mm，检修口靠西侧；无空调。"
+  },
+  {
+    "spaceCode": "YMJ",
+    "spaceName": "衣帽间",
+    "source": "simulated_survey",
+    "assumption": true,
+    "ac": {
+      "present": false,
+      "type": null,
+      "width": 0,
+      "depth": 0,
+      "height": 0,
+      "z0": 0,
+      "z1": 0,
+      "wall": null,
+      "along": 0,
+      "clearance": 100
+    },
+    "curtainBox": {
+      "present": true,
+      "depth": 180,
+      "z0": 2400,
+      "z1": 2800,
+      "clearance": 50
+    },
+    "accessPanel": {
+      "present": true,
+      "width": 600,
+      "depth": 600,
+      "z0": 2750,
+      "z1": 2800,
+      "clearance": 300,
+      "rx": 0.84,
+      "ry": 0.18
+    },
+    "note": "演示实测：衣帽间窗帘盒 180mm，检修口靠东侧墙角；无空调。"
+  },
+  {
+    "spaceCode": "WSWSJ",
+    "spaceName": "卧室卫生间",
+    "source": "simulated_survey",
+    "assumption": true,
+    "ac": {
+      "present": false,
+      "type": null,
+      "width": 0,
+      "depth": 0,
+      "height": 0,
+      "z0": 0,
+      "z1": 0,
+      "wall": null,
+      "along": 0,
+      "clearance": 100
+    },
+    "curtainBox": {
+      "present": true,
+      "depth": 160,
+      "z0": 2400,
+      "z1": 2800,
+      "clearance": 50
+    },
+    "accessPanel": {
+      "present": true,
+      "width": 600,
+      "depth": 600,
+      "z0": 2750,
+      "z1": 2800,
+      "clearance": 300,
+      "rx": 0.18,
+      "ry": 0.82
+    },
+    "note": "演示实测：主卫窗帘盒 160mm，检修口靠马桶侧；无空调。"
+  },
+  {
+    "spaceCode": "CS",
+    "spaceName": "茶室",
+    "source": "simulated_survey",
+    "assumption": true,
+    "ac": {
+      "present": true,
+      "type": "wall",
+      "width": 900,
+      "depth": 230,
+      "height": 280,
+      "z0": 2300,
+      "z1": 2580,
+      "wall": "north",
+      "along": 0.78,
+      "clearance": 100
+    },
+    "curtainBox": {
+      "present": true,
+      "depth": 240,
+      "z0": 2380,
+      "z1": 2800,
+      "clearance": 50
+    },
+    "accessPanel": {
+      "present": true,
+      "width": 600,
+      "depth": 600,
+      "z0": 2750,
+      "z1": 2800,
+      "clearance": 300,
+      "rx": 0.18,
+      "ry": 0.18
+    },
+    "note": "演示实测：茶室挂机靠北墙，窗帘盒 240mm，检修口靠西侧墙角。"
+  }
+]

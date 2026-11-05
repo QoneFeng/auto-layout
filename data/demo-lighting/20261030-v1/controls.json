@@ -1,0 +1,1055 @@
+[
+  {
+    "spaceCode": "KT",
+    "spaceName": "客厅",
+    "controls": [
+      {
+        "role": "switch",
+        "label": "开关面板",
+        "deviceKey": "开关面板",
+        "buttonCount": 3,
+        "buttons": [
+          {
+            "label": "基础照明",
+            "circuitId": "C-KT-BASE",
+            "action": "toggle"
+          },
+          {
+            "label": "任务照明",
+            "circuitId": "C-KT-TASK",
+            "action": "toggle"
+          },
+          {
+            "label": "重点照明",
+            "circuitId": "C-KT-ACCENT",
+            "action": "toggle"
+          }
+        ],
+        "circuitIds": [
+          "C-KT-BASE",
+          "C-KT-TASK",
+          "C-KT-ACCENT"
+        ]
+      },
+      {
+        "role": "scene",
+        "label": "情景面板",
+        "deviceKey": "情景面板",
+        "buttonCount": 5,
+        "sceneIds": [
+          "S01",
+          "S02",
+          "S03",
+          "S04",
+          "S05"
+        ],
+        "circuitIds": [
+          "C-KT-BASE",
+          "C-KT-TASK",
+          "C-KT-ACCENT"
+        ]
+      },
+      {
+        "role": "wireless",
+        "label": "无线开关",
+        "deviceKey": "无线开关",
+        "buttonCount": 1,
+        "circuitIds": [
+          "C-KT-ACCENT"
+        ]
+      },
+      {
+        "role": "dim",
+        "label": "调光旋钮",
+        "deviceKey": "调光旋钮",
+        "buttonCount": 1,
+        "circuitIds": [
+          "C-KT-BASE"
+        ]
+      },
+      {
+        "role": "master",
+        "label": "中控屏",
+        "deviceKey": "中控屏",
+        "buttonCount": 1,
+        "sceneIds": [
+          "S01",
+          "S02",
+          "S03",
+          "S04",
+          "S05"
+        ],
+        "circuitIds": [
+          "C-KT-BASE",
+          "C-KT-TASK",
+          "C-KT-ACCENT"
+        ]
+      }
+    ]
+  },
+  {
+    "spaceCode": "CT",
+    "spaceName": "餐厅",
+    "controls": [
+      {
+        "role": "switch",
+        "label": "开关面板",
+        "deviceKey": "开关面板",
+        "buttonCount": 3,
+        "buttons": [
+          {
+            "label": "基础照明",
+            "circuitId": "C-CT-BASE",
+            "action": "toggle"
+          },
+          {
+            "label": "任务照明",
+            "circuitId": "C-CT-TASK",
+            "action": "toggle"
+          },
+          {
+            "label": "重点照明",
+            "circuitId": "C-CT-ACCENT",
+            "action": "toggle"
+          }
+        ],
+        "circuitIds": [
+          "C-CT-BASE",
+          "C-CT-TASK",
+          "C-CT-ACCENT"
+        ]
+      },
+      {
+        "role": "scene",
+        "label": "情景面板",
+        "deviceKey": "情景面板",
+        "buttonCount": 5,
+        "sceneIds": [
+          "S01",
+          "S02",
+          "S03",
+          "S04",
+          "S05"
+        ],
+        "circuitIds": [
+          "C-CT-BASE",
+          "C-CT-TASK",
+          "C-CT-ACCENT"
+        ]
+      },
+      {
+        "role": "wireless",
+        "label": "无线开关",
+        "deviceKey": "无线开关",
+        "buttonCount": 1,
+        "circuitIds": [
+          "C-CT-ACCENT"
+        ]
+      },
+      {
+        "role": "dim",
+        "label": "调光旋钮",
+        "deviceKey": "调光旋钮",
+        "buttonCount": 1,
+        "circuitIds": [
+          "C-CT-BASE"
+        ]
+      }
+    ]
+  },
+  {
+    "spaceCode": "ZW",
+    "spaceName": "主卧",
+    "controls": [
+      {
+        "role": "switch",
+        "label": "开关面板",
+        "deviceKey": "开关面板",
+        "buttonCount": 3,
+        "buttons": [
+          {
+            "label": "基础照明",
+            "circuitId": "C-ZW-BASE",
+            "action": "toggle"
+          },
+          {
+            "label": "任务照明",
+            "circuitId": "C-ZW-TASK",
+            "action": "toggle"
+          },
+          {
+            "label": "重点照明",
+            "circuitId": "C-ZW-ACCENT",
+            "action": "toggle"
+          }
+        ],
+        "circuitIds": [
+          "C-ZW-BASE",
+          "C-ZW-TASK",
+          "C-ZW-ACCENT"
+        ]
+      },
+      {
+        "role": "scene",
+        "label": "情景面板",
+        "deviceKey": "情景面板",
+        "buttonCount": 5,
+        "sceneIds": [
+          "S01",
+          "S02",
+          "S03",
+          "S04",
+          "S05"
+        ],
+        "circuitIds": [
+          "C-ZW-BASE",
+          "C-ZW-TASK",
+          "C-ZW-ACCENT"
+        ]
+      },
+      {
+        "role": "wireless",
+        "label": "无线开关",
+        "deviceKey": "无线开关",
+        "buttonCount": 1,
+        "circuitIds": [
+          "C-ZW-ACCENT"
+        ]
+      },
+      {
+        "role": "dim",
+        "label": "调光旋钮",
+        "deviceKey": "调光旋钮",
+        "buttonCount": 1,
+        "circuitIds": [
+          "C-ZW-BASE"
+        ]
+      }
+    ]
+  },
+  {
+    "spaceCode": "SF",
+    "spaceName": "书房",
+    "controls": [
+      {
+        "role": "switch",
+        "label": "开关面板",
+        "deviceKey": "开关面板",
+        "buttonCount": 3,
+        "buttons": [
+          {
+            "label": "基础照明",
+            "circuitId": "C-SF-BASE",
+            "action": "toggle"
+          },
+          {
+            "label": "任务照明",
+            "circuitId": "C-SF-TASK",
+            "action": "toggle"
+          },
+          {
+            "label": "重点照明",
+            "circuitId": "C-SF-ACCENT",
+            "action": "toggle"
+          }
+        ],
+        "circuitIds": [
+          "C-SF-BASE",
+          "C-SF-TASK",
+          "C-SF-ACCENT"
+        ]
+      },
+      {
+        "role": "scene",
+        "label": "情景面板",
+        "deviceKey": "情景面板",
+        "buttonCount": 5,
+        "sceneIds": [
+          "S01",
+          "S02",
+          "S03",
+          "S04",
+          "S05"
+        ],
+        "circuitIds": [
+          "C-SF-BASE",
+          "C-SF-TASK",
+          "C-SF-ACCENT"
+        ]
+      },
+      {
+        "role": "wireless",
+        "label": "无线开关",
+        "deviceKey": "无线开关",
+        "buttonCount": 1,
+        "circuitIds": [
+          "C-SF-ACCENT"
+        ]
+      },
+      {
+        "role": "dim",
+        "label": "调光旋钮",
+        "deviceKey": "调光旋钮",
+        "buttonCount": 1,
+        "circuitIds": [
+          "C-SF-BASE"
+        ]
+      }
+    ]
+  },
+  {
+    "spaceCode": "WS",
+    "spaceName": "卧室",
+    "controls": [
+      {
+        "role": "switch",
+        "label": "开关面板",
+        "deviceKey": "开关面板",
+        "buttonCount": 3,
+        "buttons": [
+          {
+            "label": "基础照明",
+            "circuitId": "C-WS-BASE",
+            "action": "toggle"
+          },
+          {
+            "label": "任务照明",
+            "circuitId": "C-WS-TASK",
+            "action": "toggle"
+          },
+          {
+            "label": "重点照明",
+            "circuitId": "C-WS-ACCENT",
+            "action": "toggle"
+          }
+        ],
+        "circuitIds": [
+          "C-WS-BASE",
+          "C-WS-TASK",
+          "C-WS-ACCENT"
+        ]
+      },
+      {
+        "role": "scene",
+        "label": "情景面板",
+        "deviceKey": "情景面板",
+        "buttonCount": 5,
+        "sceneIds": [
+          "S01",
+          "S02",
+          "S03",
+          "S04",
+          "S05"
+        ],
+        "circuitIds": [
+          "C-WS-BASE",
+          "C-WS-TASK",
+          "C-WS-ACCENT"
+        ]
+      },
+      {
+        "role": "wireless",
+        "label": "无线开关",
+        "deviceKey": "无线开关",
+        "buttonCount": 1,
+        "circuitIds": [
+          "C-WS-ACCENT"
+        ]
+      },
+      {
+        "role": "dim",
+        "label": "调光旋钮",
+        "deviceKey": "调光旋钮",
+        "buttonCount": 1,
+        "circuitIds": [
+          "C-WS-BASE"
+        ]
+      }
+    ]
+  },
+  {
+    "spaceCode": "LRF",
+    "spaceName": "老人房",
+    "controls": [
+      {
+        "role": "switch",
+        "label": "开关面板",
+        "deviceKey": "开关面板",
+        "buttonCount": 2,
+        "buttons": [
+          {
+            "label": "基础照明",
+            "circuitId": "C-LRF-BASE",
+            "action": "toggle"
+          },
+          {
+            "label": "重点照明",
+            "circuitId": "C-LRF-ACCENT",
+            "action": "toggle"
+          }
+        ],
+        "circuitIds": [
+          "C-LRF-BASE",
+          "C-LRF-ACCENT"
+        ]
+      },
+      {
+        "role": "scene",
+        "label": "情景面板",
+        "deviceKey": "情景面板",
+        "buttonCount": 5,
+        "sceneIds": [
+          "S01",
+          "S02",
+          "S03",
+          "S04",
+          "S05"
+        ],
+        "circuitIds": [
+          "C-LRF-BASE",
+          "C-LRF-ACCENT"
+        ]
+      },
+      {
+        "role": "wireless",
+        "label": "无线开关",
+        "deviceKey": "无线开关",
+        "buttonCount": 1,
+        "circuitIds": [
+          "C-LRF-ACCENT"
+        ]
+      },
+      {
+        "role": "dim",
+        "label": "调光旋钮",
+        "deviceKey": "调光旋钮",
+        "buttonCount": 1,
+        "circuitIds": [
+          "C-LRF-BASE"
+        ]
+      }
+    ]
+  },
+  {
+    "spaceCode": "XHF",
+    "spaceName": "儿童房",
+    "controls": [
+      {
+        "role": "switch",
+        "label": "开关面板",
+        "deviceKey": "开关面板",
+        "buttonCount": 3,
+        "buttons": [
+          {
+            "label": "基础照明",
+            "circuitId": "C-XHF-BASE",
+            "action": "toggle"
+          },
+          {
+            "label": "任务照明",
+            "circuitId": "C-XHF-TASK",
+            "action": "toggle"
+          },
+          {
+            "label": "重点照明",
+            "circuitId": "C-XHF-ACCENT",
+            "action": "toggle"
+          }
+        ],
+        "circuitIds": [
+          "C-XHF-BASE",
+          "C-XHF-TASK",
+          "C-XHF-ACCENT"
+        ]
+      },
+      {
+        "role": "scene",
+        "label": "情景面板",
+        "deviceKey": "情景面板",
+        "buttonCount": 5,
+        "sceneIds": [
+          "S01",
+          "S02",
+          "S03",
+          "S04",
+          "S05"
+        ],
+        "circuitIds": [
+          "C-XHF-BASE",
+          "C-XHF-TASK",
+          "C-XHF-ACCENT"
+        ]
+      },
+      {
+        "role": "wireless",
+        "label": "无线开关",
+        "deviceKey": "无线开关",
+        "buttonCount": 1,
+        "circuitIds": [
+          "C-XHF-ACCENT"
+        ]
+      },
+      {
+        "role": "dim",
+        "label": "调光旋钮",
+        "deviceKey": "调光旋钮",
+        "buttonCount": 1,
+        "circuitIds": [
+          "C-XHF-BASE"
+        ]
+      }
+    ]
+  },
+  {
+    "spaceCode": "XCW",
+    "spaceName": "玄关",
+    "controls": [
+      {
+        "role": "switch",
+        "label": "开关面板",
+        "deviceKey": "开关面板",
+        "buttonCount": 2,
+        "buttons": [
+          {
+            "label": "基础照明",
+            "circuitId": "C-XCW-BASE",
+            "action": "toggle"
+          },
+          {
+            "label": "重点照明",
+            "circuitId": "C-XCW-ACCENT",
+            "action": "toggle"
+          }
+        ],
+        "circuitIds": [
+          "C-XCW-BASE",
+          "C-XCW-ACCENT"
+        ]
+      },
+      {
+        "role": "scene",
+        "label": "情景面板",
+        "deviceKey": "情景面板",
+        "buttonCount": 5,
+        "sceneIds": [
+          "S01",
+          "S02",
+          "S03",
+          "S04",
+          "S05"
+        ],
+        "circuitIds": [
+          "C-XCW-BASE",
+          "C-XCW-ACCENT"
+        ]
+      },
+      {
+        "role": "wireless",
+        "label": "无线开关",
+        "deviceKey": "无线开关",
+        "buttonCount": 1,
+        "circuitIds": [
+          "C-XCW-ACCENT"
+        ]
+      },
+      {
+        "role": "dim",
+        "label": "调光旋钮",
+        "deviceKey": "调光旋钮",
+        "buttonCount": 1,
+        "circuitIds": [
+          "C-XCW-BASE"
+        ]
+      },
+      {
+        "role": "master",
+        "label": "中控屏",
+        "deviceKey": "中控屏",
+        "buttonCount": 1,
+        "sceneIds": [
+          "S01",
+          "S02",
+          "S03",
+          "S04",
+          "S05"
+        ],
+        "circuitIds": [
+          "C-XCW-BASE",
+          "C-XCW-ACCENT"
+        ]
+      }
+    ]
+  },
+  {
+    "spaceCode": "CF",
+    "spaceName": "厨房",
+    "controls": [
+      {
+        "role": "switch",
+        "label": "开关面板",
+        "deviceKey": "开关面板",
+        "buttonCount": 2,
+        "buttons": [
+          {
+            "label": "基础照明",
+            "circuitId": "C-CF-BASE",
+            "action": "toggle"
+          },
+          {
+            "label": "任务照明",
+            "circuitId": "C-CF-TASK",
+            "action": "toggle"
+          }
+        ],
+        "circuitIds": [
+          "C-CF-BASE",
+          "C-CF-TASK"
+        ]
+      },
+      {
+        "role": "scene",
+        "label": "情景面板",
+        "deviceKey": "情景面板",
+        "buttonCount": 5,
+        "sceneIds": [
+          "S01",
+          "S02",
+          "S03",
+          "S04",
+          "S05"
+        ],
+        "circuitIds": [
+          "C-CF-BASE",
+          "C-CF-TASK"
+        ]
+      },
+      {
+        "role": "wireless",
+        "label": "无线开关",
+        "deviceKey": "无线开关",
+        "buttonCount": 1,
+        "circuitIds": [
+          "C-CF-TASK"
+        ]
+      },
+      {
+        "role": "dim",
+        "label": "调光旋钮",
+        "deviceKey": "调光旋钮",
+        "buttonCount": 1,
+        "circuitIds": [
+          "C-CF-BASE"
+        ]
+      }
+    ]
+  },
+  {
+    "spaceCode": "WSJ",
+    "spaceName": "卫生间",
+    "controls": [
+      {
+        "role": "switch",
+        "label": "开关面板",
+        "deviceKey": "开关面板",
+        "buttonCount": 3,
+        "buttons": [
+          {
+            "label": "基础照明",
+            "circuitId": "C-WSJ-BASE",
+            "action": "toggle"
+          },
+          {
+            "label": "任务照明",
+            "circuitId": "C-WSJ-TASK",
+            "action": "toggle"
+          },
+          {
+            "label": "重点照明",
+            "circuitId": "C-WSJ-ACCENT",
+            "action": "toggle"
+          }
+        ],
+        "circuitIds": [
+          "C-WSJ-BASE",
+          "C-WSJ-TASK",
+          "C-WSJ-ACCENT"
+        ]
+      },
+      {
+        "role": "scene",
+        "label": "情景面板",
+        "deviceKey": "情景面板",
+        "buttonCount": 5,
+        "sceneIds": [
+          "S01",
+          "S02",
+          "S03",
+          "S04",
+          "S05"
+        ],
+        "circuitIds": [
+          "C-WSJ-BASE",
+          "C-WSJ-TASK",
+          "C-WSJ-ACCENT"
+        ]
+      },
+      {
+        "role": "wireless",
+        "label": "无线开关",
+        "deviceKey": "无线开关",
+        "buttonCount": 1,
+        "circuitIds": [
+          "C-WSJ-ACCENT"
+        ]
+      },
+      {
+        "role": "dim",
+        "label": "调光旋钮",
+        "deviceKey": "调光旋钮",
+        "buttonCount": 1,
+        "circuitIds": [
+          "C-WSJ-BASE"
+        ]
+      }
+    ]
+  },
+  {
+    "spaceCode": "GDYT",
+    "spaceName": "过道",
+    "controls": [
+      {
+        "role": "switch",
+        "label": "开关面板",
+        "deviceKey": "开关面板",
+        "buttonCount": 2,
+        "buttons": [
+          {
+            "label": "基础照明",
+            "circuitId": "C-GDYT-BASE",
+            "action": "toggle"
+          },
+          {
+            "label": "重点照明",
+            "circuitId": "C-GDYT-ACCENT",
+            "action": "toggle"
+          }
+        ],
+        "circuitIds": [
+          "C-GDYT-BASE",
+          "C-GDYT-ACCENT"
+        ]
+      },
+      {
+        "role": "scene",
+        "label": "情景面板",
+        "deviceKey": "情景面板",
+        "buttonCount": 5,
+        "sceneIds": [
+          "S01",
+          "S02",
+          "S03",
+          "S04",
+          "S05"
+        ],
+        "circuitIds": [
+          "C-GDYT-BASE",
+          "C-GDYT-ACCENT"
+        ]
+      },
+      {
+        "role": "wireless",
+        "label": "无线开关",
+        "deviceKey": "无线开关",
+        "buttonCount": 1,
+        "circuitIds": [
+          "C-GDYT-ACCENT"
+        ]
+      },
+      {
+        "role": "dim",
+        "label": "调光旋钮",
+        "deviceKey": "调光旋钮",
+        "buttonCount": 1,
+        "circuitIds": [
+          "C-GDYT-BASE"
+        ]
+      }
+    ]
+  },
+  {
+    "spaceCode": "YT",
+    "spaceName": "阳台",
+    "controls": [
+      {
+        "role": "switch",
+        "label": "开关面板",
+        "deviceKey": "开关面板",
+        "buttonCount": 1,
+        "buttons": [
+          {
+            "label": "基础照明",
+            "circuitId": "C-YT-BASE",
+            "action": "toggle"
+          }
+        ],
+        "circuitIds": [
+          "C-YT-BASE"
+        ]
+      },
+      {
+        "role": "scene",
+        "label": "情景面板",
+        "deviceKey": "情景面板",
+        "buttonCount": 5,
+        "sceneIds": [
+          "S01",
+          "S02",
+          "S03",
+          "S04",
+          "S05"
+        ],
+        "circuitIds": [
+          "C-YT-BASE"
+        ]
+      },
+      {
+        "role": "wireless",
+        "label": "无线开关",
+        "deviceKey": "无线开关",
+        "buttonCount": 1,
+        "circuitIds": [
+          "C-YT-BASE"
+        ]
+      },
+      {
+        "role": "dim",
+        "label": "调光旋钮",
+        "deviceKey": "调光旋钮",
+        "buttonCount": 1,
+        "circuitIds": [
+          "C-YT-BASE"
+        ]
+      }
+    ]
+  },
+  {
+    "spaceCode": "YMJ",
+    "spaceName": "衣帽间",
+    "controls": [
+      {
+        "role": "switch",
+        "label": "开关面板",
+        "deviceKey": "开关面板",
+        "buttonCount": 3,
+        "buttons": [
+          {
+            "label": "基础照明",
+            "circuitId": "C-YMJ-BASE",
+            "action": "toggle"
+          },
+          {
+            "label": "任务照明",
+            "circuitId": "C-YMJ-TASK",
+            "action": "toggle"
+          },
+          {
+            "label": "重点照明",
+            "circuitId": "C-YMJ-ACCENT",
+            "action": "toggle"
+          }
+        ],
+        "circuitIds": [
+          "C-YMJ-BASE",
+          "C-YMJ-TASK",
+          "C-YMJ-ACCENT"
+        ]
+      },
+      {
+        "role": "scene",
+        "label": "情景面板",
+        "deviceKey": "情景面板",
+        "buttonCount": 5,
+        "sceneIds": [
+          "S01",
+          "S02",
+          "S03",
+          "S04",
+          "S05"
+        ],
+        "circuitIds": [
+          "C-YMJ-BASE",
+          "C-YMJ-TASK",
+          "C-YMJ-ACCENT"
+        ]
+      },
+      {
+        "role": "wireless",
+        "label": "无线开关",
+        "deviceKey": "无线开关",
+        "buttonCount": 1,
+        "circuitIds": [
+          "C-YMJ-ACCENT"
+        ]
+      },
+      {
+        "role": "dim",
+        "label": "调光旋钮",
+        "deviceKey": "调光旋钮",
+        "buttonCount": 1,
+        "circuitIds": [
+          "C-YMJ-BASE"
+        ]
+      }
+    ]
+  },
+  {
+    "spaceCode": "WSWSJ",
+    "spaceName": "卧室卫生间",
+    "controls": [
+      {
+        "role": "switch",
+        "label": "开关面板",
+        "deviceKey": "开关面板",
+        "buttonCount": 3,
+        "buttons": [
+          {
+            "label": "基础照明",
+            "circuitId": "C-WSWSJ-BASE",
+            "action": "toggle"
+          },
+          {
+            "label": "任务照明",
+            "circuitId": "C-WSWSJ-TASK",
+            "action": "toggle"
+          },
+          {
+            "label": "重点照明",
+            "circuitId": "C-WSWSJ-ACCENT",
+            "action": "toggle"
+          }
+        ],
+        "circuitIds": [
+          "C-WSWSJ-BASE",
+          "C-WSWSJ-TASK",
+          "C-WSWSJ-ACCENT"
+        ]
+      },
+      {
+        "role": "scene",
+        "label": "情景面板",
+        "deviceKey": "情景面板",
+        "buttonCount": 5,
+        "sceneIds": [
+          "S01",
+          "S02",
+          "S03",
+          "S04",
+          "S05"
+        ],
+        "circuitIds": [
+          "C-WSWSJ-BASE",
+          "C-WSWSJ-TASK",
+          "C-WSWSJ-ACCENT"
+        ]
+      },
+      {
+        "role": "wireless",
+        "label": "无线开关",
+        "deviceKey": "无线开关",
+        "buttonCount": 1,
+        "circuitIds": [
+          "C-WSWSJ-ACCENT"
+        ]
+      },
+      {
+        "role": "dim",
+        "label": "调光旋钮",
+        "deviceKey": "调光旋钮",
+        "buttonCount": 1,
+        "circuitIds": [
+          "C-WSWSJ-BASE"
+        ]
+      }
+    ]
+  },
+  {
+    "spaceCode": "CS",
+    "spaceName": "茶室",
+    "controls": [
+      {
+        "role": "switch",
+        "label": "开关面板",
+        "deviceKey": "开关面板",
+        "buttonCount": 2,
+        "buttons": [
+          {
+            "label": "基础照明",
+            "circuitId": "C-CS-BASE",
+            "action": "toggle"
+          },
+          {
+            "label": "重点照明",
+            "circuitId": "C-CS-ACCENT",
+            "action": "toggle"
+          }
+        ],
+        "circuitIds": [
+          "C-CS-BASE",
+          "C-CS-ACCENT"
+        ]
+      },
+      {
+        "role": "scene",
+        "label": "情景面板",
+        "deviceKey": "情景面板",
+        "buttonCount": 5,
+        "sceneIds": [
+          "S01",
+          "S02",
+          "S03",
+          "S04",
+          "S05"
+        ],
+        "circuitIds": [
+          "C-CS-BASE",
+          "C-CS-ACCENT"
+        ]
+      },
+      {
+        "role": "wireless",
+        "label": "无线开关",
+        "deviceKey": "无线开关",
+        "buttonCount": 1,
+        "circuitIds": [
+          "C-CS-ACCENT"
+        ]
+      },
+      {
+        "role": "dim",
+        "label": "调光旋钮",
+        "deviceKey": "调光旋钮",
+        "buttonCount": 1,
+        "circuitIds": [
+          "C-CS-BASE"
+        ]
+      },
+      {
+        "role": "master",
+        "label": "中控屏",
+        "deviceKey": "中控屏",
+        "buttonCount": 1,
+        "sceneIds": [
+          "S01",
+          "S02",
+          "S03",
+          "S04",
+          "S05"
+        ],
+        "circuitIds": [
+          "C-CS-BASE",
+          "C-CS-ACCENT"
+        ]
+      }
+    ]
+  }
+]

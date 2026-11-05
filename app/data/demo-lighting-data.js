@@ -1,0 +1,9420 @@
+/* 自动生成：20261030-v1。全部为 Demo 模拟数据，勿手改；重新生成：npm run demo:lighting-data */
+window.__DEMO_LIGHTING__ = {
+  "manifest": {
+    "version": "20261030-v1",
+    "generatedAt": "2026-10-30",
+    "source": "simulated",
+    "disclaimer": "全部为 Demo 模拟数据，不得用于真实选品、施工、照度计算或验收。",
+    "counts": {
+      "spaces": 15,
+      "products": 20,
+      "activeProducts": 17,
+      "passiveProducts": 3,
+      "iesFiles": 17,
+      "ldtFiles": 17,
+      "obstacles": 15,
+      "circuits": 38,
+      "circuitLights": 205,
+      "gateways": 4,
+      "scenes": 5,
+      "sceneRows": 225,
+      "controlSpaces": 15,
+      "controls": 63,
+      "controlBindings": 113
+    },
+    "checks": {
+      "targetLuxSpaces": 15,
+      "productKeys": 20,
+      "allCircuitsHaveGateway": true,
+      "daliAddressesWithin64": true,
+      "circuitLightSum": 205,
+      "sceneRows": 225,
+      "controlsCoverAllCircuits": true
+    }
+  },
+  "products": {
+    "筒灯": {
+      "brand": "DEMO Lighting",
+      "source": "simulated",
+      "photometryStatus": "synthetic",
+      "protocols": [
+        "DALI",
+        "0-10V",
+        "KNX",
+        "无线"
+      ],
+      "dimmingProtocols": [
+        "DALI",
+        "0-10V"
+      ],
+      "cri": 90,
+      "ip": "IP20",
+      "salesUnit": "piece",
+      "key": "筒灯",
+      "productId": "SIM-DL-9W-3000K",
+      "model": "SIM-DL-9W",
+      "category": "筒灯",
+      "watt": 9,
+      "lumen": 810,
+      "cct": 3000,
+      "beam": 60,
+      "ugr": 18,
+      "notes": "模拟 9W 深防眩筒灯，IES/LDT 为合成配光。",
+      "efficacy": 90,
+      "fileBase": "SIM-DL-9W-3000K",
+      "iesFile": "ies/SIM-DL-9W-3000K.ies",
+      "ldtFile": "ldt/SIM-DL-9W-3000K.ldt"
+    },
+    "射灯": {
+      "brand": "DEMO Lighting",
+      "source": "simulated",
+      "photometryStatus": "synthetic",
+      "protocols": [
+        "DALI",
+        "0-10V",
+        "KNX",
+        "无线"
+      ],
+      "dimmingProtocols": [
+        "DALI",
+        "0-10V"
+      ],
+      "cri": 90,
+      "ip": "IP20",
+      "salesUnit": "piece",
+      "key": "射灯",
+      "productId": "SIM-SP-7W-3000K",
+      "model": "SIM-SP-7W",
+      "category": "射灯",
+      "watt": 7,
+      "lumen": 620,
+      "cct": 3000,
+      "beam": 24,
+      "ugr": 16,
+      "notes": "模拟 7W 窄光束射灯，用于重点/洗墙示意。",
+      "efficacy": 88.6,
+      "fileBase": "SIM-SP-7W-3000K",
+      "iesFile": "ies/SIM-SP-7W-3000K.ies",
+      "ldtFile": "ldt/SIM-SP-7W-3000K.ldt"
+    },
+    "吸顶灯": {
+      "brand": "DEMO Lighting",
+      "source": "simulated",
+      "photometryStatus": "synthetic",
+      "protocols": [
+        "DALI",
+        "0-10V",
+        "KNX",
+        "无线"
+      ],
+      "dimmingProtocols": [
+        "DALI",
+        "0-10V"
+      ],
+      "cri": 90,
+      "ip": "IP20",
+      "salesUnit": "piece",
+      "key": "吸顶灯",
+      "productId": "SIM-CL-24W-3500K",
+      "model": "SIM-CL-24W",
+      "category": "吸顶灯",
+      "watt": 24,
+      "lumen": 2200,
+      "cct": 3500,
+      "beam": 110,
+      "ugr": 22,
+      "notes": "模拟 24W 吸顶灯，宽配光。",
+      "efficacy": 91.7,
+      "fileBase": "SIM-CL-24W-3500K",
+      "iesFile": "ies/SIM-CL-24W-3500K.ies",
+      "ldtFile": "ldt/SIM-CL-24W-3500K.ldt"
+    },
+    "吊灯": {
+      "brand": "DEMO Lighting",
+      "source": "simulated",
+      "photometryStatus": "synthetic",
+      "protocols": [
+        "DALI",
+        "0-10V",
+        "KNX",
+        "无线"
+      ],
+      "dimmingProtocols": [
+        "DALI",
+        "0-10V"
+      ],
+      "cri": 90,
+      "ip": "IP20",
+      "salesUnit": "piece",
+      "key": "吊灯",
+      "productId": "SIM-PD-32W-3000K",
+      "model": "SIM-PD-32W",
+      "category": "吊灯",
+      "watt": 32,
+      "lumen": 2600,
+      "cct": 3000,
+      "beam": 90,
+      "ugr": 19,
+      "notes": "模拟 32W 餐吊/装饰吊灯。",
+      "efficacy": 81.3,
+      "fileBase": "SIM-PD-32W-3000K",
+      "iesFile": "ies/SIM-PD-32W-3000K.ies",
+      "ldtFile": "ldt/SIM-PD-32W-3000K.ldt"
+    },
+    "面板灯": {
+      "brand": "DEMO Lighting",
+      "source": "simulated",
+      "photometryStatus": "synthetic",
+      "protocols": [
+        "DALI",
+        "0-10V",
+        "KNX",
+        "无线"
+      ],
+      "dimmingProtocols": [
+        "DALI",
+        "0-10V"
+      ],
+      "cri": 90,
+      "ip": "IP20",
+      "salesUnit": "piece",
+      "key": "面板灯",
+      "productId": "SIM-PL-36W-4000K",
+      "model": "SIM-PL-36W",
+      "category": "面板灯",
+      "watt": 36,
+      "lumen": 3200,
+      "cct": 4000,
+      "beam": 110,
+      "ugr": 19,
+      "notes": "模拟 600×600 面板灯。",
+      "efficacy": 88.9,
+      "fileBase": "SIM-PL-36W-4000K",
+      "iesFile": "ies/SIM-PL-36W-4000K.ies",
+      "ldtFile": "ldt/SIM-PL-36W-4000K.ldt"
+    },
+    "格栅灯": {
+      "brand": "DEMO Lighting",
+      "source": "simulated",
+      "photometryStatus": "synthetic",
+      "protocols": [
+        "DALI",
+        "0-10V",
+        "KNX",
+        "无线"
+      ],
+      "dimmingProtocols": [
+        "DALI",
+        "0-10V"
+      ],
+      "cri": 90,
+      "ip": "IP20",
+      "salesUnit": "piece",
+      "key": "格栅灯",
+      "productId": "SIM-GR-24W-4000K",
+      "model": "SIM-GR-24W",
+      "category": "格栅灯",
+      "watt": 24,
+      "lumen": 2400,
+      "cct": 4000,
+      "beam": 90,
+      "ugr": 19,
+      "notes": "模拟格栅灯，用于厨房/卫生间。",
+      "efficacy": 100,
+      "fileBase": "SIM-GR-24W-4000K",
+      "iesFile": "ies/SIM-GR-24W-4000K.ies",
+      "ldtFile": "ldt/SIM-GR-24W-4000K.ldt"
+    },
+    "壁灯": {
+      "brand": "DEMO Lighting",
+      "source": "simulated",
+      "photometryStatus": "synthetic",
+      "protocols": [
+        "DALI",
+        "0-10V",
+        "KNX",
+        "无线"
+      ],
+      "dimmingProtocols": [
+        "DALI",
+        "0-10V"
+      ],
+      "cri": 90,
+      "ip": "IP20",
+      "salesUnit": "piece",
+      "key": "壁灯",
+      "productId": "SIM-WL-8W-3000K",
+      "model": "SIM-WL-8W",
+      "category": "壁灯",
+      "watt": 8,
+      "lumen": 520,
+      "cct": 3000,
+      "beam": 60,
+      "ugr": 19,
+      "notes": "模拟床头/过道壁灯。",
+      "efficacy": 65,
+      "fileBase": "SIM-WL-8W-3000K",
+      "iesFile": "ies/SIM-WL-8W-3000K.ies",
+      "ldtFile": "ldt/SIM-WL-8W-3000K.ldt"
+    },
+    "台灯": {
+      "brand": "DEMO Lighting",
+      "source": "simulated",
+      "photometryStatus": "synthetic",
+      "protocols": [
+        "DALI",
+        "0-10V",
+        "KNX",
+        "无线"
+      ],
+      "dimmingProtocols": [
+        "DALI",
+        "0-10V"
+      ],
+      "cri": 90,
+      "ip": "IP20",
+      "salesUnit": "piece",
+      "key": "台灯",
+      "productId": "SIM-TL-8W-4000K",
+      "model": "SIM-TL-8W",
+      "category": "台灯",
+      "watt": 8,
+      "lumen": 600,
+      "cct": 4000,
+      "beam": 60,
+      "ugr": 19,
+      "notes": "模拟阅读台灯，任务照明。",
+      "efficacy": 75,
+      "fileBase": "SIM-TL-8W-4000K",
+      "iesFile": "ies/SIM-TL-8W-4000K.ies",
+      "ldtFile": "ldt/SIM-TL-8W-4000K.ldt"
+    },
+    "落地灯": {
+      "brand": "DEMO Lighting",
+      "source": "simulated",
+      "photometryStatus": "synthetic",
+      "protocols": [
+        "DALI",
+        "0-10V",
+        "KNX",
+        "无线"
+      ],
+      "dimmingProtocols": [
+        "DALI",
+        "0-10V"
+      ],
+      "cri": 90,
+      "ip": "IP20",
+      "salesUnit": "piece",
+      "key": "落地灯",
+      "productId": "SIM-FL-10W-3000K",
+      "model": "SIM-FL-10W",
+      "category": "落地灯",
+      "watt": 10,
+      "lumen": 800,
+      "cct": 3000,
+      "beam": 60,
+      "ugr": 19,
+      "notes": "模拟阅读落地灯，任务照明。",
+      "efficacy": 80,
+      "fileBase": "SIM-FL-10W-3000K",
+      "iesFile": "ies/SIM-FL-10W-3000K.ies",
+      "ldtFile": "ldt/SIM-FL-10W-3000K.ldt"
+    },
+    "磁吸泛光灯 · 灯体": {
+      "brand": "DEMO Lighting",
+      "source": "simulated",
+      "photometryStatus": "synthetic",
+      "protocols": [
+        "DALI",
+        "0-10V",
+        "KNX",
+        "无线"
+      ],
+      "dimmingProtocols": [
+        "DALI",
+        "0-10V"
+      ],
+      "cri": 90,
+      "ip": "IP20",
+      "salesUnit": "piece",
+      "key": "磁吸泛光灯 · 灯体",
+      "productId": "SIM-MG-12W-3000K",
+      "model": "SIM-MG-12W",
+      "category": "磁吸泛光灯",
+      "watt": 12,
+      "lumen": 1000,
+      "cct": 3000,
+      "beam": 36,
+      "ugr": 19,
+      "notes": "模拟磁吸泛光灯模块。",
+      "efficacy": 83.3,
+      "fileBase": "SIM-MG-12W-3000K",
+      "iesFile": "ies/SIM-MG-12W-3000K.ies",
+      "ldtFile": "ldt/SIM-MG-12W-3000K.ldt"
+    },
+    "磁吸格栅灯 · 灯体": {
+      "brand": "DEMO Lighting",
+      "source": "simulated",
+      "photometryStatus": "synthetic",
+      "protocols": [
+        "DALI",
+        "0-10V",
+        "KNX",
+        "无线"
+      ],
+      "dimmingProtocols": [
+        "DALI",
+        "0-10V"
+      ],
+      "cri": 90,
+      "ip": "IP20",
+      "salesUnit": "piece",
+      "key": "磁吸格栅灯 · 灯体",
+      "productId": "SIM-MGG-12W-4000K",
+      "model": "SIM-MGG-12W",
+      "category": "磁吸格栅灯",
+      "watt": 12,
+      "lumen": 1000,
+      "cct": 4000,
+      "beam": 36,
+      "ugr": 19,
+      "notes": "模拟磁吸格栅灯模块。",
+      "efficacy": 83.3,
+      "fileBase": "SIM-MGG-12W-4000K",
+      "iesFile": "ies/SIM-MGG-12W-4000K.ies",
+      "ldtFile": "ldt/SIM-MGG-12W-4000K.ldt"
+    },
+    "轨道射灯 · 灯头": {
+      "brand": "DEMO Lighting",
+      "source": "simulated",
+      "photometryStatus": "synthetic",
+      "protocols": [
+        "DALI",
+        "0-10V",
+        "KNX",
+        "无线"
+      ],
+      "dimmingProtocols": [
+        "DALI",
+        "0-10V"
+      ],
+      "cri": 90,
+      "ip": "IP20",
+      "salesUnit": "piece",
+      "key": "轨道射灯 · 灯头",
+      "productId": "SIM-TH-9W-3000K",
+      "model": "SIM-TH-9W",
+      "category": "轨道射灯灯头",
+      "watt": 9,
+      "lumen": 850,
+      "cct": 3000,
+      "beam": 24,
+      "ugr": 16,
+      "notes": "模拟轨道射灯灯头。",
+      "efficacy": 94.4,
+      "fileBase": "SIM-TH-9W-3000K",
+      "iesFile": "ies/SIM-TH-9W-3000K.ies",
+      "ldtFile": "ldt/SIM-TH-9W-3000K.ldt"
+    },
+    "灯槽灯带": {
+      "brand": "DEMO Lighting",
+      "source": "simulated",
+      "photometryStatus": "synthetic",
+      "protocols": [
+        "DALI",
+        "0-10V",
+        "KNX",
+        "无线"
+      ],
+      "dimmingProtocols": [
+        "DALI",
+        "0-10V"
+      ],
+      "cri": 90,
+      "ip": "IP20",
+      "salesUnit": "meter",
+      "key": "灯槽灯带",
+      "productId": "SIM-LS-6W/M-3000K",
+      "model": "SIM-LS-6W/M",
+      "category": "灯槽灯带",
+      "watt": 6,
+      "lumen": 600,
+      "cct": 3000,
+      "beam": 120,
+      "ugr": 22,
+      "notes": "模拟 6W/m 灯槽灯带，按实测米数计量。",
+      "efficacy": 100,
+      "fileBase": "SIM-LS-6W-M-3000K",
+      "iesFile": "ies/SIM-LS-6W-M-3000K.ies",
+      "ldtFile": "ldt/SIM-LS-6W-M-3000K.ldt"
+    },
+    "窗帘灯带": {
+      "brand": "DEMO Lighting",
+      "source": "simulated",
+      "photometryStatus": "synthetic",
+      "protocols": [
+        "DALI",
+        "0-10V",
+        "KNX",
+        "无线"
+      ],
+      "dimmingProtocols": [
+        "DALI",
+        "0-10V"
+      ],
+      "cri": 90,
+      "ip": "IP20",
+      "salesUnit": "meter",
+      "key": "窗帘灯带",
+      "productId": "SIM-CLS-6W/M-3000K",
+      "model": "SIM-CLS-6W/M",
+      "category": "窗帘灯带",
+      "watt": 6,
+      "lumen": 600,
+      "cct": 3000,
+      "beam": 120,
+      "ugr": 22,
+      "notes": "模拟 6W/m 窗帘灯带，按窗宽计量。",
+      "efficacy": 100,
+      "fileBase": "SIM-CLS-6W-M-3000K",
+      "iesFile": "ies/SIM-CLS-6W-M-3000K.ies",
+      "ldtFile": "ldt/SIM-CLS-6W-M-3000K.ldt"
+    },
+    "柜体灯带": {
+      "brand": "DEMO Lighting",
+      "source": "simulated",
+      "photometryStatus": "synthetic",
+      "protocols": [
+        "DALI",
+        "0-10V",
+        "KNX",
+        "无线"
+      ],
+      "dimmingProtocols": [
+        "DALI",
+        "0-10V"
+      ],
+      "cri": 90,
+      "ip": "IP20",
+      "salesUnit": "meter",
+      "key": "柜体灯带",
+      "productId": "SIM-CB-6W/M-3000K",
+      "model": "SIM-CB-6W/M",
+      "category": "柜体灯带",
+      "watt": 6,
+      "lumen": 500,
+      "cct": 3000,
+      "beam": 120,
+      "ugr": 22,
+      "notes": "模拟 6W/m 柜体灯带，按柜体长边计量。",
+      "efficacy": 83.3,
+      "fileBase": "SIM-CB-6W-M-3000K",
+      "iesFile": "ies/SIM-CB-6W-M-3000K.ies",
+      "ldtFile": "ldt/SIM-CB-6W-M-3000K.ldt"
+    },
+    "直线灯带": {
+      "brand": "DEMO Lighting",
+      "source": "simulated",
+      "photometryStatus": "synthetic",
+      "protocols": [
+        "DALI",
+        "0-10V",
+        "KNX",
+        "无线"
+      ],
+      "dimmingProtocols": [
+        "DALI",
+        "0-10V"
+      ],
+      "cri": 90,
+      "ip": "IP20",
+      "salesUnit": "meter",
+      "key": "直线灯带",
+      "productId": "SIM-SL-6W/M-3000K",
+      "model": "SIM-SL-6W/M",
+      "category": "直线灯带",
+      "watt": 6,
+      "lumen": 600,
+      "cct": 3000,
+      "beam": 120,
+      "ugr": 22,
+      "notes": "模拟 6W/m 直线灯带。",
+      "efficacy": 100,
+      "fileBase": "SIM-SL-6W-M-3000K",
+      "iesFile": "ies/SIM-SL-6W-M-3000K.ies",
+      "ldtFile": "ldt/SIM-SL-6W-M-3000K.ldt"
+    },
+    "贴墙灯带": {
+      "brand": "DEMO Lighting",
+      "source": "simulated",
+      "photometryStatus": "synthetic",
+      "protocols": [
+        "DALI",
+        "0-10V",
+        "KNX",
+        "无线"
+      ],
+      "dimmingProtocols": [
+        "DALI",
+        "0-10V"
+      ],
+      "cri": 90,
+      "ip": "IP20",
+      "salesUnit": "meter",
+      "key": "贴墙灯带",
+      "productId": "SIM-WSL-6W/M-3000K",
+      "model": "SIM-WSL-6W/M",
+      "category": "贴墙灯带",
+      "watt": 6,
+      "lumen": 600,
+      "cct": 3000,
+      "beam": 120,
+      "ugr": 22,
+      "notes": "模拟 6W/m 贴墙灯带。",
+      "efficacy": 100,
+      "fileBase": "SIM-WSL-6W-M-3000K",
+      "iesFile": "ies/SIM-WSL-6W-M-3000K.ies",
+      "ldtFile": "ldt/SIM-WSL-6W-M-3000K.ldt"
+    },
+    "轨道射灯 · 轨道": {
+      "brand": "DEMO Lighting",
+      "source": "simulated",
+      "photometryStatus": "not_applicable",
+      "protocols": [],
+      "dimmingProtocols": [],
+      "cri": 90,
+      "ip": "IP20",
+      "salesUnit": "meter",
+      "key": "轨道射灯 · 轨道",
+      "productId": "SIM-TRACK-1M",
+      "model": "SIM-TRACK-1M",
+      "category": "轨道",
+      "watt": 0,
+      "lumen": 0,
+      "cct": null,
+      "beam": null,
+      "ugr": null,
+      "notes": "被动轨道载体，无独立配光；按模块/米计价。",
+      "efficacy": null,
+      "fileBase": "SIM-TRACK-1M",
+      "iesFile": null,
+      "ldtFile": null
+    },
+    "磁吸泛光灯 · 磁吸轨道": {
+      "brand": "DEMO Lighting",
+      "source": "simulated",
+      "photometryStatus": "not_applicable",
+      "protocols": [],
+      "dimmingProtocols": [],
+      "cri": 90,
+      "ip": "IP20",
+      "salesUnit": "meter",
+      "key": "磁吸泛光灯 · 磁吸轨道",
+      "productId": "SIM-MTRACK-1M",
+      "model": "SIM-MTRACK-1M",
+      "category": "磁吸轨道",
+      "watt": 0,
+      "lumen": 0,
+      "cct": null,
+      "beam": null,
+      "ugr": null,
+      "notes": "被动磁吸轨道载体，无独立配光；按模块/米计价。",
+      "efficacy": null,
+      "fileBase": "SIM-MTRACK-1M",
+      "iesFile": null,
+      "ldtFile": null
+    },
+    "磁吸格栅灯 · 磁吸轨道": {
+      "brand": "DEMO Lighting",
+      "source": "simulated",
+      "photometryStatus": "not_applicable",
+      "protocols": [],
+      "dimmingProtocols": [],
+      "cri": 90,
+      "ip": "IP20",
+      "salesUnit": "meter",
+      "key": "磁吸格栅灯 · 磁吸轨道",
+      "productId": "SIM-MTRACK-1M",
+      "model": "SIM-MTRACK-1M",
+      "category": "磁吸轨道",
+      "watt": 0,
+      "lumen": 0,
+      "cct": null,
+      "beam": null,
+      "ugr": null,
+      "notes": "被动磁吸轨道载体，无独立配光；按模块/米计价。",
+      "efficacy": null,
+      "fileBase": "SIM-MTRACK-1M",
+      "iesFile": null,
+      "ldtFile": null
+    }
+  },
+  "productsByKey": {
+    "筒灯": {
+      "brand": "DEMO Lighting",
+      "source": "simulated",
+      "photometryStatus": "synthetic",
+      "protocols": [
+        "DALI",
+        "0-10V",
+        "KNX",
+        "无线"
+      ],
+      "dimmingProtocols": [
+        "DALI",
+        "0-10V"
+      ],
+      "cri": 90,
+      "ip": "IP20",
+      "salesUnit": "piece",
+      "key": "筒灯",
+      "productId": "SIM-DL-9W-3000K",
+      "model": "SIM-DL-9W",
+      "category": "筒灯",
+      "watt": 9,
+      "lumen": 810,
+      "cct": 3000,
+      "beam": 60,
+      "ugr": 18,
+      "notes": "模拟 9W 深防眩筒灯，IES/LDT 为合成配光。",
+      "efficacy": 90,
+      "fileBase": "SIM-DL-9W-3000K",
+      "iesFile": "ies/SIM-DL-9W-3000K.ies",
+      "ldtFile": "ldt/SIM-DL-9W-3000K.ldt"
+    },
+    "射灯": {
+      "brand": "DEMO Lighting",
+      "source": "simulated",
+      "photometryStatus": "synthetic",
+      "protocols": [
+        "DALI",
+        "0-10V",
+        "KNX",
+        "无线"
+      ],
+      "dimmingProtocols": [
+        "DALI",
+        "0-10V"
+      ],
+      "cri": 90,
+      "ip": "IP20",
+      "salesUnit": "piece",
+      "key": "射灯",
+      "productId": "SIM-SP-7W-3000K",
+      "model": "SIM-SP-7W",
+      "category": "射灯",
+      "watt": 7,
+      "lumen": 620,
+      "cct": 3000,
+      "beam": 24,
+      "ugr": 16,
+      "notes": "模拟 7W 窄光束射灯，用于重点/洗墙示意。",
+      "efficacy": 88.6,
+      "fileBase": "SIM-SP-7W-3000K",
+      "iesFile": "ies/SIM-SP-7W-3000K.ies",
+      "ldtFile": "ldt/SIM-SP-7W-3000K.ldt"
+    },
+    "吸顶灯": {
+      "brand": "DEMO Lighting",
+      "source": "simulated",
+      "photometryStatus": "synthetic",
+      "protocols": [
+        "DALI",
+        "0-10V",
+        "KNX",
+        "无线"
+      ],
+      "dimmingProtocols": [
+        "DALI",
+        "0-10V"
+      ],
+      "cri": 90,
+      "ip": "IP20",
+      "salesUnit": "piece",
+      "key": "吸顶灯",
+      "productId": "SIM-CL-24W-3500K",
+      "model": "SIM-CL-24W",
+      "category": "吸顶灯",
+      "watt": 24,
+      "lumen": 2200,
+      "cct": 3500,
+      "beam": 110,
+      "ugr": 22,
+      "notes": "模拟 24W 吸顶灯，宽配光。",
+      "efficacy": 91.7,
+      "fileBase": "SIM-CL-24W-3500K",
+      "iesFile": "ies/SIM-CL-24W-3500K.ies",
+      "ldtFile": "ldt/SIM-CL-24W-3500K.ldt"
+    },
+    "吊灯": {
+      "brand": "DEMO Lighting",
+      "source": "simulated",
+      "photometryStatus": "synthetic",
+      "protocols": [
+        "DALI",
+        "0-10V",
+        "KNX",
+        "无线"
+      ],
+      "dimmingProtocols": [
+        "DALI",
+        "0-10V"
+      ],
+      "cri": 90,
+      "ip": "IP20",
+      "salesUnit": "piece",
+      "key": "吊灯",
+      "productId": "SIM-PD-32W-3000K",
+      "model": "SIM-PD-32W",
+      "category": "吊灯",
+      "watt": 32,
+      "lumen": 2600,
+      "cct": 3000,
+      "beam": 90,
+      "ugr": 19,
+      "notes": "模拟 32W 餐吊/装饰吊灯。",
+      "efficacy": 81.3,
+      "fileBase": "SIM-PD-32W-3000K",
+      "iesFile": "ies/SIM-PD-32W-3000K.ies",
+      "ldtFile": "ldt/SIM-PD-32W-3000K.ldt"
+    },
+    "面板灯": {
+      "brand": "DEMO Lighting",
+      "source": "simulated",
+      "photometryStatus": "synthetic",
+      "protocols": [
+        "DALI",
+        "0-10V",
+        "KNX",
+        "无线"
+      ],
+      "dimmingProtocols": [
+        "DALI",
+        "0-10V"
+      ],
+      "cri": 90,
+      "ip": "IP20",
+      "salesUnit": "piece",
+      "key": "面板灯",
+      "productId": "SIM-PL-36W-4000K",
+      "model": "SIM-PL-36W",
+      "category": "面板灯",
+      "watt": 36,
+      "lumen": 3200,
+      "cct": 4000,
+      "beam": 110,
+      "ugr": 19,
+      "notes": "模拟 600×600 面板灯。",
+      "efficacy": 88.9,
+      "fileBase": "SIM-PL-36W-4000K",
+      "iesFile": "ies/SIM-PL-36W-4000K.ies",
+      "ldtFile": "ldt/SIM-PL-36W-4000K.ldt"
+    },
+    "格栅灯": {
+      "brand": "DEMO Lighting",
+      "source": "simulated",
+      "photometryStatus": "synthetic",
+      "protocols": [
+        "DALI",
+        "0-10V",
+        "KNX",
+        "无线"
+      ],
+      "dimmingProtocols": [
+        "DALI",
+        "0-10V"
+      ],
+      "cri": 90,
+      "ip": "IP20",
+      "salesUnit": "piece",
+      "key": "格栅灯",
+      "productId": "SIM-GR-24W-4000K",
+      "model": "SIM-GR-24W",
+      "category": "格栅灯",
+      "watt": 24,
+      "lumen": 2400,
+      "cct": 4000,
+      "beam": 90,
+      "ugr": 19,
+      "notes": "模拟格栅灯，用于厨房/卫生间。",
+      "efficacy": 100,
+      "fileBase": "SIM-GR-24W-4000K",
+      "iesFile": "ies/SIM-GR-24W-4000K.ies",
+      "ldtFile": "ldt/SIM-GR-24W-4000K.ldt"
+    },
+    "壁灯": {
+      "brand": "DEMO Lighting",
+      "source": "simulated",
+      "photometryStatus": "synthetic",
+      "protocols": [
+        "DALI",
+        "0-10V",
+        "KNX",
+        "无线"
+      ],
+      "dimmingProtocols": [
+        "DALI",
+        "0-10V"
+      ],
+      "cri": 90,
+      "ip": "IP20",
+      "salesUnit": "piece",
+      "key": "壁灯",
+      "productId": "SIM-WL-8W-3000K",
+      "model": "SIM-WL-8W",
+      "category": "壁灯",
+      "watt": 8,
+      "lumen": 520,
+      "cct": 3000,
+      "beam": 60,
+      "ugr": 19,
+      "notes": "模拟床头/过道壁灯。",
+      "efficacy": 65,
+      "fileBase": "SIM-WL-8W-3000K",
+      "iesFile": "ies/SIM-WL-8W-3000K.ies",
+      "ldtFile": "ldt/SIM-WL-8W-3000K.ldt"
+    },
+    "台灯": {
+      "brand": "DEMO Lighting",
+      "source": "simulated",
+      "photometryStatus": "synthetic",
+      "protocols": [
+        "DALI",
+        "0-10V",
+        "KNX",
+        "无线"
+      ],
+      "dimmingProtocols": [
+        "DALI",
+        "0-10V"
+      ],
+      "cri": 90,
+      "ip": "IP20",
+      "salesUnit": "piece",
+      "key": "台灯",
+      "productId": "SIM-TL-8W-4000K",
+      "model": "SIM-TL-8W",
+      "category": "台灯",
+      "watt": 8,
+      "lumen": 600,
+      "cct": 4000,
+      "beam": 60,
+      "ugr": 19,
+      "notes": "模拟阅读台灯，任务照明。",
+      "efficacy": 75,
+      "fileBase": "SIM-TL-8W-4000K",
+      "iesFile": "ies/SIM-TL-8W-4000K.ies",
+      "ldtFile": "ldt/SIM-TL-8W-4000K.ldt"
+    },
+    "落地灯": {
+      "brand": "DEMO Lighting",
+      "source": "simulated",
+      "photometryStatus": "synthetic",
+      "protocols": [
+        "DALI",
+        "0-10V",
+        "KNX",
+        "无线"
+      ],
+      "dimmingProtocols": [
+        "DALI",
+        "0-10V"
+      ],
+      "cri": 90,
+      "ip": "IP20",
+      "salesUnit": "piece",
+      "key": "落地灯",
+      "productId": "SIM-FL-10W-3000K",
+      "model": "SIM-FL-10W",
+      "category": "落地灯",
+      "watt": 10,
+      "lumen": 800,
+      "cct": 3000,
+      "beam": 60,
+      "ugr": 19,
+      "notes": "模拟阅读落地灯，任务照明。",
+      "efficacy": 80,
+      "fileBase": "SIM-FL-10W-3000K",
+      "iesFile": "ies/SIM-FL-10W-3000K.ies",
+      "ldtFile": "ldt/SIM-FL-10W-3000K.ldt"
+    },
+    "磁吸泛光灯 · 灯体": {
+      "brand": "DEMO Lighting",
+      "source": "simulated",
+      "photometryStatus": "synthetic",
+      "protocols": [
+        "DALI",
+        "0-10V",
+        "KNX",
+        "无线"
+      ],
+      "dimmingProtocols": [
+        "DALI",
+        "0-10V"
+      ],
+      "cri": 90,
+      "ip": "IP20",
+      "salesUnit": "piece",
+      "key": "磁吸泛光灯 · 灯体",
+      "productId": "SIM-MG-12W-3000K",
+      "model": "SIM-MG-12W",
+      "category": "磁吸泛光灯",
+      "watt": 12,
+      "lumen": 1000,
+      "cct": 3000,
+      "beam": 36,
+      "ugr": 19,
+      "notes": "模拟磁吸泛光灯模块。",
+      "efficacy": 83.3,
+      "fileBase": "SIM-MG-12W-3000K",
+      "iesFile": "ies/SIM-MG-12W-3000K.ies",
+      "ldtFile": "ldt/SIM-MG-12W-3000K.ldt"
+    },
+    "磁吸格栅灯 · 灯体": {
+      "brand": "DEMO Lighting",
+      "source": "simulated",
+      "photometryStatus": "synthetic",
+      "protocols": [
+        "DALI",
+        "0-10V",
+        "KNX",
+        "无线"
+      ],
+      "dimmingProtocols": [
+        "DALI",
+        "0-10V"
+      ],
+      "cri": 90,
+      "ip": "IP20",
+      "salesUnit": "piece",
+      "key": "磁吸格栅灯 · 灯体",
+      "productId": "SIM-MGG-12W-4000K",
+      "model": "SIM-MGG-12W",
+      "category": "磁吸格栅灯",
+      "watt": 12,
+      "lumen": 1000,
+      "cct": 4000,
+      "beam": 36,
+      "ugr": 19,
+      "notes": "模拟磁吸格栅灯模块。",
+      "efficacy": 83.3,
+      "fileBase": "SIM-MGG-12W-4000K",
+      "iesFile": "ies/SIM-MGG-12W-4000K.ies",
+      "ldtFile": "ldt/SIM-MGG-12W-4000K.ldt"
+    },
+    "轨道射灯 · 灯头": {
+      "brand": "DEMO Lighting",
+      "source": "simulated",
+      "photometryStatus": "synthetic",
+      "protocols": [
+        "DALI",
+        "0-10V",
+        "KNX",
+        "无线"
+      ],
+      "dimmingProtocols": [
+        "DALI",
+        "0-10V"
+      ],
+      "cri": 90,
+      "ip": "IP20",
+      "salesUnit": "piece",
+      "key": "轨道射灯 · 灯头",
+      "productId": "SIM-TH-9W-3000K",
+      "model": "SIM-TH-9W",
+      "category": "轨道射灯灯头",
+      "watt": 9,
+      "lumen": 850,
+      "cct": 3000,
+      "beam": 24,
+      "ugr": 16,
+      "notes": "模拟轨道射灯灯头。",
+      "efficacy": 94.4,
+      "fileBase": "SIM-TH-9W-3000K",
+      "iesFile": "ies/SIM-TH-9W-3000K.ies",
+      "ldtFile": "ldt/SIM-TH-9W-3000K.ldt"
+    },
+    "灯槽灯带": {
+      "brand": "DEMO Lighting",
+      "source": "simulated",
+      "photometryStatus": "synthetic",
+      "protocols": [
+        "DALI",
+        "0-10V",
+        "KNX",
+        "无线"
+      ],
+      "dimmingProtocols": [
+        "DALI",
+        "0-10V"
+      ],
+      "cri": 90,
+      "ip": "IP20",
+      "salesUnit": "meter",
+      "key": "灯槽灯带",
+      "productId": "SIM-LS-6W/M-3000K",
+      "model": "SIM-LS-6W/M",
+      "category": "灯槽灯带",
+      "watt": 6,
+      "lumen": 600,
+      "cct": 3000,
+      "beam": 120,
+      "ugr": 22,
+      "notes": "模拟 6W/m 灯槽灯带，按实测米数计量。",
+      "efficacy": 100,
+      "fileBase": "SIM-LS-6W-M-3000K",
+      "iesFile": "ies/SIM-LS-6W-M-3000K.ies",
+      "ldtFile": "ldt/SIM-LS-6W-M-3000K.ldt"
+    },
+    "窗帘灯带": {
+      "brand": "DEMO Lighting",
+      "source": "simulated",
+      "photometryStatus": "synthetic",
+      "protocols": [
+        "DALI",
+        "0-10V",
+        "KNX",
+        "无线"
+      ],
+      "dimmingProtocols": [
+        "DALI",
+        "0-10V"
+      ],
+      "cri": 90,
+      "ip": "IP20",
+      "salesUnit": "meter",
+      "key": "窗帘灯带",
+      "productId": "SIM-CLS-6W/M-3000K",
+      "model": "SIM-CLS-6W/M",
+      "category": "窗帘灯带",
+      "watt": 6,
+      "lumen": 600,
+      "cct": 3000,
+      "beam": 120,
+      "ugr": 22,
+      "notes": "模拟 6W/m 窗帘灯带，按窗宽计量。",
+      "efficacy": 100,
+      "fileBase": "SIM-CLS-6W-M-3000K",
+      "iesFile": "ies/SIM-CLS-6W-M-3000K.ies",
+      "ldtFile": "ldt/SIM-CLS-6W-M-3000K.ldt"
+    },
+    "柜体灯带": {
+      "brand": "DEMO Lighting",
+      "source": "simulated",
+      "photometryStatus": "synthetic",
+      "protocols": [
+        "DALI",
+        "0-10V",
+        "KNX",
+        "无线"
+      ],
+      "dimmingProtocols": [
+        "DALI",
+        "0-10V"
+      ],
+      "cri": 90,
+      "ip": "IP20",
+      "salesUnit": "meter",
+      "key": "柜体灯带",
+      "productId": "SIM-CB-6W/M-3000K",
+      "model": "SIM-CB-6W/M",
+      "category": "柜体灯带",
+      "watt": 6,
+      "lumen": 500,
+      "cct": 3000,
+      "beam": 120,
+      "ugr": 22,
+      "notes": "模拟 6W/m 柜体灯带，按柜体长边计量。",
+      "efficacy": 83.3,
+      "fileBase": "SIM-CB-6W-M-3000K",
+      "iesFile": "ies/SIM-CB-6W-M-3000K.ies",
+      "ldtFile": "ldt/SIM-CB-6W-M-3000K.ldt"
+    },
+    "直线灯带": {
+      "brand": "DEMO Lighting",
+      "source": "simulated",
+      "photometryStatus": "synthetic",
+      "protocols": [
+        "DALI",
+        "0-10V",
+        "KNX",
+        "无线"
+      ],
+      "dimmingProtocols": [
+        "DALI",
+        "0-10V"
+      ],
+      "cri": 90,
+      "ip": "IP20",
+      "salesUnit": "meter",
+      "key": "直线灯带",
+      "productId": "SIM-SL-6W/M-3000K",
+      "model": "SIM-SL-6W/M",
+      "category": "直线灯带",
+      "watt": 6,
+      "lumen": 600,
+      "cct": 3000,
+      "beam": 120,
+      "ugr": 22,
+      "notes": "模拟 6W/m 直线灯带。",
+      "efficacy": 100,
+      "fileBase": "SIM-SL-6W-M-3000K",
+      "iesFile": "ies/SIM-SL-6W-M-3000K.ies",
+      "ldtFile": "ldt/SIM-SL-6W-M-3000K.ldt"
+    },
+    "贴墙灯带": {
+      "brand": "DEMO Lighting",
+      "source": "simulated",
+      "photometryStatus": "synthetic",
+      "protocols": [
+        "DALI",
+        "0-10V",
+        "KNX",
+        "无线"
+      ],
+      "dimmingProtocols": [
+        "DALI",
+        "0-10V"
+      ],
+      "cri": 90,
+      "ip": "IP20",
+      "salesUnit": "meter",
+      "key": "贴墙灯带",
+      "productId": "SIM-WSL-6W/M-3000K",
+      "model": "SIM-WSL-6W/M",
+      "category": "贴墙灯带",
+      "watt": 6,
+      "lumen": 600,
+      "cct": 3000,
+      "beam": 120,
+      "ugr": 22,
+      "notes": "模拟 6W/m 贴墙灯带。",
+      "efficacy": 100,
+      "fileBase": "SIM-WSL-6W-M-3000K",
+      "iesFile": "ies/SIM-WSL-6W-M-3000K.ies",
+      "ldtFile": "ldt/SIM-WSL-6W-M-3000K.ldt"
+    },
+    "轨道射灯 · 轨道": {
+      "brand": "DEMO Lighting",
+      "source": "simulated",
+      "photometryStatus": "not_applicable",
+      "protocols": [],
+      "dimmingProtocols": [],
+      "cri": 90,
+      "ip": "IP20",
+      "salesUnit": "meter",
+      "key": "轨道射灯 · 轨道",
+      "productId": "SIM-TRACK-1M",
+      "model": "SIM-TRACK-1M",
+      "category": "轨道",
+      "watt": 0,
+      "lumen": 0,
+      "cct": null,
+      "beam": null,
+      "ugr": null,
+      "notes": "被动轨道载体，无独立配光；按模块/米计价。",
+      "efficacy": null,
+      "fileBase": "SIM-TRACK-1M",
+      "iesFile": null,
+      "ldtFile": null
+    },
+    "磁吸泛光灯 · 磁吸轨道": {
+      "brand": "DEMO Lighting",
+      "source": "simulated",
+      "photometryStatus": "not_applicable",
+      "protocols": [],
+      "dimmingProtocols": [],
+      "cri": 90,
+      "ip": "IP20",
+      "salesUnit": "meter",
+      "key": "磁吸泛光灯 · 磁吸轨道",
+      "productId": "SIM-MTRACK-1M",
+      "model": "SIM-MTRACK-1M",
+      "category": "磁吸轨道",
+      "watt": 0,
+      "lumen": 0,
+      "cct": null,
+      "beam": null,
+      "ugr": null,
+      "notes": "被动磁吸轨道载体，无独立配光；按模块/米计价。",
+      "efficacy": null,
+      "fileBase": "SIM-MTRACK-1M",
+      "iesFile": null,
+      "ldtFile": null
+    },
+    "磁吸格栅灯 · 磁吸轨道": {
+      "brand": "DEMO Lighting",
+      "source": "simulated",
+      "photometryStatus": "not_applicable",
+      "protocols": [],
+      "dimmingProtocols": [],
+      "cri": 90,
+      "ip": "IP20",
+      "salesUnit": "meter",
+      "key": "磁吸格栅灯 · 磁吸轨道",
+      "productId": "SIM-MTRACK-1M",
+      "model": "SIM-MTRACK-1M",
+      "category": "磁吸轨道",
+      "watt": 0,
+      "lumen": 0,
+      "cct": null,
+      "beam": null,
+      "ugr": null,
+      "notes": "被动磁吸轨道载体，无独立配光；按模块/米计价。",
+      "efficacy": null,
+      "fileBase": "SIM-MTRACK-1M",
+      "iesFile": null,
+      "ldtFile": null
+    }
+  },
+  "obstacles": [
+    {
+      "spaceCode": "KT",
+      "spaceName": "客厅",
+      "source": "simulated_survey",
+      "assumption": true,
+      "ac": {
+        "present": true,
+        "type": "cabinet",
+        "width": 520,
+        "depth": 520,
+        "height": 1800,
+        "z0": 0,
+        "z1": 1800,
+        "wall": "west",
+        "along": 0.82,
+        "clearance": 120
+      },
+      "curtainBox": {
+        "present": true,
+        "depth": 240,
+        "z0": 2380,
+        "z1": 2800,
+        "clearance": 50
+      },
+      "accessPanel": {
+        "present": true,
+        "width": 600,
+        "depth": 600,
+        "z0": 2750,
+        "z1": 2800,
+        "clearance": 300,
+        "rx": 0.12,
+        "ry": 0.18
+      },
+      "note": "演示实测：柜机 520×520×1800，窗帘盒 240mm，检修口靠西侧墙角。"
+    },
+    {
+      "spaceCode": "CT",
+      "spaceName": "餐厅",
+      "source": "simulated_survey",
+      "assumption": true,
+      "ac": {
+        "present": true,
+        "type": "wall",
+        "width": 900,
+        "depth": 230,
+        "height": 280,
+        "z0": 2300,
+        "z1": 2580,
+        "wall": "east",
+        "along": 0.18,
+        "clearance": 100
+      },
+      "curtainBox": {
+        "present": true,
+        "depth": 240,
+        "z0": 2380,
+        "z1": 2800,
+        "clearance": 50
+      },
+      "accessPanel": {
+        "present": true,
+        "width": 600,
+        "depth": 600,
+        "z0": 2750,
+        "z1": 2800,
+        "clearance": 300,
+        "rx": 0.86,
+        "ry": 0.18
+      },
+      "note": "演示实测：挂机 900×230×280，窗帘盒 240mm，检修口靠东侧墙角。"
+    },
+    {
+      "spaceCode": "ZW",
+      "spaceName": "主卧",
+      "source": "simulated_survey",
+      "assumption": true,
+      "ac": {
+        "present": true,
+        "type": "wall",
+        "width": 900,
+        "depth": 230,
+        "height": 280,
+        "z0": 2300,
+        "z1": 2580,
+        "wall": "east",
+        "along": 0.78,
+        "clearance": 100
+      },
+      "curtainBox": {
+        "present": true,
+        "depth": 220,
+        "z0": 2400,
+        "z1": 2800,
+        "clearance": 50
+      },
+      "accessPanel": {
+        "present": false,
+        "width": 600,
+        "depth": 600,
+        "z0": 2750,
+        "z1": 2800,
+        "clearance": 300,
+        "rx": 0.8,
+        "ry": 0.2
+      },
+      "note": "演示实测：主卧挂机 900×230×280，窗帘盒 220mm，无独立检修口。"
+    },
+    {
+      "spaceCode": "SF",
+      "spaceName": "书房",
+      "source": "simulated_survey",
+      "assumption": true,
+      "ac": {
+        "present": true,
+        "type": "wall",
+        "width": 900,
+        "depth": 230,
+        "height": 280,
+        "z0": 2300,
+        "z1": 2580,
+        "wall": "west",
+        "along": 0.16,
+        "clearance": 100
+      },
+      "curtainBox": {
+        "present": true,
+        "depth": 220,
+        "z0": 2400,
+        "z1": 2800,
+        "clearance": 50
+      },
+      "accessPanel": {
+        "present": false,
+        "width": 600,
+        "depth": 600,
+        "z0": 2750,
+        "z1": 2800,
+        "clearance": 300,
+        "rx": 0.2,
+        "ry": 0.2
+      },
+      "note": "演示实测：书房挂机靠西墙，窗帘盒 220mm，无独立检修口。"
+    },
+    {
+      "spaceCode": "WS",
+      "spaceName": "卧室",
+      "source": "simulated_survey",
+      "assumption": true,
+      "ac": {
+        "present": true,
+        "type": "wall",
+        "width": 900,
+        "depth": 230,
+        "height": 280,
+        "z0": 2300,
+        "z1": 2580,
+        "wall": "east",
+        "along": 0.8,
+        "clearance": 100
+      },
+      "curtainBox": {
+        "present": true,
+        "depth": 220,
+        "z0": 2400,
+        "z1": 2800,
+        "clearance": 50
+      },
+      "accessPanel": {
+        "present": false,
+        "width": 600,
+        "depth": 600,
+        "z0": 2750,
+        "z1": 2800,
+        "clearance": 300,
+        "rx": 0.8,
+        "ry": 0.2
+      },
+      "note": "演示实测：卧室挂机靠东墙，窗帘盒 220mm。"
+    },
+    {
+      "spaceCode": "LRF",
+      "spaceName": "老人房",
+      "source": "simulated_survey",
+      "assumption": true,
+      "ac": {
+        "present": true,
+        "type": "wall",
+        "width": 900,
+        "depth": 230,
+        "height": 280,
+        "z0": 2300,
+        "z1": 2580,
+        "wall": "west",
+        "along": 0.8,
+        "clearance": 100
+      },
+      "curtainBox": {
+        "present": true,
+        "depth": 220,
+        "z0": 2400,
+        "z1": 2800,
+        "clearance": 50
+      },
+      "accessPanel": {
+        "present": false,
+        "width": 600,
+        "depth": 600,
+        "z0": 2750,
+        "z1": 2800,
+        "clearance": 300,
+        "rx": 0.2,
+        "ry": 0.2
+      },
+      "note": "演示实测：老人房挂机靠西墙，窗帘盒 220mm。"
+    },
+    {
+      "spaceCode": "XHF",
+      "spaceName": "儿童房",
+      "source": "simulated_survey",
+      "assumption": true,
+      "ac": {
+        "present": true,
+        "type": "wall",
+        "width": 900,
+        "depth": 230,
+        "height": 280,
+        "z0": 2300,
+        "z1": 2580,
+        "wall": "east",
+        "along": 0.2,
+        "clearance": 100
+      },
+      "curtainBox": {
+        "present": true,
+        "depth": 220,
+        "z0": 2400,
+        "z1": 2800,
+        "clearance": 50
+      },
+      "accessPanel": {
+        "present": false,
+        "width": 600,
+        "depth": 600,
+        "z0": 2750,
+        "z1": 2800,
+        "clearance": 300,
+        "rx": 0.8,
+        "ry": 0.2
+      },
+      "note": "演示实测：儿童房挂机靠东墙，窗帘盒 220mm。"
+    },
+    {
+      "spaceCode": "XCW",
+      "spaceName": "玄关",
+      "source": "simulated_survey",
+      "assumption": true,
+      "ac": {
+        "present": false,
+        "type": null,
+        "width": 0,
+        "depth": 0,
+        "height": 0,
+        "z0": 0,
+        "z1": 0,
+        "wall": null,
+        "along": 0,
+        "clearance": 100
+      },
+      "curtainBox": {
+        "present": true,
+        "depth": 180,
+        "z0": 2400,
+        "z1": 2800,
+        "clearance": 50
+      },
+      "accessPanel": {
+        "present": true,
+        "width": 600,
+        "depth": 600,
+        "z0": 2750,
+        "z1": 2800,
+        "clearance": 300,
+        "rx": 0.18,
+        "ry": 0.18
+      },
+      "note": "演示实测：玄关窗帘盒 180mm，检修口靠入口墙角；无空调。"
+    },
+    {
+      "spaceCode": "CF",
+      "spaceName": "厨房",
+      "source": "simulated_survey",
+      "assumption": true,
+      "ac": {
+        "present": false,
+        "type": null,
+        "width": 0,
+        "depth": 0,
+        "height": 0,
+        "z0": 0,
+        "z1": 0,
+        "wall": null,
+        "along": 0,
+        "clearance": 100
+      },
+      "curtainBox": {
+        "present": true,
+        "depth": 180,
+        "z0": 2400,
+        "z1": 2800,
+        "clearance": 50
+      },
+      "accessPanel": {
+        "present": true,
+        "width": 600,
+        "depth": 600,
+        "z0": 2750,
+        "z1": 2800,
+        "clearance": 300,
+        "rx": 0.84,
+        "ry": 0.84
+      },
+      "note": "演示实测：厨房窗帘盒 180mm，检修口靠灶台侧墙角；无空调。"
+    },
+    {
+      "spaceCode": "WSJ",
+      "spaceName": "卫生间",
+      "source": "simulated_survey",
+      "assumption": true,
+      "ac": {
+        "present": false,
+        "type": null,
+        "width": 0,
+        "depth": 0,
+        "height": 0,
+        "z0": 0,
+        "z1": 0,
+        "wall": null,
+        "along": 0,
+        "clearance": 100
+      },
+      "curtainBox": {
+        "present": true,
+        "depth": 160,
+        "z0": 2400,
+        "z1": 2800,
+        "clearance": 50
+      },
+      "accessPanel": {
+        "present": true,
+        "width": 600,
+        "depth": 600,
+        "z0": 2750,
+        "z1": 2800,
+        "clearance": 300,
+        "rx": 0.18,
+        "ry": 0.82
+      },
+      "note": "演示实测：卫生间窗帘盒 160mm，检修口靠马桶侧；无空调。"
+    },
+    {
+      "spaceCode": "GDYT",
+      "spaceName": "过道",
+      "source": "simulated_survey",
+      "assumption": true,
+      "ac": {
+        "present": false,
+        "type": null,
+        "width": 0,
+        "depth": 0,
+        "height": 0,
+        "z0": 0,
+        "z1": 0,
+        "wall": null,
+        "along": 0,
+        "clearance": 100
+      },
+      "curtainBox": {
+        "present": false,
+        "depth": 0,
+        "z0": 0,
+        "z1": 0,
+        "clearance": 50
+      },
+      "accessPanel": {
+        "present": true,
+        "width": 600,
+        "depth": 600,
+        "z0": 2750,
+        "z1": 2800,
+        "clearance": 300,
+        "rx": 0.72,
+        "ry": 0.45
+      },
+      "note": "演示实测：过道检修口居中偏东；无窗、无空调。"
+    },
+    {
+      "spaceCode": "YT",
+      "spaceName": "阳台",
+      "source": "simulated_survey",
+      "assumption": true,
+      "ac": {
+        "present": false,
+        "type": null,
+        "width": 0,
+        "depth": 0,
+        "height": 0,
+        "z0": 0,
+        "z1": 0,
+        "wall": null,
+        "along": 0,
+        "clearance": 100
+      },
+      "curtainBox": {
+        "present": true,
+        "depth": 200,
+        "z0": 2400,
+        "z1": 2800,
+        "clearance": 50
+      },
+      "accessPanel": {
+        "present": true,
+        "width": 600,
+        "depth": 600,
+        "z0": 2750,
+        "z1": 2800,
+        "clearance": 300,
+        "rx": 0.15,
+        "ry": 0.5
+      },
+      "note": "演示实测：阳台窗帘盒 200mm，检修口靠西侧；无空调。"
+    },
+    {
+      "spaceCode": "YMJ",
+      "spaceName": "衣帽间",
+      "source": "simulated_survey",
+      "assumption": true,
+      "ac": {
+        "present": false,
+        "type": null,
+        "width": 0,
+        "depth": 0,
+        "height": 0,
+        "z0": 0,
+        "z1": 0,
+        "wall": null,
+        "along": 0,
+        "clearance": 100
+      },
+      "curtainBox": {
+        "present": true,
+        "depth": 180,
+        "z0": 2400,
+        "z1": 2800,
+        "clearance": 50
+      },
+      "accessPanel": {
+        "present": true,
+        "width": 600,
+        "depth": 600,
+        "z0": 2750,
+        "z1": 2800,
+        "clearance": 300,
+        "rx": 0.84,
+        "ry": 0.18
+      },
+      "note": "演示实测：衣帽间窗帘盒 180mm，检修口靠东侧墙角；无空调。"
+    },
+    {
+      "spaceCode": "WSWSJ",
+      "spaceName": "卧室卫生间",
+      "source": "simulated_survey",
+      "assumption": true,
+      "ac": {
+        "present": false,
+        "type": null,
+        "width": 0,
+        "depth": 0,
+        "height": 0,
+        "z0": 0,
+        "z1": 0,
+        "wall": null,
+        "along": 0,
+        "clearance": 100
+      },
+      "curtainBox": {
+        "present": true,
+        "depth": 160,
+        "z0": 2400,
+        "z1": 2800,
+        "clearance": 50
+      },
+      "accessPanel": {
+        "present": true,
+        "width": 600,
+        "depth": 600,
+        "z0": 2750,
+        "z1": 2800,
+        "clearance": 300,
+        "rx": 0.18,
+        "ry": 0.82
+      },
+      "note": "演示实测：主卫窗帘盒 160mm，检修口靠马桶侧；无空调。"
+    },
+    {
+      "spaceCode": "CS",
+      "spaceName": "茶室",
+      "source": "simulated_survey",
+      "assumption": true,
+      "ac": {
+        "present": true,
+        "type": "wall",
+        "width": 900,
+        "depth": 230,
+        "height": 280,
+        "z0": 2300,
+        "z1": 2580,
+        "wall": "north",
+        "along": 0.78,
+        "clearance": 100
+      },
+      "curtainBox": {
+        "present": true,
+        "depth": 240,
+        "z0": 2380,
+        "z1": 2800,
+        "clearance": 50
+      },
+      "accessPanel": {
+        "present": true,
+        "width": 600,
+        "depth": 600,
+        "z0": 2750,
+        "z1": 2800,
+        "clearance": 300,
+        "rx": 0.18,
+        "ry": 0.18
+      },
+      "note": "演示实测：茶室挂机靠北墙，窗帘盒 240mm，检修口靠西侧墙角。"
+    }
+  ],
+  "obstaclesBySpace": {
+    "KT": {
+      "spaceCode": "KT",
+      "spaceName": "客厅",
+      "source": "simulated_survey",
+      "assumption": true,
+      "ac": {
+        "present": true,
+        "type": "cabinet",
+        "width": 520,
+        "depth": 520,
+        "height": 1800,
+        "z0": 0,
+        "z1": 1800,
+        "wall": "west",
+        "along": 0.82,
+        "clearance": 120
+      },
+      "curtainBox": {
+        "present": true,
+        "depth": 240,
+        "z0": 2380,
+        "z1": 2800,
+        "clearance": 50
+      },
+      "accessPanel": {
+        "present": true,
+        "width": 600,
+        "depth": 600,
+        "z0": 2750,
+        "z1": 2800,
+        "clearance": 300,
+        "rx": 0.12,
+        "ry": 0.18
+      },
+      "note": "演示实测：柜机 520×520×1800，窗帘盒 240mm，检修口靠西侧墙角。"
+    },
+    "CT": {
+      "spaceCode": "CT",
+      "spaceName": "餐厅",
+      "source": "simulated_survey",
+      "assumption": true,
+      "ac": {
+        "present": true,
+        "type": "wall",
+        "width": 900,
+        "depth": 230,
+        "height": 280,
+        "z0": 2300,
+        "z1": 2580,
+        "wall": "east",
+        "along": 0.18,
+        "clearance": 100
+      },
+      "curtainBox": {
+        "present": true,
+        "depth": 240,
+        "z0": 2380,
+        "z1": 2800,
+        "clearance": 50
+      },
+      "accessPanel": {
+        "present": true,
+        "width": 600,
+        "depth": 600,
+        "z0": 2750,
+        "z1": 2800,
+        "clearance": 300,
+        "rx": 0.86,
+        "ry": 0.18
+      },
+      "note": "演示实测：挂机 900×230×280，窗帘盒 240mm，检修口靠东侧墙角。"
+    },
+    "ZW": {
+      "spaceCode": "ZW",
+      "spaceName": "主卧",
+      "source": "simulated_survey",
+      "assumption": true,
+      "ac": {
+        "present": true,
+        "type": "wall",
+        "width": 900,
+        "depth": 230,
+        "height": 280,
+        "z0": 2300,
+        "z1": 2580,
+        "wall": "east",
+        "along": 0.78,
+        "clearance": 100
+      },
+      "curtainBox": {
+        "present": true,
+        "depth": 220,
+        "z0": 2400,
+        "z1": 2800,
+        "clearance": 50
+      },
+      "accessPanel": {
+        "present": false,
+        "width": 600,
+        "depth": 600,
+        "z0": 2750,
+        "z1": 2800,
+        "clearance": 300,
+        "rx": 0.8,
+        "ry": 0.2
+      },
+      "note": "演示实测：主卧挂机 900×230×280，窗帘盒 220mm，无独立检修口。"
+    },
+    "SF": {
+      "spaceCode": "SF",
+      "spaceName": "书房",
+      "source": "simulated_survey",
+      "assumption": true,
+      "ac": {
+        "present": true,
+        "type": "wall",
+        "width": 900,
+        "depth": 230,
+        "height": 280,
+        "z0": 2300,
+        "z1": 2580,
+        "wall": "west",
+        "along": 0.16,
+        "clearance": 100
+      },
+      "curtainBox": {
+        "present": true,
+        "depth": 220,
+        "z0": 2400,
+        "z1": 2800,
+        "clearance": 50
+      },
+      "accessPanel": {
+        "present": false,
+        "width": 600,
+        "depth": 600,
+        "z0": 2750,
+        "z1": 2800,
+        "clearance": 300,
+        "rx": 0.2,
+        "ry": 0.2
+      },
+      "note": "演示实测：书房挂机靠西墙，窗帘盒 220mm，无独立检修口。"
+    },
+    "WS": {
+      "spaceCode": "WS",
+      "spaceName": "卧室",
+      "source": "simulated_survey",
+      "assumption": true,
+      "ac": {
+        "present": true,
+        "type": "wall",
+        "width": 900,
+        "depth": 230,
+        "height": 280,
+        "z0": 2300,
+        "z1": 2580,
+        "wall": "east",
+        "along": 0.8,
+        "clearance": 100
+      },
+      "curtainBox": {
+        "present": true,
+        "depth": 220,
+        "z0": 2400,
+        "z1": 2800,
+        "clearance": 50
+      },
+      "accessPanel": {
+        "present": false,
+        "width": 600,
+        "depth": 600,
+        "z0": 2750,
+        "z1": 2800,
+        "clearance": 300,
+        "rx": 0.8,
+        "ry": 0.2
+      },
+      "note": "演示实测：卧室挂机靠东墙，窗帘盒 220mm。"
+    },
+    "LRF": {
+      "spaceCode": "LRF",
+      "spaceName": "老人房",
+      "source": "simulated_survey",
+      "assumption": true,
+      "ac": {
+        "present": true,
+        "type": "wall",
+        "width": 900,
+        "depth": 230,
+        "height": 280,
+        "z0": 2300,
+        "z1": 2580,
+        "wall": "west",
+        "along": 0.8,
+        "clearance": 100
+      },
+      "curtainBox": {
+        "present": true,
+        "depth": 220,
+        "z0": 2400,
+        "z1": 2800,
+        "clearance": 50
+      },
+      "accessPanel": {
+        "present": false,
+        "width": 600,
+        "depth": 600,
+        "z0": 2750,
+        "z1": 2800,
+        "clearance": 300,
+        "rx": 0.2,
+        "ry": 0.2
+      },
+      "note": "演示实测：老人房挂机靠西墙，窗帘盒 220mm。"
+    },
+    "XHF": {
+      "spaceCode": "XHF",
+      "spaceName": "儿童房",
+      "source": "simulated_survey",
+      "assumption": true,
+      "ac": {
+        "present": true,
+        "type": "wall",
+        "width": 900,
+        "depth": 230,
+        "height": 280,
+        "z0": 2300,
+        "z1": 2580,
+        "wall": "east",
+        "along": 0.2,
+        "clearance": 100
+      },
+      "curtainBox": {
+        "present": true,
+        "depth": 220,
+        "z0": 2400,
+        "z1": 2800,
+        "clearance": 50
+      },
+      "accessPanel": {
+        "present": false,
+        "width": 600,
+        "depth": 600,
+        "z0": 2750,
+        "z1": 2800,
+        "clearance": 300,
+        "rx": 0.8,
+        "ry": 0.2
+      },
+      "note": "演示实测：儿童房挂机靠东墙，窗帘盒 220mm。"
+    },
+    "XCW": {
+      "spaceCode": "XCW",
+      "spaceName": "玄关",
+      "source": "simulated_survey",
+      "assumption": true,
+      "ac": {
+        "present": false,
+        "type": null,
+        "width": 0,
+        "depth": 0,
+        "height": 0,
+        "z0": 0,
+        "z1": 0,
+        "wall": null,
+        "along": 0,
+        "clearance": 100
+      },
+      "curtainBox": {
+        "present": true,
+        "depth": 180,
+        "z0": 2400,
+        "z1": 2800,
+        "clearance": 50
+      },
+      "accessPanel": {
+        "present": true,
+        "width": 600,
+        "depth": 600,
+        "z0": 2750,
+        "z1": 2800,
+        "clearance": 300,
+        "rx": 0.18,
+        "ry": 0.18
+      },
+      "note": "演示实测：玄关窗帘盒 180mm，检修口靠入口墙角；无空调。"
+    },
+    "CF": {
+      "spaceCode": "CF",
+      "spaceName": "厨房",
+      "source": "simulated_survey",
+      "assumption": true,
+      "ac": {
+        "present": false,
+        "type": null,
+        "width": 0,
+        "depth": 0,
+        "height": 0,
+        "z0": 0,
+        "z1": 0,
+        "wall": null,
+        "along": 0,
+        "clearance": 100
+      },
+      "curtainBox": {
+        "present": true,
+        "depth": 180,
+        "z0": 2400,
+        "z1": 2800,
+        "clearance": 50
+      },
+      "accessPanel": {
+        "present": true,
+        "width": 600,
+        "depth": 600,
+        "z0": 2750,
+        "z1": 2800,
+        "clearance": 300,
+        "rx": 0.84,
+        "ry": 0.84
+      },
+      "note": "演示实测：厨房窗帘盒 180mm，检修口靠灶台侧墙角；无空调。"
+    },
+    "WSJ": {
+      "spaceCode": "WSJ",
+      "spaceName": "卫生间",
+      "source": "simulated_survey",
+      "assumption": true,
+      "ac": {
+        "present": false,
+        "type": null,
+        "width": 0,
+        "depth": 0,
+        "height": 0,
+        "z0": 0,
+        "z1": 0,
+        "wall": null,
+        "along": 0,
+        "clearance": 100
+      },
+      "curtainBox": {
+        "present": true,
+        "depth": 160,
+        "z0": 2400,
+        "z1": 2800,
+        "clearance": 50
+      },
+      "accessPanel": {
+        "present": true,
+        "width": 600,
+        "depth": 600,
+        "z0": 2750,
+        "z1": 2800,
+        "clearance": 300,
+        "rx": 0.18,
+        "ry": 0.82
+      },
+      "note": "演示实测：卫生间窗帘盒 160mm，检修口靠马桶侧；无空调。"
+    },
+    "GDYT": {
+      "spaceCode": "GDYT",
+      "spaceName": "过道",
+      "source": "simulated_survey",
+      "assumption": true,
+      "ac": {
+        "present": false,
+        "type": null,
+        "width": 0,
+        "depth": 0,
+        "height": 0,
+        "z0": 0,
+        "z1": 0,
+        "wall": null,
+        "along": 0,
+        "clearance": 100
+      },
+      "curtainBox": {
+        "present": false,
+        "depth": 0,
+        "z0": 0,
+        "z1": 0,
+        "clearance": 50
+      },
+      "accessPanel": {
+        "present": true,
+        "width": 600,
+        "depth": 600,
+        "z0": 2750,
+        "z1": 2800,
+        "clearance": 300,
+        "rx": 0.72,
+        "ry": 0.45
+      },
+      "note": "演示实测：过道检修口居中偏东；无窗、无空调。"
+    },
+    "YT": {
+      "spaceCode": "YT",
+      "spaceName": "阳台",
+      "source": "simulated_survey",
+      "assumption": true,
+      "ac": {
+        "present": false,
+        "type": null,
+        "width": 0,
+        "depth": 0,
+        "height": 0,
+        "z0": 0,
+        "z1": 0,
+        "wall": null,
+        "along": 0,
+        "clearance": 100
+      },
+      "curtainBox": {
+        "present": true,
+        "depth": 200,
+        "z0": 2400,
+        "z1": 2800,
+        "clearance": 50
+      },
+      "accessPanel": {
+        "present": true,
+        "width": 600,
+        "depth": 600,
+        "z0": 2750,
+        "z1": 2800,
+        "clearance": 300,
+        "rx": 0.15,
+        "ry": 0.5
+      },
+      "note": "演示实测：阳台窗帘盒 200mm，检修口靠西侧；无空调。"
+    },
+    "YMJ": {
+      "spaceCode": "YMJ",
+      "spaceName": "衣帽间",
+      "source": "simulated_survey",
+      "assumption": true,
+      "ac": {
+        "present": false,
+        "type": null,
+        "width": 0,
+        "depth": 0,
+        "height": 0,
+        "z0": 0,
+        "z1": 0,
+        "wall": null,
+        "along": 0,
+        "clearance": 100
+      },
+      "curtainBox": {
+        "present": true,
+        "depth": 180,
+        "z0": 2400,
+        "z1": 2800,
+        "clearance": 50
+      },
+      "accessPanel": {
+        "present": true,
+        "width": 600,
+        "depth": 600,
+        "z0": 2750,
+        "z1": 2800,
+        "clearance": 300,
+        "rx": 0.84,
+        "ry": 0.18
+      },
+      "note": "演示实测：衣帽间窗帘盒 180mm，检修口靠东侧墙角；无空调。"
+    },
+    "WSWSJ": {
+      "spaceCode": "WSWSJ",
+      "spaceName": "卧室卫生间",
+      "source": "simulated_survey",
+      "assumption": true,
+      "ac": {
+        "present": false,
+        "type": null,
+        "width": 0,
+        "depth": 0,
+        "height": 0,
+        "z0": 0,
+        "z1": 0,
+        "wall": null,
+        "along": 0,
+        "clearance": 100
+      },
+      "curtainBox": {
+        "present": true,
+        "depth": 160,
+        "z0": 2400,
+        "z1": 2800,
+        "clearance": 50
+      },
+      "accessPanel": {
+        "present": true,
+        "width": 600,
+        "depth": 600,
+        "z0": 2750,
+        "z1": 2800,
+        "clearance": 300,
+        "rx": 0.18,
+        "ry": 0.82
+      },
+      "note": "演示实测：主卫窗帘盒 160mm，检修口靠马桶侧；无空调。"
+    },
+    "CS": {
+      "spaceCode": "CS",
+      "spaceName": "茶室",
+      "source": "simulated_survey",
+      "assumption": true,
+      "ac": {
+        "present": true,
+        "type": "wall",
+        "width": 900,
+        "depth": 230,
+        "height": 280,
+        "z0": 2300,
+        "z1": 2580,
+        "wall": "north",
+        "along": 0.78,
+        "clearance": 100
+      },
+      "curtainBox": {
+        "present": true,
+        "depth": 240,
+        "z0": 2380,
+        "z1": 2800,
+        "clearance": 50
+      },
+      "accessPanel": {
+        "present": true,
+        "width": 600,
+        "depth": 600,
+        "z0": 2750,
+        "z1": 2800,
+        "clearance": 300,
+        "rx": 0.18,
+        "ry": 0.18
+      },
+      "note": "演示实测：茶室挂机靠北墙，窗帘盒 240mm，检修口靠西侧墙角。"
+    }
+  },
+  "circuits": [
+    {
+      "circuitId": "C-KT-BASE",
+      "spaceCode": "KT",
+      "spaceName": "客厅",
+      "layer": "base",
+      "layerLabel": "基础照明",
+      "lightCount": 24,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L1",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 3,
+      "gatewayId": "DALI-GW-01",
+      "daliUniverse": 1,
+      "daliAddressStart": 0,
+      "daliAddressEnd": 23,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 240,
+      "connectedLoadW": 240,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    {
+      "circuitId": "C-KT-TASK",
+      "spaceCode": "KT",
+      "spaceName": "客厅",
+      "layer": "task",
+      "layerLabel": "任务照明",
+      "lightCount": 3,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L2",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 1,
+      "gatewayId": "DALI-GW-01",
+      "daliUniverse": 1,
+      "daliAddressStart": 24,
+      "daliAddressEnd": 26,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 100,
+      "connectedLoadW": 24,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    {
+      "circuitId": "C-KT-ACCENT",
+      "spaceCode": "KT",
+      "spaceName": "客厅",
+      "layer": "accent",
+      "layerLabel": "重点照明",
+      "lightCount": 6,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L3",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 1,
+      "gatewayId": "DALI-GW-01",
+      "daliUniverse": 1,
+      "daliAddressStart": 27,
+      "daliAddressEnd": 32,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 100,
+      "connectedLoadW": 48,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    {
+      "circuitId": "C-CT-BASE",
+      "spaceCode": "CT",
+      "spaceName": "餐厅",
+      "layer": "base",
+      "layerLabel": "基础照明",
+      "lightCount": 10,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L1",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 2,
+      "gatewayId": "DALI-GW-01",
+      "daliUniverse": 1,
+      "daliAddressStart": 33,
+      "daliAddressEnd": 42,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 100,
+      "connectedLoadW": 100,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    {
+      "circuitId": "C-CT-TASK",
+      "spaceCode": "CT",
+      "spaceName": "餐厅",
+      "layer": "task",
+      "layerLabel": "任务照明",
+      "lightCount": 1,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L2",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 1,
+      "gatewayId": "DALI-GW-01",
+      "daliUniverse": 1,
+      "daliAddressStart": 43,
+      "daliAddressEnd": 43,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 100,
+      "connectedLoadW": 8,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    {
+      "circuitId": "C-CT-ACCENT",
+      "spaceCode": "CT",
+      "spaceName": "餐厅",
+      "layer": "accent",
+      "layerLabel": "重点照明",
+      "lightCount": 5,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L3",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 1,
+      "gatewayId": "DALI-GW-01",
+      "daliUniverse": 1,
+      "daliAddressStart": 44,
+      "daliAddressEnd": 48,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 100,
+      "connectedLoadW": 40,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    {
+      "circuitId": "C-ZW-BASE",
+      "spaceCode": "ZW",
+      "spaceName": "主卧",
+      "layer": "base",
+      "layerLabel": "基础照明",
+      "lightCount": 12,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L1",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 2,
+      "gatewayId": "DALI-GW-01",
+      "daliUniverse": 1,
+      "daliAddressStart": 49,
+      "daliAddressEnd": 60,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 120,
+      "connectedLoadW": 120,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    {
+      "circuitId": "C-ZW-TASK",
+      "spaceCode": "ZW",
+      "spaceName": "主卧",
+      "layer": "task",
+      "layerLabel": "任务照明",
+      "lightCount": 3,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L2",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 1,
+      "gatewayId": "DALI-GW-01",
+      "daliUniverse": 1,
+      "daliAddressStart": 61,
+      "daliAddressEnd": 63,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 100,
+      "connectedLoadW": 24,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    {
+      "circuitId": "C-ZW-ACCENT",
+      "spaceCode": "ZW",
+      "spaceName": "主卧",
+      "layer": "accent",
+      "layerLabel": "重点照明",
+      "lightCount": 3,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L3",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 1,
+      "gatewayId": "DALI-GW-02",
+      "daliUniverse": 2,
+      "daliAddressStart": 0,
+      "daliAddressEnd": 2,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 100,
+      "connectedLoadW": 24,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    {
+      "circuitId": "C-SF-BASE",
+      "spaceCode": "SF",
+      "spaceName": "书房",
+      "layer": "base",
+      "layerLabel": "基础照明",
+      "lightCount": 11,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L1",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 2,
+      "gatewayId": "DALI-GW-02",
+      "daliUniverse": 2,
+      "daliAddressStart": 3,
+      "daliAddressEnd": 13,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 110,
+      "connectedLoadW": 110,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    {
+      "circuitId": "C-SF-TASK",
+      "spaceCode": "SF",
+      "spaceName": "书房",
+      "layer": "task",
+      "layerLabel": "任务照明",
+      "lightCount": 3,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L2",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 1,
+      "gatewayId": "DALI-GW-02",
+      "daliUniverse": 2,
+      "daliAddressStart": 14,
+      "daliAddressEnd": 16,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 100,
+      "connectedLoadW": 24,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    {
+      "circuitId": "C-SF-ACCENT",
+      "spaceCode": "SF",
+      "spaceName": "书房",
+      "layer": "accent",
+      "layerLabel": "重点照明",
+      "lightCount": 4,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L3",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 1,
+      "gatewayId": "DALI-GW-02",
+      "daliUniverse": 2,
+      "daliAddressStart": 17,
+      "daliAddressEnd": 20,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 100,
+      "connectedLoadW": 32,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    {
+      "circuitId": "C-WS-BASE",
+      "spaceCode": "WS",
+      "spaceName": "卧室",
+      "layer": "base",
+      "layerLabel": "基础照明",
+      "lightCount": 12,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L1",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 2,
+      "gatewayId": "DALI-GW-02",
+      "daliUniverse": 2,
+      "daliAddressStart": 21,
+      "daliAddressEnd": 32,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 120,
+      "connectedLoadW": 120,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    {
+      "circuitId": "C-WS-TASK",
+      "spaceCode": "WS",
+      "spaceName": "卧室",
+      "layer": "task",
+      "layerLabel": "任务照明",
+      "lightCount": 2,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L2",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 1,
+      "gatewayId": "DALI-GW-02",
+      "daliUniverse": 2,
+      "daliAddressStart": 33,
+      "daliAddressEnd": 34,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 100,
+      "connectedLoadW": 16,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    {
+      "circuitId": "C-WS-ACCENT",
+      "spaceCode": "WS",
+      "spaceName": "卧室",
+      "layer": "accent",
+      "layerLabel": "重点照明",
+      "lightCount": 3,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L3",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 1,
+      "gatewayId": "DALI-GW-02",
+      "daliUniverse": 2,
+      "daliAddressStart": 35,
+      "daliAddressEnd": 37,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 100,
+      "connectedLoadW": 24,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    {
+      "circuitId": "C-LRF-BASE",
+      "spaceCode": "LRF",
+      "spaceName": "老人房",
+      "layer": "base",
+      "layerLabel": "基础照明",
+      "lightCount": 12,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L1",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 2,
+      "gatewayId": "DALI-GW-02",
+      "daliUniverse": 2,
+      "daliAddressStart": 38,
+      "daliAddressEnd": 49,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 120,
+      "connectedLoadW": 120,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    {
+      "circuitId": "C-LRF-ACCENT",
+      "spaceCode": "LRF",
+      "spaceName": "老人房",
+      "layer": "accent",
+      "layerLabel": "重点照明",
+      "lightCount": 3,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L2",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 1,
+      "gatewayId": "DALI-GW-02",
+      "daliUniverse": 2,
+      "daliAddressStart": 50,
+      "daliAddressEnd": 52,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 100,
+      "connectedLoadW": 24,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    {
+      "circuitId": "C-XHF-BASE",
+      "spaceCode": "XHF",
+      "spaceName": "儿童房",
+      "layer": "base",
+      "layerLabel": "基础照明",
+      "lightCount": 10,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L3",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 2,
+      "gatewayId": "DALI-GW-02",
+      "daliUniverse": 2,
+      "daliAddressStart": 53,
+      "daliAddressEnd": 62,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 100,
+      "connectedLoadW": 100,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    {
+      "circuitId": "C-XHF-TASK",
+      "spaceCode": "XHF",
+      "spaceName": "儿童房",
+      "layer": "task",
+      "layerLabel": "任务照明",
+      "lightCount": 1,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L1",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 1,
+      "gatewayId": "DALI-GW-02",
+      "daliUniverse": 2,
+      "daliAddressStart": 63,
+      "daliAddressEnd": 63,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 100,
+      "connectedLoadW": 8,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    {
+      "circuitId": "C-XHF-ACCENT",
+      "spaceCode": "XHF",
+      "spaceName": "儿童房",
+      "layer": "accent",
+      "layerLabel": "重点照明",
+      "lightCount": 1,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L2",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 1,
+      "gatewayId": "DALI-GW-03",
+      "daliUniverse": 3,
+      "daliAddressStart": 0,
+      "daliAddressEnd": 0,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 100,
+      "connectedLoadW": 8,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    {
+      "circuitId": "C-XCW-BASE",
+      "spaceCode": "XCW",
+      "spaceName": "玄关",
+      "layer": "base",
+      "layerLabel": "基础照明",
+      "lightCount": 6,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L3",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 1,
+      "gatewayId": "DALI-GW-03",
+      "daliUniverse": 3,
+      "daliAddressStart": 1,
+      "daliAddressEnd": 6,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 100,
+      "connectedLoadW": 60,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    {
+      "circuitId": "C-XCW-ACCENT",
+      "spaceCode": "XCW",
+      "spaceName": "玄关",
+      "layer": "accent",
+      "layerLabel": "重点照明",
+      "lightCount": 1,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L1",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 1,
+      "gatewayId": "DALI-GW-03",
+      "daliUniverse": 3,
+      "daliAddressStart": 7,
+      "daliAddressEnd": 7,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 100,
+      "connectedLoadW": 8,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    {
+      "circuitId": "C-CF-BASE",
+      "spaceCode": "CF",
+      "spaceName": "厨房",
+      "layer": "base",
+      "layerLabel": "基础照明",
+      "lightCount": 5,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L2",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 1,
+      "gatewayId": "DALI-GW-03",
+      "daliUniverse": 3,
+      "daliAddressStart": 8,
+      "daliAddressEnd": 12,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 100,
+      "connectedLoadW": 50,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    {
+      "circuitId": "C-CF-TASK",
+      "spaceCode": "CF",
+      "spaceName": "厨房",
+      "layer": "task",
+      "layerLabel": "任务照明",
+      "lightCount": 2,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L3",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 1,
+      "gatewayId": "DALI-GW-03",
+      "daliUniverse": 3,
+      "daliAddressStart": 13,
+      "daliAddressEnd": 14,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 100,
+      "connectedLoadW": 16,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    {
+      "circuitId": "C-WSJ-BASE",
+      "spaceCode": "WSJ",
+      "spaceName": "卫生间",
+      "layer": "base",
+      "layerLabel": "基础照明",
+      "lightCount": 5,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L1",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 1,
+      "gatewayId": "DALI-GW-03",
+      "daliUniverse": 3,
+      "daliAddressStart": 15,
+      "daliAddressEnd": 19,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 100,
+      "connectedLoadW": 50,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    {
+      "circuitId": "C-WSJ-TASK",
+      "spaceCode": "WSJ",
+      "spaceName": "卫生间",
+      "layer": "task",
+      "layerLabel": "任务照明",
+      "lightCount": 2,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L2",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 1,
+      "gatewayId": "DALI-GW-03",
+      "daliUniverse": 3,
+      "daliAddressStart": 20,
+      "daliAddressEnd": 21,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 100,
+      "connectedLoadW": 16,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    {
+      "circuitId": "C-WSJ-ACCENT",
+      "spaceCode": "WSJ",
+      "spaceName": "卫生间",
+      "layer": "accent",
+      "layerLabel": "重点照明",
+      "lightCount": 2,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L3",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 1,
+      "gatewayId": "DALI-GW-03",
+      "daliUniverse": 3,
+      "daliAddressStart": 22,
+      "daliAddressEnd": 23,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 100,
+      "connectedLoadW": 16,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    {
+      "circuitId": "C-GDYT-BASE",
+      "spaceCode": "GDYT",
+      "spaceName": "过道",
+      "layer": "base",
+      "layerLabel": "基础照明",
+      "lightCount": 14,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L1",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 2,
+      "gatewayId": "DALI-GW-03",
+      "daliUniverse": 3,
+      "daliAddressStart": 24,
+      "daliAddressEnd": 37,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 140,
+      "connectedLoadW": 140,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    {
+      "circuitId": "C-GDYT-ACCENT",
+      "spaceCode": "GDYT",
+      "spaceName": "过道",
+      "layer": "accent",
+      "layerLabel": "重点照明",
+      "lightCount": 1,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L2",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 1,
+      "gatewayId": "DALI-GW-03",
+      "daliUniverse": 3,
+      "daliAddressStart": 38,
+      "daliAddressEnd": 38,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 100,
+      "connectedLoadW": 8,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    {
+      "circuitId": "C-YT-BASE",
+      "spaceCode": "YT",
+      "spaceName": "阳台",
+      "layer": "base",
+      "layerLabel": "基础照明",
+      "lightCount": 4,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L3",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 1,
+      "gatewayId": "DALI-GW-03",
+      "daliUniverse": 3,
+      "daliAddressStart": 39,
+      "daliAddressEnd": 42,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 100,
+      "connectedLoadW": 40,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    {
+      "circuitId": "C-YMJ-BASE",
+      "spaceCode": "YMJ",
+      "spaceName": "衣帽间",
+      "layer": "base",
+      "layerLabel": "基础照明",
+      "lightCount": 7,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L1",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 1,
+      "gatewayId": "DALI-GW-03",
+      "daliUniverse": 3,
+      "daliAddressStart": 43,
+      "daliAddressEnd": 49,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 100,
+      "connectedLoadW": 70,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    {
+      "circuitId": "C-YMJ-TASK",
+      "spaceCode": "YMJ",
+      "spaceName": "衣帽间",
+      "layer": "task",
+      "layerLabel": "任务照明",
+      "lightCount": 1,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L2",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 1,
+      "gatewayId": "DALI-GW-03",
+      "daliUniverse": 3,
+      "daliAddressStart": 50,
+      "daliAddressEnd": 50,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 100,
+      "connectedLoadW": 8,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    {
+      "circuitId": "C-YMJ-ACCENT",
+      "spaceCode": "YMJ",
+      "spaceName": "衣帽间",
+      "layer": "accent",
+      "layerLabel": "重点照明",
+      "lightCount": 6,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L3",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 1,
+      "gatewayId": "DALI-GW-03",
+      "daliUniverse": 3,
+      "daliAddressStart": 51,
+      "daliAddressEnd": 56,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 100,
+      "connectedLoadW": 48,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    {
+      "circuitId": "C-WSWSJ-BASE",
+      "spaceCode": "WSWSJ",
+      "spaceName": "卧室卫生间",
+      "layer": "base",
+      "layerLabel": "基础照明",
+      "lightCount": 3,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L1",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 1,
+      "gatewayId": "DALI-GW-03",
+      "daliUniverse": 3,
+      "daliAddressStart": 57,
+      "daliAddressEnd": 59,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 100,
+      "connectedLoadW": 30,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    {
+      "circuitId": "C-WSWSJ-TASK",
+      "spaceCode": "WSWSJ",
+      "spaceName": "卧室卫生间",
+      "layer": "task",
+      "layerLabel": "任务照明",
+      "lightCount": 2,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L2",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 1,
+      "gatewayId": "DALI-GW-03",
+      "daliUniverse": 3,
+      "daliAddressStart": 60,
+      "daliAddressEnd": 61,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 100,
+      "connectedLoadW": 16,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    {
+      "circuitId": "C-WSWSJ-ACCENT",
+      "spaceCode": "WSWSJ",
+      "spaceName": "卧室卫生间",
+      "layer": "accent",
+      "layerLabel": "重点照明",
+      "lightCount": 1,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L3",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 1,
+      "gatewayId": "DALI-GW-03",
+      "daliUniverse": 3,
+      "daliAddressStart": 62,
+      "daliAddressEnd": 62,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 100,
+      "connectedLoadW": 8,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    {
+      "circuitId": "C-CS-BASE",
+      "spaceCode": "CS",
+      "spaceName": "茶室",
+      "layer": "base",
+      "layerLabel": "基础照明",
+      "lightCount": 7,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L1",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 1,
+      "gatewayId": "DALI-GW-04",
+      "daliUniverse": 4,
+      "daliAddressStart": 0,
+      "daliAddressEnd": 6,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 100,
+      "connectedLoadW": 70,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    {
+      "circuitId": "C-CS-ACCENT",
+      "spaceCode": "CS",
+      "spaceName": "茶室",
+      "layer": "accent",
+      "layerLabel": "重点照明",
+      "lightCount": 7,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L2",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 1,
+      "gatewayId": "DALI-GW-04",
+      "daliUniverse": 4,
+      "daliAddressStart": 7,
+      "daliAddressEnd": 13,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 100,
+      "connectedLoadW": 56,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    }
+  ],
+  "circuitsBySpaceLayer": {
+    "KT:base": {
+      "circuitId": "C-KT-BASE",
+      "spaceCode": "KT",
+      "spaceName": "客厅",
+      "layer": "base",
+      "layerLabel": "基础照明",
+      "lightCount": 24,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L1",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 3,
+      "gatewayId": "DALI-GW-01",
+      "daliUniverse": 1,
+      "daliAddressStart": 0,
+      "daliAddressEnd": 23,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 240,
+      "connectedLoadW": 240,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    "KT:task": {
+      "circuitId": "C-KT-TASK",
+      "spaceCode": "KT",
+      "spaceName": "客厅",
+      "layer": "task",
+      "layerLabel": "任务照明",
+      "lightCount": 3,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L2",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 1,
+      "gatewayId": "DALI-GW-01",
+      "daliUniverse": 1,
+      "daliAddressStart": 24,
+      "daliAddressEnd": 26,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 100,
+      "connectedLoadW": 24,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    "KT:accent": {
+      "circuitId": "C-KT-ACCENT",
+      "spaceCode": "KT",
+      "spaceName": "客厅",
+      "layer": "accent",
+      "layerLabel": "重点照明",
+      "lightCount": 6,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L3",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 1,
+      "gatewayId": "DALI-GW-01",
+      "daliUniverse": 1,
+      "daliAddressStart": 27,
+      "daliAddressEnd": 32,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 100,
+      "connectedLoadW": 48,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    "CT:base": {
+      "circuitId": "C-CT-BASE",
+      "spaceCode": "CT",
+      "spaceName": "餐厅",
+      "layer": "base",
+      "layerLabel": "基础照明",
+      "lightCount": 10,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L1",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 2,
+      "gatewayId": "DALI-GW-01",
+      "daliUniverse": 1,
+      "daliAddressStart": 33,
+      "daliAddressEnd": 42,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 100,
+      "connectedLoadW": 100,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    "CT:task": {
+      "circuitId": "C-CT-TASK",
+      "spaceCode": "CT",
+      "spaceName": "餐厅",
+      "layer": "task",
+      "layerLabel": "任务照明",
+      "lightCount": 1,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L2",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 1,
+      "gatewayId": "DALI-GW-01",
+      "daliUniverse": 1,
+      "daliAddressStart": 43,
+      "daliAddressEnd": 43,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 100,
+      "connectedLoadW": 8,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    "CT:accent": {
+      "circuitId": "C-CT-ACCENT",
+      "spaceCode": "CT",
+      "spaceName": "餐厅",
+      "layer": "accent",
+      "layerLabel": "重点照明",
+      "lightCount": 5,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L3",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 1,
+      "gatewayId": "DALI-GW-01",
+      "daliUniverse": 1,
+      "daliAddressStart": 44,
+      "daliAddressEnd": 48,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 100,
+      "connectedLoadW": 40,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    "ZW:base": {
+      "circuitId": "C-ZW-BASE",
+      "spaceCode": "ZW",
+      "spaceName": "主卧",
+      "layer": "base",
+      "layerLabel": "基础照明",
+      "lightCount": 12,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L1",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 2,
+      "gatewayId": "DALI-GW-01",
+      "daliUniverse": 1,
+      "daliAddressStart": 49,
+      "daliAddressEnd": 60,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 120,
+      "connectedLoadW": 120,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    "ZW:task": {
+      "circuitId": "C-ZW-TASK",
+      "spaceCode": "ZW",
+      "spaceName": "主卧",
+      "layer": "task",
+      "layerLabel": "任务照明",
+      "lightCount": 3,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L2",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 1,
+      "gatewayId": "DALI-GW-01",
+      "daliUniverse": 1,
+      "daliAddressStart": 61,
+      "daliAddressEnd": 63,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 100,
+      "connectedLoadW": 24,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    "ZW:accent": {
+      "circuitId": "C-ZW-ACCENT",
+      "spaceCode": "ZW",
+      "spaceName": "主卧",
+      "layer": "accent",
+      "layerLabel": "重点照明",
+      "lightCount": 3,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L3",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 1,
+      "gatewayId": "DALI-GW-02",
+      "daliUniverse": 2,
+      "daliAddressStart": 0,
+      "daliAddressEnd": 2,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 100,
+      "connectedLoadW": 24,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    "SF:base": {
+      "circuitId": "C-SF-BASE",
+      "spaceCode": "SF",
+      "spaceName": "书房",
+      "layer": "base",
+      "layerLabel": "基础照明",
+      "lightCount": 11,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L1",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 2,
+      "gatewayId": "DALI-GW-02",
+      "daliUniverse": 2,
+      "daliAddressStart": 3,
+      "daliAddressEnd": 13,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 110,
+      "connectedLoadW": 110,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    "SF:task": {
+      "circuitId": "C-SF-TASK",
+      "spaceCode": "SF",
+      "spaceName": "书房",
+      "layer": "task",
+      "layerLabel": "任务照明",
+      "lightCount": 3,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L2",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 1,
+      "gatewayId": "DALI-GW-02",
+      "daliUniverse": 2,
+      "daliAddressStart": 14,
+      "daliAddressEnd": 16,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 100,
+      "connectedLoadW": 24,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    "SF:accent": {
+      "circuitId": "C-SF-ACCENT",
+      "spaceCode": "SF",
+      "spaceName": "书房",
+      "layer": "accent",
+      "layerLabel": "重点照明",
+      "lightCount": 4,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L3",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 1,
+      "gatewayId": "DALI-GW-02",
+      "daliUniverse": 2,
+      "daliAddressStart": 17,
+      "daliAddressEnd": 20,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 100,
+      "connectedLoadW": 32,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    "WS:base": {
+      "circuitId": "C-WS-BASE",
+      "spaceCode": "WS",
+      "spaceName": "卧室",
+      "layer": "base",
+      "layerLabel": "基础照明",
+      "lightCount": 12,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L1",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 2,
+      "gatewayId": "DALI-GW-02",
+      "daliUniverse": 2,
+      "daliAddressStart": 21,
+      "daliAddressEnd": 32,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 120,
+      "connectedLoadW": 120,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    "WS:task": {
+      "circuitId": "C-WS-TASK",
+      "spaceCode": "WS",
+      "spaceName": "卧室",
+      "layer": "task",
+      "layerLabel": "任务照明",
+      "lightCount": 2,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L2",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 1,
+      "gatewayId": "DALI-GW-02",
+      "daliUniverse": 2,
+      "daliAddressStart": 33,
+      "daliAddressEnd": 34,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 100,
+      "connectedLoadW": 16,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    "WS:accent": {
+      "circuitId": "C-WS-ACCENT",
+      "spaceCode": "WS",
+      "spaceName": "卧室",
+      "layer": "accent",
+      "layerLabel": "重点照明",
+      "lightCount": 3,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L3",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 1,
+      "gatewayId": "DALI-GW-02",
+      "daliUniverse": 2,
+      "daliAddressStart": 35,
+      "daliAddressEnd": 37,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 100,
+      "connectedLoadW": 24,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    "LRF:base": {
+      "circuitId": "C-LRF-BASE",
+      "spaceCode": "LRF",
+      "spaceName": "老人房",
+      "layer": "base",
+      "layerLabel": "基础照明",
+      "lightCount": 12,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L1",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 2,
+      "gatewayId": "DALI-GW-02",
+      "daliUniverse": 2,
+      "daliAddressStart": 38,
+      "daliAddressEnd": 49,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 120,
+      "connectedLoadW": 120,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    "LRF:accent": {
+      "circuitId": "C-LRF-ACCENT",
+      "spaceCode": "LRF",
+      "spaceName": "老人房",
+      "layer": "accent",
+      "layerLabel": "重点照明",
+      "lightCount": 3,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L2",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 1,
+      "gatewayId": "DALI-GW-02",
+      "daliUniverse": 2,
+      "daliAddressStart": 50,
+      "daliAddressEnd": 52,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 100,
+      "connectedLoadW": 24,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    "XHF:base": {
+      "circuitId": "C-XHF-BASE",
+      "spaceCode": "XHF",
+      "spaceName": "儿童房",
+      "layer": "base",
+      "layerLabel": "基础照明",
+      "lightCount": 10,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L3",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 2,
+      "gatewayId": "DALI-GW-02",
+      "daliUniverse": 2,
+      "daliAddressStart": 53,
+      "daliAddressEnd": 62,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 100,
+      "connectedLoadW": 100,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    "XHF:task": {
+      "circuitId": "C-XHF-TASK",
+      "spaceCode": "XHF",
+      "spaceName": "儿童房",
+      "layer": "task",
+      "layerLabel": "任务照明",
+      "lightCount": 1,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L1",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 1,
+      "gatewayId": "DALI-GW-02",
+      "daliUniverse": 2,
+      "daliAddressStart": 63,
+      "daliAddressEnd": 63,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 100,
+      "connectedLoadW": 8,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    "XHF:accent": {
+      "circuitId": "C-XHF-ACCENT",
+      "spaceCode": "XHF",
+      "spaceName": "儿童房",
+      "layer": "accent",
+      "layerLabel": "重点照明",
+      "lightCount": 1,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L2",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 1,
+      "gatewayId": "DALI-GW-03",
+      "daliUniverse": 3,
+      "daliAddressStart": 0,
+      "daliAddressEnd": 0,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 100,
+      "connectedLoadW": 8,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    "XCW:base": {
+      "circuitId": "C-XCW-BASE",
+      "spaceCode": "XCW",
+      "spaceName": "玄关",
+      "layer": "base",
+      "layerLabel": "基础照明",
+      "lightCount": 6,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L3",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 1,
+      "gatewayId": "DALI-GW-03",
+      "daliUniverse": 3,
+      "daliAddressStart": 1,
+      "daliAddressEnd": 6,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 100,
+      "connectedLoadW": 60,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    "XCW:accent": {
+      "circuitId": "C-XCW-ACCENT",
+      "spaceCode": "XCW",
+      "spaceName": "玄关",
+      "layer": "accent",
+      "layerLabel": "重点照明",
+      "lightCount": 1,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L1",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 1,
+      "gatewayId": "DALI-GW-03",
+      "daliUniverse": 3,
+      "daliAddressStart": 7,
+      "daliAddressEnd": 7,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 100,
+      "connectedLoadW": 8,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    "CF:base": {
+      "circuitId": "C-CF-BASE",
+      "spaceCode": "CF",
+      "spaceName": "厨房",
+      "layer": "base",
+      "layerLabel": "基础照明",
+      "lightCount": 5,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L2",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 1,
+      "gatewayId": "DALI-GW-03",
+      "daliUniverse": 3,
+      "daliAddressStart": 8,
+      "daliAddressEnd": 12,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 100,
+      "connectedLoadW": 50,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    "CF:task": {
+      "circuitId": "C-CF-TASK",
+      "spaceCode": "CF",
+      "spaceName": "厨房",
+      "layer": "task",
+      "layerLabel": "任务照明",
+      "lightCount": 2,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L3",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 1,
+      "gatewayId": "DALI-GW-03",
+      "daliUniverse": 3,
+      "daliAddressStart": 13,
+      "daliAddressEnd": 14,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 100,
+      "connectedLoadW": 16,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    "WSJ:base": {
+      "circuitId": "C-WSJ-BASE",
+      "spaceCode": "WSJ",
+      "spaceName": "卫生间",
+      "layer": "base",
+      "layerLabel": "基础照明",
+      "lightCount": 5,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L1",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 1,
+      "gatewayId": "DALI-GW-03",
+      "daliUniverse": 3,
+      "daliAddressStart": 15,
+      "daliAddressEnd": 19,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 100,
+      "connectedLoadW": 50,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    "WSJ:task": {
+      "circuitId": "C-WSJ-TASK",
+      "spaceCode": "WSJ",
+      "spaceName": "卫生间",
+      "layer": "task",
+      "layerLabel": "任务照明",
+      "lightCount": 2,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L2",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 1,
+      "gatewayId": "DALI-GW-03",
+      "daliUniverse": 3,
+      "daliAddressStart": 20,
+      "daliAddressEnd": 21,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 100,
+      "connectedLoadW": 16,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    "WSJ:accent": {
+      "circuitId": "C-WSJ-ACCENT",
+      "spaceCode": "WSJ",
+      "spaceName": "卫生间",
+      "layer": "accent",
+      "layerLabel": "重点照明",
+      "lightCount": 2,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L3",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 1,
+      "gatewayId": "DALI-GW-03",
+      "daliUniverse": 3,
+      "daliAddressStart": 22,
+      "daliAddressEnd": 23,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 100,
+      "connectedLoadW": 16,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    "GDYT:base": {
+      "circuitId": "C-GDYT-BASE",
+      "spaceCode": "GDYT",
+      "spaceName": "过道",
+      "layer": "base",
+      "layerLabel": "基础照明",
+      "lightCount": 14,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L1",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 2,
+      "gatewayId": "DALI-GW-03",
+      "daliUniverse": 3,
+      "daliAddressStart": 24,
+      "daliAddressEnd": 37,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 140,
+      "connectedLoadW": 140,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    "GDYT:accent": {
+      "circuitId": "C-GDYT-ACCENT",
+      "spaceCode": "GDYT",
+      "spaceName": "过道",
+      "layer": "accent",
+      "layerLabel": "重点照明",
+      "lightCount": 1,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L2",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 1,
+      "gatewayId": "DALI-GW-03",
+      "daliUniverse": 3,
+      "daliAddressStart": 38,
+      "daliAddressEnd": 38,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 100,
+      "connectedLoadW": 8,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    "YT:base": {
+      "circuitId": "C-YT-BASE",
+      "spaceCode": "YT",
+      "spaceName": "阳台",
+      "layer": "base",
+      "layerLabel": "基础照明",
+      "lightCount": 4,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L3",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 1,
+      "gatewayId": "DALI-GW-03",
+      "daliUniverse": 3,
+      "daliAddressStart": 39,
+      "daliAddressEnd": 42,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 100,
+      "connectedLoadW": 40,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    "YMJ:base": {
+      "circuitId": "C-YMJ-BASE",
+      "spaceCode": "YMJ",
+      "spaceName": "衣帽间",
+      "layer": "base",
+      "layerLabel": "基础照明",
+      "lightCount": 7,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L1",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 1,
+      "gatewayId": "DALI-GW-03",
+      "daliUniverse": 3,
+      "daliAddressStart": 43,
+      "daliAddressEnd": 49,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 100,
+      "connectedLoadW": 70,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    "YMJ:task": {
+      "circuitId": "C-YMJ-TASK",
+      "spaceCode": "YMJ",
+      "spaceName": "衣帽间",
+      "layer": "task",
+      "layerLabel": "任务照明",
+      "lightCount": 1,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L2",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 1,
+      "gatewayId": "DALI-GW-03",
+      "daliUniverse": 3,
+      "daliAddressStart": 50,
+      "daliAddressEnd": 50,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 100,
+      "connectedLoadW": 8,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    "YMJ:accent": {
+      "circuitId": "C-YMJ-ACCENT",
+      "spaceCode": "YMJ",
+      "spaceName": "衣帽间",
+      "layer": "accent",
+      "layerLabel": "重点照明",
+      "lightCount": 6,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L3",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 1,
+      "gatewayId": "DALI-GW-03",
+      "daliUniverse": 3,
+      "daliAddressStart": 51,
+      "daliAddressEnd": 56,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 100,
+      "connectedLoadW": 48,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    "WSWSJ:base": {
+      "circuitId": "C-WSWSJ-BASE",
+      "spaceCode": "WSWSJ",
+      "spaceName": "卧室卫生间",
+      "layer": "base",
+      "layerLabel": "基础照明",
+      "lightCount": 3,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L1",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 1,
+      "gatewayId": "DALI-GW-03",
+      "daliUniverse": 3,
+      "daliAddressStart": 57,
+      "daliAddressEnd": 59,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 100,
+      "connectedLoadW": 30,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    "WSWSJ:task": {
+      "circuitId": "C-WSWSJ-TASK",
+      "spaceCode": "WSWSJ",
+      "spaceName": "卧室卫生间",
+      "layer": "task",
+      "layerLabel": "任务照明",
+      "lightCount": 2,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L2",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 1,
+      "gatewayId": "DALI-GW-03",
+      "daliUniverse": 3,
+      "daliAddressStart": 60,
+      "daliAddressEnd": 61,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 100,
+      "connectedLoadW": 16,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    "WSWSJ:accent": {
+      "circuitId": "C-WSWSJ-ACCENT",
+      "spaceCode": "WSWSJ",
+      "spaceName": "卧室卫生间",
+      "layer": "accent",
+      "layerLabel": "重点照明",
+      "lightCount": 1,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L3",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 1,
+      "gatewayId": "DALI-GW-03",
+      "daliUniverse": 3,
+      "daliAddressStart": 62,
+      "daliAddressEnd": 62,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 100,
+      "connectedLoadW": 8,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    "CS:base": {
+      "circuitId": "C-CS-BASE",
+      "spaceCode": "CS",
+      "spaceName": "茶室",
+      "layer": "base",
+      "layerLabel": "基础照明",
+      "lightCount": 7,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L1",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 1,
+      "gatewayId": "DALI-GW-04",
+      "daliUniverse": 4,
+      "daliAddressStart": 0,
+      "daliAddressEnd": 6,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 100,
+      "connectedLoadW": 70,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    "CS:accent": {
+      "circuitId": "C-CS-ACCENT",
+      "spaceCode": "CS",
+      "spaceName": "茶室",
+      "layer": "accent",
+      "layerLabel": "重点照明",
+      "lightCount": 7,
+      "breaker": "RCBO 16A/30mA",
+      "phase": "L2",
+      "driverModel": "SIM-DALI-DRV-100W",
+      "driverQty": 1,
+      "gatewayId": "DALI-GW-04",
+      "daliUniverse": 4,
+      "daliAddressStart": 7,
+      "daliAddressEnd": 13,
+      "protocol": "DALI",
+      "dimming": "1–100%（模拟）",
+      "maxLoadW": 100,
+      "connectedLoadW": 56,
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    }
+  },
+  "controls": [
+    {
+      "spaceCode": "KT",
+      "spaceName": "客厅",
+      "controls": [
+        {
+          "role": "switch",
+          "label": "开关面板",
+          "deviceKey": "开关面板",
+          "buttonCount": 3,
+          "buttons": [
+            {
+              "label": "基础照明",
+              "circuitId": "C-KT-BASE",
+              "action": "toggle"
+            },
+            {
+              "label": "任务照明",
+              "circuitId": "C-KT-TASK",
+              "action": "toggle"
+            },
+            {
+              "label": "重点照明",
+              "circuitId": "C-KT-ACCENT",
+              "action": "toggle"
+            }
+          ],
+          "circuitIds": [
+            "C-KT-BASE",
+            "C-KT-TASK",
+            "C-KT-ACCENT"
+          ]
+        },
+        {
+          "role": "scene",
+          "label": "情景面板",
+          "deviceKey": "情景面板",
+          "buttonCount": 5,
+          "sceneIds": [
+            "S01",
+            "S02",
+            "S03",
+            "S04",
+            "S05"
+          ],
+          "circuitIds": [
+            "C-KT-BASE",
+            "C-KT-TASK",
+            "C-KT-ACCENT"
+          ]
+        },
+        {
+          "role": "wireless",
+          "label": "无线开关",
+          "deviceKey": "无线开关",
+          "buttonCount": 1,
+          "circuitIds": [
+            "C-KT-ACCENT"
+          ]
+        },
+        {
+          "role": "dim",
+          "label": "调光旋钮",
+          "deviceKey": "调光旋钮",
+          "buttonCount": 1,
+          "circuitIds": [
+            "C-KT-BASE"
+          ]
+        },
+        {
+          "role": "master",
+          "label": "中控屏",
+          "deviceKey": "中控屏",
+          "buttonCount": 1,
+          "sceneIds": [
+            "S01",
+            "S02",
+            "S03",
+            "S04",
+            "S05"
+          ],
+          "circuitIds": [
+            "C-KT-BASE",
+            "C-KT-TASK",
+            "C-KT-ACCENT"
+          ]
+        }
+      ]
+    },
+    {
+      "spaceCode": "CT",
+      "spaceName": "餐厅",
+      "controls": [
+        {
+          "role": "switch",
+          "label": "开关面板",
+          "deviceKey": "开关面板",
+          "buttonCount": 3,
+          "buttons": [
+            {
+              "label": "基础照明",
+              "circuitId": "C-CT-BASE",
+              "action": "toggle"
+            },
+            {
+              "label": "任务照明",
+              "circuitId": "C-CT-TASK",
+              "action": "toggle"
+            },
+            {
+              "label": "重点照明",
+              "circuitId": "C-CT-ACCENT",
+              "action": "toggle"
+            }
+          ],
+          "circuitIds": [
+            "C-CT-BASE",
+            "C-CT-TASK",
+            "C-CT-ACCENT"
+          ]
+        },
+        {
+          "role": "scene",
+          "label": "情景面板",
+          "deviceKey": "情景面板",
+          "buttonCount": 5,
+          "sceneIds": [
+            "S01",
+            "S02",
+            "S03",
+            "S04",
+            "S05"
+          ],
+          "circuitIds": [
+            "C-CT-BASE",
+            "C-CT-TASK",
+            "C-CT-ACCENT"
+          ]
+        },
+        {
+          "role": "wireless",
+          "label": "无线开关",
+          "deviceKey": "无线开关",
+          "buttonCount": 1,
+          "circuitIds": [
+            "C-CT-ACCENT"
+          ]
+        },
+        {
+          "role": "dim",
+          "label": "调光旋钮",
+          "deviceKey": "调光旋钮",
+          "buttonCount": 1,
+          "circuitIds": [
+            "C-CT-BASE"
+          ]
+        }
+      ]
+    },
+    {
+      "spaceCode": "ZW",
+      "spaceName": "主卧",
+      "controls": [
+        {
+          "role": "switch",
+          "label": "开关面板",
+          "deviceKey": "开关面板",
+          "buttonCount": 3,
+          "buttons": [
+            {
+              "label": "基础照明",
+              "circuitId": "C-ZW-BASE",
+              "action": "toggle"
+            },
+            {
+              "label": "任务照明",
+              "circuitId": "C-ZW-TASK",
+              "action": "toggle"
+            },
+            {
+              "label": "重点照明",
+              "circuitId": "C-ZW-ACCENT",
+              "action": "toggle"
+            }
+          ],
+          "circuitIds": [
+            "C-ZW-BASE",
+            "C-ZW-TASK",
+            "C-ZW-ACCENT"
+          ]
+        },
+        {
+          "role": "scene",
+          "label": "情景面板",
+          "deviceKey": "情景面板",
+          "buttonCount": 5,
+          "sceneIds": [
+            "S01",
+            "S02",
+            "S03",
+            "S04",
+            "S05"
+          ],
+          "circuitIds": [
+            "C-ZW-BASE",
+            "C-ZW-TASK",
+            "C-ZW-ACCENT"
+          ]
+        },
+        {
+          "role": "wireless",
+          "label": "无线开关",
+          "deviceKey": "无线开关",
+          "buttonCount": 1,
+          "circuitIds": [
+            "C-ZW-ACCENT"
+          ]
+        },
+        {
+          "role": "dim",
+          "label": "调光旋钮",
+          "deviceKey": "调光旋钮",
+          "buttonCount": 1,
+          "circuitIds": [
+            "C-ZW-BASE"
+          ]
+        }
+      ]
+    },
+    {
+      "spaceCode": "SF",
+      "spaceName": "书房",
+      "controls": [
+        {
+          "role": "switch",
+          "label": "开关面板",
+          "deviceKey": "开关面板",
+          "buttonCount": 3,
+          "buttons": [
+            {
+              "label": "基础照明",
+              "circuitId": "C-SF-BASE",
+              "action": "toggle"
+            },
+            {
+              "label": "任务照明",
+              "circuitId": "C-SF-TASK",
+              "action": "toggle"
+            },
+            {
+              "label": "重点照明",
+              "circuitId": "C-SF-ACCENT",
+              "action": "toggle"
+            }
+          ],
+          "circuitIds": [
+            "C-SF-BASE",
+            "C-SF-TASK",
+            "C-SF-ACCENT"
+          ]
+        },
+        {
+          "role": "scene",
+          "label": "情景面板",
+          "deviceKey": "情景面板",
+          "buttonCount": 5,
+          "sceneIds": [
+            "S01",
+            "S02",
+            "S03",
+            "S04",
+            "S05"
+          ],
+          "circuitIds": [
+            "C-SF-BASE",
+            "C-SF-TASK",
+            "C-SF-ACCENT"
+          ]
+        },
+        {
+          "role": "wireless",
+          "label": "无线开关",
+          "deviceKey": "无线开关",
+          "buttonCount": 1,
+          "circuitIds": [
+            "C-SF-ACCENT"
+          ]
+        },
+        {
+          "role": "dim",
+          "label": "调光旋钮",
+          "deviceKey": "调光旋钮",
+          "buttonCount": 1,
+          "circuitIds": [
+            "C-SF-BASE"
+          ]
+        }
+      ]
+    },
+    {
+      "spaceCode": "WS",
+      "spaceName": "卧室",
+      "controls": [
+        {
+          "role": "switch",
+          "label": "开关面板",
+          "deviceKey": "开关面板",
+          "buttonCount": 3,
+          "buttons": [
+            {
+              "label": "基础照明",
+              "circuitId": "C-WS-BASE",
+              "action": "toggle"
+            },
+            {
+              "label": "任务照明",
+              "circuitId": "C-WS-TASK",
+              "action": "toggle"
+            },
+            {
+              "label": "重点照明",
+              "circuitId": "C-WS-ACCENT",
+              "action": "toggle"
+            }
+          ],
+          "circuitIds": [
+            "C-WS-BASE",
+            "C-WS-TASK",
+            "C-WS-ACCENT"
+          ]
+        },
+        {
+          "role": "scene",
+          "label": "情景面板",
+          "deviceKey": "情景面板",
+          "buttonCount": 5,
+          "sceneIds": [
+            "S01",
+            "S02",
+            "S03",
+            "S04",
+            "S05"
+          ],
+          "circuitIds": [
+            "C-WS-BASE",
+            "C-WS-TASK",
+            "C-WS-ACCENT"
+          ]
+        },
+        {
+          "role": "wireless",
+          "label": "无线开关",
+          "deviceKey": "无线开关",
+          "buttonCount": 1,
+          "circuitIds": [
+            "C-WS-ACCENT"
+          ]
+        },
+        {
+          "role": "dim",
+          "label": "调光旋钮",
+          "deviceKey": "调光旋钮",
+          "buttonCount": 1,
+          "circuitIds": [
+            "C-WS-BASE"
+          ]
+        }
+      ]
+    },
+    {
+      "spaceCode": "LRF",
+      "spaceName": "老人房",
+      "controls": [
+        {
+          "role": "switch",
+          "label": "开关面板",
+          "deviceKey": "开关面板",
+          "buttonCount": 2,
+          "buttons": [
+            {
+              "label": "基础照明",
+              "circuitId": "C-LRF-BASE",
+              "action": "toggle"
+            },
+            {
+              "label": "重点照明",
+              "circuitId": "C-LRF-ACCENT",
+              "action": "toggle"
+            }
+          ],
+          "circuitIds": [
+            "C-LRF-BASE",
+            "C-LRF-ACCENT"
+          ]
+        },
+        {
+          "role": "scene",
+          "label": "情景面板",
+          "deviceKey": "情景面板",
+          "buttonCount": 5,
+          "sceneIds": [
+            "S01",
+            "S02",
+            "S03",
+            "S04",
+            "S05"
+          ],
+          "circuitIds": [
+            "C-LRF-BASE",
+            "C-LRF-ACCENT"
+          ]
+        },
+        {
+          "role": "wireless",
+          "label": "无线开关",
+          "deviceKey": "无线开关",
+          "buttonCount": 1,
+          "circuitIds": [
+            "C-LRF-ACCENT"
+          ]
+        },
+        {
+          "role": "dim",
+          "label": "调光旋钮",
+          "deviceKey": "调光旋钮",
+          "buttonCount": 1,
+          "circuitIds": [
+            "C-LRF-BASE"
+          ]
+        }
+      ]
+    },
+    {
+      "spaceCode": "XHF",
+      "spaceName": "儿童房",
+      "controls": [
+        {
+          "role": "switch",
+          "label": "开关面板",
+          "deviceKey": "开关面板",
+          "buttonCount": 3,
+          "buttons": [
+            {
+              "label": "基础照明",
+              "circuitId": "C-XHF-BASE",
+              "action": "toggle"
+            },
+            {
+              "label": "任务照明",
+              "circuitId": "C-XHF-TASK",
+              "action": "toggle"
+            },
+            {
+              "label": "重点照明",
+              "circuitId": "C-XHF-ACCENT",
+              "action": "toggle"
+            }
+          ],
+          "circuitIds": [
+            "C-XHF-BASE",
+            "C-XHF-TASK",
+            "C-XHF-ACCENT"
+          ]
+        },
+        {
+          "role": "scene",
+          "label": "情景面板",
+          "deviceKey": "情景面板",
+          "buttonCount": 5,
+          "sceneIds": [
+            "S01",
+            "S02",
+            "S03",
+            "S04",
+            "S05"
+          ],
+          "circuitIds": [
+            "C-XHF-BASE",
+            "C-XHF-TASK",
+            "C-XHF-ACCENT"
+          ]
+        },
+        {
+          "role": "wireless",
+          "label": "无线开关",
+          "deviceKey": "无线开关",
+          "buttonCount": 1,
+          "circuitIds": [
+            "C-XHF-ACCENT"
+          ]
+        },
+        {
+          "role": "dim",
+          "label": "调光旋钮",
+          "deviceKey": "调光旋钮",
+          "buttonCount": 1,
+          "circuitIds": [
+            "C-XHF-BASE"
+          ]
+        }
+      ]
+    },
+    {
+      "spaceCode": "XCW",
+      "spaceName": "玄关",
+      "controls": [
+        {
+          "role": "switch",
+          "label": "开关面板",
+          "deviceKey": "开关面板",
+          "buttonCount": 2,
+          "buttons": [
+            {
+              "label": "基础照明",
+              "circuitId": "C-XCW-BASE",
+              "action": "toggle"
+            },
+            {
+              "label": "重点照明",
+              "circuitId": "C-XCW-ACCENT",
+              "action": "toggle"
+            }
+          ],
+          "circuitIds": [
+            "C-XCW-BASE",
+            "C-XCW-ACCENT"
+          ]
+        },
+        {
+          "role": "scene",
+          "label": "情景面板",
+          "deviceKey": "情景面板",
+          "buttonCount": 5,
+          "sceneIds": [
+            "S01",
+            "S02",
+            "S03",
+            "S04",
+            "S05"
+          ],
+          "circuitIds": [
+            "C-XCW-BASE",
+            "C-XCW-ACCENT"
+          ]
+        },
+        {
+          "role": "wireless",
+          "label": "无线开关",
+          "deviceKey": "无线开关",
+          "buttonCount": 1,
+          "circuitIds": [
+            "C-XCW-ACCENT"
+          ]
+        },
+        {
+          "role": "dim",
+          "label": "调光旋钮",
+          "deviceKey": "调光旋钮",
+          "buttonCount": 1,
+          "circuitIds": [
+            "C-XCW-BASE"
+          ]
+        },
+        {
+          "role": "master",
+          "label": "中控屏",
+          "deviceKey": "中控屏",
+          "buttonCount": 1,
+          "sceneIds": [
+            "S01",
+            "S02",
+            "S03",
+            "S04",
+            "S05"
+          ],
+          "circuitIds": [
+            "C-XCW-BASE",
+            "C-XCW-ACCENT"
+          ]
+        }
+      ]
+    },
+    {
+      "spaceCode": "CF",
+      "spaceName": "厨房",
+      "controls": [
+        {
+          "role": "switch",
+          "label": "开关面板",
+          "deviceKey": "开关面板",
+          "buttonCount": 2,
+          "buttons": [
+            {
+              "label": "基础照明",
+              "circuitId": "C-CF-BASE",
+              "action": "toggle"
+            },
+            {
+              "label": "任务照明",
+              "circuitId": "C-CF-TASK",
+              "action": "toggle"
+            }
+          ],
+          "circuitIds": [
+            "C-CF-BASE",
+            "C-CF-TASK"
+          ]
+        },
+        {
+          "role": "scene",
+          "label": "情景面板",
+          "deviceKey": "情景面板",
+          "buttonCount": 5,
+          "sceneIds": [
+            "S01",
+            "S02",
+            "S03",
+            "S04",
+            "S05"
+          ],
+          "circuitIds": [
+            "C-CF-BASE",
+            "C-CF-TASK"
+          ]
+        },
+        {
+          "role": "wireless",
+          "label": "无线开关",
+          "deviceKey": "无线开关",
+          "buttonCount": 1,
+          "circuitIds": [
+            "C-CF-TASK"
+          ]
+        },
+        {
+          "role": "dim",
+          "label": "调光旋钮",
+          "deviceKey": "调光旋钮",
+          "buttonCount": 1,
+          "circuitIds": [
+            "C-CF-BASE"
+          ]
+        }
+      ]
+    },
+    {
+      "spaceCode": "WSJ",
+      "spaceName": "卫生间",
+      "controls": [
+        {
+          "role": "switch",
+          "label": "开关面板",
+          "deviceKey": "开关面板",
+          "buttonCount": 3,
+          "buttons": [
+            {
+              "label": "基础照明",
+              "circuitId": "C-WSJ-BASE",
+              "action": "toggle"
+            },
+            {
+              "label": "任务照明",
+              "circuitId": "C-WSJ-TASK",
+              "action": "toggle"
+            },
+            {
+              "label": "重点照明",
+              "circuitId": "C-WSJ-ACCENT",
+              "action": "toggle"
+            }
+          ],
+          "circuitIds": [
+            "C-WSJ-BASE",
+            "C-WSJ-TASK",
+            "C-WSJ-ACCENT"
+          ]
+        },
+        {
+          "role": "scene",
+          "label": "情景面板",
+          "deviceKey": "情景面板",
+          "buttonCount": 5,
+          "sceneIds": [
+            "S01",
+            "S02",
+            "S03",
+            "S04",
+            "S05"
+          ],
+          "circuitIds": [
+            "C-WSJ-BASE",
+            "C-WSJ-TASK",
+            "C-WSJ-ACCENT"
+          ]
+        },
+        {
+          "role": "wireless",
+          "label": "无线开关",
+          "deviceKey": "无线开关",
+          "buttonCount": 1,
+          "circuitIds": [
+            "C-WSJ-ACCENT"
+          ]
+        },
+        {
+          "role": "dim",
+          "label": "调光旋钮",
+          "deviceKey": "调光旋钮",
+          "buttonCount": 1,
+          "circuitIds": [
+            "C-WSJ-BASE"
+          ]
+        }
+      ]
+    },
+    {
+      "spaceCode": "GDYT",
+      "spaceName": "过道",
+      "controls": [
+        {
+          "role": "switch",
+          "label": "开关面板",
+          "deviceKey": "开关面板",
+          "buttonCount": 2,
+          "buttons": [
+            {
+              "label": "基础照明",
+              "circuitId": "C-GDYT-BASE",
+              "action": "toggle"
+            },
+            {
+              "label": "重点照明",
+              "circuitId": "C-GDYT-ACCENT",
+              "action": "toggle"
+            }
+          ],
+          "circuitIds": [
+            "C-GDYT-BASE",
+            "C-GDYT-ACCENT"
+          ]
+        },
+        {
+          "role": "scene",
+          "label": "情景面板",
+          "deviceKey": "情景面板",
+          "buttonCount": 5,
+          "sceneIds": [
+            "S01",
+            "S02",
+            "S03",
+            "S04",
+            "S05"
+          ],
+          "circuitIds": [
+            "C-GDYT-BASE",
+            "C-GDYT-ACCENT"
+          ]
+        },
+        {
+          "role": "wireless",
+          "label": "无线开关",
+          "deviceKey": "无线开关",
+          "buttonCount": 1,
+          "circuitIds": [
+            "C-GDYT-ACCENT"
+          ]
+        },
+        {
+          "role": "dim",
+          "label": "调光旋钮",
+          "deviceKey": "调光旋钮",
+          "buttonCount": 1,
+          "circuitIds": [
+            "C-GDYT-BASE"
+          ]
+        }
+      ]
+    },
+    {
+      "spaceCode": "YT",
+      "spaceName": "阳台",
+      "controls": [
+        {
+          "role": "switch",
+          "label": "开关面板",
+          "deviceKey": "开关面板",
+          "buttonCount": 1,
+          "buttons": [
+            {
+              "label": "基础照明",
+              "circuitId": "C-YT-BASE",
+              "action": "toggle"
+            }
+          ],
+          "circuitIds": [
+            "C-YT-BASE"
+          ]
+        },
+        {
+          "role": "scene",
+          "label": "情景面板",
+          "deviceKey": "情景面板",
+          "buttonCount": 5,
+          "sceneIds": [
+            "S01",
+            "S02",
+            "S03",
+            "S04",
+            "S05"
+          ],
+          "circuitIds": [
+            "C-YT-BASE"
+          ]
+        },
+        {
+          "role": "wireless",
+          "label": "无线开关",
+          "deviceKey": "无线开关",
+          "buttonCount": 1,
+          "circuitIds": [
+            "C-YT-BASE"
+          ]
+        },
+        {
+          "role": "dim",
+          "label": "调光旋钮",
+          "deviceKey": "调光旋钮",
+          "buttonCount": 1,
+          "circuitIds": [
+            "C-YT-BASE"
+          ]
+        }
+      ]
+    },
+    {
+      "spaceCode": "YMJ",
+      "spaceName": "衣帽间",
+      "controls": [
+        {
+          "role": "switch",
+          "label": "开关面板",
+          "deviceKey": "开关面板",
+          "buttonCount": 3,
+          "buttons": [
+            {
+              "label": "基础照明",
+              "circuitId": "C-YMJ-BASE",
+              "action": "toggle"
+            },
+            {
+              "label": "任务照明",
+              "circuitId": "C-YMJ-TASK",
+              "action": "toggle"
+            },
+            {
+              "label": "重点照明",
+              "circuitId": "C-YMJ-ACCENT",
+              "action": "toggle"
+            }
+          ],
+          "circuitIds": [
+            "C-YMJ-BASE",
+            "C-YMJ-TASK",
+            "C-YMJ-ACCENT"
+          ]
+        },
+        {
+          "role": "scene",
+          "label": "情景面板",
+          "deviceKey": "情景面板",
+          "buttonCount": 5,
+          "sceneIds": [
+            "S01",
+            "S02",
+            "S03",
+            "S04",
+            "S05"
+          ],
+          "circuitIds": [
+            "C-YMJ-BASE",
+            "C-YMJ-TASK",
+            "C-YMJ-ACCENT"
+          ]
+        },
+        {
+          "role": "wireless",
+          "label": "无线开关",
+          "deviceKey": "无线开关",
+          "buttonCount": 1,
+          "circuitIds": [
+            "C-YMJ-ACCENT"
+          ]
+        },
+        {
+          "role": "dim",
+          "label": "调光旋钮",
+          "deviceKey": "调光旋钮",
+          "buttonCount": 1,
+          "circuitIds": [
+            "C-YMJ-BASE"
+          ]
+        }
+      ]
+    },
+    {
+      "spaceCode": "WSWSJ",
+      "spaceName": "卧室卫生间",
+      "controls": [
+        {
+          "role": "switch",
+          "label": "开关面板",
+          "deviceKey": "开关面板",
+          "buttonCount": 3,
+          "buttons": [
+            {
+              "label": "基础照明",
+              "circuitId": "C-WSWSJ-BASE",
+              "action": "toggle"
+            },
+            {
+              "label": "任务照明",
+              "circuitId": "C-WSWSJ-TASK",
+              "action": "toggle"
+            },
+            {
+              "label": "重点照明",
+              "circuitId": "C-WSWSJ-ACCENT",
+              "action": "toggle"
+            }
+          ],
+          "circuitIds": [
+            "C-WSWSJ-BASE",
+            "C-WSWSJ-TASK",
+            "C-WSWSJ-ACCENT"
+          ]
+        },
+        {
+          "role": "scene",
+          "label": "情景面板",
+          "deviceKey": "情景面板",
+          "buttonCount": 5,
+          "sceneIds": [
+            "S01",
+            "S02",
+            "S03",
+            "S04",
+            "S05"
+          ],
+          "circuitIds": [
+            "C-WSWSJ-BASE",
+            "C-WSWSJ-TASK",
+            "C-WSWSJ-ACCENT"
+          ]
+        },
+        {
+          "role": "wireless",
+          "label": "无线开关",
+          "deviceKey": "无线开关",
+          "buttonCount": 1,
+          "circuitIds": [
+            "C-WSWSJ-ACCENT"
+          ]
+        },
+        {
+          "role": "dim",
+          "label": "调光旋钮",
+          "deviceKey": "调光旋钮",
+          "buttonCount": 1,
+          "circuitIds": [
+            "C-WSWSJ-BASE"
+          ]
+        }
+      ]
+    },
+    {
+      "spaceCode": "CS",
+      "spaceName": "茶室",
+      "controls": [
+        {
+          "role": "switch",
+          "label": "开关面板",
+          "deviceKey": "开关面板",
+          "buttonCount": 2,
+          "buttons": [
+            {
+              "label": "基础照明",
+              "circuitId": "C-CS-BASE",
+              "action": "toggle"
+            },
+            {
+              "label": "重点照明",
+              "circuitId": "C-CS-ACCENT",
+              "action": "toggle"
+            }
+          ],
+          "circuitIds": [
+            "C-CS-BASE",
+            "C-CS-ACCENT"
+          ]
+        },
+        {
+          "role": "scene",
+          "label": "情景面板",
+          "deviceKey": "情景面板",
+          "buttonCount": 5,
+          "sceneIds": [
+            "S01",
+            "S02",
+            "S03",
+            "S04",
+            "S05"
+          ],
+          "circuitIds": [
+            "C-CS-BASE",
+            "C-CS-ACCENT"
+          ]
+        },
+        {
+          "role": "wireless",
+          "label": "无线开关",
+          "deviceKey": "无线开关",
+          "buttonCount": 1,
+          "circuitIds": [
+            "C-CS-ACCENT"
+          ]
+        },
+        {
+          "role": "dim",
+          "label": "调光旋钮",
+          "deviceKey": "调光旋钮",
+          "buttonCount": 1,
+          "circuitIds": [
+            "C-CS-BASE"
+          ]
+        },
+        {
+          "role": "master",
+          "label": "中控屏",
+          "deviceKey": "中控屏",
+          "buttonCount": 1,
+          "sceneIds": [
+            "S01",
+            "S02",
+            "S03",
+            "S04",
+            "S05"
+          ],
+          "circuitIds": [
+            "C-CS-BASE",
+            "C-CS-ACCENT"
+          ]
+        }
+      ]
+    }
+  ],
+  "controlsBySpace": {
+    "KT": {
+      "spaceCode": "KT",
+      "spaceName": "客厅",
+      "controls": [
+        {
+          "role": "switch",
+          "label": "开关面板",
+          "deviceKey": "开关面板",
+          "buttonCount": 3,
+          "buttons": [
+            {
+              "label": "基础照明",
+              "circuitId": "C-KT-BASE",
+              "action": "toggle"
+            },
+            {
+              "label": "任务照明",
+              "circuitId": "C-KT-TASK",
+              "action": "toggle"
+            },
+            {
+              "label": "重点照明",
+              "circuitId": "C-KT-ACCENT",
+              "action": "toggle"
+            }
+          ],
+          "circuitIds": [
+            "C-KT-BASE",
+            "C-KT-TASK",
+            "C-KT-ACCENT"
+          ]
+        },
+        {
+          "role": "scene",
+          "label": "情景面板",
+          "deviceKey": "情景面板",
+          "buttonCount": 5,
+          "sceneIds": [
+            "S01",
+            "S02",
+            "S03",
+            "S04",
+            "S05"
+          ],
+          "circuitIds": [
+            "C-KT-BASE",
+            "C-KT-TASK",
+            "C-KT-ACCENT"
+          ]
+        },
+        {
+          "role": "wireless",
+          "label": "无线开关",
+          "deviceKey": "无线开关",
+          "buttonCount": 1,
+          "circuitIds": [
+            "C-KT-ACCENT"
+          ]
+        },
+        {
+          "role": "dim",
+          "label": "调光旋钮",
+          "deviceKey": "调光旋钮",
+          "buttonCount": 1,
+          "circuitIds": [
+            "C-KT-BASE"
+          ]
+        },
+        {
+          "role": "master",
+          "label": "中控屏",
+          "deviceKey": "中控屏",
+          "buttonCount": 1,
+          "sceneIds": [
+            "S01",
+            "S02",
+            "S03",
+            "S04",
+            "S05"
+          ],
+          "circuitIds": [
+            "C-KT-BASE",
+            "C-KT-TASK",
+            "C-KT-ACCENT"
+          ]
+        }
+      ]
+    },
+    "CT": {
+      "spaceCode": "CT",
+      "spaceName": "餐厅",
+      "controls": [
+        {
+          "role": "switch",
+          "label": "开关面板",
+          "deviceKey": "开关面板",
+          "buttonCount": 3,
+          "buttons": [
+            {
+              "label": "基础照明",
+              "circuitId": "C-CT-BASE",
+              "action": "toggle"
+            },
+            {
+              "label": "任务照明",
+              "circuitId": "C-CT-TASK",
+              "action": "toggle"
+            },
+            {
+              "label": "重点照明",
+              "circuitId": "C-CT-ACCENT",
+              "action": "toggle"
+            }
+          ],
+          "circuitIds": [
+            "C-CT-BASE",
+            "C-CT-TASK",
+            "C-CT-ACCENT"
+          ]
+        },
+        {
+          "role": "scene",
+          "label": "情景面板",
+          "deviceKey": "情景面板",
+          "buttonCount": 5,
+          "sceneIds": [
+            "S01",
+            "S02",
+            "S03",
+            "S04",
+            "S05"
+          ],
+          "circuitIds": [
+            "C-CT-BASE",
+            "C-CT-TASK",
+            "C-CT-ACCENT"
+          ]
+        },
+        {
+          "role": "wireless",
+          "label": "无线开关",
+          "deviceKey": "无线开关",
+          "buttonCount": 1,
+          "circuitIds": [
+            "C-CT-ACCENT"
+          ]
+        },
+        {
+          "role": "dim",
+          "label": "调光旋钮",
+          "deviceKey": "调光旋钮",
+          "buttonCount": 1,
+          "circuitIds": [
+            "C-CT-BASE"
+          ]
+        }
+      ]
+    },
+    "ZW": {
+      "spaceCode": "ZW",
+      "spaceName": "主卧",
+      "controls": [
+        {
+          "role": "switch",
+          "label": "开关面板",
+          "deviceKey": "开关面板",
+          "buttonCount": 3,
+          "buttons": [
+            {
+              "label": "基础照明",
+              "circuitId": "C-ZW-BASE",
+              "action": "toggle"
+            },
+            {
+              "label": "任务照明",
+              "circuitId": "C-ZW-TASK",
+              "action": "toggle"
+            },
+            {
+              "label": "重点照明",
+              "circuitId": "C-ZW-ACCENT",
+              "action": "toggle"
+            }
+          ],
+          "circuitIds": [
+            "C-ZW-BASE",
+            "C-ZW-TASK",
+            "C-ZW-ACCENT"
+          ]
+        },
+        {
+          "role": "scene",
+          "label": "情景面板",
+          "deviceKey": "情景面板",
+          "buttonCount": 5,
+          "sceneIds": [
+            "S01",
+            "S02",
+            "S03",
+            "S04",
+            "S05"
+          ],
+          "circuitIds": [
+            "C-ZW-BASE",
+            "C-ZW-TASK",
+            "C-ZW-ACCENT"
+          ]
+        },
+        {
+          "role": "wireless",
+          "label": "无线开关",
+          "deviceKey": "无线开关",
+          "buttonCount": 1,
+          "circuitIds": [
+            "C-ZW-ACCENT"
+          ]
+        },
+        {
+          "role": "dim",
+          "label": "调光旋钮",
+          "deviceKey": "调光旋钮",
+          "buttonCount": 1,
+          "circuitIds": [
+            "C-ZW-BASE"
+          ]
+        }
+      ]
+    },
+    "SF": {
+      "spaceCode": "SF",
+      "spaceName": "书房",
+      "controls": [
+        {
+          "role": "switch",
+          "label": "开关面板",
+          "deviceKey": "开关面板",
+          "buttonCount": 3,
+          "buttons": [
+            {
+              "label": "基础照明",
+              "circuitId": "C-SF-BASE",
+              "action": "toggle"
+            },
+            {
+              "label": "任务照明",
+              "circuitId": "C-SF-TASK",
+              "action": "toggle"
+            },
+            {
+              "label": "重点照明",
+              "circuitId": "C-SF-ACCENT",
+              "action": "toggle"
+            }
+          ],
+          "circuitIds": [
+            "C-SF-BASE",
+            "C-SF-TASK",
+            "C-SF-ACCENT"
+          ]
+        },
+        {
+          "role": "scene",
+          "label": "情景面板",
+          "deviceKey": "情景面板",
+          "buttonCount": 5,
+          "sceneIds": [
+            "S01",
+            "S02",
+            "S03",
+            "S04",
+            "S05"
+          ],
+          "circuitIds": [
+            "C-SF-BASE",
+            "C-SF-TASK",
+            "C-SF-ACCENT"
+          ]
+        },
+        {
+          "role": "wireless",
+          "label": "无线开关",
+          "deviceKey": "无线开关",
+          "buttonCount": 1,
+          "circuitIds": [
+            "C-SF-ACCENT"
+          ]
+        },
+        {
+          "role": "dim",
+          "label": "调光旋钮",
+          "deviceKey": "调光旋钮",
+          "buttonCount": 1,
+          "circuitIds": [
+            "C-SF-BASE"
+          ]
+        }
+      ]
+    },
+    "WS": {
+      "spaceCode": "WS",
+      "spaceName": "卧室",
+      "controls": [
+        {
+          "role": "switch",
+          "label": "开关面板",
+          "deviceKey": "开关面板",
+          "buttonCount": 3,
+          "buttons": [
+            {
+              "label": "基础照明",
+              "circuitId": "C-WS-BASE",
+              "action": "toggle"
+            },
+            {
+              "label": "任务照明",
+              "circuitId": "C-WS-TASK",
+              "action": "toggle"
+            },
+            {
+              "label": "重点照明",
+              "circuitId": "C-WS-ACCENT",
+              "action": "toggle"
+            }
+          ],
+          "circuitIds": [
+            "C-WS-BASE",
+            "C-WS-TASK",
+            "C-WS-ACCENT"
+          ]
+        },
+        {
+          "role": "scene",
+          "label": "情景面板",
+          "deviceKey": "情景面板",
+          "buttonCount": 5,
+          "sceneIds": [
+            "S01",
+            "S02",
+            "S03",
+            "S04",
+            "S05"
+          ],
+          "circuitIds": [
+            "C-WS-BASE",
+            "C-WS-TASK",
+            "C-WS-ACCENT"
+          ]
+        },
+        {
+          "role": "wireless",
+          "label": "无线开关",
+          "deviceKey": "无线开关",
+          "buttonCount": 1,
+          "circuitIds": [
+            "C-WS-ACCENT"
+          ]
+        },
+        {
+          "role": "dim",
+          "label": "调光旋钮",
+          "deviceKey": "调光旋钮",
+          "buttonCount": 1,
+          "circuitIds": [
+            "C-WS-BASE"
+          ]
+        }
+      ]
+    },
+    "LRF": {
+      "spaceCode": "LRF",
+      "spaceName": "老人房",
+      "controls": [
+        {
+          "role": "switch",
+          "label": "开关面板",
+          "deviceKey": "开关面板",
+          "buttonCount": 2,
+          "buttons": [
+            {
+              "label": "基础照明",
+              "circuitId": "C-LRF-BASE",
+              "action": "toggle"
+            },
+            {
+              "label": "重点照明",
+              "circuitId": "C-LRF-ACCENT",
+              "action": "toggle"
+            }
+          ],
+          "circuitIds": [
+            "C-LRF-BASE",
+            "C-LRF-ACCENT"
+          ]
+        },
+        {
+          "role": "scene",
+          "label": "情景面板",
+          "deviceKey": "情景面板",
+          "buttonCount": 5,
+          "sceneIds": [
+            "S01",
+            "S02",
+            "S03",
+            "S04",
+            "S05"
+          ],
+          "circuitIds": [
+            "C-LRF-BASE",
+            "C-LRF-ACCENT"
+          ]
+        },
+        {
+          "role": "wireless",
+          "label": "无线开关",
+          "deviceKey": "无线开关",
+          "buttonCount": 1,
+          "circuitIds": [
+            "C-LRF-ACCENT"
+          ]
+        },
+        {
+          "role": "dim",
+          "label": "调光旋钮",
+          "deviceKey": "调光旋钮",
+          "buttonCount": 1,
+          "circuitIds": [
+            "C-LRF-BASE"
+          ]
+        }
+      ]
+    },
+    "XHF": {
+      "spaceCode": "XHF",
+      "spaceName": "儿童房",
+      "controls": [
+        {
+          "role": "switch",
+          "label": "开关面板",
+          "deviceKey": "开关面板",
+          "buttonCount": 3,
+          "buttons": [
+            {
+              "label": "基础照明",
+              "circuitId": "C-XHF-BASE",
+              "action": "toggle"
+            },
+            {
+              "label": "任务照明",
+              "circuitId": "C-XHF-TASK",
+              "action": "toggle"
+            },
+            {
+              "label": "重点照明",
+              "circuitId": "C-XHF-ACCENT",
+              "action": "toggle"
+            }
+          ],
+          "circuitIds": [
+            "C-XHF-BASE",
+            "C-XHF-TASK",
+            "C-XHF-ACCENT"
+          ]
+        },
+        {
+          "role": "scene",
+          "label": "情景面板",
+          "deviceKey": "情景面板",
+          "buttonCount": 5,
+          "sceneIds": [
+            "S01",
+            "S02",
+            "S03",
+            "S04",
+            "S05"
+          ],
+          "circuitIds": [
+            "C-XHF-BASE",
+            "C-XHF-TASK",
+            "C-XHF-ACCENT"
+          ]
+        },
+        {
+          "role": "wireless",
+          "label": "无线开关",
+          "deviceKey": "无线开关",
+          "buttonCount": 1,
+          "circuitIds": [
+            "C-XHF-ACCENT"
+          ]
+        },
+        {
+          "role": "dim",
+          "label": "调光旋钮",
+          "deviceKey": "调光旋钮",
+          "buttonCount": 1,
+          "circuitIds": [
+            "C-XHF-BASE"
+          ]
+        }
+      ]
+    },
+    "XCW": {
+      "spaceCode": "XCW",
+      "spaceName": "玄关",
+      "controls": [
+        {
+          "role": "switch",
+          "label": "开关面板",
+          "deviceKey": "开关面板",
+          "buttonCount": 2,
+          "buttons": [
+            {
+              "label": "基础照明",
+              "circuitId": "C-XCW-BASE",
+              "action": "toggle"
+            },
+            {
+              "label": "重点照明",
+              "circuitId": "C-XCW-ACCENT",
+              "action": "toggle"
+            }
+          ],
+          "circuitIds": [
+            "C-XCW-BASE",
+            "C-XCW-ACCENT"
+          ]
+        },
+        {
+          "role": "scene",
+          "label": "情景面板",
+          "deviceKey": "情景面板",
+          "buttonCount": 5,
+          "sceneIds": [
+            "S01",
+            "S02",
+            "S03",
+            "S04",
+            "S05"
+          ],
+          "circuitIds": [
+            "C-XCW-BASE",
+            "C-XCW-ACCENT"
+          ]
+        },
+        {
+          "role": "wireless",
+          "label": "无线开关",
+          "deviceKey": "无线开关",
+          "buttonCount": 1,
+          "circuitIds": [
+            "C-XCW-ACCENT"
+          ]
+        },
+        {
+          "role": "dim",
+          "label": "调光旋钮",
+          "deviceKey": "调光旋钮",
+          "buttonCount": 1,
+          "circuitIds": [
+            "C-XCW-BASE"
+          ]
+        },
+        {
+          "role": "master",
+          "label": "中控屏",
+          "deviceKey": "中控屏",
+          "buttonCount": 1,
+          "sceneIds": [
+            "S01",
+            "S02",
+            "S03",
+            "S04",
+            "S05"
+          ],
+          "circuitIds": [
+            "C-XCW-BASE",
+            "C-XCW-ACCENT"
+          ]
+        }
+      ]
+    },
+    "CF": {
+      "spaceCode": "CF",
+      "spaceName": "厨房",
+      "controls": [
+        {
+          "role": "switch",
+          "label": "开关面板",
+          "deviceKey": "开关面板",
+          "buttonCount": 2,
+          "buttons": [
+            {
+              "label": "基础照明",
+              "circuitId": "C-CF-BASE",
+              "action": "toggle"
+            },
+            {
+              "label": "任务照明",
+              "circuitId": "C-CF-TASK",
+              "action": "toggle"
+            }
+          ],
+          "circuitIds": [
+            "C-CF-BASE",
+            "C-CF-TASK"
+          ]
+        },
+        {
+          "role": "scene",
+          "label": "情景面板",
+          "deviceKey": "情景面板",
+          "buttonCount": 5,
+          "sceneIds": [
+            "S01",
+            "S02",
+            "S03",
+            "S04",
+            "S05"
+          ],
+          "circuitIds": [
+            "C-CF-BASE",
+            "C-CF-TASK"
+          ]
+        },
+        {
+          "role": "wireless",
+          "label": "无线开关",
+          "deviceKey": "无线开关",
+          "buttonCount": 1,
+          "circuitIds": [
+            "C-CF-TASK"
+          ]
+        },
+        {
+          "role": "dim",
+          "label": "调光旋钮",
+          "deviceKey": "调光旋钮",
+          "buttonCount": 1,
+          "circuitIds": [
+            "C-CF-BASE"
+          ]
+        }
+      ]
+    },
+    "WSJ": {
+      "spaceCode": "WSJ",
+      "spaceName": "卫生间",
+      "controls": [
+        {
+          "role": "switch",
+          "label": "开关面板",
+          "deviceKey": "开关面板",
+          "buttonCount": 3,
+          "buttons": [
+            {
+              "label": "基础照明",
+              "circuitId": "C-WSJ-BASE",
+              "action": "toggle"
+            },
+            {
+              "label": "任务照明",
+              "circuitId": "C-WSJ-TASK",
+              "action": "toggle"
+            },
+            {
+              "label": "重点照明",
+              "circuitId": "C-WSJ-ACCENT",
+              "action": "toggle"
+            }
+          ],
+          "circuitIds": [
+            "C-WSJ-BASE",
+            "C-WSJ-TASK",
+            "C-WSJ-ACCENT"
+          ]
+        },
+        {
+          "role": "scene",
+          "label": "情景面板",
+          "deviceKey": "情景面板",
+          "buttonCount": 5,
+          "sceneIds": [
+            "S01",
+            "S02",
+            "S03",
+            "S04",
+            "S05"
+          ],
+          "circuitIds": [
+            "C-WSJ-BASE",
+            "C-WSJ-TASK",
+            "C-WSJ-ACCENT"
+          ]
+        },
+        {
+          "role": "wireless",
+          "label": "无线开关",
+          "deviceKey": "无线开关",
+          "buttonCount": 1,
+          "circuitIds": [
+            "C-WSJ-ACCENT"
+          ]
+        },
+        {
+          "role": "dim",
+          "label": "调光旋钮",
+          "deviceKey": "调光旋钮",
+          "buttonCount": 1,
+          "circuitIds": [
+            "C-WSJ-BASE"
+          ]
+        }
+      ]
+    },
+    "GDYT": {
+      "spaceCode": "GDYT",
+      "spaceName": "过道",
+      "controls": [
+        {
+          "role": "switch",
+          "label": "开关面板",
+          "deviceKey": "开关面板",
+          "buttonCount": 2,
+          "buttons": [
+            {
+              "label": "基础照明",
+              "circuitId": "C-GDYT-BASE",
+              "action": "toggle"
+            },
+            {
+              "label": "重点照明",
+              "circuitId": "C-GDYT-ACCENT",
+              "action": "toggle"
+            }
+          ],
+          "circuitIds": [
+            "C-GDYT-BASE",
+            "C-GDYT-ACCENT"
+          ]
+        },
+        {
+          "role": "scene",
+          "label": "情景面板",
+          "deviceKey": "情景面板",
+          "buttonCount": 5,
+          "sceneIds": [
+            "S01",
+            "S02",
+            "S03",
+            "S04",
+            "S05"
+          ],
+          "circuitIds": [
+            "C-GDYT-BASE",
+            "C-GDYT-ACCENT"
+          ]
+        },
+        {
+          "role": "wireless",
+          "label": "无线开关",
+          "deviceKey": "无线开关",
+          "buttonCount": 1,
+          "circuitIds": [
+            "C-GDYT-ACCENT"
+          ]
+        },
+        {
+          "role": "dim",
+          "label": "调光旋钮",
+          "deviceKey": "调光旋钮",
+          "buttonCount": 1,
+          "circuitIds": [
+            "C-GDYT-BASE"
+          ]
+        }
+      ]
+    },
+    "YT": {
+      "spaceCode": "YT",
+      "spaceName": "阳台",
+      "controls": [
+        {
+          "role": "switch",
+          "label": "开关面板",
+          "deviceKey": "开关面板",
+          "buttonCount": 1,
+          "buttons": [
+            {
+              "label": "基础照明",
+              "circuitId": "C-YT-BASE",
+              "action": "toggle"
+            }
+          ],
+          "circuitIds": [
+            "C-YT-BASE"
+          ]
+        },
+        {
+          "role": "scene",
+          "label": "情景面板",
+          "deviceKey": "情景面板",
+          "buttonCount": 5,
+          "sceneIds": [
+            "S01",
+            "S02",
+            "S03",
+            "S04",
+            "S05"
+          ],
+          "circuitIds": [
+            "C-YT-BASE"
+          ]
+        },
+        {
+          "role": "wireless",
+          "label": "无线开关",
+          "deviceKey": "无线开关",
+          "buttonCount": 1,
+          "circuitIds": [
+            "C-YT-BASE"
+          ]
+        },
+        {
+          "role": "dim",
+          "label": "调光旋钮",
+          "deviceKey": "调光旋钮",
+          "buttonCount": 1,
+          "circuitIds": [
+            "C-YT-BASE"
+          ]
+        }
+      ]
+    },
+    "YMJ": {
+      "spaceCode": "YMJ",
+      "spaceName": "衣帽间",
+      "controls": [
+        {
+          "role": "switch",
+          "label": "开关面板",
+          "deviceKey": "开关面板",
+          "buttonCount": 3,
+          "buttons": [
+            {
+              "label": "基础照明",
+              "circuitId": "C-YMJ-BASE",
+              "action": "toggle"
+            },
+            {
+              "label": "任务照明",
+              "circuitId": "C-YMJ-TASK",
+              "action": "toggle"
+            },
+            {
+              "label": "重点照明",
+              "circuitId": "C-YMJ-ACCENT",
+              "action": "toggle"
+            }
+          ],
+          "circuitIds": [
+            "C-YMJ-BASE",
+            "C-YMJ-TASK",
+            "C-YMJ-ACCENT"
+          ]
+        },
+        {
+          "role": "scene",
+          "label": "情景面板",
+          "deviceKey": "情景面板",
+          "buttonCount": 5,
+          "sceneIds": [
+            "S01",
+            "S02",
+            "S03",
+            "S04",
+            "S05"
+          ],
+          "circuitIds": [
+            "C-YMJ-BASE",
+            "C-YMJ-TASK",
+            "C-YMJ-ACCENT"
+          ]
+        },
+        {
+          "role": "wireless",
+          "label": "无线开关",
+          "deviceKey": "无线开关",
+          "buttonCount": 1,
+          "circuitIds": [
+            "C-YMJ-ACCENT"
+          ]
+        },
+        {
+          "role": "dim",
+          "label": "调光旋钮",
+          "deviceKey": "调光旋钮",
+          "buttonCount": 1,
+          "circuitIds": [
+            "C-YMJ-BASE"
+          ]
+        }
+      ]
+    },
+    "WSWSJ": {
+      "spaceCode": "WSWSJ",
+      "spaceName": "卧室卫生间",
+      "controls": [
+        {
+          "role": "switch",
+          "label": "开关面板",
+          "deviceKey": "开关面板",
+          "buttonCount": 3,
+          "buttons": [
+            {
+              "label": "基础照明",
+              "circuitId": "C-WSWSJ-BASE",
+              "action": "toggle"
+            },
+            {
+              "label": "任务照明",
+              "circuitId": "C-WSWSJ-TASK",
+              "action": "toggle"
+            },
+            {
+              "label": "重点照明",
+              "circuitId": "C-WSWSJ-ACCENT",
+              "action": "toggle"
+            }
+          ],
+          "circuitIds": [
+            "C-WSWSJ-BASE",
+            "C-WSWSJ-TASK",
+            "C-WSWSJ-ACCENT"
+          ]
+        },
+        {
+          "role": "scene",
+          "label": "情景面板",
+          "deviceKey": "情景面板",
+          "buttonCount": 5,
+          "sceneIds": [
+            "S01",
+            "S02",
+            "S03",
+            "S04",
+            "S05"
+          ],
+          "circuitIds": [
+            "C-WSWSJ-BASE",
+            "C-WSWSJ-TASK",
+            "C-WSWSJ-ACCENT"
+          ]
+        },
+        {
+          "role": "wireless",
+          "label": "无线开关",
+          "deviceKey": "无线开关",
+          "buttonCount": 1,
+          "circuitIds": [
+            "C-WSWSJ-ACCENT"
+          ]
+        },
+        {
+          "role": "dim",
+          "label": "调光旋钮",
+          "deviceKey": "调光旋钮",
+          "buttonCount": 1,
+          "circuitIds": [
+            "C-WSWSJ-BASE"
+          ]
+        }
+      ]
+    },
+    "CS": {
+      "spaceCode": "CS",
+      "spaceName": "茶室",
+      "controls": [
+        {
+          "role": "switch",
+          "label": "开关面板",
+          "deviceKey": "开关面板",
+          "buttonCount": 2,
+          "buttons": [
+            {
+              "label": "基础照明",
+              "circuitId": "C-CS-BASE",
+              "action": "toggle"
+            },
+            {
+              "label": "重点照明",
+              "circuitId": "C-CS-ACCENT",
+              "action": "toggle"
+            }
+          ],
+          "circuitIds": [
+            "C-CS-BASE",
+            "C-CS-ACCENT"
+          ]
+        },
+        {
+          "role": "scene",
+          "label": "情景面板",
+          "deviceKey": "情景面板",
+          "buttonCount": 5,
+          "sceneIds": [
+            "S01",
+            "S02",
+            "S03",
+            "S04",
+            "S05"
+          ],
+          "circuitIds": [
+            "C-CS-BASE",
+            "C-CS-ACCENT"
+          ]
+        },
+        {
+          "role": "wireless",
+          "label": "无线开关",
+          "deviceKey": "无线开关",
+          "buttonCount": 1,
+          "circuitIds": [
+            "C-CS-ACCENT"
+          ]
+        },
+        {
+          "role": "dim",
+          "label": "调光旋钮",
+          "deviceKey": "调光旋钮",
+          "buttonCount": 1,
+          "circuitIds": [
+            "C-CS-BASE"
+          ]
+        },
+        {
+          "role": "master",
+          "label": "中控屏",
+          "deviceKey": "中控屏",
+          "buttonCount": 1,
+          "sceneIds": [
+            "S01",
+            "S02",
+            "S03",
+            "S04",
+            "S05"
+          ],
+          "circuitIds": [
+            "C-CS-BASE",
+            "C-CS-ACCENT"
+          ]
+        }
+      ]
+    }
+  },
+  "scenes": [
+    {
+      "id": "S01",
+      "name": "回家",
+      "description": "入口与主要空间基础照明渐亮",
+      "base": 80,
+      "task": 60,
+      "accent": 40,
+      "cct": 3500,
+      "fadeSec": 3,
+      "rows": [
+        {
+          "sceneId": "S01",
+          "sceneName": "回家",
+          "spaceCode": "KT",
+          "spaceName": "客厅",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 80,
+          "cct": 3500,
+          "fadeSec": 3,
+          "description": "入口与主要空间基础照明渐亮"
+        },
+        {
+          "sceneId": "S01",
+          "sceneName": "回家",
+          "spaceCode": "KT",
+          "spaceName": "客厅",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 60,
+          "cct": 3500,
+          "fadeSec": 3,
+          "description": "入口与主要空间基础照明渐亮"
+        },
+        {
+          "sceneId": "S01",
+          "sceneName": "回家",
+          "spaceCode": "KT",
+          "spaceName": "客厅",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 40,
+          "cct": 3500,
+          "fadeSec": 3,
+          "description": "入口与主要空间基础照明渐亮"
+        },
+        {
+          "sceneId": "S01",
+          "sceneName": "回家",
+          "spaceCode": "CT",
+          "spaceName": "餐厅",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 80,
+          "cct": 3500,
+          "fadeSec": 3,
+          "description": "入口与主要空间基础照明渐亮"
+        },
+        {
+          "sceneId": "S01",
+          "sceneName": "回家",
+          "spaceCode": "CT",
+          "spaceName": "餐厅",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 60,
+          "cct": 3500,
+          "fadeSec": 3,
+          "description": "入口与主要空间基础照明渐亮"
+        },
+        {
+          "sceneId": "S01",
+          "sceneName": "回家",
+          "spaceCode": "CT",
+          "spaceName": "餐厅",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 40,
+          "cct": 3500,
+          "fadeSec": 3,
+          "description": "入口与主要空间基础照明渐亮"
+        },
+        {
+          "sceneId": "S01",
+          "sceneName": "回家",
+          "spaceCode": "ZW",
+          "spaceName": "主卧",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 80,
+          "cct": 3500,
+          "fadeSec": 3,
+          "description": "入口与主要空间基础照明渐亮"
+        },
+        {
+          "sceneId": "S01",
+          "sceneName": "回家",
+          "spaceCode": "ZW",
+          "spaceName": "主卧",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 60,
+          "cct": 3500,
+          "fadeSec": 3,
+          "description": "入口与主要空间基础照明渐亮"
+        },
+        {
+          "sceneId": "S01",
+          "sceneName": "回家",
+          "spaceCode": "ZW",
+          "spaceName": "主卧",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 40,
+          "cct": 3500,
+          "fadeSec": 3,
+          "description": "入口与主要空间基础照明渐亮"
+        },
+        {
+          "sceneId": "S01",
+          "sceneName": "回家",
+          "spaceCode": "SF",
+          "spaceName": "书房",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 80,
+          "cct": 3500,
+          "fadeSec": 3,
+          "description": "入口与主要空间基础照明渐亮"
+        },
+        {
+          "sceneId": "S01",
+          "sceneName": "回家",
+          "spaceCode": "SF",
+          "spaceName": "书房",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 60,
+          "cct": 3500,
+          "fadeSec": 3,
+          "description": "入口与主要空间基础照明渐亮"
+        },
+        {
+          "sceneId": "S01",
+          "sceneName": "回家",
+          "spaceCode": "SF",
+          "spaceName": "书房",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 40,
+          "cct": 3500,
+          "fadeSec": 3,
+          "description": "入口与主要空间基础照明渐亮"
+        },
+        {
+          "sceneId": "S01",
+          "sceneName": "回家",
+          "spaceCode": "WS",
+          "spaceName": "卧室",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 80,
+          "cct": 3500,
+          "fadeSec": 3,
+          "description": "入口与主要空间基础照明渐亮"
+        },
+        {
+          "sceneId": "S01",
+          "sceneName": "回家",
+          "spaceCode": "WS",
+          "spaceName": "卧室",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 60,
+          "cct": 3500,
+          "fadeSec": 3,
+          "description": "入口与主要空间基础照明渐亮"
+        },
+        {
+          "sceneId": "S01",
+          "sceneName": "回家",
+          "spaceCode": "WS",
+          "spaceName": "卧室",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 40,
+          "cct": 3500,
+          "fadeSec": 3,
+          "description": "入口与主要空间基础照明渐亮"
+        },
+        {
+          "sceneId": "S01",
+          "sceneName": "回家",
+          "spaceCode": "LRF",
+          "spaceName": "老人房",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 80,
+          "cct": 3500,
+          "fadeSec": 3,
+          "description": "入口与主要空间基础照明渐亮"
+        },
+        {
+          "sceneId": "S01",
+          "sceneName": "回家",
+          "spaceCode": "LRF",
+          "spaceName": "老人房",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 60,
+          "cct": 3500,
+          "fadeSec": 3,
+          "description": "入口与主要空间基础照明渐亮"
+        },
+        {
+          "sceneId": "S01",
+          "sceneName": "回家",
+          "spaceCode": "LRF",
+          "spaceName": "老人房",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 40,
+          "cct": 3500,
+          "fadeSec": 3,
+          "description": "入口与主要空间基础照明渐亮"
+        },
+        {
+          "sceneId": "S01",
+          "sceneName": "回家",
+          "spaceCode": "XHF",
+          "spaceName": "儿童房",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 80,
+          "cct": 3500,
+          "fadeSec": 3,
+          "description": "入口与主要空间基础照明渐亮"
+        },
+        {
+          "sceneId": "S01",
+          "sceneName": "回家",
+          "spaceCode": "XHF",
+          "spaceName": "儿童房",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 60,
+          "cct": 3500,
+          "fadeSec": 3,
+          "description": "入口与主要空间基础照明渐亮"
+        },
+        {
+          "sceneId": "S01",
+          "sceneName": "回家",
+          "spaceCode": "XHF",
+          "spaceName": "儿童房",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 40,
+          "cct": 3500,
+          "fadeSec": 3,
+          "description": "入口与主要空间基础照明渐亮"
+        },
+        {
+          "sceneId": "S01",
+          "sceneName": "回家",
+          "spaceCode": "XCW",
+          "spaceName": "玄关",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 80,
+          "cct": 3500,
+          "fadeSec": 3,
+          "description": "入口与主要空间基础照明渐亮"
+        },
+        {
+          "sceneId": "S01",
+          "sceneName": "回家",
+          "spaceCode": "XCW",
+          "spaceName": "玄关",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 60,
+          "cct": 3500,
+          "fadeSec": 3,
+          "description": "入口与主要空间基础照明渐亮"
+        },
+        {
+          "sceneId": "S01",
+          "sceneName": "回家",
+          "spaceCode": "XCW",
+          "spaceName": "玄关",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 40,
+          "cct": 3500,
+          "fadeSec": 3,
+          "description": "入口与主要空间基础照明渐亮"
+        },
+        {
+          "sceneId": "S01",
+          "sceneName": "回家",
+          "spaceCode": "CF",
+          "spaceName": "厨房",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 80,
+          "cct": 3500,
+          "fadeSec": 3,
+          "description": "入口与主要空间基础照明渐亮"
+        },
+        {
+          "sceneId": "S01",
+          "sceneName": "回家",
+          "spaceCode": "CF",
+          "spaceName": "厨房",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 60,
+          "cct": 3500,
+          "fadeSec": 3,
+          "description": "入口与主要空间基础照明渐亮"
+        },
+        {
+          "sceneId": "S01",
+          "sceneName": "回家",
+          "spaceCode": "CF",
+          "spaceName": "厨房",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 40,
+          "cct": 3500,
+          "fadeSec": 3,
+          "description": "入口与主要空间基础照明渐亮"
+        },
+        {
+          "sceneId": "S01",
+          "sceneName": "回家",
+          "spaceCode": "WSJ",
+          "spaceName": "卫生间",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 80,
+          "cct": 3500,
+          "fadeSec": 3,
+          "description": "入口与主要空间基础照明渐亮"
+        },
+        {
+          "sceneId": "S01",
+          "sceneName": "回家",
+          "spaceCode": "WSJ",
+          "spaceName": "卫生间",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 60,
+          "cct": 3500,
+          "fadeSec": 3,
+          "description": "入口与主要空间基础照明渐亮"
+        },
+        {
+          "sceneId": "S01",
+          "sceneName": "回家",
+          "spaceCode": "WSJ",
+          "spaceName": "卫生间",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 40,
+          "cct": 3500,
+          "fadeSec": 3,
+          "description": "入口与主要空间基础照明渐亮"
+        },
+        {
+          "sceneId": "S01",
+          "sceneName": "回家",
+          "spaceCode": "GDYT",
+          "spaceName": "过道",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 80,
+          "cct": 3500,
+          "fadeSec": 3,
+          "description": "入口与主要空间基础照明渐亮"
+        },
+        {
+          "sceneId": "S01",
+          "sceneName": "回家",
+          "spaceCode": "GDYT",
+          "spaceName": "过道",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 60,
+          "cct": 3500,
+          "fadeSec": 3,
+          "description": "入口与主要空间基础照明渐亮"
+        },
+        {
+          "sceneId": "S01",
+          "sceneName": "回家",
+          "spaceCode": "GDYT",
+          "spaceName": "过道",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 40,
+          "cct": 3500,
+          "fadeSec": 3,
+          "description": "入口与主要空间基础照明渐亮"
+        },
+        {
+          "sceneId": "S01",
+          "sceneName": "回家",
+          "spaceCode": "YT",
+          "spaceName": "阳台",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 80,
+          "cct": 3500,
+          "fadeSec": 3,
+          "description": "入口与主要空间基础照明渐亮"
+        },
+        {
+          "sceneId": "S01",
+          "sceneName": "回家",
+          "spaceCode": "YT",
+          "spaceName": "阳台",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 60,
+          "cct": 3500,
+          "fadeSec": 3,
+          "description": "入口与主要空间基础照明渐亮"
+        },
+        {
+          "sceneId": "S01",
+          "sceneName": "回家",
+          "spaceCode": "YT",
+          "spaceName": "阳台",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 40,
+          "cct": 3500,
+          "fadeSec": 3,
+          "description": "入口与主要空间基础照明渐亮"
+        },
+        {
+          "sceneId": "S01",
+          "sceneName": "回家",
+          "spaceCode": "YMJ",
+          "spaceName": "衣帽间",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 80,
+          "cct": 3500,
+          "fadeSec": 3,
+          "description": "入口与主要空间基础照明渐亮"
+        },
+        {
+          "sceneId": "S01",
+          "sceneName": "回家",
+          "spaceCode": "YMJ",
+          "spaceName": "衣帽间",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 60,
+          "cct": 3500,
+          "fadeSec": 3,
+          "description": "入口与主要空间基础照明渐亮"
+        },
+        {
+          "sceneId": "S01",
+          "sceneName": "回家",
+          "spaceCode": "YMJ",
+          "spaceName": "衣帽间",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 40,
+          "cct": 3500,
+          "fadeSec": 3,
+          "description": "入口与主要空间基础照明渐亮"
+        },
+        {
+          "sceneId": "S01",
+          "sceneName": "回家",
+          "spaceCode": "WSWSJ",
+          "spaceName": "卧室卫生间",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 80,
+          "cct": 3500,
+          "fadeSec": 3,
+          "description": "入口与主要空间基础照明渐亮"
+        },
+        {
+          "sceneId": "S01",
+          "sceneName": "回家",
+          "spaceCode": "WSWSJ",
+          "spaceName": "卧室卫生间",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 60,
+          "cct": 3500,
+          "fadeSec": 3,
+          "description": "入口与主要空间基础照明渐亮"
+        },
+        {
+          "sceneId": "S01",
+          "sceneName": "回家",
+          "spaceCode": "WSWSJ",
+          "spaceName": "卧室卫生间",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 40,
+          "cct": 3500,
+          "fadeSec": 3,
+          "description": "入口与主要空间基础照明渐亮"
+        },
+        {
+          "sceneId": "S01",
+          "sceneName": "回家",
+          "spaceCode": "CS",
+          "spaceName": "茶室",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 80,
+          "cct": 3500,
+          "fadeSec": 3,
+          "description": "入口与主要空间基础照明渐亮"
+        },
+        {
+          "sceneId": "S01",
+          "sceneName": "回家",
+          "spaceCode": "CS",
+          "spaceName": "茶室",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 60,
+          "cct": 3500,
+          "fadeSec": 3,
+          "description": "入口与主要空间基础照明渐亮"
+        },
+        {
+          "sceneId": "S01",
+          "sceneName": "回家",
+          "spaceCode": "CS",
+          "spaceName": "茶室",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 40,
+          "cct": 3500,
+          "fadeSec": 3,
+          "description": "入口与主要空间基础照明渐亮"
+        }
+      ]
+    },
+    {
+      "id": "S02",
+      "name": "会客",
+      "description": "客厅/餐厅全亮，重点照明增强",
+      "base": 100,
+      "task": 80,
+      "accent": 70,
+      "cct": 3500,
+      "fadeSec": 2,
+      "rows": [
+        {
+          "sceneId": "S02",
+          "sceneName": "会客",
+          "spaceCode": "KT",
+          "spaceName": "客厅",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 100,
+          "cct": 3500,
+          "fadeSec": 2,
+          "description": "客厅/餐厅全亮，重点照明增强"
+        },
+        {
+          "sceneId": "S02",
+          "sceneName": "会客",
+          "spaceCode": "KT",
+          "spaceName": "客厅",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 80,
+          "cct": 3500,
+          "fadeSec": 2,
+          "description": "客厅/餐厅全亮，重点照明增强"
+        },
+        {
+          "sceneId": "S02",
+          "sceneName": "会客",
+          "spaceCode": "KT",
+          "spaceName": "客厅",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 70,
+          "cct": 3500,
+          "fadeSec": 2,
+          "description": "客厅/餐厅全亮，重点照明增强"
+        },
+        {
+          "sceneId": "S02",
+          "sceneName": "会客",
+          "spaceCode": "CT",
+          "spaceName": "餐厅",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 100,
+          "cct": 3500,
+          "fadeSec": 2,
+          "description": "客厅/餐厅全亮，重点照明增强"
+        },
+        {
+          "sceneId": "S02",
+          "sceneName": "会客",
+          "spaceCode": "CT",
+          "spaceName": "餐厅",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 80,
+          "cct": 3500,
+          "fadeSec": 2,
+          "description": "客厅/餐厅全亮，重点照明增强"
+        },
+        {
+          "sceneId": "S02",
+          "sceneName": "会客",
+          "spaceCode": "CT",
+          "spaceName": "餐厅",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 70,
+          "cct": 3500,
+          "fadeSec": 2,
+          "description": "客厅/餐厅全亮，重点照明增强"
+        },
+        {
+          "sceneId": "S02",
+          "sceneName": "会客",
+          "spaceCode": "ZW",
+          "spaceName": "主卧",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 100,
+          "cct": 3500,
+          "fadeSec": 2,
+          "description": "客厅/餐厅全亮，重点照明增强"
+        },
+        {
+          "sceneId": "S02",
+          "sceneName": "会客",
+          "spaceCode": "ZW",
+          "spaceName": "主卧",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 80,
+          "cct": 3500,
+          "fadeSec": 2,
+          "description": "客厅/餐厅全亮，重点照明增强"
+        },
+        {
+          "sceneId": "S02",
+          "sceneName": "会客",
+          "spaceCode": "ZW",
+          "spaceName": "主卧",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 70,
+          "cct": 3500,
+          "fadeSec": 2,
+          "description": "客厅/餐厅全亮，重点照明增强"
+        },
+        {
+          "sceneId": "S02",
+          "sceneName": "会客",
+          "spaceCode": "SF",
+          "spaceName": "书房",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 100,
+          "cct": 3500,
+          "fadeSec": 2,
+          "description": "客厅/餐厅全亮，重点照明增强"
+        },
+        {
+          "sceneId": "S02",
+          "sceneName": "会客",
+          "spaceCode": "SF",
+          "spaceName": "书房",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 80,
+          "cct": 3500,
+          "fadeSec": 2,
+          "description": "客厅/餐厅全亮，重点照明增强"
+        },
+        {
+          "sceneId": "S02",
+          "sceneName": "会客",
+          "spaceCode": "SF",
+          "spaceName": "书房",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 70,
+          "cct": 3500,
+          "fadeSec": 2,
+          "description": "客厅/餐厅全亮，重点照明增强"
+        },
+        {
+          "sceneId": "S02",
+          "sceneName": "会客",
+          "spaceCode": "WS",
+          "spaceName": "卧室",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 100,
+          "cct": 3500,
+          "fadeSec": 2,
+          "description": "客厅/餐厅全亮，重点照明增强"
+        },
+        {
+          "sceneId": "S02",
+          "sceneName": "会客",
+          "spaceCode": "WS",
+          "spaceName": "卧室",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 80,
+          "cct": 3500,
+          "fadeSec": 2,
+          "description": "客厅/餐厅全亮，重点照明增强"
+        },
+        {
+          "sceneId": "S02",
+          "sceneName": "会客",
+          "spaceCode": "WS",
+          "spaceName": "卧室",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 70,
+          "cct": 3500,
+          "fadeSec": 2,
+          "description": "客厅/餐厅全亮，重点照明增强"
+        },
+        {
+          "sceneId": "S02",
+          "sceneName": "会客",
+          "spaceCode": "LRF",
+          "spaceName": "老人房",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 100,
+          "cct": 3500,
+          "fadeSec": 2,
+          "description": "客厅/餐厅全亮，重点照明增强"
+        },
+        {
+          "sceneId": "S02",
+          "sceneName": "会客",
+          "spaceCode": "LRF",
+          "spaceName": "老人房",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 80,
+          "cct": 3500,
+          "fadeSec": 2,
+          "description": "客厅/餐厅全亮，重点照明增强"
+        },
+        {
+          "sceneId": "S02",
+          "sceneName": "会客",
+          "spaceCode": "LRF",
+          "spaceName": "老人房",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 70,
+          "cct": 3500,
+          "fadeSec": 2,
+          "description": "客厅/餐厅全亮，重点照明增强"
+        },
+        {
+          "sceneId": "S02",
+          "sceneName": "会客",
+          "spaceCode": "XHF",
+          "spaceName": "儿童房",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 100,
+          "cct": 3500,
+          "fadeSec": 2,
+          "description": "客厅/餐厅全亮，重点照明增强"
+        },
+        {
+          "sceneId": "S02",
+          "sceneName": "会客",
+          "spaceCode": "XHF",
+          "spaceName": "儿童房",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 80,
+          "cct": 3500,
+          "fadeSec": 2,
+          "description": "客厅/餐厅全亮，重点照明增强"
+        },
+        {
+          "sceneId": "S02",
+          "sceneName": "会客",
+          "spaceCode": "XHF",
+          "spaceName": "儿童房",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 70,
+          "cct": 3500,
+          "fadeSec": 2,
+          "description": "客厅/餐厅全亮，重点照明增强"
+        },
+        {
+          "sceneId": "S02",
+          "sceneName": "会客",
+          "spaceCode": "XCW",
+          "spaceName": "玄关",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 100,
+          "cct": 3500,
+          "fadeSec": 2,
+          "description": "客厅/餐厅全亮，重点照明增强"
+        },
+        {
+          "sceneId": "S02",
+          "sceneName": "会客",
+          "spaceCode": "XCW",
+          "spaceName": "玄关",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 80,
+          "cct": 3500,
+          "fadeSec": 2,
+          "description": "客厅/餐厅全亮，重点照明增强"
+        },
+        {
+          "sceneId": "S02",
+          "sceneName": "会客",
+          "spaceCode": "XCW",
+          "spaceName": "玄关",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 70,
+          "cct": 3500,
+          "fadeSec": 2,
+          "description": "客厅/餐厅全亮，重点照明增强"
+        },
+        {
+          "sceneId": "S02",
+          "sceneName": "会客",
+          "spaceCode": "CF",
+          "spaceName": "厨房",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 100,
+          "cct": 3500,
+          "fadeSec": 2,
+          "description": "客厅/餐厅全亮，重点照明增强"
+        },
+        {
+          "sceneId": "S02",
+          "sceneName": "会客",
+          "spaceCode": "CF",
+          "spaceName": "厨房",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 80,
+          "cct": 3500,
+          "fadeSec": 2,
+          "description": "客厅/餐厅全亮，重点照明增强"
+        },
+        {
+          "sceneId": "S02",
+          "sceneName": "会客",
+          "spaceCode": "CF",
+          "spaceName": "厨房",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 70,
+          "cct": 3500,
+          "fadeSec": 2,
+          "description": "客厅/餐厅全亮，重点照明增强"
+        },
+        {
+          "sceneId": "S02",
+          "sceneName": "会客",
+          "spaceCode": "WSJ",
+          "spaceName": "卫生间",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 100,
+          "cct": 3500,
+          "fadeSec": 2,
+          "description": "客厅/餐厅全亮，重点照明增强"
+        },
+        {
+          "sceneId": "S02",
+          "sceneName": "会客",
+          "spaceCode": "WSJ",
+          "spaceName": "卫生间",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 80,
+          "cct": 3500,
+          "fadeSec": 2,
+          "description": "客厅/餐厅全亮，重点照明增强"
+        },
+        {
+          "sceneId": "S02",
+          "sceneName": "会客",
+          "spaceCode": "WSJ",
+          "spaceName": "卫生间",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 70,
+          "cct": 3500,
+          "fadeSec": 2,
+          "description": "客厅/餐厅全亮，重点照明增强"
+        },
+        {
+          "sceneId": "S02",
+          "sceneName": "会客",
+          "spaceCode": "GDYT",
+          "spaceName": "过道",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 100,
+          "cct": 3500,
+          "fadeSec": 2,
+          "description": "客厅/餐厅全亮，重点照明增强"
+        },
+        {
+          "sceneId": "S02",
+          "sceneName": "会客",
+          "spaceCode": "GDYT",
+          "spaceName": "过道",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 80,
+          "cct": 3500,
+          "fadeSec": 2,
+          "description": "客厅/餐厅全亮，重点照明增强"
+        },
+        {
+          "sceneId": "S02",
+          "sceneName": "会客",
+          "spaceCode": "GDYT",
+          "spaceName": "过道",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 70,
+          "cct": 3500,
+          "fadeSec": 2,
+          "description": "客厅/餐厅全亮，重点照明增强"
+        },
+        {
+          "sceneId": "S02",
+          "sceneName": "会客",
+          "spaceCode": "YT",
+          "spaceName": "阳台",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 100,
+          "cct": 3500,
+          "fadeSec": 2,
+          "description": "客厅/餐厅全亮，重点照明增强"
+        },
+        {
+          "sceneId": "S02",
+          "sceneName": "会客",
+          "spaceCode": "YT",
+          "spaceName": "阳台",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 80,
+          "cct": 3500,
+          "fadeSec": 2,
+          "description": "客厅/餐厅全亮，重点照明增强"
+        },
+        {
+          "sceneId": "S02",
+          "sceneName": "会客",
+          "spaceCode": "YT",
+          "spaceName": "阳台",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 70,
+          "cct": 3500,
+          "fadeSec": 2,
+          "description": "客厅/餐厅全亮，重点照明增强"
+        },
+        {
+          "sceneId": "S02",
+          "sceneName": "会客",
+          "spaceCode": "YMJ",
+          "spaceName": "衣帽间",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 100,
+          "cct": 3500,
+          "fadeSec": 2,
+          "description": "客厅/餐厅全亮，重点照明增强"
+        },
+        {
+          "sceneId": "S02",
+          "sceneName": "会客",
+          "spaceCode": "YMJ",
+          "spaceName": "衣帽间",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 80,
+          "cct": 3500,
+          "fadeSec": 2,
+          "description": "客厅/餐厅全亮，重点照明增强"
+        },
+        {
+          "sceneId": "S02",
+          "sceneName": "会客",
+          "spaceCode": "YMJ",
+          "spaceName": "衣帽间",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 70,
+          "cct": 3500,
+          "fadeSec": 2,
+          "description": "客厅/餐厅全亮，重点照明增强"
+        },
+        {
+          "sceneId": "S02",
+          "sceneName": "会客",
+          "spaceCode": "WSWSJ",
+          "spaceName": "卧室卫生间",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 100,
+          "cct": 3500,
+          "fadeSec": 2,
+          "description": "客厅/餐厅全亮，重点照明增强"
+        },
+        {
+          "sceneId": "S02",
+          "sceneName": "会客",
+          "spaceCode": "WSWSJ",
+          "spaceName": "卧室卫生间",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 80,
+          "cct": 3500,
+          "fadeSec": 2,
+          "description": "客厅/餐厅全亮，重点照明增强"
+        },
+        {
+          "sceneId": "S02",
+          "sceneName": "会客",
+          "spaceCode": "WSWSJ",
+          "spaceName": "卧室卫生间",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 70,
+          "cct": 3500,
+          "fadeSec": 2,
+          "description": "客厅/餐厅全亮，重点照明增强"
+        },
+        {
+          "sceneId": "S02",
+          "sceneName": "会客",
+          "spaceCode": "CS",
+          "spaceName": "茶室",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 100,
+          "cct": 3500,
+          "fadeSec": 2,
+          "description": "客厅/餐厅全亮，重点照明增强"
+        },
+        {
+          "sceneId": "S02",
+          "sceneName": "会客",
+          "spaceCode": "CS",
+          "spaceName": "茶室",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 80,
+          "cct": 3500,
+          "fadeSec": 2,
+          "description": "客厅/餐厅全亮，重点照明增强"
+        },
+        {
+          "sceneId": "S02",
+          "sceneName": "会客",
+          "spaceCode": "CS",
+          "spaceName": "茶室",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 70,
+          "cct": 3500,
+          "fadeSec": 2,
+          "description": "客厅/餐厅全亮，重点照明增强"
+        }
+      ]
+    },
+    {
+      "id": "S03",
+      "name": "观影",
+      "description": "客厅基础压暗，保留低位重点",
+      "base": 15,
+      "task": 0,
+      "accent": 10,
+      "cct": 2700,
+      "fadeSec": 4,
+      "rows": [
+        {
+          "sceneId": "S03",
+          "sceneName": "观影",
+          "spaceCode": "KT",
+          "spaceName": "客厅",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 15,
+          "cct": 2700,
+          "fadeSec": 4,
+          "description": "客厅基础压暗，保留低位重点"
+        },
+        {
+          "sceneId": "S03",
+          "sceneName": "观影",
+          "spaceCode": "KT",
+          "spaceName": "客厅",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 0,
+          "cct": 2700,
+          "fadeSec": 4,
+          "description": "客厅基础压暗，保留低位重点"
+        },
+        {
+          "sceneId": "S03",
+          "sceneName": "观影",
+          "spaceCode": "KT",
+          "spaceName": "客厅",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 15,
+          "cct": 2700,
+          "fadeSec": 4,
+          "description": "客厅基础压暗，保留低位重点"
+        },
+        {
+          "sceneId": "S03",
+          "sceneName": "观影",
+          "spaceCode": "CT",
+          "spaceName": "餐厅",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 15,
+          "cct": 2700,
+          "fadeSec": 4,
+          "description": "客厅基础压暗，保留低位重点"
+        },
+        {
+          "sceneId": "S03",
+          "sceneName": "观影",
+          "spaceCode": "CT",
+          "spaceName": "餐厅",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 0,
+          "cct": 2700,
+          "fadeSec": 4,
+          "description": "客厅基础压暗，保留低位重点"
+        },
+        {
+          "sceneId": "S03",
+          "sceneName": "观影",
+          "spaceCode": "CT",
+          "spaceName": "餐厅",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 10,
+          "cct": 2700,
+          "fadeSec": 4,
+          "description": "客厅基础压暗，保留低位重点"
+        },
+        {
+          "sceneId": "S03",
+          "sceneName": "观影",
+          "spaceCode": "ZW",
+          "spaceName": "主卧",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 15,
+          "cct": 2700,
+          "fadeSec": 4,
+          "description": "客厅基础压暗，保留低位重点"
+        },
+        {
+          "sceneId": "S03",
+          "sceneName": "观影",
+          "spaceCode": "ZW",
+          "spaceName": "主卧",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 0,
+          "cct": 2700,
+          "fadeSec": 4,
+          "description": "客厅基础压暗，保留低位重点"
+        },
+        {
+          "sceneId": "S03",
+          "sceneName": "观影",
+          "spaceCode": "ZW",
+          "spaceName": "主卧",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 10,
+          "cct": 2700,
+          "fadeSec": 4,
+          "description": "客厅基础压暗，保留低位重点"
+        },
+        {
+          "sceneId": "S03",
+          "sceneName": "观影",
+          "spaceCode": "SF",
+          "spaceName": "书房",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 15,
+          "cct": 2700,
+          "fadeSec": 4,
+          "description": "客厅基础压暗，保留低位重点"
+        },
+        {
+          "sceneId": "S03",
+          "sceneName": "观影",
+          "spaceCode": "SF",
+          "spaceName": "书房",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 0,
+          "cct": 2700,
+          "fadeSec": 4,
+          "description": "客厅基础压暗，保留低位重点"
+        },
+        {
+          "sceneId": "S03",
+          "sceneName": "观影",
+          "spaceCode": "SF",
+          "spaceName": "书房",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 10,
+          "cct": 2700,
+          "fadeSec": 4,
+          "description": "客厅基础压暗，保留低位重点"
+        },
+        {
+          "sceneId": "S03",
+          "sceneName": "观影",
+          "spaceCode": "WS",
+          "spaceName": "卧室",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 15,
+          "cct": 2700,
+          "fadeSec": 4,
+          "description": "客厅基础压暗，保留低位重点"
+        },
+        {
+          "sceneId": "S03",
+          "sceneName": "观影",
+          "spaceCode": "WS",
+          "spaceName": "卧室",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 0,
+          "cct": 2700,
+          "fadeSec": 4,
+          "description": "客厅基础压暗，保留低位重点"
+        },
+        {
+          "sceneId": "S03",
+          "sceneName": "观影",
+          "spaceCode": "WS",
+          "spaceName": "卧室",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 10,
+          "cct": 2700,
+          "fadeSec": 4,
+          "description": "客厅基础压暗，保留低位重点"
+        },
+        {
+          "sceneId": "S03",
+          "sceneName": "观影",
+          "spaceCode": "LRF",
+          "spaceName": "老人房",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 15,
+          "cct": 2700,
+          "fadeSec": 4,
+          "description": "客厅基础压暗，保留低位重点"
+        },
+        {
+          "sceneId": "S03",
+          "sceneName": "观影",
+          "spaceCode": "LRF",
+          "spaceName": "老人房",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 0,
+          "cct": 2700,
+          "fadeSec": 4,
+          "description": "客厅基础压暗，保留低位重点"
+        },
+        {
+          "sceneId": "S03",
+          "sceneName": "观影",
+          "spaceCode": "LRF",
+          "spaceName": "老人房",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 10,
+          "cct": 2700,
+          "fadeSec": 4,
+          "description": "客厅基础压暗，保留低位重点"
+        },
+        {
+          "sceneId": "S03",
+          "sceneName": "观影",
+          "spaceCode": "XHF",
+          "spaceName": "儿童房",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 15,
+          "cct": 2700,
+          "fadeSec": 4,
+          "description": "客厅基础压暗，保留低位重点"
+        },
+        {
+          "sceneId": "S03",
+          "sceneName": "观影",
+          "spaceCode": "XHF",
+          "spaceName": "儿童房",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 0,
+          "cct": 2700,
+          "fadeSec": 4,
+          "description": "客厅基础压暗，保留低位重点"
+        },
+        {
+          "sceneId": "S03",
+          "sceneName": "观影",
+          "spaceCode": "XHF",
+          "spaceName": "儿童房",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 10,
+          "cct": 2700,
+          "fadeSec": 4,
+          "description": "客厅基础压暗，保留低位重点"
+        },
+        {
+          "sceneId": "S03",
+          "sceneName": "观影",
+          "spaceCode": "XCW",
+          "spaceName": "玄关",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 15,
+          "cct": 2700,
+          "fadeSec": 4,
+          "description": "客厅基础压暗，保留低位重点"
+        },
+        {
+          "sceneId": "S03",
+          "sceneName": "观影",
+          "spaceCode": "XCW",
+          "spaceName": "玄关",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 0,
+          "cct": 2700,
+          "fadeSec": 4,
+          "description": "客厅基础压暗，保留低位重点"
+        },
+        {
+          "sceneId": "S03",
+          "sceneName": "观影",
+          "spaceCode": "XCW",
+          "spaceName": "玄关",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 10,
+          "cct": 2700,
+          "fadeSec": 4,
+          "description": "客厅基础压暗，保留低位重点"
+        },
+        {
+          "sceneId": "S03",
+          "sceneName": "观影",
+          "spaceCode": "CF",
+          "spaceName": "厨房",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 15,
+          "cct": 2700,
+          "fadeSec": 4,
+          "description": "客厅基础压暗，保留低位重点"
+        },
+        {
+          "sceneId": "S03",
+          "sceneName": "观影",
+          "spaceCode": "CF",
+          "spaceName": "厨房",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 0,
+          "cct": 2700,
+          "fadeSec": 4,
+          "description": "客厅基础压暗，保留低位重点"
+        },
+        {
+          "sceneId": "S03",
+          "sceneName": "观影",
+          "spaceCode": "CF",
+          "spaceName": "厨房",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 10,
+          "cct": 2700,
+          "fadeSec": 4,
+          "description": "客厅基础压暗，保留低位重点"
+        },
+        {
+          "sceneId": "S03",
+          "sceneName": "观影",
+          "spaceCode": "WSJ",
+          "spaceName": "卫生间",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 15,
+          "cct": 2700,
+          "fadeSec": 4,
+          "description": "客厅基础压暗，保留低位重点"
+        },
+        {
+          "sceneId": "S03",
+          "sceneName": "观影",
+          "spaceCode": "WSJ",
+          "spaceName": "卫生间",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 0,
+          "cct": 2700,
+          "fadeSec": 4,
+          "description": "客厅基础压暗，保留低位重点"
+        },
+        {
+          "sceneId": "S03",
+          "sceneName": "观影",
+          "spaceCode": "WSJ",
+          "spaceName": "卫生间",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 10,
+          "cct": 2700,
+          "fadeSec": 4,
+          "description": "客厅基础压暗，保留低位重点"
+        },
+        {
+          "sceneId": "S03",
+          "sceneName": "观影",
+          "spaceCode": "GDYT",
+          "spaceName": "过道",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 15,
+          "cct": 2700,
+          "fadeSec": 4,
+          "description": "客厅基础压暗，保留低位重点"
+        },
+        {
+          "sceneId": "S03",
+          "sceneName": "观影",
+          "spaceCode": "GDYT",
+          "spaceName": "过道",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 0,
+          "cct": 2700,
+          "fadeSec": 4,
+          "description": "客厅基础压暗，保留低位重点"
+        },
+        {
+          "sceneId": "S03",
+          "sceneName": "观影",
+          "spaceCode": "GDYT",
+          "spaceName": "过道",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 10,
+          "cct": 2700,
+          "fadeSec": 4,
+          "description": "客厅基础压暗，保留低位重点"
+        },
+        {
+          "sceneId": "S03",
+          "sceneName": "观影",
+          "spaceCode": "YT",
+          "spaceName": "阳台",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 15,
+          "cct": 2700,
+          "fadeSec": 4,
+          "description": "客厅基础压暗，保留低位重点"
+        },
+        {
+          "sceneId": "S03",
+          "sceneName": "观影",
+          "spaceCode": "YT",
+          "spaceName": "阳台",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 0,
+          "cct": 2700,
+          "fadeSec": 4,
+          "description": "客厅基础压暗，保留低位重点"
+        },
+        {
+          "sceneId": "S03",
+          "sceneName": "观影",
+          "spaceCode": "YT",
+          "spaceName": "阳台",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 10,
+          "cct": 2700,
+          "fadeSec": 4,
+          "description": "客厅基础压暗，保留低位重点"
+        },
+        {
+          "sceneId": "S03",
+          "sceneName": "观影",
+          "spaceCode": "YMJ",
+          "spaceName": "衣帽间",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 15,
+          "cct": 2700,
+          "fadeSec": 4,
+          "description": "客厅基础压暗，保留低位重点"
+        },
+        {
+          "sceneId": "S03",
+          "sceneName": "观影",
+          "spaceCode": "YMJ",
+          "spaceName": "衣帽间",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 0,
+          "cct": 2700,
+          "fadeSec": 4,
+          "description": "客厅基础压暗，保留低位重点"
+        },
+        {
+          "sceneId": "S03",
+          "sceneName": "观影",
+          "spaceCode": "YMJ",
+          "spaceName": "衣帽间",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 10,
+          "cct": 2700,
+          "fadeSec": 4,
+          "description": "客厅基础压暗，保留低位重点"
+        },
+        {
+          "sceneId": "S03",
+          "sceneName": "观影",
+          "spaceCode": "WSWSJ",
+          "spaceName": "卧室卫生间",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 15,
+          "cct": 2700,
+          "fadeSec": 4,
+          "description": "客厅基础压暗，保留低位重点"
+        },
+        {
+          "sceneId": "S03",
+          "sceneName": "观影",
+          "spaceCode": "WSWSJ",
+          "spaceName": "卧室卫生间",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 0,
+          "cct": 2700,
+          "fadeSec": 4,
+          "description": "客厅基础压暗，保留低位重点"
+        },
+        {
+          "sceneId": "S03",
+          "sceneName": "观影",
+          "spaceCode": "WSWSJ",
+          "spaceName": "卧室卫生间",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 10,
+          "cct": 2700,
+          "fadeSec": 4,
+          "description": "客厅基础压暗，保留低位重点"
+        },
+        {
+          "sceneId": "S03",
+          "sceneName": "观影",
+          "spaceCode": "CS",
+          "spaceName": "茶室",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 15,
+          "cct": 2700,
+          "fadeSec": 4,
+          "description": "客厅基础压暗，保留低位重点"
+        },
+        {
+          "sceneId": "S03",
+          "sceneName": "观影",
+          "spaceCode": "CS",
+          "spaceName": "茶室",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 0,
+          "cct": 2700,
+          "fadeSec": 4,
+          "description": "客厅基础压暗，保留低位重点"
+        },
+        {
+          "sceneId": "S03",
+          "sceneName": "观影",
+          "spaceCode": "CS",
+          "spaceName": "茶室",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 10,
+          "cct": 2700,
+          "fadeSec": 4,
+          "description": "客厅基础压暗，保留低位重点"
+        }
+      ]
+    },
+    {
+      "id": "S04",
+      "name": "就餐",
+      "description": "餐厅任务照明为主，周边基础辅助",
+      "base": 60,
+      "task": 100,
+      "accent": 50,
+      "cct": 3000,
+      "fadeSec": 2,
+      "rows": [
+        {
+          "sceneId": "S04",
+          "sceneName": "就餐",
+          "spaceCode": "KT",
+          "spaceName": "客厅",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 60,
+          "cct": 3000,
+          "fadeSec": 2,
+          "description": "餐厅任务照明为主，周边基础辅助"
+        },
+        {
+          "sceneId": "S04",
+          "sceneName": "就餐",
+          "spaceCode": "KT",
+          "spaceName": "客厅",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 100,
+          "cct": 3000,
+          "fadeSec": 2,
+          "description": "餐厅任务照明为主，周边基础辅助"
+        },
+        {
+          "sceneId": "S04",
+          "sceneName": "就餐",
+          "spaceCode": "KT",
+          "spaceName": "客厅",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 50,
+          "cct": 3000,
+          "fadeSec": 2,
+          "description": "餐厅任务照明为主，周边基础辅助"
+        },
+        {
+          "sceneId": "S04",
+          "sceneName": "就餐",
+          "spaceCode": "CT",
+          "spaceName": "餐厅",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 60,
+          "cct": 3000,
+          "fadeSec": 2,
+          "description": "餐厅任务照明为主，周边基础辅助"
+        },
+        {
+          "sceneId": "S04",
+          "sceneName": "就餐",
+          "spaceCode": "CT",
+          "spaceName": "餐厅",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 100,
+          "cct": 3000,
+          "fadeSec": 2,
+          "description": "餐厅任务照明为主，周边基础辅助"
+        },
+        {
+          "sceneId": "S04",
+          "sceneName": "就餐",
+          "spaceCode": "CT",
+          "spaceName": "餐厅",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 50,
+          "cct": 3000,
+          "fadeSec": 2,
+          "description": "餐厅任务照明为主，周边基础辅助"
+        },
+        {
+          "sceneId": "S04",
+          "sceneName": "就餐",
+          "spaceCode": "ZW",
+          "spaceName": "主卧",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 60,
+          "cct": 3000,
+          "fadeSec": 2,
+          "description": "餐厅任务照明为主，周边基础辅助"
+        },
+        {
+          "sceneId": "S04",
+          "sceneName": "就餐",
+          "spaceCode": "ZW",
+          "spaceName": "主卧",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 100,
+          "cct": 3000,
+          "fadeSec": 2,
+          "description": "餐厅任务照明为主，周边基础辅助"
+        },
+        {
+          "sceneId": "S04",
+          "sceneName": "就餐",
+          "spaceCode": "ZW",
+          "spaceName": "主卧",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 50,
+          "cct": 3000,
+          "fadeSec": 2,
+          "description": "餐厅任务照明为主，周边基础辅助"
+        },
+        {
+          "sceneId": "S04",
+          "sceneName": "就餐",
+          "spaceCode": "SF",
+          "spaceName": "书房",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 60,
+          "cct": 3000,
+          "fadeSec": 2,
+          "description": "餐厅任务照明为主，周边基础辅助"
+        },
+        {
+          "sceneId": "S04",
+          "sceneName": "就餐",
+          "spaceCode": "SF",
+          "spaceName": "书房",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 100,
+          "cct": 3000,
+          "fadeSec": 2,
+          "description": "餐厅任务照明为主，周边基础辅助"
+        },
+        {
+          "sceneId": "S04",
+          "sceneName": "就餐",
+          "spaceCode": "SF",
+          "spaceName": "书房",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 50,
+          "cct": 3000,
+          "fadeSec": 2,
+          "description": "餐厅任务照明为主，周边基础辅助"
+        },
+        {
+          "sceneId": "S04",
+          "sceneName": "就餐",
+          "spaceCode": "WS",
+          "spaceName": "卧室",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 60,
+          "cct": 3000,
+          "fadeSec": 2,
+          "description": "餐厅任务照明为主，周边基础辅助"
+        },
+        {
+          "sceneId": "S04",
+          "sceneName": "就餐",
+          "spaceCode": "WS",
+          "spaceName": "卧室",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 100,
+          "cct": 3000,
+          "fadeSec": 2,
+          "description": "餐厅任务照明为主，周边基础辅助"
+        },
+        {
+          "sceneId": "S04",
+          "sceneName": "就餐",
+          "spaceCode": "WS",
+          "spaceName": "卧室",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 50,
+          "cct": 3000,
+          "fadeSec": 2,
+          "description": "餐厅任务照明为主，周边基础辅助"
+        },
+        {
+          "sceneId": "S04",
+          "sceneName": "就餐",
+          "spaceCode": "LRF",
+          "spaceName": "老人房",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 60,
+          "cct": 3000,
+          "fadeSec": 2,
+          "description": "餐厅任务照明为主，周边基础辅助"
+        },
+        {
+          "sceneId": "S04",
+          "sceneName": "就餐",
+          "spaceCode": "LRF",
+          "spaceName": "老人房",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 100,
+          "cct": 3000,
+          "fadeSec": 2,
+          "description": "餐厅任务照明为主，周边基础辅助"
+        },
+        {
+          "sceneId": "S04",
+          "sceneName": "就餐",
+          "spaceCode": "LRF",
+          "spaceName": "老人房",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 50,
+          "cct": 3000,
+          "fadeSec": 2,
+          "description": "餐厅任务照明为主，周边基础辅助"
+        },
+        {
+          "sceneId": "S04",
+          "sceneName": "就餐",
+          "spaceCode": "XHF",
+          "spaceName": "儿童房",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 60,
+          "cct": 3000,
+          "fadeSec": 2,
+          "description": "餐厅任务照明为主，周边基础辅助"
+        },
+        {
+          "sceneId": "S04",
+          "sceneName": "就餐",
+          "spaceCode": "XHF",
+          "spaceName": "儿童房",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 100,
+          "cct": 3000,
+          "fadeSec": 2,
+          "description": "餐厅任务照明为主，周边基础辅助"
+        },
+        {
+          "sceneId": "S04",
+          "sceneName": "就餐",
+          "spaceCode": "XHF",
+          "spaceName": "儿童房",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 50,
+          "cct": 3000,
+          "fadeSec": 2,
+          "description": "餐厅任务照明为主，周边基础辅助"
+        },
+        {
+          "sceneId": "S04",
+          "sceneName": "就餐",
+          "spaceCode": "XCW",
+          "spaceName": "玄关",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 60,
+          "cct": 3000,
+          "fadeSec": 2,
+          "description": "餐厅任务照明为主，周边基础辅助"
+        },
+        {
+          "sceneId": "S04",
+          "sceneName": "就餐",
+          "spaceCode": "XCW",
+          "spaceName": "玄关",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 100,
+          "cct": 3000,
+          "fadeSec": 2,
+          "description": "餐厅任务照明为主，周边基础辅助"
+        },
+        {
+          "sceneId": "S04",
+          "sceneName": "就餐",
+          "spaceCode": "XCW",
+          "spaceName": "玄关",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 50,
+          "cct": 3000,
+          "fadeSec": 2,
+          "description": "餐厅任务照明为主，周边基础辅助"
+        },
+        {
+          "sceneId": "S04",
+          "sceneName": "就餐",
+          "spaceCode": "CF",
+          "spaceName": "厨房",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 60,
+          "cct": 3000,
+          "fadeSec": 2,
+          "description": "餐厅任务照明为主，周边基础辅助"
+        },
+        {
+          "sceneId": "S04",
+          "sceneName": "就餐",
+          "spaceCode": "CF",
+          "spaceName": "厨房",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 100,
+          "cct": 3000,
+          "fadeSec": 2,
+          "description": "餐厅任务照明为主，周边基础辅助"
+        },
+        {
+          "sceneId": "S04",
+          "sceneName": "就餐",
+          "spaceCode": "CF",
+          "spaceName": "厨房",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 50,
+          "cct": 3000,
+          "fadeSec": 2,
+          "description": "餐厅任务照明为主，周边基础辅助"
+        },
+        {
+          "sceneId": "S04",
+          "sceneName": "就餐",
+          "spaceCode": "WSJ",
+          "spaceName": "卫生间",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 60,
+          "cct": 3000,
+          "fadeSec": 2,
+          "description": "餐厅任务照明为主，周边基础辅助"
+        },
+        {
+          "sceneId": "S04",
+          "sceneName": "就餐",
+          "spaceCode": "WSJ",
+          "spaceName": "卫生间",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 100,
+          "cct": 3000,
+          "fadeSec": 2,
+          "description": "餐厅任务照明为主，周边基础辅助"
+        },
+        {
+          "sceneId": "S04",
+          "sceneName": "就餐",
+          "spaceCode": "WSJ",
+          "spaceName": "卫生间",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 50,
+          "cct": 3000,
+          "fadeSec": 2,
+          "description": "餐厅任务照明为主，周边基础辅助"
+        },
+        {
+          "sceneId": "S04",
+          "sceneName": "就餐",
+          "spaceCode": "GDYT",
+          "spaceName": "过道",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 60,
+          "cct": 3000,
+          "fadeSec": 2,
+          "description": "餐厅任务照明为主，周边基础辅助"
+        },
+        {
+          "sceneId": "S04",
+          "sceneName": "就餐",
+          "spaceCode": "GDYT",
+          "spaceName": "过道",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 100,
+          "cct": 3000,
+          "fadeSec": 2,
+          "description": "餐厅任务照明为主，周边基础辅助"
+        },
+        {
+          "sceneId": "S04",
+          "sceneName": "就餐",
+          "spaceCode": "GDYT",
+          "spaceName": "过道",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 50,
+          "cct": 3000,
+          "fadeSec": 2,
+          "description": "餐厅任务照明为主，周边基础辅助"
+        },
+        {
+          "sceneId": "S04",
+          "sceneName": "就餐",
+          "spaceCode": "YT",
+          "spaceName": "阳台",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 60,
+          "cct": 3000,
+          "fadeSec": 2,
+          "description": "餐厅任务照明为主，周边基础辅助"
+        },
+        {
+          "sceneId": "S04",
+          "sceneName": "就餐",
+          "spaceCode": "YT",
+          "spaceName": "阳台",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 100,
+          "cct": 3000,
+          "fadeSec": 2,
+          "description": "餐厅任务照明为主，周边基础辅助"
+        },
+        {
+          "sceneId": "S04",
+          "sceneName": "就餐",
+          "spaceCode": "YT",
+          "spaceName": "阳台",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 50,
+          "cct": 3000,
+          "fadeSec": 2,
+          "description": "餐厅任务照明为主，周边基础辅助"
+        },
+        {
+          "sceneId": "S04",
+          "sceneName": "就餐",
+          "spaceCode": "YMJ",
+          "spaceName": "衣帽间",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 60,
+          "cct": 3000,
+          "fadeSec": 2,
+          "description": "餐厅任务照明为主，周边基础辅助"
+        },
+        {
+          "sceneId": "S04",
+          "sceneName": "就餐",
+          "spaceCode": "YMJ",
+          "spaceName": "衣帽间",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 100,
+          "cct": 3000,
+          "fadeSec": 2,
+          "description": "餐厅任务照明为主，周边基础辅助"
+        },
+        {
+          "sceneId": "S04",
+          "sceneName": "就餐",
+          "spaceCode": "YMJ",
+          "spaceName": "衣帽间",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 50,
+          "cct": 3000,
+          "fadeSec": 2,
+          "description": "餐厅任务照明为主，周边基础辅助"
+        },
+        {
+          "sceneId": "S04",
+          "sceneName": "就餐",
+          "spaceCode": "WSWSJ",
+          "spaceName": "卧室卫生间",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 60,
+          "cct": 3000,
+          "fadeSec": 2,
+          "description": "餐厅任务照明为主，周边基础辅助"
+        },
+        {
+          "sceneId": "S04",
+          "sceneName": "就餐",
+          "spaceCode": "WSWSJ",
+          "spaceName": "卧室卫生间",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 100,
+          "cct": 3000,
+          "fadeSec": 2,
+          "description": "餐厅任务照明为主，周边基础辅助"
+        },
+        {
+          "sceneId": "S04",
+          "sceneName": "就餐",
+          "spaceCode": "WSWSJ",
+          "spaceName": "卧室卫生间",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 50,
+          "cct": 3000,
+          "fadeSec": 2,
+          "description": "餐厅任务照明为主，周边基础辅助"
+        },
+        {
+          "sceneId": "S04",
+          "sceneName": "就餐",
+          "spaceCode": "CS",
+          "spaceName": "茶室",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 60,
+          "cct": 3000,
+          "fadeSec": 2,
+          "description": "餐厅任务照明为主，周边基础辅助"
+        },
+        {
+          "sceneId": "S04",
+          "sceneName": "就餐",
+          "spaceCode": "CS",
+          "spaceName": "茶室",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 100,
+          "cct": 3000,
+          "fadeSec": 2,
+          "description": "餐厅任务照明为主，周边基础辅助"
+        },
+        {
+          "sceneId": "S04",
+          "sceneName": "就餐",
+          "spaceCode": "CS",
+          "spaceName": "茶室",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 50,
+          "cct": 3000,
+          "fadeSec": 2,
+          "description": "餐厅任务照明为主，周边基础辅助"
+        }
+      ]
+    },
+    {
+      "id": "S05",
+      "name": "睡眠",
+      "description": "卧室仅保留夜灯/低位重点",
+      "base": 0,
+      "task": 0,
+      "accent": 5,
+      "cct": 2700,
+      "fadeSec": 8,
+      "rows": [
+        {
+          "sceneId": "S05",
+          "sceneName": "睡眠",
+          "spaceCode": "KT",
+          "spaceName": "客厅",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 0,
+          "cct": 2700,
+          "fadeSec": 8,
+          "description": "卧室仅保留夜灯/低位重点"
+        },
+        {
+          "sceneId": "S05",
+          "sceneName": "睡眠",
+          "spaceCode": "KT",
+          "spaceName": "客厅",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 0,
+          "cct": 2700,
+          "fadeSec": 8,
+          "description": "卧室仅保留夜灯/低位重点"
+        },
+        {
+          "sceneId": "S05",
+          "sceneName": "睡眠",
+          "spaceCode": "KT",
+          "spaceName": "客厅",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 5,
+          "cct": 2700,
+          "fadeSec": 8,
+          "description": "卧室仅保留夜灯/低位重点"
+        },
+        {
+          "sceneId": "S05",
+          "sceneName": "睡眠",
+          "spaceCode": "CT",
+          "spaceName": "餐厅",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 0,
+          "cct": 2700,
+          "fadeSec": 8,
+          "description": "卧室仅保留夜灯/低位重点"
+        },
+        {
+          "sceneId": "S05",
+          "sceneName": "睡眠",
+          "spaceCode": "CT",
+          "spaceName": "餐厅",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 0,
+          "cct": 2700,
+          "fadeSec": 8,
+          "description": "卧室仅保留夜灯/低位重点"
+        },
+        {
+          "sceneId": "S05",
+          "sceneName": "睡眠",
+          "spaceCode": "CT",
+          "spaceName": "餐厅",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 5,
+          "cct": 2700,
+          "fadeSec": 8,
+          "description": "卧室仅保留夜灯/低位重点"
+        },
+        {
+          "sceneId": "S05",
+          "sceneName": "睡眠",
+          "spaceCode": "ZW",
+          "spaceName": "主卧",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 0,
+          "cct": 2700,
+          "fadeSec": 8,
+          "description": "卧室仅保留夜灯/低位重点"
+        },
+        {
+          "sceneId": "S05",
+          "sceneName": "睡眠",
+          "spaceCode": "ZW",
+          "spaceName": "主卧",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 0,
+          "cct": 2700,
+          "fadeSec": 8,
+          "description": "卧室仅保留夜灯/低位重点"
+        },
+        {
+          "sceneId": "S05",
+          "sceneName": "睡眠",
+          "spaceCode": "ZW",
+          "spaceName": "主卧",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 5,
+          "cct": 2700,
+          "fadeSec": 8,
+          "description": "卧室仅保留夜灯/低位重点"
+        },
+        {
+          "sceneId": "S05",
+          "sceneName": "睡眠",
+          "spaceCode": "SF",
+          "spaceName": "书房",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 0,
+          "cct": 2700,
+          "fadeSec": 8,
+          "description": "卧室仅保留夜灯/低位重点"
+        },
+        {
+          "sceneId": "S05",
+          "sceneName": "睡眠",
+          "spaceCode": "SF",
+          "spaceName": "书房",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 0,
+          "cct": 2700,
+          "fadeSec": 8,
+          "description": "卧室仅保留夜灯/低位重点"
+        },
+        {
+          "sceneId": "S05",
+          "sceneName": "睡眠",
+          "spaceCode": "SF",
+          "spaceName": "书房",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 5,
+          "cct": 2700,
+          "fadeSec": 8,
+          "description": "卧室仅保留夜灯/低位重点"
+        },
+        {
+          "sceneId": "S05",
+          "sceneName": "睡眠",
+          "spaceCode": "WS",
+          "spaceName": "卧室",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 0,
+          "cct": 2700,
+          "fadeSec": 8,
+          "description": "卧室仅保留夜灯/低位重点"
+        },
+        {
+          "sceneId": "S05",
+          "sceneName": "睡眠",
+          "spaceCode": "WS",
+          "spaceName": "卧室",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 0,
+          "cct": 2700,
+          "fadeSec": 8,
+          "description": "卧室仅保留夜灯/低位重点"
+        },
+        {
+          "sceneId": "S05",
+          "sceneName": "睡眠",
+          "spaceCode": "WS",
+          "spaceName": "卧室",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 5,
+          "cct": 2700,
+          "fadeSec": 8,
+          "description": "卧室仅保留夜灯/低位重点"
+        },
+        {
+          "sceneId": "S05",
+          "sceneName": "睡眠",
+          "spaceCode": "LRF",
+          "spaceName": "老人房",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 0,
+          "cct": 2700,
+          "fadeSec": 8,
+          "description": "卧室仅保留夜灯/低位重点"
+        },
+        {
+          "sceneId": "S05",
+          "sceneName": "睡眠",
+          "spaceCode": "LRF",
+          "spaceName": "老人房",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 0,
+          "cct": 2700,
+          "fadeSec": 8,
+          "description": "卧室仅保留夜灯/低位重点"
+        },
+        {
+          "sceneId": "S05",
+          "sceneName": "睡眠",
+          "spaceCode": "LRF",
+          "spaceName": "老人房",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 5,
+          "cct": 2700,
+          "fadeSec": 8,
+          "description": "卧室仅保留夜灯/低位重点"
+        },
+        {
+          "sceneId": "S05",
+          "sceneName": "睡眠",
+          "spaceCode": "XHF",
+          "spaceName": "儿童房",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 0,
+          "cct": 2700,
+          "fadeSec": 8,
+          "description": "卧室仅保留夜灯/低位重点"
+        },
+        {
+          "sceneId": "S05",
+          "sceneName": "睡眠",
+          "spaceCode": "XHF",
+          "spaceName": "儿童房",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 0,
+          "cct": 2700,
+          "fadeSec": 8,
+          "description": "卧室仅保留夜灯/低位重点"
+        },
+        {
+          "sceneId": "S05",
+          "sceneName": "睡眠",
+          "spaceCode": "XHF",
+          "spaceName": "儿童房",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 5,
+          "cct": 2700,
+          "fadeSec": 8,
+          "description": "卧室仅保留夜灯/低位重点"
+        },
+        {
+          "sceneId": "S05",
+          "sceneName": "睡眠",
+          "spaceCode": "XCW",
+          "spaceName": "玄关",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 0,
+          "cct": 2700,
+          "fadeSec": 8,
+          "description": "卧室仅保留夜灯/低位重点"
+        },
+        {
+          "sceneId": "S05",
+          "sceneName": "睡眠",
+          "spaceCode": "XCW",
+          "spaceName": "玄关",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 0,
+          "cct": 2700,
+          "fadeSec": 8,
+          "description": "卧室仅保留夜灯/低位重点"
+        },
+        {
+          "sceneId": "S05",
+          "sceneName": "睡眠",
+          "spaceCode": "XCW",
+          "spaceName": "玄关",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 5,
+          "cct": 2700,
+          "fadeSec": 8,
+          "description": "卧室仅保留夜灯/低位重点"
+        },
+        {
+          "sceneId": "S05",
+          "sceneName": "睡眠",
+          "spaceCode": "CF",
+          "spaceName": "厨房",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 0,
+          "cct": 2700,
+          "fadeSec": 8,
+          "description": "卧室仅保留夜灯/低位重点"
+        },
+        {
+          "sceneId": "S05",
+          "sceneName": "睡眠",
+          "spaceCode": "CF",
+          "spaceName": "厨房",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 0,
+          "cct": 2700,
+          "fadeSec": 8,
+          "description": "卧室仅保留夜灯/低位重点"
+        },
+        {
+          "sceneId": "S05",
+          "sceneName": "睡眠",
+          "spaceCode": "CF",
+          "spaceName": "厨房",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 5,
+          "cct": 2700,
+          "fadeSec": 8,
+          "description": "卧室仅保留夜灯/低位重点"
+        },
+        {
+          "sceneId": "S05",
+          "sceneName": "睡眠",
+          "spaceCode": "WSJ",
+          "spaceName": "卫生间",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 0,
+          "cct": 2700,
+          "fadeSec": 8,
+          "description": "卧室仅保留夜灯/低位重点"
+        },
+        {
+          "sceneId": "S05",
+          "sceneName": "睡眠",
+          "spaceCode": "WSJ",
+          "spaceName": "卫生间",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 0,
+          "cct": 2700,
+          "fadeSec": 8,
+          "description": "卧室仅保留夜灯/低位重点"
+        },
+        {
+          "sceneId": "S05",
+          "sceneName": "睡眠",
+          "spaceCode": "WSJ",
+          "spaceName": "卫生间",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 5,
+          "cct": 2700,
+          "fadeSec": 8,
+          "description": "卧室仅保留夜灯/低位重点"
+        },
+        {
+          "sceneId": "S05",
+          "sceneName": "睡眠",
+          "spaceCode": "GDYT",
+          "spaceName": "过道",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 0,
+          "cct": 2700,
+          "fadeSec": 8,
+          "description": "卧室仅保留夜灯/低位重点"
+        },
+        {
+          "sceneId": "S05",
+          "sceneName": "睡眠",
+          "spaceCode": "GDYT",
+          "spaceName": "过道",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 0,
+          "cct": 2700,
+          "fadeSec": 8,
+          "description": "卧室仅保留夜灯/低位重点"
+        },
+        {
+          "sceneId": "S05",
+          "sceneName": "睡眠",
+          "spaceCode": "GDYT",
+          "spaceName": "过道",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 5,
+          "cct": 2700,
+          "fadeSec": 8,
+          "description": "卧室仅保留夜灯/低位重点"
+        },
+        {
+          "sceneId": "S05",
+          "sceneName": "睡眠",
+          "spaceCode": "YT",
+          "spaceName": "阳台",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 0,
+          "cct": 2700,
+          "fadeSec": 8,
+          "description": "卧室仅保留夜灯/低位重点"
+        },
+        {
+          "sceneId": "S05",
+          "sceneName": "睡眠",
+          "spaceCode": "YT",
+          "spaceName": "阳台",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 0,
+          "cct": 2700,
+          "fadeSec": 8,
+          "description": "卧室仅保留夜灯/低位重点"
+        },
+        {
+          "sceneId": "S05",
+          "sceneName": "睡眠",
+          "spaceCode": "YT",
+          "spaceName": "阳台",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 5,
+          "cct": 2700,
+          "fadeSec": 8,
+          "description": "卧室仅保留夜灯/低位重点"
+        },
+        {
+          "sceneId": "S05",
+          "sceneName": "睡眠",
+          "spaceCode": "YMJ",
+          "spaceName": "衣帽间",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 0,
+          "cct": 2700,
+          "fadeSec": 8,
+          "description": "卧室仅保留夜灯/低位重点"
+        },
+        {
+          "sceneId": "S05",
+          "sceneName": "睡眠",
+          "spaceCode": "YMJ",
+          "spaceName": "衣帽间",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 0,
+          "cct": 2700,
+          "fadeSec": 8,
+          "description": "卧室仅保留夜灯/低位重点"
+        },
+        {
+          "sceneId": "S05",
+          "sceneName": "睡眠",
+          "spaceCode": "YMJ",
+          "spaceName": "衣帽间",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 5,
+          "cct": 2700,
+          "fadeSec": 8,
+          "description": "卧室仅保留夜灯/低位重点"
+        },
+        {
+          "sceneId": "S05",
+          "sceneName": "睡眠",
+          "spaceCode": "WSWSJ",
+          "spaceName": "卧室卫生间",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 0,
+          "cct": 2700,
+          "fadeSec": 8,
+          "description": "卧室仅保留夜灯/低位重点"
+        },
+        {
+          "sceneId": "S05",
+          "sceneName": "睡眠",
+          "spaceCode": "WSWSJ",
+          "spaceName": "卧室卫生间",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 0,
+          "cct": 2700,
+          "fadeSec": 8,
+          "description": "卧室仅保留夜灯/低位重点"
+        },
+        {
+          "sceneId": "S05",
+          "sceneName": "睡眠",
+          "spaceCode": "WSWSJ",
+          "spaceName": "卧室卫生间",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 5,
+          "cct": 2700,
+          "fadeSec": 8,
+          "description": "卧室仅保留夜灯/低位重点"
+        },
+        {
+          "sceneId": "S05",
+          "sceneName": "睡眠",
+          "spaceCode": "CS",
+          "spaceName": "茶室",
+          "layer": "base",
+          "layerLabel": "基础照明",
+          "level": 0,
+          "cct": 2700,
+          "fadeSec": 8,
+          "description": "卧室仅保留夜灯/低位重点"
+        },
+        {
+          "sceneId": "S05",
+          "sceneName": "睡眠",
+          "spaceCode": "CS",
+          "spaceName": "茶室",
+          "layer": "task",
+          "layerLabel": "任务照明",
+          "level": 0,
+          "cct": 2700,
+          "fadeSec": 8,
+          "description": "卧室仅保留夜灯/低位重点"
+        },
+        {
+          "sceneId": "S05",
+          "sceneName": "睡眠",
+          "spaceCode": "CS",
+          "spaceName": "茶室",
+          "layer": "accent",
+          "layerLabel": "重点照明",
+          "level": 5,
+          "cct": 2700,
+          "fadeSec": 8,
+          "description": "卧室仅保留夜灯/低位重点"
+        }
+      ]
+    }
+  ],
+  "standard": {
+    "project": {
+      "name": "演示项目 · 上海 226㎡ 大平层",
+      "location": "上海市",
+      "buildingType": "住宅",
+      "areaM2": 226.32,
+      "source": "simulated_project_brief"
+    },
+    "standard": {
+      "code": "GB/T 50034-2024",
+      "name": "建筑照明设计标准",
+      "edition": "演示口径",
+      "note": "版本与限值需按项目所在地现行规范及审图口径复核，不作为正式设计依据。"
+    },
+    "targets": {
+      "KT": {
+        "spaceName": "客厅",
+        "targetLux": 150,
+        "ugr": 19,
+        "ra": 80,
+        "lpd": 6
+      },
+      "CT": {
+        "spaceName": "餐厅",
+        "targetLux": 200,
+        "ugr": 19,
+        "ra": 80,
+        "lpd": 6
+      },
+      "ZW": {
+        "spaceName": "主卧",
+        "targetLux": 100,
+        "ugr": 19,
+        "ra": 80,
+        "lpd": 4
+      },
+      "SF": {
+        "spaceName": "书房",
+        "targetLux": 300,
+        "ugr": 19,
+        "ra": 80,
+        "lpd": 6
+      },
+      "WS": {
+        "spaceName": "卧室",
+        "targetLux": 100,
+        "ugr": 19,
+        "ra": 80,
+        "lpd": 4
+      },
+      "LRF": {
+        "spaceName": "老人房",
+        "targetLux": 150,
+        "ugr": 19,
+        "ra": 80,
+        "lpd": 4
+      },
+      "XHF": {
+        "spaceName": "儿童房",
+        "targetLux": 200,
+        "ugr": 19,
+        "ra": 80,
+        "lpd": 4
+      },
+      "XCW": {
+        "spaceName": "玄关",
+        "targetLux": 100,
+        "ugr": 19,
+        "ra": 80,
+        "lpd": 5
+      },
+      "CF": {
+        "spaceName": "厨房",
+        "targetLux": 300,
+        "ugr": 19,
+        "ra": 80,
+        "lpd": 7
+      },
+      "WSJ": {
+        "spaceName": "卫生间",
+        "targetLux": 200,
+        "ugr": 19,
+        "ra": 80,
+        "lpd": 6
+      },
+      "GDYT": {
+        "spaceName": "过道",
+        "targetLux": 100,
+        "ugr": 22,
+        "ra": 80,
+        "lpd": 4
+      },
+      "YT": {
+        "spaceName": "阳台",
+        "targetLux": 100,
+        "ugr": 22,
+        "ra": 80,
+        "lpd": 4
+      },
+      "YMJ": {
+        "spaceName": "衣帽间",
+        "targetLux": 150,
+        "ugr": 19,
+        "ra": 80,
+        "lpd": 4
+      },
+      "WSWSJ": {
+        "spaceName": "卧室卫生间",
+        "targetLux": 200,
+        "ugr": 19,
+        "ra": 80,
+        "lpd": 6
+      },
+      "CS": {
+        "spaceName": "茶室",
+        "targetLux": 150,
+        "ugr": 19,
+        "ra": 80,
+        "lpd": 5
+      }
+    },
+    "acceptance": [
+      "照度实测值不低于设计值的 90%，且不低于标准值",
+      "UGR 不大于本表限值；重点作业面显色指数 Ra≥80",
+      "色容差≤5 SDCM，同空间色温偏差≤200K",
+      "照明功率密度不高于本表 LPD 限值",
+      "调光/场景联动逐回路验收，DALI 地址与场景表一致"
+    ],
+    "protocols": [
+      "DALI",
+      "0-10V",
+      "KNX",
+      "无线"
+    ],
+    "dimming": "DALI 主推，0-10V/KNX/无线按产品与网关能力兼容",
+    "source": "simulated_standard_profile"
+  }
+};

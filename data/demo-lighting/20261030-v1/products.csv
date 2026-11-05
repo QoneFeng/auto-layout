@@ -1,0 +1,21 @@
+﻿key,productId,model,watt,lumen,efficacy,cct,beam,ugr,cri,protocols,iesFile,ldtFile,photometryStatus,source
+筒灯,SIM-DL-9W-3000K,SIM-DL-9W,9,810,90,3000,60,18,90,DALI|0-10V|KNX|无线,ies/SIM-DL-9W-3000K.ies,ldt/SIM-DL-9W-3000K.ldt,synthetic,simulated
+射灯,SIM-SP-7W-3000K,SIM-SP-7W,7,620,88.6,3000,24,16,90,DALI|0-10V|KNX|无线,ies/SIM-SP-7W-3000K.ies,ldt/SIM-SP-7W-3000K.ldt,synthetic,simulated
+吸顶灯,SIM-CL-24W-3500K,SIM-CL-24W,24,2200,91.7,3500,110,22,90,DALI|0-10V|KNX|无线,ies/SIM-CL-24W-3500K.ies,ldt/SIM-CL-24W-3500K.ldt,synthetic,simulated
+吊灯,SIM-PD-32W-3000K,SIM-PD-32W,32,2600,81.3,3000,90,19,90,DALI|0-10V|KNX|无线,ies/SIM-PD-32W-3000K.ies,ldt/SIM-PD-32W-3000K.ldt,synthetic,simulated
+面板灯,SIM-PL-36W-4000K,SIM-PL-36W,36,3200,88.9,4000,110,19,90,DALI|0-10V|KNX|无线,ies/SIM-PL-36W-4000K.ies,ldt/SIM-PL-36W-4000K.ldt,synthetic,simulated
+格栅灯,SIM-GR-24W-4000K,SIM-GR-24W,24,2400,100,4000,90,19,90,DALI|0-10V|KNX|无线,ies/SIM-GR-24W-4000K.ies,ldt/SIM-GR-24W-4000K.ldt,synthetic,simulated
+壁灯,SIM-WL-8W-3000K,SIM-WL-8W,8,520,65,3000,60,19,90,DALI|0-10V|KNX|无线,ies/SIM-WL-8W-3000K.ies,ldt/SIM-WL-8W-3000K.ldt,synthetic,simulated
+台灯,SIM-TL-8W-4000K,SIM-TL-8W,8,600,75,4000,60,19,90,DALI|0-10V|KNX|无线,ies/SIM-TL-8W-4000K.ies,ldt/SIM-TL-8W-4000K.ldt,synthetic,simulated
+落地灯,SIM-FL-10W-3000K,SIM-FL-10W,10,800,80,3000,60,19,90,DALI|0-10V|KNX|无线,ies/SIM-FL-10W-3000K.ies,ldt/SIM-FL-10W-3000K.ldt,synthetic,simulated
+磁吸泛光灯 · 灯体,SIM-MG-12W-3000K,SIM-MG-12W,12,1000,83.3,3000,36,19,90,DALI|0-10V|KNX|无线,ies/SIM-MG-12W-3000K.ies,ldt/SIM-MG-12W-3000K.ldt,synthetic,simulated
+磁吸格栅灯 · 灯体,SIM-MGG-12W-4000K,SIM-MGG-12W,12,1000,83.3,4000,36,19,90,DALI|0-10V|KNX|无线,ies/SIM-MGG-12W-4000K.ies,ldt/SIM-MGG-12W-4000K.ldt,synthetic,simulated
+轨道射灯 · 灯头,SIM-TH-9W-3000K,SIM-TH-9W,9,850,94.4,3000,24,16,90,DALI|0-10V|KNX|无线,ies/SIM-TH-9W-3000K.ies,ldt/SIM-TH-9W-3000K.ldt,synthetic,simulated
+灯槽灯带,SIM-LS-6W/M-3000K,SIM-LS-6W/M,6,600,100,3000,120,22,90,DALI|0-10V|KNX|无线,ies/SIM-LS-6W-M-3000K.ies,ldt/SIM-LS-6W-M-3000K.ldt,synthetic,simulated
+窗帘灯带,SIM-CLS-6W/M-3000K,SIM-CLS-6W/M,6,600,100,3000,120,22,90,DALI|0-10V|KNX|无线,ies/SIM-CLS-6W-M-3000K.ies,ldt/SIM-CLS-6W-M-3000K.ldt,synthetic,simulated
+柜体灯带,SIM-CB-6W/M-3000K,SIM-CB-6W/M,6,500,83.3,3000,120,22,90,DALI|0-10V|KNX|无线,ies/SIM-CB-6W-M-3000K.ies,ldt/SIM-CB-6W-M-3000K.ldt,synthetic,simulated
+直线灯带,SIM-SL-6W/M-3000K,SIM-SL-6W/M,6,600,100,3000,120,22,90,DALI|0-10V|KNX|无线,ies/SIM-SL-6W-M-3000K.ies,ldt/SIM-SL-6W-M-3000K.ldt,synthetic,simulated
+贴墙灯带,SIM-WSL-6W/M-3000K,SIM-WSL-6W/M,6,600,100,3000,120,22,90,DALI|0-10V|KNX|无线,ies/SIM-WSL-6W-M-3000K.ies,ldt/SIM-WSL-6W-M-3000K.ldt,synthetic,simulated
+轨道射灯 · 轨道,SIM-TRACK-1M,SIM-TRACK-1M,0,0,,,,,90,,,,not_applicable,simulated
+磁吸泛光灯 · 磁吸轨道,SIM-MTRACK-1M,SIM-MTRACK-1M,0,0,,,,,90,,,,not_applicable,simulated
+磁吸格栅灯 · 磁吸轨道,SIM-MTRACK-1M,SIM-MTRACK-1M,0,0,,,,,90,,,,not_applicable,simulated

@@ -1,0 +1,137 @@
+{
+  "project": {
+    "name": "演示项目 · 上海 226㎡ 大平层",
+    "location": "上海市",
+    "buildingType": "住宅",
+    "areaM2": 226.32,
+    "source": "simulated_project_brief"
+  },
+  "standard": {
+    "code": "GB/T 50034-2024",
+    "name": "建筑照明设计标准",
+    "edition": "演示口径",
+    "note": "版本与限值需按项目所在地现行规范及审图口径复核，不作为正式设计依据。"
+  },
+  "targets": {
+    "KT": {
+      "spaceName": "客厅",
+      "targetLux": 150,
+      "ugr": 19,
+      "ra": 80,
+      "lpd": 6
+    },
+    "CT": {
+      "spaceName": "餐厅",
+      "targetLux": 200,
+      "ugr": 19,
+      "ra": 80,
+      "lpd": 6
+    },
+    "ZW": {
+      "spaceName": "主卧",
+      "targetLux": 100,
+      "ugr": 19,
+      "ra": 80,
+      "lpd": 4
+    },
+    "SF": {
+      "spaceName": "书房",
+      "targetLux": 300,
+      "ugr": 19,
+      "ra": 80,
+      "lpd": 6
+    },
+    "WS": {
+      "spaceName": "卧室",
+      "targetLux": 100,
+      "ugr": 19,
+      "ra": 80,
+      "lpd": 4
+    },
+    "LRF": {
+      "spaceName": "老人房",
+      "targetLux": 150,
+      "ugr": 19,
+      "ra": 80,
+      "lpd": 4
+    },
+    "XHF": {
+      "spaceName": "儿童房",
+      "targetLux": 200,
+      "ugr": 19,
+      "ra": 80,
+      "lpd": 4
+    },
+    "XCW": {
+      "spaceName": "玄关",
+      "targetLux": 100,
+      "ugr": 19,
+      "ra": 80,
+      "lpd": 5
+    },
+    "CF": {
+      "spaceName": "厨房",
+      "targetLux": 300,
+      "ugr": 19,
+      "ra": 80,
+      "lpd": 7
+    },
+    "WSJ": {
+      "spaceName": "卫生间",
+      "targetLux": 200,
+      "ugr": 19,
+      "ra": 80,
+      "lpd": 6
+    },
+    "GDYT": {
+      "spaceName": "过道",
+      "targetLux": 100,
+      "ugr": 22,
+      "ra": 80,
+      "lpd": 4
+    },
+    "YT": {
+      "spaceName": "阳台",
+      "targetLux": 100,
+      "ugr": 22,
+      "ra": 80,
+      "lpd": 4
+    },
+    "YMJ": {
+      "spaceName": "衣帽间",
+      "targetLux": 150,
+      "ugr": 19,
+      "ra": 80,
+      "lpd": 4
+    },
+    "WSWSJ": {
+      "spaceName": "卧室卫生间",
+      "targetLux": 200,
+      "ugr": 19,
+      "ra": 80,
+      "lpd": 6
+    },
+    "CS": {
+      "spaceName": "茶室",
+      "targetLux": 150,
+      "ugr": 19,
+      "ra": 80,
+      "lpd": 5
+    }
+  },
+  "acceptance": [
+    "照度实测值不低于设计值的 90%，且不低于标准值",
+    "UGR 不大于本表限值；重点作业面显色指数 Ra≥80",
+    "色容差≤5 SDCM，同空间色温偏差≤200K",
+    "照明功率密度不高于本表 LPD 限值",
+    "调光/场景联动逐回路验收，DALI 地址与场景表一致"
+  ],
+  "protocols": [
+    "DALI",
+    "0-10V",
+    "KNX",
+    "无线"
+  ],
+  "dimming": "DALI 主推，0-10V/KNX/无线按产品与网关能力兼容",
+  "source": "simulated_standard_profile"
+}

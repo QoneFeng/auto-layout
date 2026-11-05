@@ -1,0 +1,28 @@
+:root {
+  color-scheme: light;
+  --bg: #eef6fd;
+  --panel: #ffffff;
+  --panel-2: #f6f9fc;
+  --line: #e4eaf1;
+  --text: #243447;
+  --muted: #7b8794;
+  --accent: #1687f5;
+  --accent-2: #0b73db;
+  --danger: #cf5f50;
+  --ok: #388157;
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+* { box-sizing: border-box; }
+html, body, #app { margin: 0; width: 100%; height: 100%; min-height: 100%; }
+body { background: var(--bg); color: var(--text); overflow: hidden; }
+button, input, select { font: inherit; }
+button { -webkit-tap-highlight-color: transparent; }
+::selection { background: rgba(22, 135, 245, .18); }
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #d3dde8; border-radius: 8px; }
+::-webkit-scrollbar-thumb:hover { background: #b7c6d6; }

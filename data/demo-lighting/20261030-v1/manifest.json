@@ -1,0 +1,32 @@
+{
+  "version": "20261030-v1",
+  "generatedAt": "2026-10-30",
+  "source": "simulated",
+  "disclaimer": "全部为 Demo 模拟数据，不得用于真实选品、施工、照度计算或验收。",
+  "counts": {
+    "spaces": 15,
+    "products": 20,
+    "activeProducts": 17,
+    "passiveProducts": 3,
+    "iesFiles": 17,
+    "ldtFiles": 17,
+    "obstacles": 15,
+    "circuits": 38,
+    "circuitLights": 205,
+    "gateways": 4,
+    "scenes": 5,
+    "sceneRows": 225,
+    "controlSpaces": 15,
+    "controls": 63,
+    "controlBindings": 113
+  },
+  "checks": {
+    "targetLuxSpaces": 15,
+    "productKeys": 20,
+    "allCircuitsHaveGateway": true,
+    "daliAddressesWithin64": true,
+    "circuitLightSum": 205,
+    "sceneRows": 225,
+    "controlsCoverAllCircuits": true
+  }
+}
