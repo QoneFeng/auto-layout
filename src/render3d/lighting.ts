@@ -10,7 +10,7 @@ export interface LightingRig {
 }
 
 export function createLighting(scene: THREE.Scene, renderer: THREE.WebGLRenderer, size: number, mats: MaterialKit): LightingRig {
-  const hemi = new THREE.HemisphereLight(0xfff8ee, 0xb9a88f, 0.75);
+  const hemi = new THREE.HemisphereLight(0xffffff, 0xdbe6f2, 0.85);
   const sun = new THREE.DirectionalLight(0xfff1dd, 1.8);
   sun.position.set(size, size * 1.6, size * 0.9);
   sun.castShadow = true;
@@ -27,7 +27,7 @@ export function createLighting(scene: THREE.Scene, renderer: THREE.WebGLRenderer
 
   const ground = new THREE.Mesh(
     new THREE.PlaneGeometry(size * 12, size * 12),
-    new THREE.MeshStandardMaterial({ color: 0x2b3036, roughness: 1 }),
+    new THREE.MeshStandardMaterial({ color: 0xeaf2fa, roughness: 1 }),
   );
   ground.rotation.x = -Math.PI / 2;
   ground.position.y = -0.02;

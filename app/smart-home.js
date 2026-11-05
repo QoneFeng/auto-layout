@@ -17,8 +17,8 @@
   const SPACE_BY_CODE = Object.fromEntries(SPACES.map(s => [s.code, s]));
   const CATEGORY_ORDER = ['灯光', '控制', '环境', '安防监控', '网络', '音乐', '遮阳', '暖通'];
   const CATEGORY_COLORS = {
-    灯光: '#f0b44a', 控制: '#d7d1c6', 环境: '#7fb2c9', 安防监控: '#c97b7b',
-    网络: '#8fa3b8', 音乐: '#9fb6a0', 遮阳: '#c9b08a', 暖通: '#b7c4d2',
+    灯光: '#c47f00', 控制: '#1687f5', 环境: '#0f9b8e', 安防监控: '#cf5f50',
+    网络: '#7c6fd6', 音乐: '#388157', 遮阳: '#d97745', 暖通: '#5a9bd4',
   };
   const ROOM_SPACE = {
     master: 'ZW', mbath: 'WSWSJ', kid: 'XHF', gbath: 'WSJ', laundry: 'YT',
@@ -731,7 +731,7 @@
     const boundControls = controlBindings().byDevice.size;
     circuitPanel.querySelector('#circuit-count').textContent = `${all.length} 个 · ${all.reduce((s, g) => s + g.lights.length, 0)} 灯位`;
     circuitPanel.querySelector('#circuit-summary').innerHTML = visible.length
-      ? `当前显示 <b>${visible.length}</b> 个回路 · <b>${totalLights}</b> 灯位 · 网关 <b>${gateways.size}</b> 个 · DALI 地址 <b>${addresses.length}${capacity ? `/${capacity}` : ''}</b> · 控制 <b>${boundControls}/${allControls.length}</b><br><span style="color:#9a9185">模拟回路 / 模拟地址 / 模拟开关绑定，仅用于 Demo 对账</span>`
+      ? `当前显示 <b>${visible.length}</b> 个回路 · <b>${totalLights}</b> 灯位 · 网关 <b>${gateways.size}</b> 个 · DALI 地址 <b>${addresses.length}${capacity ? `/${capacity}` : ''}</b> · 控制 <b>${boundControls}/${allControls.length}</b><br><span style="color:var(--muted)">模拟回路 / 模拟地址 / 模拟开关绑定，仅用于 Demo 对账</span>`
       : '当前筛选下没有回路；先生成套餐或添加灯具。';
     circuitPanel.querySelector('#circuit-visible').checked = circuitVisible;
     circuitPanel.querySelector('#circuit-control-links').checked = controlLinksVisible;
@@ -861,7 +861,7 @@
 
   function colorFor(key) {
     const d = DEVICE_BY_KEY[key];
-    return CATEGORY_COLORS[d?.category1] || '#e8e2d8';
+    return CATEGORY_COLORS[d?.category1] || '#91a0ae';
   }
   function catalogProductForLegacy(key) {
     const item = DEVICES.find(device => device.productId && (device.legacyKey || device.key) === key);

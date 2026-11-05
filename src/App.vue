@@ -507,7 +507,7 @@ function exportPng() {
     canvas.width = 2400;
     canvas.height = Math.round(2400 * (project.value.height / project.value.width));
     const ctx = canvas.getContext('2d')!;
-    ctx.fillStyle = '#0b0d10';
+    ctx.fillStyle = '#f7fafd';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
     const a = document.createElement('a');
