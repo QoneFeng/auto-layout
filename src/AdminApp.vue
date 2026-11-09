@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted, onBeforeUnmount, ref, watch } from 'vue';
-import { NButton, NConfigProvider, NInput, NInputNumber, NSelect, zhCN, type GlobalThemeOverrides } from 'naive-ui';
+import { NButton, NConfigProvider, NInput, NInputNumber, NSelect, NTag, zhCN, type GlobalThemeOverrides } from 'naive-ui';
 import ProductWorkspace from './admin/ProductWorkspace.vue';
 import BusinessWorkspace from './admin/BusinessWorkspace.vue';
 import DesignWorkspace from './admin/DesignWorkspace.vue';
@@ -10,10 +10,24 @@ import AdminPagination from './admin/components/AdminPagination.vue';
 import AdminPageHeader from './admin/components/AdminPageHeader.vue';
 import AdminFilterBar from './admin/components/AdminFilterBar.vue';
 import AdminNavIcon from './admin/components/AdminNavIcon.vue';
+import AdminBrandMark from './admin/components/AdminBrandMark.vue';
+import AdminPageTabs, { type PageTabItem } from './admin/components/AdminPageTabs.vue';
 import { queryPage, queryPageSize, readRouteQuery, updateRouteQuery } from './admin/hash-query';
 
 const adminTheme: GlobalThemeOverrides = {
-  common: { primaryColor: '#1687f5', primaryColorHover: '#0b73db', primaryColorPressed: '#075eb8', borderRadius: '6px', fontSize: '14px', fontFamily: '-apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif' },
+  common: {
+    primaryColor: '#0b6cd0',
+    primaryColorHover: '#0a5fb8',
+    primaryColorPressed: '#084f99',
+    primaryColorSuppl: '#0b6cd0',
+    borderColor: '#d5d5cf',
+    borderRadius: '8px',
+    fontSize: '14px',
+    fontFamily: '-apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif',
+  },
+  Tag: { borderRadius: '6px' },
+  Button: { borderRadiusMedium: '8px', borderRadiusSmall: '6px' },
+  Input: { borderRadius: '8px' },
 };
 
 type Tab = 'overview' | 'projects' | 'designs' | 'customers' | 'quotes' | 'products' | 'operations' | 'store' | 'settings';
@@ -41,6 +55,11 @@ const loginError = ref('');
 const loggingIn = ref(false);
 const projectDetail = ref<Project | null>(null);
 const projectLoading = ref(false);
+// 项目详情里的“关联方案 / 关联报价”：直接读 designs 与 quotes 两张表，不在项目 JSON 里复制一份。
+const projectLinks = ref<{ designs: any[]; quotes: any[] }>({ designs: [], quotes: [] });
+const projectLinksLoading = ref(false);
+// 项目资料计数：设计版本 / 项目文件 / 交付包并入顶部项目信息，避免在下方再开一个“设计与交付”抬头。
+const projectStats = ref({ designs: 0, versions: 0, quotes: 0, files: 0, packages: 0 });
 const savingTask = ref('');
 let approvedPath = '';
 const cleanRoutePath = computed(() => routePath.value.split('?')[0]);
@@ -68,6 +87,163 @@ function changeActivityPage(value: number) { activityPage.value = value; }
 function changeActivityPageSize(value: number) { activityPageSize.value = value; activityPage.value = 1; }
 watch(activityList, () => { if (activityPage.value > activityPageCount.value) activityPage.value = activityPageCount.value; });
 
+// 页面标签：后台是多页面并行的工作台，项目详情 → 设计方案 → 报价单来回切换时
+// 不应该每次重建导航路径。标签只保存“页面身份 + 最近一次完整路径”，不复制业务数据。
+const PAGE_TABS_KEY = 'qone-admin-page-tabs';
+const MAX_PAGE_TABS = 10;
+const moduleTitles: Record<string, string> = {
+  overview: '工作台', projects: '客户项目', designs: '设计方案', customers: '客户管理',
+  quotes: '报价中心', products: '产品管理', operations: '经营管理', store: '店铺管理', settings: '系统设置',
+};
+const pageTitleRules: Array<[RegExp, string]> = [
+  [/^\/overview$/, '工作台'],
+  [/^\/projects$/, '客户项目'],
+  [/^\/projects\/[^/]+$/, '项目详情'],
+  [/^\/designs$/, '设计方案'],
+  [/^\/designs\/[^/]+$/, '设计方案详情'],
+  [/^\/customers$/, '客户管理'],
+  [/^\/quotes$/, '报价单列表'],
+  [/^\/quotes\/templates$/, '报价模板配置'],
+  [/^\/quotes\/templates\/new$/, '报价模板'],
+  [/^\/quotes\/new$/, '新建报价单'],
+  [/^\/quotes\/new\/quick$/, '快速报价'],
+  [/^\/quotes\/new\/manual$/, '手动选品报价'],
+  [/^\/quotes\/new\/design$/, '按设计方案报价'],
+  [/^\/quotes\/[^/]+\/edit$/, '编辑报价单'],
+  [/^\/quotes\/[^/]+$/, '报价单详情'],
+  [/^\/products$/, '产品库'],
+  [/^\/products\/new$/, '新增产品'],
+  [/^\/products\/categories$/, '产品分类'],
+  [/^\/products\/[^/]+\/edit$/, '编辑产品'],
+  [/^\/products\/[^/]+$/, '产品详情'],
+  [/^\/operations\/inventory$/, '库存管理'],
+  [/^\/operations\/purchase$/, '采购管理'],
+  [/^\/operations\/payments$/, '收款记录'],
+  [/^\/store\/profile$/, '门店资料'],
+  [/^\/store\/staff$/, '员工账号'],
+  [/^\/store\/roles$/, '角色权限'],
+  [/^\/settings\/pricing$/, '报价与费用'],
+  [/^\/settings\/project-journey$/, '项目阶段与任务'],
+  [/^\/settings\/devices$/, '默认设备'],
+  [/^\/settings\/construction$/, '施工模板'],
+  [/^\/settings\/backup$/, '数据备份'],
+  [/^\/settings\/audit$/, '操作审计'],
+];
+function pageTabKey(path: string) {
+  return path.split('?')[0].replace(/\/+$/, '') || '/overview';
+}
+function resolvePageTitle(path: string) {
+  const key = pageTabKey(path);
+  if (key === '/quotes/templates/new') {
+    return new URLSearchParams(path.split('?')[1] || '').get('id') ? '编辑报价模板' : '新建报价模板';
+  }
+  const matched = pageTitleRules.find(([pattern]) => pattern.test(key));
+  if (matched) return matched[1];
+  return moduleTitles[key.split('/')[1] || 'overview'] || '工作台';
+}
+function readStoredPageTabs(): PageTabItem[] {
+  try {
+    const parsed = JSON.parse(sessionStorage.getItem(PAGE_TABS_KEY) || '[]');
+    if (!Array.isArray(parsed)) return [];
+    const seen = new Set<string>();
+    return parsed
+      .filter((item: any) => item && typeof item.key === 'string' && item.key.startsWith('/') && typeof item.path === 'string' && item.path.startsWith('/'))
+      .map((item: any) => {
+        const key = pageTabKey(item.key);
+        return {
+          key,
+          path: item.path,
+          title: typeof item.title === 'string' && item.title.trim() ? item.title.trim().slice(0, 80) : resolvePageTitle(item.key),
+          pinned: key === '/overview',
+        };
+      })
+      .filter((item: PageTabItem) => {
+        if (seen.has(item.key)) return false;
+        seen.add(item.key);
+        return true;
+      })
+      .slice(0, MAX_PAGE_TABS);
+  } catch {
+    return [];
+  }
+}
+function persistPageTabs() {
+  try { sessionStorage.setItem(PAGE_TABS_KEY, JSON.stringify(pageTabs.value)); } catch { /* 隐私模式下不阻塞页面 */ }
+}
+function ensureHomeTab() {
+  const home = pageTabs.value.find(item => item.key === '/overview');
+  if (home) { home.pinned = true; return; }
+  pageTabs.value.unshift({ key: '/overview', path: '/overview', title: '工作台', pinned: true });
+}
+function openPageTab(path: string) {
+  if (!session.value) return;
+  const key = pageTabKey(path);
+  const next = (key.split('/')[1] || 'overview') as Tab;
+  if (!hasTabAccess(next)) return;
+  const existing = pageTabs.value.find(item => item.key === key);
+  if (existing) {
+    existing.path = path;
+    persistPageTabs();
+    return;
+  }
+  const removableCount = pageTabs.value.filter(item => !item.pinned).length;
+  if (removableCount >= MAX_PAGE_TABS - 1) {
+    const activeKey = pageTabKey(routePath.value);
+    const removable = pageTabs.value.findIndex(item => !item.pinned && item.key !== activeKey);
+    if (removable >= 0) pageTabs.value.splice(removable, 1);
+  }
+  const tab: PageTabItem = { key, path, title: resolvePageTitle(path), pinned: key === '/overview' };
+  if (tab.pinned) pageTabs.value.unshift(tab);
+  else pageTabs.value.push(tab);
+  persistPageTabs();
+}
+function setPageTitle(title: string, key = pageTabKey(routePath.value)) {
+  const text = String(title || '').trim().slice(0, 80);
+  if (!text) return;
+  const item = pageTabs.value.find(entry => entry.key === key);
+  if (!item || item.title === text) return;
+  item.title = text;
+  persistPageTabs();
+}
+function handlePageTitle(payload: string | { title: string; path?: string }) {
+  if (typeof payload === 'string') { setPageTitle(payload); return; }
+  if (!payload?.title) return;
+  setPageTitle(payload.title, pageTabKey(payload.path || routePath.value));
+}
+function resetPageTabs() {
+  pageTabs.value = [];
+  try { sessionStorage.removeItem(PAGE_TABS_KEY); } catch { /* 隐私模式下忽略 */ }
+}
+const pageTabs = ref<PageTabItem[]>(session.value ? readStoredPageTabs() : []);
+if (session.value) ensureHomeTab();
+const activePageTabKey = computed(() => pageTabKey(routePath.value));
+function activatePageTab(item: PageTabItem) { navigatePath(item.path); }
+async function closePageTab(item: PageTabItem) {
+  if (item.pinned) return;
+  const index = pageTabs.value.findIndex(tab => tab.key === item.key);
+  if (index < 0) return;
+  if (item.key !== activePageTabKey.value) {
+    pageTabs.value.splice(index, 1);
+    persistPageTabs();
+    return;
+  }
+  const rest = pageTabs.value.filter(tab => tab.key !== item.key);
+  const next = rest[index] || rest[index - 1] || rest[0];
+  if (!next) { pageTabs.value = rest; persistPageTabs(); return; }
+  // 先走统一导航（含产品未保存确认），用户取消时标签保持原状。
+  if (!await navigatePath(next.path)) return;
+  pageTabs.value = pageTabs.value.filter(tab => tab.key !== item.key);
+  persistPageTabs();
+}
+function closeOtherPageTabs() {
+  pageTabs.value = pageTabs.value.filter(tab => tab.pinned || tab.key === activePageTabKey.value);
+  persistPageTabs();
+}
+// 详情页的标题来自对象本身；项目详情在 AdminApp 内加载，方案/报价/产品由子组件回传。
+watch(projectDetail, project => {
+  if (project) setPageTitle(`项目 · ${project.name}`, `/projects/${project.id}`);
+});
+
 function applyPath(path: string) {
   const normalizedPath = normalizeLegacyPath(path);
   error.value = '';
@@ -89,20 +265,89 @@ function applyPath(path: string) {
     customerPage.value = queryPage(query.get('page'));
     customerPageSize.value = queryPageSize(query.get('pageSize'));
   }
+  openPageTab(normalizedPath);
   routePath.value = normalizedPath;
   window.scrollTo({ top: 0 });
 }
-async function navigatePath(path: string) {
+async function navigatePath(path: string): Promise<boolean> {
   const next = (path.split('?')[0].split('/')[1] || 'overview') as Tab;
   // 登录前直接打开受保护路由时，URL 可能已正确但 tab 仍停在 overview；
   // 此时点击同一路径也要重新应用路由，不能因为 path 相同而吞掉点击。
-  if (path === routePath.value && tab.value === next) return;
-  if (!hasTabAccess(next)) { notify('当前角色没有访问该模块的权限'); return; }
-  if (tab.value === 'products' && productWorkspace.value && !await productWorkspace.value.confirmLeave()) return;
+  if (path === routePath.value && tab.value === next) return true;
+  if (!hasTabAccess(next)) { notify('当前角色没有访问该模块的权限'); return false; }
+  if (tab.value === 'products' && productWorkspace.value && !await productWorkspace.value.confirmLeave()) return false;
   approvedPath = path;
   window.location.hash = path;
+  return true;
 }
-function continueProjectDesign(projectId: string) { window.location.href = `/app/?project=${projectId}&restore=1`; }
+function openDesignWorkbench(designId: string) {
+  window.location.href = `/app/?design=${encodeURIComponent(designId)}&restore=1`;
+}
+// 一个项目可以有多套方案：标题区「继续设计」进入最近更新的方案，没有方案时先确保有一个（自动命名）。
+async function continueProjectDesign(projectId: string) {
+  const design = projectLinks.value.designs[0];
+  if (design) { openDesignWorkbench(design.id); return; }
+  try {
+    const created = await api<any>(`/api/admin/projects/${encodeURIComponent(projectId)}/design`, { method: 'POST' });
+    await loadProjectLinks();
+    notify(`已创建设计方案：${created.name}`);
+    openDesignWorkbench(created.id);
+  } catch (e) {
+    error.value = e instanceof Error ? e.message : '创建设计方案失败';
+  }
+}
+async function loadProjectLinks() {
+  const projectId = projectIdFromPath.value;
+  if (!projectId) { projectLinks.value = { designs: [], quotes: [] }; return; }
+  projectLinksLoading.value = true;
+  try {
+    const [designData, quoteData, packageData, fileData] = await Promise.all([
+      api<{ designs: any[] }>(`/api/admin/designs?page=1&pageSize=100&status=全部&projectId=${encodeURIComponent(projectId)}`),
+      api<{ quotes: any[] }>(`/api/admin/quotes?projectId=${encodeURIComponent(projectId)}`),
+      api<{ packages: any[] }>(`/api/admin/delivery-packages?projectId=${encodeURIComponent(projectId)}`),
+      api<{ attachments: any[] }>(`/api/admin/projects/${encodeURIComponent(projectId)}/attachments`),
+    ]);
+    const designs = designData.designs || [];
+    const quotes = quoteData.quotes || [];
+    projectLinks.value = { designs, quotes };
+    projectStats.value = {
+      designs: designs.length,
+      versions: designs.reduce((sum, design) => sum + Number(design.versionCount || 0), 0),
+      quotes: quotes.length,
+      files: (fileData.attachments || []).length,
+      packages: (packageData.packages || []).length,
+    };
+  } catch {
+    projectLinks.value = { designs: [], quotes: [] };
+    projectStats.value = { designs: 0, versions: 0, quotes: 0, files: 0, packages: 0 };
+  } finally {
+    projectLinksLoading.value = false;
+  }
+}
+// 项目内新建方案：跳到设计方案列表并直接打开建档弹窗，名称由用户确认（支持同一项目多方案）。
+function openProjectDesignForm(projectId: string) {
+  navigatePath(`/designs?projectId=${encodeURIComponent(projectId)}&new=1`);
+}
+function openProjectQuote(projectId: string) {
+  // 有设计版本时优先走“按设计方案报价”，没有才回到报价方式选择页。
+  const hasVersion = projectLinks.value.designs.some(design => Number(design.latestVersionNo || 0) > 0);
+  navigatePath(hasVersion ? `/quotes/new/design?project=${projectId}` : `/quotes/new?project=${projectId}`);
+}
+// 复制项目属于低频动作，入口在项目标题区「更多」；复制后直接进入新项目，保持与设计交付页一致的行为。
+async function copyCurrentProject() {
+  if (!projectDetail.value) return;
+  try {
+    const created = await api<any>(`/api/admin/projects/${encodeURIComponent(projectDetail.value.id)}/copy`, {
+      method: 'POST',
+      body: JSON.stringify({ copyDesign: true }),
+    });
+    await loadAll();
+    notify(`已复制项目：${created.name}`);
+    navigatePath(`/projects/${created.id}`);
+  } catch (e) {
+    error.value = e instanceof Error ? e.message : '复制项目失败';
+  }
+}
 async function loadCurrentProject() {
   if (!projectIdFromPath.value) { projectDetail.value = null; return; }
   activityPage.value = 1;
@@ -110,6 +355,7 @@ async function loadCurrentProject() {
   try { projectDetail.value = await api<Project>(`/api/admin/projects/${encodeURIComponent(projectIdFromPath.value)}`); }
   catch (e) { projectDetail.value = null; error.value = e instanceof Error ? e.message : '项目详情加载失败'; }
   finally { projectLoading.value = false; }
+  await loadProjectLinks();
 }
 async function onHashChange() {
   const rawPath = window.location.hash.slice(1) || '/overview';
@@ -221,6 +467,9 @@ function isSubNavActive(path: string) {
   if (path.startsWith('/settings/')) return cleanRoutePath.value === path || (path === '/settings/pricing' && cleanRoutePath.value === '/settings');
   return cleanRoutePath.value === path;
 }
+function hasActiveChild(item: { children?: Array<{ path: string }> }) {
+  return !!item.children?.some(child => isSubNavActive(child.path));
+}
 const openGroups = ref<Record<string, boolean>>({});
 function syncOpenGroups() {
   const active = nav.find(item => item.children?.some(child => childTab(child.path) === tab.value));
@@ -305,6 +554,7 @@ async function api<T>(url: string, options?: RequestInit): Promise<T> {
   if (response.status === 401 && url !== '/api/admin/login') {
     sessionStorage.removeItem('qone-admin-session');
     session.value = null;
+    resetPageTabs();
   }
   if (!response.ok) throw new Error(body.error || body.message || `请求失败 ${response.status}`);
   return body;
@@ -332,6 +582,7 @@ function notify(message: string) { toast.value = message; window.setTimeout(() =
 function authExpired() {
   sessionStorage.removeItem('qone-admin-session');
   session.value = null;
+  resetPageTabs();
   loginError.value = '登录已失效，请重新登录';
 }
 async function login() {
@@ -339,6 +590,10 @@ async function login() {
   try {
     session.value = await api('/api/admin/login', { method:'POST', body:JSON.stringify(loginForm.value) });
     sessionStorage.setItem('qone-admin-session', JSON.stringify(session.value));
+    // 换账号后不沿用上一个账号的页面标签，避免出现无权限页面。
+    resetPageTabs();
+    ensureHomeTab();
+    persistPageTabs();
     const currentTab = (routePath.value.split('?')[0].split('/')[1] || 'overview') as Tab;
     if (!hasTabAccess(currentTab)) { approvedPath='/overview'; window.location.hash='/overview'; applyPath('/overview'); }
     else applyPath(routePath.value);
@@ -353,6 +608,7 @@ async function logout() {
   confirmLogout.value = false;
   try { await fetch('/api/admin/logout', { method: 'POST' }); } catch { /* 本地服务退出时仍清除前端会话 */ }
   sessionStorage.removeItem('qone-admin-session'); session.value = null;
+  resetPageTabs();
 }
 async function loadProjectPage(reset = false) {
   if (reset) projectPage.value = 1;
@@ -492,14 +748,14 @@ onBeforeUnmount(() => { window.removeEventListener('hashchange', onHashChange); 
 
 <template>
   <NConfigProvider :locale="zhCN" :theme-overrides="adminTheme">
-  <div v-if="!session" class="login-screen"><form class="login-card" @submit.prevent="login"><div class="login-brand"><img v-if="brandLogoUrl" class="login-brand-logo" :src="brandLogoUrl" :alt="`${branding.storeName || '门店'} LOGO`" @error="logoBroken = true"><span v-else>⌂</span><div><b>Qone Home</b><small>智能家电门店系统 · 离线版</small></div></div><div><h1>登录本机门店</h1><p>账号、项目和报价只保存在这台电脑。</p></div><label>本地账号<input v-model="loginForm.account" autocomplete="username"></label><label>4 位 PIN<input v-model="loginForm.pin" type="password" inputmode="numeric" autocomplete="current-password"></label><div v-if="loginError" class="login-error">{{ loginError }}</div><NButton type="primary" attr-type="submit" block :loading="loggingIn">登录</NButton><small class="login-hint">演示账号：admin / 0000</small></form></div>
+  <div v-if="!session" class="login-screen"><form class="login-card" @submit.prevent="login"><div class="login-brand"><img v-if="brandLogoUrl" class="login-brand-logo" :src="brandLogoUrl" :alt="`${branding.storeName || '门店'} LOGO`" @error="logoBroken = true"><span v-else><AdminBrandMark /></span><div><b>QoneHome</b><small>智能家电门店管理系统 · 离线版</small></div></div><div><h1>登录本机门店</h1><p>账号、项目和报价只保存在这台电脑。</p></div><label>本地账号<input v-model="loginForm.account" autocomplete="username"></label><label>4 位 PIN<input v-model="loginForm.pin" type="password" inputmode="numeric" autocomplete="current-password"></label><div v-if="loginError" class="login-error">{{ loginError }}</div><NButton type="primary" attr-type="submit" block :loading="loggingIn">登录</NButton><small class="login-hint">演示账号：admin / 0000</small></form></div>
   <div v-else class="admin-shell">
     <aside class="sidebar">
-      <a class="admin-brand" href="/"><img v-if="brandLogoUrl" class="brand-logo" :src="brandLogoUrl" :alt="`${branding.storeName || '门店'} LOGO`" @error="logoBroken = true"><span v-else class="brand-mark">⌂</span><span><b>Qone Home</b><small>智能家电门店系统</small></span></a>
+      <a class="admin-brand" href="/" title="QoneHome·智能家电门店管理系统"><img v-if="brandLogoUrl" class="brand-logo" :src="brandLogoUrl" :alt="`${branding.storeName || '门店'} LOGO`" @error="logoBroken = true"><span v-else class="brand-mark"><AdminBrandMark /></span><span><b>QoneHome</b><small>智能家电门店管理系统</small></span></a>
       <nav class="side-nav">
         <template v-for="item in visibleNav" :key="item.key">
           <div v-if="item.children" class="side-nav-group">
-            <button class="side-nav-parent" :class="{ active: tab === item.key, open: !!openGroups[item.key] }" :title="item.label" :aria-label="item.label" :aria-expanded="!!openGroups[item.key]" @click="toggleNavGroup(item.key)"><AdminNavIcon :name="item.icon" /><span>{{ item.label }}</span><b aria-hidden="true">⌄</b></button>
+            <button class="side-nav-parent" :class="{ active: tab === item.key, open: !!openGroups[item.key], 'has-active-child': hasActiveChild(item) }" :title="item.label" :aria-label="item.label" :aria-expanded="!!openGroups[item.key]" @click="toggleNavGroup(item.key)"><AdminNavIcon :name="item.icon" /><span>{{ item.label }}</span><b aria-hidden="true">⌄</b></button>
             <div v-show="openGroups[item.key]" class="side-sub-nav">
               <button v-for="child in item.children" :key="child.path" :class="{ active: isSubNavActive(child.path) }" :aria-current="isSubNavActive(child.path) ? 'page' : undefined" @click="navigatePath(child.path)">{{ child.label }}</button>
             </div>
@@ -517,23 +773,70 @@ onBeforeUnmount(() => { window.removeEventListener('hashchange', onHashChange); 
     </aside>
 
     <main class="main-area">
+      <AdminPageTabs
+        :tabs="pageTabs"
+        :active-key="activePageTabKey"
+        @activate="activatePageTab"
+        @close="closePageTab"
+        @close-others="closeOtherPageTabs"
+      />
       <div v-if="error" class="error-banner">{{ error }} <button @click="error = ''" aria-label="关闭">×</button></div><div v-if="toast" class="toast">{{ toast }}</div><div v-if="loading" class="loading-state">正在读取本地门店数据…</div>
 
       <section v-else class="page-content" :data-page="tab">
         <template v-if="tab === 'overview'">
-          <div class="welcome-row"><div><h2>今天，先把方案推进一点。</h2></div><NButton type="primary" @click="showProjectForm = true">＋ 新建项目</NButton></div>
-          <div class="metric-grid"><div class="metric-card"><span>进行中项目</span><strong>{{ overview.projects }}</strong><small>{{ overview.pendingProjects }} 个待推进</small></div><div class="metric-card olive"><span>报价版本</span><strong>{{ overview.quotes }}</strong><small>价格快照可追溯</small></div><div class="metric-card orange"><span>在售产品</span><strong>{{ overview.products }}</strong><small>本地产品目录</small></div><div class="metric-card dark"><span>设计方案</span><strong>{{ overview.designs }}</strong><small>{{ overview.designVersions }} 个版本 · {{ overview.deliveryPackages }} 个交付包</small></div></div>
-          <div class="content-grid"><section class="panel large-panel"><div class="panel-head"><div><span class="panel-kicker">PROJECTS</span><h3>最近项目</h3></div><button class="text-btn" @click="navigatePath('/projects')">查看全部 →</button></div><div v-if="!recentProjects.length" class="empty">还没有项目，创建第一个方案吧。</div><button v-for="project in recentProjects" :key="project.id" class="project-row project-row-button" @click="navigatePath(`/projects/${project.id}`)"><div class="project-icon"><AdminNavIcon name="projects" /></div><div class="project-main"><strong>{{ project.name }}</strong><span>{{ project.customerName }} · {{ project.currentStage }} · 下一步：{{ project.nextTask }}</span><div class="row-progress"><i :style="{ width: `${project.progress}%` }"></i></div></div><span class="status-tag" :data-status="project.status">{{ project.progress }}%</span><time>{{ date(project.updatedAt) }}</time><span class="row-arrow">→</span></button></section><section class="panel quick-panel"><div class="panel-head"><div><span class="panel-kicker">QUICK ACCESS</span><h3>快捷入口</h3></div></div><button class="quick-link" @click="navigatePath('/quotes')"><span><AdminNavIcon name="quotes" /></span><div><strong>智能 / 快速报价</strong><small>规则计算、模板和版本快照</small></div><b>→</b></button><button class="quick-link" @click="navigatePath('/projects')"><span><AdminNavIcon name="projects" /></span><div><strong>客户项目与交付</strong><small>进度、设计版本和施工交付统一管理</small></div><b>→</b></button><button class="quick-link" @click="navigatePath('/products')"><span><AdminNavIcon name="products" /></span><div><strong>产品管理</strong><small>产品库、分类映射和物品编码同步</small></div><b>→</b></button></section></div>
+          <div class="welcome-row"><div><h2>工作台</h2><p>{{ overview.projects }} 个客户项目 · {{ overview.pendingProjects }} 个待推进</p></div><NButton type="primary" @click="showProjectForm = true">新建项目</NButton></div>
+          <div class="metric-grid workbench-metrics"><div class="metric-card lead"><div class="metric-lead-main"><span>在推进项目</span><strong>{{ overview.pendingProjects }}</strong></div><div class="metric-lead-facts"><div><span>客户</span><b>{{ overview.customers }}</b></div><div><span>报价单</span><b>{{ overview.quotes }}</b></div><div><span>项目总数</span><b>{{ overview.projects }}</b></div></div></div><div class="metric-card"><span>在售产品</span><strong>{{ overview.products }}</strong><small>在售状态产品</small></div><div class="metric-card"><span>设计方案</span><strong>{{ overview.designs }}</strong><small>{{ overview.designVersions }} 个版本 · {{ overview.deliveryPackages }} 个交付包</small></div></div>
+          <div class="content-grid"><section class="panel large-panel"><div class="panel-head"><div><h3>最近项目</h3></div><button class="text-btn" @click="navigatePath('/projects')">查看全部</button></div><div v-if="!recentProjects.length" class="empty">还没有项目，创建第一个方案吧。</div><button v-for="project in recentProjects" :key="project.id" class="project-row project-row-button" @click="navigatePath(`/projects/${project.id}`)"><div class="project-icon"><AdminNavIcon name="projects" /></div><div class="project-main"><strong>{{ project.name }}</strong><span>{{ project.customerName }} · {{ project.currentStage }} · 下一步：{{ project.nextTask }}</span><div class="row-progress"><i :style="{ width: `${project.progress}%` }"></i></div></div><span class="row-percent">{{ project.progress }}%</span><time>{{ date(project.updatedAt) }}</time><span class="row-arrow" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m6 3.5 4.5 4.5L6 12.5" /></svg></span></button></section><section class="panel quick-panel"><div class="panel-head"><div><h3>快捷入口</h3></div></div><button class="quick-link" @click="navigatePath('/quotes')"><span><AdminNavIcon name="quotes" /></span><div><strong>智能 / 快速报价</strong><small>规则计算、模板和版本快照</small></div><b aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m6 3.5 4.5 4.5L6 12.5" /></svg></b></button><button class="quick-link" @click="navigatePath('/projects')"><span><AdminNavIcon name="projects" /></span><div><strong>客户项目与交付</strong><small>进度、设计版本和施工交付统一管理</small></div><b aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m6 3.5 4.5 4.5L6 12.5" /></svg></b></button><button class="quick-link" @click="navigatePath('/products')"><span><AdminNavIcon name="products" /></span><div><strong>产品管理</strong><small>产品库、分类映射和物品编码同步</small></div><b aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m6 3.5 4.5 4.5L6 12.5" /></svg></b></button></section></div>
         </template>
 
         <template v-else-if="tab === 'projects' && projectIdFromPath">
           <div v-if="projectLoading" class="loading-state detail-loading">正在读取项目详情…</div>
           <template v-else-if="projectDetail">
-            <ProjectDetailOverview :project="projectDetail" :saving-task="savingTask" @toggle-task="toggleProjectTask" @edit="openProjectEdit" @quote="navigatePath(`/quotes?project=${projectDetail.id}`)" @design="continueProjectDesign(projectDetail.id)" @back="navigatePath('/projects')" />
-            <BusinessWorkspace mode="designs" :route-path="routePath" :project-id="projectDetail.id" :projects="projects" :overview="overview" :permissions="session.permissions || []" embedded @changed="businessChanged" @notice="notify" @open-design-plans="projectId => navigatePath(`/designs?projectId=${projectId}`)" @open-design-object="designId => navigatePath(`/designs/${designId}`)" />
+            <ProjectDetailOverview :project="projectDetail" :saving-task="savingTask" :stats="projectStats" @toggle-task="toggleProjectTask" @edit="openProjectEdit" @quote="openProjectQuote(projectDetail.id)" @design="continueProjectDesign(projectDetail.id)" @copy-project="copyCurrentProject" @open-design-plans="navigatePath(`/designs?projectId=${projectDetail.id}`)" @back="navigatePath('/projects')" />
+            <section class="panel table-panel project-link-panel" :aria-busy="projectLinksLoading">
+              <div class="panel-head">
+                <div><h3>关联方案与报价</h3></div>
+                <div class="project-link-head-actions">
+                  <span class="panel-note">设计方案 {{ projectLinks.designs.length }} 个 · 报价单 {{ projectLinks.quotes.length }} 张</span>
+                  <NButton size="small" @click="openProjectDesignForm(projectDetail.id)">新建设计方案</NButton>
+                  <NButton size="small" type="primary" @click="openProjectQuote(projectDetail.id)">新建报价单</NButton>
+                </div>
+              </div>
+              <table class="project-link-table">
+                <thead><tr><th>类型</th><th>名称</th><th>关联信息</th><th>状态</th><th>操作</th></tr></thead>
+                <tbody>
+                  <tr v-for="design in projectLinks.designs" :key="design.id">
+                    <td><span class="project-link-type" data-type="design">设计方案</span></td>
+                    <td><button type="button" class="project-link-name" @click="navigatePath(`/designs/${design.id}`)"><strong>{{ design.name }}</strong></button><small>{{ design.id }}</small></td>
+                    <td>{{ design.latestVersionNo ? `最新 V${design.latestVersionNo} · 共 ${design.versionCount} 个版本` : '还没有已保存版本' }}<small>规则 {{ design.ruleVersion }}</small></td>
+                    <td><NTag size="small" :type="design.status === '已定稿' ? 'success' : design.status === '已归档' ? 'default' : 'warning'" :bordered="false">{{ design.status }}</NTag></td>
+                    <td><div class="table-actions">
+                      <button type="button" class="table-link" @click="navigatePath(`/designs/${design.id}`)">查看</button>
+                      <button type="button" class="table-link" @click="openDesignWorkbench(design.id)">打开设计</button>
+                      <button type="button" class="table-link" :disabled="!design.latestVersionNo" :title="design.latestVersionNo ? '按该方案最新版本生成报价' : '先保存设计版本才能报价'" @click="navigatePath(`/quotes/new/design?design=${design.id}`)">生成报价</button>
+                    </div></td>
+                  </tr>
+                  <tr v-for="quote in projectLinks.quotes" :key="quote.id">
+                    <td><span class="project-link-type" data-type="quote">报价单</span></td>
+                    <td><button type="button" class="project-link-name" @click="navigatePath(`/quotes/${quote.id}`)"><strong>{{ quote.name }}</strong></button><small>{{ quote.quoteNo || quote.id }} · {{ quote.mode }}</small></td>
+                    <td>{{ money(quote.total) }}<small>{{ quote.designVersionNo ? `引用方案 V${quote.designVersionNo}` : '未关联方案' }}</small></td>
+                    <td><NTag size="small" :type="quote.status === '已确认' ? 'success' : quote.status === '已作废' ? 'default' : 'warning'" :bordered="false">{{ quote.status }}</NTag></td>
+                    <td><div class="table-actions">
+                      <button type="button" class="table-link" @click="navigatePath(`/quotes/${quote.id}`)">查看</button>
+                      <button v-if="quote.status === '草稿' && quote.designId" type="button" class="table-link" @click="navigatePath(`/quotes/new/design?design=${quote.designId}`)">再报一版</button>
+                    </div></td>
+                  </tr>
+                  <tr v-if="!projectLinksLoading && !projectLinks.designs.length && !projectLinks.quotes.length">
+                    <td colspan="5"><div class="empty">这个项目还没有设计方案与报价单，先点右上角「新建设计方案」。</div></td>
+                  </tr>
+                  <tr v-if="projectLinksLoading"><td colspan="5"><div class="empty">正在读取关联对象…</div></td></tr>
+                </tbody>
+              </table>
+            </section>
+            <BusinessWorkspace mode="designs" :route-path="routePath" :project-id="projectDetail.id" :projects="projects" :overview="overview" :permissions="session.permissions || []" embedded @changed="businessChanged" @notice="notify" @open-design-plans="projectId => navigatePath(`/designs?projectId=${projectId}`)" />
             <section class="panel activity-panel">
               <div class="panel-head activity-panel-head">
-                <div><span class="panel-kicker">ACTIVITY LOG</span><h3>操作日志</h3></div>
+                <div><h3>操作日志</h3></div>
                 <div class="activity-summary">
                   <span class="activity-total">共 {{ activityList.length }} 条</span>
                   <span v-if="activityTodayCount">今日 {{ activityTodayCount }} 条</span>
@@ -571,7 +874,7 @@ onBeforeUnmount(() => { window.removeEventListener('hashchange', onHashChange); 
 
         <template v-else-if="tab === 'projects'">
           <AdminPageHeader title="客户项目" description="查看每个项目所处阶段、下一步待办和交付进度。">
-            <template #actions><NButton type="primary" @click="showProjectForm = true">＋ 新建项目</NButton></template>
+            <template #actions><NButton type="primary" @click="showProjectForm = true">新建项目</NButton></template>
           </AdminPageHeader>
           <AdminFilterBar label="项目筛选">
             <NInput v-model:value="projectSearch" clearable placeholder="搜索项目或客户" @keyup.enter="queryProjects" />
@@ -598,11 +901,11 @@ onBeforeUnmount(() => { window.removeEventListener('hashchange', onHashChange); 
           <AdminPagination v-if="projectTotal" :page="projectPage" :page-size="projectPageSize" :total="projectTotal" :current-count="pagedProjects.length" label="项目" :disabled="loading" @update:page="changeProjectPage" @update:page-size="changeProjectPageSize" />
         </template>
 
-        <DesignWorkspace v-else-if="tab === 'designs'" :path="routePath" :projects="projects" :customers="customers" @navigate="navigatePath" @changed="designChanged" @notice="notify" />
+        <DesignWorkspace v-else-if="tab === 'designs'" :path="routePath" :projects="projects" :customers="customers" @navigate="navigatePath" @changed="designChanged" @notice="notify" @page-title="handlePageTitle" />
 
         <template v-else-if="tab === 'customers'">
           <AdminPageHeader title="客户管理" description="维护客户基础档案、房型地址、家庭成员和项目关联信息。">
-            <template #actions><NButton type="primary" @click="openCustomerForm()">＋ 新增客户</NButton></template>
+            <template #actions><NButton type="primary" @click="openCustomerForm()">新增客户</NButton></template>
           </AdminPageHeader>
           <AdminFilterBar label="客户筛选">
             <NInput v-model:value="customerSearch" clearable placeholder="搜索姓名、手机号、地址或家庭成员" @keyup.enter="queryCustomers" />
@@ -628,8 +931,8 @@ onBeforeUnmount(() => { window.removeEventListener('hashchange', onHashChange); 
           </section>
           <AdminPagination v-if="customerTotal" :page="customerPage" :page-size="customerPageSize" :total="customerTotal" :current-count="pagedCustomers.length" label="客户" :disabled="loading" @update:page="changeCustomerPage" @update:page-size="changeCustomerPageSize" />
         </template>
-        <template v-else-if="tab === 'products'"><ProductWorkspace ref="productWorkspace" :path="routePath" @navigate="navigatePath" @changed="productChanged" @notice="notify" /></template>
-        <BusinessWorkspace v-else-if="['quotes','operations','store','settings'].includes(tab)" :mode="tab as 'quotes'|'operations'|'store'|'settings'" :route-path="routePath" :projects="projects" :overview="overview" :permissions="session.permissions || []" :current-user-id="session.id || ''" @changed="businessChanged" @notice="notify" />
+        <template v-else-if="tab === 'products'"><ProductWorkspace ref="productWorkspace" :path="routePath" @navigate="navigatePath" @changed="productChanged" @notice="notify" @page-title="handlePageTitle" /></template>
+        <BusinessWorkspace v-else-if="['quotes','operations','store','settings'].includes(tab)" :mode="tab as 'quotes'|'operations'|'store'|'settings'" :route-path="routePath" :projects="projects" :overview="overview" :permissions="session.permissions || []" :current-user-id="session.id || ''" @changed="businessChanged" @notice="notify" @page-title="handlePageTitle" />
       </section>
     </main>
 

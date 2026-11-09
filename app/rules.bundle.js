@@ -23,7 +23,7 @@ var SmartHomeRules = (() => {
   __export(rules_entry_exports, {
     ANCHOR_LABELS: () => ANCHOR_LABELS,
     CROSS_RULE_TEMPLATES: () => CROSS_RULE_TEMPLATES,
-    MOUNT_LABELS: () => MOUNT_LABELS,
+    MOUNT_LABELS: () => MOUNT_LABELS2,
     PRIORITY_LABELS: () => PRIORITY_LABELS,
     allRules: () => allRules,
     catalogDevicesForRule: () => catalogDevicesForRule,
@@ -7324,6 +7324,54 @@ var SmartHomeRules = (() => {
     defaultCeilingHeight: 2800
   };
 
+  // shared/placement-rules.mjs
+  var DEVICE_KEY_ALIASES = Object.freeze({
+    "\u78C1\u5438\u8F68\u9053": "\u78C1\u5438\u6CDB\u5149\u706F \xB7 \u78C1\u5438\u8F68\u9053",
+    "\u78C1\u5438\u6CDB\u5149\u706F\u4F53": "\u78C1\u5438\u6CDB\u5149\u706F \xB7 \u706F\u4F53",
+    "\u78C1\u5438\u683C\u6805\u706F\u4F53": "\u78C1\u5438\u683C\u6805\u706F \xB7 \u706F\u4F53"
+  });
+  var MOUNT_LABELS = Object.freeze({
+    CL: "\u9876\u9762",
+    WL: "\u5899\u9762",
+    SL: "\u7ACB\u9762",
+    BL: "\u4F4E\u4F4D"
+  });
+  function normalizeDeviceName(name) {
+    const s = String(name ?? "").replaceAll("\xB7", " \xB7 ").replace(/\s+/g, " ").trim();
+    return DEVICE_KEY_ALIASES[s] || s;
+  }
+  function ruleDeviceNames(rule) {
+    const name = normalizeDeviceName(rule?.deviceCanonical ?? rule?.deviceType2 ?? "");
+    const names = [];
+    const add = (value) => {
+      if (value && !names.includes(value)) names.push(value);
+    };
+    add(name);
+    for (const part of name.split(/[\/;]/).map((s) => s.trim()).filter(Boolean)) add(part);
+    if (name.includes("\u7A97\u5E18\u7535\u673A")) add("\u7A97\u5E18\u7535\u673A");
+    if (name.includes("\u5377\u5E18")) add("\u5377\u5E18\u7535\u673A");
+    if (name.includes("\u5438\u9876\u706F")) add("\u5438\u9876\u706F");
+    if (name.includes("\u9762\u677F\u706F")) add("\u9762\u677F\u706F");
+    if (name.includes("\u7B52\u706F")) add("\u7B52\u706F");
+    if (name.includes("\u706F\u69FD\u706F\u5E26")) add("\u706F\u69FD\u706F\u5E26");
+    if (name.includes("\u76F4\u7EBF\u706F\u5E26")) add("\u76F4\u7EBF\u706F\u5E26");
+    return names;
+  }
+  function ruleMatchesDeviceKey(rule, deviceKey) {
+    const key = normalizeDeviceName(deviceKey);
+    if (!key) return false;
+    const names = ruleDeviceNames(rule);
+    if (names.includes(key)) return true;
+    const name = names[0] || "";
+    if (!name) return false;
+    if (key.includes("\u8F68\u9053") && !name.includes("\u8F68\u9053")) {
+      if (key.includes("\u7A97\u5E18") && name.includes("\u7A97\u5E18")) return true;
+      return false;
+    }
+    if (key.includes("\u706F\u5E26") && !name.includes("\u706F\u5E26")) return false;
+    return name.includes(key) || key.includes(name);
+  }
+
   // src/core/geometry.ts
   var EPS = 1e-6;
   function polygonArea(poly) {
@@ -7708,32 +7756,15 @@ var SmartHomeRules = (() => {
 
   // src/core/engine.ts
   var RULES = rules_generated_default;
-  function normalizeDeviceName(name) {
-    const s = name.replaceAll("\xB7", " \xB7 ").replace(/\s+/g, " ").trim();
-    if (s === "\u78C1\u5438\u8F68\u9053") return "\u78C1\u5438\u6CDB\u5149\u706F \xB7 \u78C1\u5438\u8F68\u9053";
-    if (s === "\u78C1\u5438\u6CDB\u5149\u706F\u4F53") return "\u78C1\u5438\u6CDB\u5149\u706F \xB7 \u706F\u4F53";
-    if (s === "\u78C1\u5438\u683C\u6805\u706F\u4F53") return "\u78C1\u5438\u683C\u6805\u706F \xB7 \u706F\u4F53";
-    return s;
-  }
   function catalogDevicesForRule(rule) {
-    const name = normalizeDeviceName(rule.deviceCanonical || rule.deviceType2);
     const found = /* @__PURE__ */ new Map();
     const add = (d) => {
       if (d) found.set(d.key, d);
     };
-    add(DEVICE_BY_KEY[name]);
-    add(findDevice(name));
-    for (const part of name.split(/[\/;]/).map((s) => s.trim()).filter(Boolean)) {
-      add(DEVICE_BY_KEY[part]);
-      add(findDevice(part));
+    for (const name of ruleDeviceNames(rule)) {
+      add(DEVICE_BY_KEY[name]);
+      add(findDevice(name));
     }
-    if (name.includes("\u7A97\u5E18\u7535\u673A")) add(DEVICE_BY_KEY["\u7A97\u5E18\u7535\u673A"]);
-    if (name.includes("\u5377\u5E18")) add(DEVICE_BY_KEY["\u5377\u5E18\u7535\u673A"]);
-    if (name.includes("\u5438\u9876\u706F")) add(DEVICE_BY_KEY["\u5438\u9876\u706F"]);
-    if (name.includes("\u9762\u677F\u706F")) add(DEVICE_BY_KEY["\u9762\u677F\u706F"]);
-    if (name.includes("\u7B52\u706F")) add(DEVICE_BY_KEY["\u7B52\u706F"]);
-    if (name.includes("\u706F\u69FD\u706F\u5E26")) add(DEVICE_BY_KEY["\u706F\u69FD\u706F\u5E26"]);
-    if (name.includes("\u76F4\u7EBF\u706F\u5E26")) add(DEVICE_BY_KEY["\u76F4\u7EBF\u706F\u5E26"]);
     return [...found.values()];
   }
   function deviceForRule(rule) {
@@ -8876,14 +8907,7 @@ var SmartHomeRules = (() => {
     return wallOffsetPoints(room, 250);
   }
   function deviceRuleMatches(rule, def) {
-    if (catalogDevicesForRule(rule).some((d) => d.key === def.key)) return true;
-    const name = normalizeDeviceName(rule.deviceCanonical || rule.deviceType2);
-    if (def.category2.includes("\u8F68\u9053") && !name.includes("\u8F68\u9053")) {
-      if (def.category2.includes("\u7A97\u5E18") && name.includes("\u7A97\u5E18")) return true;
-      return false;
-    }
-    if (def.category2.includes("\u706F\u5E26") && !name.includes("\u706F\u5E26")) return false;
-    return name.includes(def.category2) || def.category2.includes(name);
+    return ruleMatchesDeviceKey(rule, def.key);
   }
   function rulesForDevice(spaceCode, deviceKey) {
     const def = DEVICE_BY_KEY[deviceKey] ?? findDevice(deviceKey);
@@ -9116,7 +9140,7 @@ var SmartHomeRules = (() => {
     perimeter: "\u623F\u95F4\u5468\u5708",
     wholeHouse: "\u5168\u5C4B\u7EA7"
   };
-  var MOUNT_LABELS = {
+  var MOUNT_LABELS2 = {
     FL: "\u5B8C\u6210\u5730\u9762 FL",
     CL: "\u540A\u9876\u5B8C\u6210\u9762 CL",
     SL: "\u5899\u9762\u5B8C\u6210\u9762 SL",
@@ -9318,7 +9342,7 @@ var SmartHomeRules = (() => {
     }
     const isGeneric = rule.pointCode === "EXISTING-GENERIC" || device.trace.notes.includes("NO_RULE_FALLBACK");
     const priority = PRIORITY_LABELS[rule.priority];
-    const mount = MOUNT_LABELS[rule.mount];
+    const mount = MOUNT_LABELS2[rule.mount];
     const statusText = device.status === "pending" ? "\u5F85\u5904\u7406\uFF08\u672A\u786E\u8BA4\u843D\u4F4D\uFF09" : device.status === "fallback" ? "\u964D\u7EA7\u843D\u4F4D" : device.status === "adjusted" ? "\u4EBA\u5DE5\u8C03\u6574\uFF08\u4FDD\u7559\u89C4\u5219\u5F52\u56E0\uFF09" : device.status === "manual" ? "\u624B\u52A8" : "\u6B63\u5E38\u843D\u4F4D";
     const lighting = device.lighting;
     const circuitText = lighting?.circuitId ? `${lighting.circuitId}${lighting.gatewayId ? ` \xB7 ${lighting.gatewayId}` : ""}${lighting.daliAddress != null ? ` \xB7 DALI ${lighting.daliAddress}` : ""} \xB7 ${lighting.dimmingProtocol || "\u2014"}\uFF08\u6A21\u62DF\uFF09` : "\u672A\u5206\u914D";

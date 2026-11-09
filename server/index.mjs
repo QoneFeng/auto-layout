@@ -8,6 +8,7 @@ import { randomUUID } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { backup, businessStore, copyProject, countCustomers, countProjects, createBackupPackage, createCustomer, createProject, decodeBackupPackage, getProject, importProducts, listCustomers, listCustomersPage, listProducts, listProjects, listProjectsPage, overview, previewRestore, productCategories, productStore, restoreBackup, updateCustomer, updateProject, dataDir as storeDataDir } from './db.mjs';
 import { productMetadata, decodeAsset } from './products.mjs';
+import { createPlacementStore } from './placement.mjs';
 import { listPlatformProducts, platformProductDraft } from './platform-catalog.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -51,12 +52,17 @@ function requiredPermission(req) {
   // 上传、移除仍走 store.write 权限。
   if (url === '/api/admin/branding') return '';
   if (url === '/api/admin/store/logo' && method === 'GET') return '';
+  // 设计工作台 /app/ 可以直接从项目链接打开（本地优先，户型与设备存在浏览器里），
+  // 不会带后台登录态；因此它需要的两个“只读目录”公开，写操作仍然要求后台权限。
+  // 服务只监听 127.0.0.1，不对外网暴露。
+  if (method === 'GET' && (url === '/api/admin/design-catalog' || url.startsWith('/api/admin/placement/') || url.startsWith('/api/admin/product-assets/'))) return '';
   if (url.includes('/backup') || url.includes('/restore') || url.includes('/settings') || url.includes('/audit-logs')) return method === 'GET' ? 'settings.read' : 'settings.write';
   if (url.includes('/roles') || url.includes('/users') || url.startsWith('/api/admin/store')) return method === 'GET' ? 'store.read' : 'store.write';
   if (url.includes('/inventory') || url.includes('/purchase-orders') || url.includes('/operations/')) return method === 'GET' ? 'operations.read' : 'operations.write';
   if (url.includes('/payments')) return method === 'GET' ? 'operations.read' : 'payment.write';
   if (url.includes('/quote')) return method === 'GET' ? 'quote.read' : 'quote.write';
   if (url.includes('/delivery') || url.includes('/designs') || url.includes('/design-versions') || url.includes('/floorplan-assists') || url.includes('/attachments')) return method === 'GET' ? 'design.read' : 'design.write';
+  if (url.includes('/placement')) return 'product.read';
   if (url.includes('/products') || url.includes('/product-') || url.includes('/design-catalog')) return method === 'GET' ? 'product.read' : 'product.write';
   if (url.includes('/customers')) return method === 'GET' ? 'customer.read' : 'customer.write';
   if (url.includes('/projects')) return method === 'GET' ? 'project.read' : 'project.write';
@@ -214,8 +220,28 @@ app.get('/api/admin/products/export.xls', async (req, reply) => {
   reply.header('Content-Disposition', `attachment; filename*=UTF-8''${encodeURIComponent(`Qone产品库-${new Date().toISOString().slice(0, 10)}.xls`)}`);
   return reply.type('application/vnd.ms-excel; charset=utf-8').send(html);
 });
-app.get('/api/admin/product-metadata', async () => ({ ...productMetadata, categories: productStore.categories() }));
+app.get('/api/admin/product-metadata', async () => ({ ...productMetadata, categories: productStore.categories(), brands: productStore.brands() }));
 app.get('/api/admin/design-catalog', async () => productStore.designCatalog());
+// 设计系统 ↔ 产品库：按产品分类组织的布置目录（只读）。
+// 规则口径与布点引擎共用 shared/placement-rules.mjs，接口不写任何产品/规则数据。
+const placementStore = createPlacementStore(productStore);
+app.get('/api/admin/placement/catalog', async () => placementStore.catalog());
+app.get('/api/admin/placement/audit', async () => placementStore.audit());
+app.get('/api/admin/placement/categories/:id', async (req, reply) => {
+  const detail = placementStore.category(req.params.id);
+  if (!detail) return reply.code(404).send({ error: '找不到该产品分类', id: req.params.id });
+  return detail;
+});
+app.get('/api/admin/placement/models', async (req, reply) => {
+  const data = placementStore.models(String(req.query?.categoryId || ''), req.query || {});
+  if (!data) return reply.code(404).send({ error: '找不到该产品分类', id: req.query?.categoryId || '' });
+  return data;
+});
+app.get('/api/admin/placement/products/:id', async (req, reply) => {
+  const detail = placementStore.productDetail(req.params.id);
+  if (!detail) return reply.code(404).send({ error: '找不到该产品', id: req.params.id });
+  return detail;
+});
 app.get('/api/admin/product-categories', async () => productStore.categoryOverview());
 app.put('/api/admin/product-categories/:id', async (req, reply) => {
   try {
@@ -238,7 +264,7 @@ app.post('/api/admin/products/batch', async (req, reply) => {
   try {
     const result = productStore.batchUpdate({ ...(req.body || {}), actor: req.adminSession?.account || '本机用户' });
     const label = ({ publish:'上架', withdraw:'下架', archive:'归档', restore:'恢复', category:'修改分类' })[result.action] || result.action;
-    businessStore.audit('product.batch', 'product_batch', '', `批量${label}：成功 ${result.updated} 项，失败 ${result.failed.length} 项`, { ids:req.body?.ids, action:result.action, categoryId:req.body?.categoryId });
+    businessStore.audit('product.batch', 'product_batch', '', `批量${label}（${result.scope === 'filtered' ? '当前筛选' : '已选'}）：成功 ${result.updated} 项，失败 ${result.failed.length} 项`, { ids:req.body?.ids, filters:req.body?.filters, action:result.action, categoryId:req.body?.categoryId });
     return result;
   } catch (error) { return reply.code(error.statusCode || 400).send({ error: error.message || 'product_batch_failed', fields: error.fields }); }
 });
@@ -437,8 +463,23 @@ app.put('/api/admin/designs/:id', async (req, reply) => {
   try { return businessStore.updateDesign(req.params.id, req.body || {}); }
   catch (error) { return reply.code(400).send({ error: error.message || 'design_update_failed' }); }
 });
+app.get('/api/admin/designs/:id/quotes', async (req, reply) => {
+  const design = businessStore.getDesign(req.params.id);
+  return design ? { quotes: businessStore.designQuotes(req.params.id) } : reply.code(404).send({ error: '设计方案不存在' });
+});
+app.get('/api/admin/designs/:id/quote-preview', async (req, reply) => {
+  try {
+    return businessStore.designQuotePreview({ designId: req.params.id, designVersionId: req.query?.versionId || '' });
+  } catch (error) {
+    return reply.code(400).send({ error: error.message || 'design_quote_preview_failed' });
+  }
+});
 
 app.get('/api/admin/projects/:id/design-versions', async req => ({ versions: businessStore.designVersions(req.params.id) }));
+app.post('/api/admin/projects/:id/design', async (req, reply) => {
+  try { return reply.code(201).send(businessStore.ensureProjectDesignFor(req.params.id)); }
+  catch (error) { return reply.code(400).send({ error: error.message || 'project_design_ensure_failed' }); }
+});
 app.get('/api/admin/projects/:id/floorplan-assists', async req => ({ assists: businessStore.floorplanAssists(req.params.id) }));
 app.post('/api/admin/projects/:id/floorplan-assists', async (req, reply) => {
   try { return reply.code(201).send(businessStore.assistFloorplan(req.params.id, req.body || {})); }
@@ -515,6 +556,10 @@ app.get('/api/admin/project-attachments/:id', async (req, reply) => {
   if (!item) return reply.code(404).send({ error: '项目附件不存在' });
   reply.header('Content-Disposition', `${item.mime.startsWith('image/') ? 'inline' : 'attachment'}; filename*=UTF-8''${encodeURIComponent(item.name)}`);
   return reply.type(item.mime).send(fs.createReadStream(item.local_path));
+});
+app.put('/api/admin/project-attachments/:id', async (req, reply) => {
+  try { return businessStore.updateAttachment(req.params.id, req.body || {}); }
+  catch (error) { return reply.code(400).send({ error: error.message || 'project_attachment_update_failed' }); }
 });
 app.post('/api/admin/projects/:id/delivery-packages', async (req, reply) => {
   try { return reply.code(201).send(businessStore.createDelivery(req.params.id, req.body || {})); }

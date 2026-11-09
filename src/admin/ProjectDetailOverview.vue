@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import { NButton, NCheckbox, NProgress } from 'naive-ui';
+import { NButton, NCheckbox, NDropdown, NProgress } from 'naive-ui';
 import AdminStatusHistory from './components/AdminStatusHistory.vue';
+import AdminNavIcon from './components/AdminNavIcon.vue';
 
 type ProjectTask = { id: string; stageKey: string; title: string; owner: string; dueDate: string; done: boolean };
 type ProjectStage = { key: string; name: string; description: string; status: 'done' | 'active' | 'pending' | 'skipped'; completed: number; total: number };
@@ -35,8 +36,22 @@ type Project = {
   };
 };
 
-const props = defineProps<{ project: Project; savingTask?: string }>();
-const emit = defineEmits<{ toggleTask: [task: ProjectTask, done: boolean]; edit: []; quote: []; design: []; back: [] }>();
+type ProjectStats = { designs?: number; versions?: number; quotes?: number; files?: number; packages?: number };
+
+const props = withDefaults(defineProps<{ project: Project; savingTask?: string; stats?: ProjectStats }>(), {
+  savingTask: '',
+  stats: () => ({}),
+});
+const emit = defineEmits<{ toggleTask: [task: ProjectTask, done: boolean]; edit: []; quote: []; design: []; copyProject: []; openDesignPlans: []; back: [] }>();
+// 低频项目动作收进「更多」，顶部只保留编辑资料 / 项目报价 / 继续设计三个主动作。
+const moreActions = [
+  { label: '复制历史项目', key: 'copy' },
+  { label: '设计方案列表', key: 'designs' },
+];
+function onMoreAction(key: string) {
+  if (key === 'copy') emit('copyProject');
+  if (key === 'designs') emit('openDesignPlans');
+}
 
 const money = (value: number) => `¥${Number(value || 0).toLocaleString('zh-CN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 const fullDate = (value: string) => value ? new Date(value).toLocaleDateString('zh-CN') : '—';
@@ -70,13 +85,13 @@ const statusBadgeType = computed<'default' | 'success' | 'warning'>(() => (
 
 <template>
   <div class="project-detail-backbar">
-    <button class="back-link" @click="emit('back')">← 返回客户项目</button>
+    <button class="back-link" @click="emit('back')">返回客户项目</button>
     <span>客户项目 / {{ project.name }}</span>
   </div>
   <section class="panel project-overview-panel">
     <div class="project-overview-head">
       <div class="overview-identity">
-        <div class="hero-icon">⌂</div>
+        <div class="hero-icon"><AdminNavIcon name="projects" /></div>
         <div>
           <div class="hero-title">
             <h2>{{ project.name }}</h2>
@@ -103,6 +118,9 @@ const statusBadgeType = computed<'default' | 'success' | 'warning'>(() => (
           <NButton size="small" @click="$emit('edit')">编辑资料</NButton>
           <NButton size="small" @click="$emit('quote')">项目报价</NButton>
           <NButton size="small" type="primary" @click="$emit('design')">继续设计</NButton>
+          <NDropdown trigger="click" placement="bottom-end" :options="moreActions" @select="onMoreAction">
+            <NButton size="small">更多 ▾</NButton>
+          </NDropdown>
         </div>
       </div>
     </div>
@@ -116,7 +134,10 @@ const statusBadgeType = computed<'default' | 'success' | 'warning'>(() => (
           <div><dt>房屋类型</dt><dd>{{ project.payload.houseType }}</dd></div>
           <div><dt>建筑面积</dt><dd>{{ project.area }}㎡</dd></div>
           <div><dt>预算意向</dt><dd>{{ money(project.payload.budget) }}</dd></div>
+          <div><dt>设计版本</dt><dd>{{ stats.versions || 0 }} 个</dd></div>
+          <div><dt>项目文件</dt><dd>{{ stats.files || 0 }} 个</dd></div>
           <div class="project-info-wide"><dt>项目地址</dt><dd>{{ project.payload.address || '待补充项目地址' }}</dd></div>
+          <div><dt>交付包</dt><dd>{{ stats.packages || 0 }} 个</dd></div>
           <div><dt>最近更新</dt><dd>{{ fullDate(project.updatedAt) }}</dd></div>
         </dl>
       </div>
@@ -136,7 +157,7 @@ const statusBadgeType = computed<'default' | 'success' | 'warning'>(() => (
 
   <section class="panel project-stage-board">
     <div class="panel-head">
-      <div><span class="panel-kicker">PROJECT JOURNEY</span><h3>项目阶段与任务</h3></div>
+      <div><h3>项目阶段与任务</h3></div>
       <span class="panel-note">{{ project.completedTasks }}/{{ project.totalTasks }} 项完成 · {{ totalStages }} 个阶段</span>
     </div>
     <div class="stage-board-grid">
@@ -166,7 +187,7 @@ const statusBadgeType = computed<'default' | 'success' | 'warning'>(() => (
 
   <section class="panel project-deliverables-panel">
     <div class="panel-head">
-      <div><span class="panel-kicker">DELIVERABLES</span><h3>方案成果</h3></div>
+      <div><h3>方案成果</h3></div>
       <span class="panel-note">从户型到施工交付的项目资料</span>
     </div>
     <div class="deliverable-grid">

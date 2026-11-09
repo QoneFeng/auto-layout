@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue';
-import { NAlert, NButton, NCascader, NCheckbox, NForm, NInput, NInputNumber, NModal, NSelect, NSwitch, NTag, NUpload, type UploadCustomRequestOptions } from 'naive-ui';
+import { NAlert, NButton, NCascader, NCheckbox, NDropdown, NForm, NInput, NInputNumber, NModal, NSelect, NSwitch, NTag, NUpload, type UploadCustomRequestOptions } from 'naive-ui';
 import ProductField from './ProductField.vue';
 import AdminPagination from './components/AdminPagination.vue';
 import AdminPageHeader from './components/AdminPageHeader.vue';
@@ -9,7 +9,7 @@ import { blankProduct, productIssues, specificationFields, STATUSES, UNITS, DATA
 import { PRODUCT_STATUS_META, productTransitionsFrom } from '../../shared/product-state.mjs';
 
 const props = defineProps<{ path: string }>();
-const emit = defineEmits<{ navigate: [path: string]; changed: []; notice: [message: string] }>();
+const emit = defineEmits<{ navigate: [path: string]; changed: []; notice: [message: string]; pageTitle: [payload: { title: string; path: string }] }>();
 type Metadata = { categories: ProductCategory[]; spaces: {code: string; name: string}[]; protocols: string[]; ecosystems: string[]; dimming: string[]; surfaces: {label: string; value: string}[]; mountMethods: string[]; routes: {label: string; value: string}[] };
 const meta = ref<Metadata>({ categories: [], spaces: [], protocols: [], ecosystems: [], dimming: [], surfaces: [], mountMethods: [], routes: [] });
 const rows = ref<ProductRecord[]>([]), platformRows = ref<any[]>([]), busy = ref(false), saving = ref(false), uploading = ref(0), message = ref('');
@@ -26,6 +26,8 @@ const mode = computed(() => {
   return path.endsWith('/new') ? 'new' : path.endsWith('/edit') ? 'edit' : /^\/products\/[^/]+$/.test(path) ? 'detail' : 'list';
 });
 const readOnly = computed(() => mode.value === 'detail');
+// 布点关联：产品详情只读展示“这个型号属于哪个分类、会命中哪些空间规则”。
+const placementLink = ref<any>(null);
 const archived = computed(() => form.status === '归档');
 const formLocked = computed(() => readOnly.value || (mode.value === 'edit' && archived.value));
 const statusHistory = ref<any[]>([]);
@@ -61,6 +63,9 @@ const batchOpen = ref(false), batchBusy = ref(false), batchAction = ref(''), bat
 const batchLabels: Record<string, string> = { publish:'批量上架', withdraw:'批量下架', archive:'批量归档', restore:'批量恢复', category:'批量修改分类' };
 const batchTitle = computed(() => batchLabels[batchAction.value] || '批量操作');
 const batchConfirmLabel = computed(() => ({ publish:'确认上架', withdraw:'确认下架', archive:'确认归档', restore:'确认恢复', category:'确认修改分类' } as Record<string, string>)[batchAction.value] || '确认');
+const batchScope = ref<'selected'|'filtered'>('selected');
+const appliedFilters = ref({ search:'', category:'', status:'', brand:'', ecosystem:'' });
+const batchRangeCount = computed(() => batchScope.value === 'filtered' ? visibleTotal.value : selectedIds.value.length);
 const categoryLevels = computed(() => [...new Set<string>((categoryData.value.categories || []).map((category: any) => String(category.category1 || '')))]);
 const filteredCategoryRows = computed(() => {
   const keyword = categorySearch.value.trim().toLowerCase();
@@ -150,7 +155,9 @@ function syncListQuery() {
 async function queryList(reset: boolean | Event = true) {
   if (reset) currentPage.value = 1;
   const sequence = ++listSequence; listBusy.value = true;
-  const params = new URLSearchParams({ search: search.value, category: categoryFilter.value || '', status: statusFilter.value || '', brand: brandFilter.value || '', ecosystem: ecosystemFilter.value || '', page:String(currentPage.value), pageSize:String(pageSize.value) });
+  const filters = { search: search.value, category: categoryFilter.value || '', status: statusFilter.value || '', brand: brandFilter.value || '', ecosystem: ecosystemFilter.value || '' };
+  appliedFilters.value = filters;
+  const params = new URLSearchParams({ ...filters, page:String(currentPage.value), pageSize:String(pageSize.value) });
   try {
     const data = await api<{products:ProductRecord[];total:number;page:number}>(`/api/admin/products?${params}`);
     if (sequence !== listSequence) return;
@@ -187,7 +194,7 @@ function switchLibrary(value: 'store'|'platform') { libraryMode.value = value; c
 function changePage(value: number) { currentPage.value = value; runListQuery(false); }
 function changePageSize(value: number) { pageSize.value = value; runListQuery(); }
 function openBatch(action: string) {
-  if (!selectedIds.value.length) { emit('notice', '请先勾选需要批量处理的产品'); return; }
+  if (!batchRangeCount.value) { emit('notice', batchScope.value === 'filtered' ? '当前筛选没有可操作的产品' : '请先勾选需要批量处理的产品'); return; }
   batchAction.value = action; batchReason.value = ''; batchCategoryId.value = null; batchError.value = ''; batchOpen.value = true;
 }
 async function submitBatch() {
@@ -198,7 +205,12 @@ async function submitBatch() {
   try {
     const result = await api<{ total:number; updated:number; failed:Array<{id:string;name:string;error:string}> }>('/api/admin/products/batch', {
       method: 'POST',
-      body: JSON.stringify({ ids: selectedIds.value, action: batchAction.value, categoryId: batchCategoryId.value, reason: batchReason.value.trim() }),
+      body: JSON.stringify({
+        ...(batchScope.value === 'filtered' ? { filters: appliedFilters.value } : { ids: selectedIds.value }),
+        action: batchAction.value,
+        categoryId: batchCategoryId.value,
+        reason: batchReason.value.trim(),
+      }),
     });
     batchOpen.value = false;
     const failed = result.failed || [];
@@ -232,6 +244,11 @@ async function loadStatusHistory(id = form.id || '') {
   const data = await api<{ history: any[] }>(`/api/admin/products/${encodeURIComponent(id)}/status-history`);
   statusHistory.value = data.history || [];
 }
+async function loadPlacementLink(id: string) {
+  if (!id) { placementLink.value = null; return; }
+  try { placementLink.value = await api(`/api/admin/placement/products/${encodeURIComponent(id)}`); }
+  catch { placementLink.value = null; }
+}
 function openTransition(action: string, product: ProductRecord = form) {
   if (!product.id) { emit('notice', '请先保存产品后再执行状态操作'); return; }
   transitionTarget.value = product;
@@ -239,6 +256,18 @@ function openTransition(action: string, product: ProductRecord = form) {
   transitionForm.reason = '';
   transitionError.value = '';
   transitionOpen.value = true;
+}
+function rowActionOptions(product: ProductRecord) {
+  const options: Array<{ label: string; key: string }> = [{ label: '复制新增', key: 'copy' }];
+  if (product.status === '草稿' || product.status === '下架') options.push({ label: '上架', key: 'publish' });
+  if (product.status === '在售') options.push({ label: '下架', key: 'withdraw' });
+  if (product.status !== '归档') options.push({ label: '归档', key: 'archive' });
+  if (product.status === '归档') options.push({ label: '恢复为草稿', key: 'restore' });
+  return options;
+}
+function handleRowAction(key: string | number, product: ProductRecord) {
+  if (key === 'copy') { navigate(`/products/new?copy=${product.id}`); return; }
+  openTransition(String(key), product);
 }
 async function submitTransition() {
   const target = transitionTarget.value, definition = transitionDefinition.value;
@@ -283,6 +312,7 @@ async function loadPath() {
       await Promise.all([runListQuery(false), loadStatusSummary()]);
     }
     else if (mode.value === 'new') {
+      placementLink.value = null;
       const copyId = new URLSearchParams(props.path.split('?')[1]).get('copy');
       const p = copyId ? await api<ProductRecord>(`/api/admin/products/${encodeURIComponent(copyId)}`) : blankProduct();
       if (sequence !== loadSequence) return;
@@ -293,8 +323,11 @@ async function loadPath() {
       const p = await api<ProductRecord>(`/api/admin/products/${encodeURIComponent(id || '')}`);
       if (sequence !== loadSequence) return;
       setForm(p);
+      emitPageTitle(p.name);
       await loadStatusHistory(p.id || '');
       alternatives.value = mode.value === 'detail' ? (await api<{alternatives:any[]}>(`/api/admin/products/${encodeURIComponent(id || '')}/alternatives`)).alternatives : [];
+      if (mode.value === 'detail') await loadPlacementLink(p.id || '');
+      else placementLink.value = null;
     }
   } catch (e) { if (sequence === loadSequence) message.value = e instanceof Error ? e.message : '读取失败'; }
   finally { if (sequence === loadSequence) busy.value = false; }
@@ -307,6 +340,11 @@ function confirmLeave(): Promise<boolean> {
 }
 function finishLeave(allow: boolean) { leaveOpen.value = false; leaveResolve?.(allow); leaveResolve = undefined; }
 defineExpose({ confirmLeave });
+function emitPageTitle(name?: string) {
+  if (mode.value !== 'detail' && mode.value !== 'edit') return;
+  const title = String(name || '').trim();
+  if (title) emit('pageTitle', { title: `产品 · ${title}`, path: props.path });
+}
 function navigate(path: string) { emit('navigate', path); }
 function jump(section: string) { activeSection.value = section; document.getElementById(`product-section-${section}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
 function updateActiveSection() {
@@ -351,7 +389,7 @@ async function save(status: string, continueNew = false) {
   saving.value = true;
   try {
     const saved = await api<ProductRecord>(form.id ? `/api/admin/products/${encodeURIComponent(form.id)}` : '/api/admin/products', { method: form.id ? 'PUT' : 'POST', body: JSON.stringify(payload) });
-    setForm(saved); emit('changed'); emit('notice', status === '在售' ? '产品已保存并上架' : '产品已保存');
+    setForm(saved); emitPageTitle(saved.name); emit('changed'); emit('notice', status === '在售' ? '产品已保存并上架' : '产品已保存');
     await loadStatusHistory(saved.id || '');
     saving.value = false;
     if (continueNew && mode.value === 'new') { setForm({ ...blankProduct(), sku: makeSku() }); window.scrollTo({top:0}); }
@@ -493,7 +531,7 @@ onBeforeUnmount(() => {
             <a class="secondary link-button" :href="exportUrl('csv')">导出 CSV</a>
             <a class="secondary link-button" :href="exportUrl('xls')">导出 Excel</a>
             <NButton @click="openImport">批量导入</NButton>
-            <NButton type="primary" @click="navigate('/products/new')">＋ 新增产品</NButton>
+            <NButton type="primary" @click="navigate('/products/new')">新增产品</NButton>
           </template>
           <NTag v-else type="warning" :bordered="false">离线镜像 · 模拟参考</NTag>
         </template>
@@ -509,14 +547,18 @@ onBeforeUnmount(() => {
         <NButton :loading="busy || listBusy || platformBusy" @click="runListQuery">筛选</NButton>
       </div>
       <div v-if="libraryMode==='store'" class="product-batch-bar">
-        <span class="product-batch-count">已选 <b>{{ selectedIds.length }}</b> 项</span>
-        <NButton size="small" :disabled="!selectedIds.length" @click="openBatch('publish')">批量上架</NButton>
-        <NButton size="small" :disabled="!selectedIds.length" @click="openBatch('withdraw')">批量下架</NButton>
-        <NButton size="small" :disabled="!selectedIds.length" @click="openBatch('restore')">批量恢复</NButton>
-        <NButton size="small" :disabled="!selectedIds.length" @click="openBatch('archive')">批量归档</NButton>
-        <NButton size="small" type="primary" :disabled="!selectedIds.length" @click="openBatch('category')">批量修改分类</NButton>
+        <div class="product-batch-scope">
+          <span>操作范围</span>
+          <NButton size="small" :class="{ 'is-active': batchScope === 'selected' }" @click="batchScope = 'selected'">已选 {{ selectedIds.length }} 项</NButton>
+          <NButton size="small" :class="{ 'is-active': batchScope === 'filtered' }" @click="batchScope = 'filtered'">当前筛选 {{ visibleTotal }} 项</NButton>
+        </div>
+        <NButton size="small" :disabled="!batchRangeCount" @click="openBatch('publish')">批量上架</NButton>
+        <NButton size="small" :disabled="!batchRangeCount" @click="openBatch('withdraw')">批量下架</NButton>
+        <NButton size="small" :disabled="!batchRangeCount" @click="openBatch('restore')">批量恢复</NButton>
+        <NButton size="small" :disabled="!batchRangeCount" @click="openBatch('archive')">批量归档</NButton>
+        <NButton size="small" :disabled="!batchRangeCount" @click="openBatch('category')">批量修改分类</NButton>
         <NButton v-if="selectedIds.length" text size="small" @click="clearSelection">清除选择</NButton>
-        <span class="product-batch-hint">跨页保留选择；筛选条件变化会清空</span>
+        <span class="product-batch-hint">{{ batchScope === 'filtered' ? '将处理当前筛选下全部产品' : '跨页保留选择' }}</span>
       </div>
       <section class="panel table-panel product-list-table" :aria-busy="busy">
         <table><thead><tr><th v-if="libraryMode==='store'" class="product-select-col"><NCheckbox :checked="allPageSelected" :indeterminate="somePageSelected" :disabled="!rows.length" aria-label="全选当前页产品" @update:checked="togglePageSelection" /></th><th>产品信息</th><th>分类 / 品牌型号</th><th>销售单位</th><th>有效售价</th><th>状态</th><th>操作</th></tr></thead>
@@ -525,18 +567,16 @@ onBeforeUnmount(() => {
             <td><div class="product-list-info"><img v-if="p.assets.find(a=>a.role==='cover')" :src="p.assets.find(a=>a.role==='cover')?.url" alt="产品主图"><span v-else class="product-placeholder" aria-hidden="true">◇</span><div><button class="product-name-link" @click="navigate(`/products/${p.id}`)">{{ p.name }}</button><small>{{ p.sku }}</small></div></div></td>
             <td>{{ p.category }}<small>{{ [p.brand,p.model].filter(Boolean).join(' · ') || '品牌 / 型号未填写' }}</small></td><td>{{ p.salesUnit }}</td><td class="price">{{ p.canPrice ? money(p.price) : '不单独计价' }}<small v-if="p.canPrice">/ {{ p.salesUnit }}</small></td>
             <td><NTag size="small" :type="p.status==='在售'?'success':p.status==='下架'?'warning':p.status==='归档'?'default':'info'" :bordered="false">{{ p.status }}</NTag></td>
-            <td><div class="product-row-actions">
-              <NButton text size="small" @click="navigate(`/products/${p.id}`)">详情</NButton>
-              <NButton v-if="p.status !== '归档'" text size="small" @click="navigate(`/products/${p.id}/edit`)">编辑</NButton>
-              <NButton text size="small" @click="navigate(`/products/new?copy=${p.id}`)">复制新增</NButton>
-              <NButton v-if="p.status==='草稿' || p.status==='下架'" text size="small" @click="openTransition('publish', p)">上架</NButton>
-              <NButton v-if="p.status==='在售'" text size="small" @click="openTransition('withdraw', p)">下架</NButton>
-              <NButton v-if="p.status!=='归档'" text size="small" @click="openTransition('archive', p)">归档</NButton>
-              <NButton v-if="p.status==='归档'" text size="small" @click="openTransition('restore', p)">恢复</NButton>
+            <td><div class="table-actions product-row-actions">
+              <button type="button" class="table-link" @click="navigate(`/products/${p.id}`)">详情</button>
+              <button v-if="p.status !== '归档'" type="button" class="table-link" @click="navigate(`/products/${p.id}/edit`)">编辑</button>
+              <NDropdown trigger="click" :options="rowActionOptions(p)" @select="key => handleRowAction(key, p)">
+                <button type="button" class="table-link">更多</button>
+              </NDropdown>
             </div></td>
           </tr></tbody>
           <tbody v-else><tr v-for="p in platformRows" :key="p.id">
-            <td><div class="product-list-info"><span class="product-placeholder" aria-hidden="true">◇</span><div><strong>{{ p.name }}</strong><small>{{ p.platformCode }}</small></div></div></td>
+            <td><div class="product-list-info"><span class="product-placeholder" aria-hidden="true"></span><div><strong>{{ p.name }}</strong><small>{{ p.platformCode }}</small></div></div></td>
             <td>{{ p.category }}<small>{{ p.brand }} · {{ p.model }}</small></td><td>{{ p.salesUnit }}</td><td class="price">{{ money(p.price) }}<small>/ {{ p.salesUnit }}</small></td>
             <td><NTag size="small" type="warning" :bordered="false">平台参考</NTag><small>模拟参数 · 加入后需审核</small></td>
             <td><NButton size="small" type="primary" @click="addPlatformProduct(p.id)">加入门店库</NButton></td>
@@ -547,7 +587,7 @@ onBeforeUnmount(() => {
     </template>
     <div v-else-if="busy" class="loading-state">正在读取产品资料…</div>
     <template v-else-if="baseline">
-      <div class="page-toolbar product-editor-title"><div><div class="admin-breadcrumb">产品管理 / 产品库 / {{ pageTitle }}</div><h2>{{ pageTitle }} <NTag size="small" :bordered="false">{{ form.status }}</NTag></h2><p>{{ readOnly ? '查看销售规格、安装能力与资料来源。' : archived ? '产品已归档，需先恢复为草稿后才能编辑。' : '先录入基本信息，专业参数按需补充；不完整资料可保存草稿。' }}</p></div><div class="toolbar-buttons"><NButton @click="navigate('/products')">返回产品库</NButton><NButton v-if="readOnly" @click="navigate(`/products/new?copy=${form.id}`)">复制新增</NButton><NButton v-if="readOnly && !archived" type="primary" @click="navigate(`/products/${form.id}/edit`)">编辑产品</NButton><template v-if="readOnly"><NButton v-for="action in statusActions" :key="action.action" :type="action.tone==='danger'?'error':action.tone==='primary'?'primary':'default'" :disabled="saving || uploading>0" @click="openTransition(action.action)">{{ action.label }}</NButton></template></div></div>
+      <div class="page-toolbar product-editor-title"><div><div class="admin-breadcrumb">产品管理 / 产品库 / {{ pageTitle }}</div><h2>{{ pageTitle }} <NTag size="small" :bordered="false">{{ form.status }}</NTag></h2><p>{{ readOnly ? '查看销售规格、安装能力与资料来源。' : archived ? '产品已归档，需先恢复为草稿后才能编辑。' : '先录入基本信息，专业参数按需补充；不完整资料可保存草稿。' }}</p></div><div class="toolbar-buttons"><NButton @click="navigate('/products')">返回产品库</NButton><NButton v-if="readOnly" @click="navigate(`/products/new?copy=${form.id}`)">复制新增</NButton><NButton v-if="readOnly && !archived" type="primary" @click="navigate(`/products/${form.id}/edit`)">编辑产品</NButton><template v-if="readOnly"><NButton v-for="action in statusActions" :key="action.action" :class="{ 'danger-ghost': action.tone === 'danger' }" :type="action.tone==='primary'?'primary':'default'" :disabled="saving || uploading>0" @click="openTransition(action.action)">{{ action.label }}</NButton></template></div></div>
       <div class="product-editor-grid">
         <nav class="product-section-nav" aria-label="产品字段分组"><button v-for="(section,index) in sections" :key="section.id" :class="{active:activeSection===section.id}" @click="jump(section.id)"><span>0{{ index+1 }}</span><div>{{ section.name }}<small>{{ section.sub }}</small></div></button></nav>
         <NForm class="product-editor-form" label-placement="top" :disabled="formLocked || saving" :show-require-mark="!readOnly" @submit.prevent>
@@ -615,7 +655,7 @@ onBeforeUnmount(() => {
           </div></section>
 
           <section id="product-section-media" class="panel product-form-section"><header><span>06</span><div><h3>图片与附件</h3></div></header><div class="product-fields-grid">
-            <div class="product-span-2" v-if="!readOnly"><NUpload :custom-request="upload" :show-file-list="false" :disabled="saving" accept=".png,.jpg,.jpeg,.webp,.pdf,.ies,.ldt,.glb" multiple><NButton :loading="uploading>0">＋ 添加图片 / 资料</NButton></NUpload><p class="product-field-hint">支持图片、PDF、IES/LDT、GLB，单文件≤10MB；第一张图片默认主图。上传后请保存产品。移除只解除引用，不物理删除本地文件。</p></div>
+            <div class="product-span-2" v-if="!readOnly"><NUpload :custom-request="upload" :show-file-list="false" :disabled="saving" accept=".png,.jpg,.jpeg,.webp,.pdf,.ies,.ldt,.glb" multiple><NButton :loading="uploading>0">添加图片 / 资料</NButton></NUpload><p class="product-field-hint">支持图片、PDF、IES/LDT、GLB，单文件≤10MB；第一张图片默认主图。上传后请保存产品。移除只解除引用，不物理删除本地文件。</p></div>
             <div v-if="!form.assets.length" class="product-empty-media product-span-2">暂无资料，允许稍后补充。图片缺失不阻止保存草稿。</div>
             <div v-for="a in form.assets" :key="a.id" class="product-asset product-span-2"><img v-if="a.mime.startsWith('image/')" :src="a.url" :alt="a.name"><span v-else class="product-placeholder">文</span><div><a :href="a.url" target="_blank" rel="noopener">{{ a.name }}</a><small>{{ (a.size/1024).toFixed(1) }} KB · {{ a.role==='cover'?'主图':a.role==='image'?'附图':'本地附件' }}</small></div><NButton v-if="!readOnly && a.mime.startsWith('image/') && a.role!=='cover'" text @click="asCover(a.id)">设主图</NButton><NButton v-if="!readOnly" text @click="removeAsset(a.id)">移除引用</NButton></div>
             <ProductField label="资料来源" field="source"><NInput v-model:value="form.source" :input-props="{id:'product-source'}" placeholder="厂商目录 / 门店录入等" /></ProductField>
@@ -625,12 +665,30 @@ onBeforeUnmount(() => {
         </NForm>
         <aside class="product-preview">
           <section class="panel"><div class="product-preview-heading">产品预览 <NTag v-if="form.isSimulated" size="small" type="warning" :bordered="false">模拟</NTag></div><div class="product-cover"><img v-if="cover" :src="cover.url" alt="当前产品主图"><div v-else><span>◇</span><small>{{ selectedCategory?.label || '等待添加产品' }}</small></div></div><div class="product-preview-body"><h3>{{ form.name || '产品名称' }}</h3><p>{{ [form.brand,form.model].filter(Boolean).join(' · ') || '品牌 / 型号' }}</p><strong>{{ form.canPrice ? money(effectivePrice) : '不单独计价' }} <small v-if="form.canPrice">/ {{ form.salesUnit }}</small></strong><code>{{ form.sku }}</code></div></section>
+          <section v-if="readOnly && placementLink?.category" class="panel product-placement-link">
+            <div class="product-preview-heading">布点关联 <NTag size="small" :bordered="false">{{ placementLink.category.dev || '未映射编码' }}</NTag></div>
+            <div class="product-placement-chain">
+              <span>{{ placementLink.category.category1 }} / {{ placementLink.category.label }}</span>
+              <NTag v-if="placementLink.category.itemCode" size="small" :bordered="false">{{ placementLink.category.itemCode }}</NTag>
+              <span class="product-placement-keys">设备键：{{ placementLink.category.legacyKeys.length ? placementLink.category.legacyKeys.join(' / ') : '无独立设备键（由宿主派生）' }}</span>
+            </div>
+            <p class="product-field-hint">命中 {{ placementLink.rules.length }} 条空间规则，覆盖 {{ [...new Set(placementLink.rules.map((r:any)=>r.spaceName))].length }} 类空间。规则由产品分类决定，本页只读。</p>
+            <ul class="product-placement-rules" v-if="placementLink.rules.length">
+              <li v-for="rule in placementLink.rules.slice(0, 4)" :key="rule.pointCode">
+                <code>{{ rule.pointCode }}</code>
+                <span>{{ rule.spaceName }} · {{ rule.usage }}</span>
+                <small>{{ rule.anchor }}</small>
+              </li>
+            </ul>
+            <p v-if="placementLink.rules.length > 4" class="product-field-hint">另有 {{ placementLink.rules.length - 4 }} 条规则，见设计系统设备库。</p>
+            <p v-if="placementLink.profile" class="product-field-hint">布置关注 · 位置：{{ placementLink.profile.fields.position }}</p>
+          </section>
           <section v-if="readOnly" class="panel product-alternatives"><div class="product-preview-heading">同类在售替代 <NTag size="small" :bordered="false">{{ alternatives.length }}</NTag></div><div class="product-alternatives-body"><p v-if="!alternatives.length" class="product-alternatives-empty">同分类暂无其他在售产品。</p><button v-for="item in alternatives" :key="item.id" @click="navigate(`/products/${item.id}`)"><div><strong>{{ item.name }}</strong><small>{{ item.sku }} · {{ item.reason }}</small></div><span>{{ money(item.price) }}<em>匹配 {{ item.score }}</em></span></button></div></section>
           <div class="product-preview-note"><p v-if="form.id">版本 {{ form.revision }} · {{ new Date(form.updatedAt || '').toLocaleDateString('zh-CN') }}</p></div>
         </aside>
       </div>
       <section v-if="readOnly && statusHistory.length" class="panel product-status-events">
-        <header class="product-status-events-head"><div><span class="panel-kicker">AUDIT TRAIL</span><h3>状态流转记录</h3></div><span class="panel-note">共 {{ statusHistory.length }} 条</span></header>
+        <header class="product-status-events-head"><div><h3>状态流转记录</h3></div><span class="panel-note">共 {{ statusHistory.length }} 条</span></header>
         <div class="product-status-events-table">
           <table><thead><tr><th>时间</th><th>操作人</th><th>变更</th><th>动作</th><th>原因 / 说明</th></tr></thead><tbody>
             <tr v-for="event in statusHistory" :key="event.id">
@@ -660,7 +718,7 @@ onBeforeUnmount(() => {
     <NModal v-model:show="riskOpen" preset="dialog" title="确认销售价格" content="当前有效售价为0元或低于进货成本。确认这是有意设置后再上架。" positive-text="确认价格并上架" negative-text="返回检查" :mask-closable="false" @positive-click="finishRisk(true)" @negative-click="finishRisk(false)" @close="finishRisk(false)" />
     <NModal v-model:show="batchOpen" preset="card" :title="batchTitle" class="product-batch-modal" :mask-closable="!batchBusy">
       <div class="product-batch-body">
-        <p class="product-batch-modal-note">已选 <b>{{ selectedIds.length }}</b> 个产品。批量操作会逐项执行，失败项不会写入，并在操作完成后列出原因。</p>
+        <p class="product-batch-modal-note">操作范围：<b>{{ batchScope === 'filtered' ? `当前筛选 ${visibleTotal} 个产品` : `已选 ${selectedIds.length} 个产品` }}</b>。批量操作会逐项执行，失败项不会写入，并在操作完成后列出原因。</p>
         <template v-if="batchAction === 'category'">
           <label class="product-transition-label">目标产品分类</label>
           <NCascader :value="batchCategoryId" :options="categoryOptions" filterable clearable placeholder="选择一级 / 二级分类" @update:value="value => batchCategoryId = value ? String(value) : null" />

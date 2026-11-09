@@ -40,7 +40,7 @@ const badgeText = computed(() => props.badge);
   <div class="status-history">
     <header class="status-history__head">
       <div>
-        <span class="panel-kicker">STATUS HISTORY</span>
+        
         <h3>{{ title }}</h3>
       </div>
       <NTag v-if="badgeText" :type="badgeType" :bordered="false">{{ badgeText }}</NTag>

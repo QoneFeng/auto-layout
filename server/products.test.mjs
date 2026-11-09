@@ -30,6 +30,19 @@ describe('offline product store', () => {
     expect(store.page({page:99,pageSize:30}).page).toBe(3);
     expect(store.page({page:2,pageSize:30,brand:'品牌A'})).toMatchObject({page:1,total:5});
   });
+  it('产品选择弹窗按名称、编码、型号、品牌、分类和平台筛选', () => {
+    const lamp = category('筒灯');
+    store.save(product({ sku:'FILTER-001', name:'磁吸泛光灯 12W', model:'MAG-12', brand:'品牌甲', categoryId:lamp.id, retailPrice:699, ecosystems:['米家'] }));
+    store.save(product({ sku:'FILTER-002', name:'四键智能开关', model:'SW-4', brand:'品牌乙', categoryId:category('控制面板').id, retailPrice:399, ecosystems:['Apple Home'] }));
+    expect(store.page({ name:'磁吸' }).total).toBe(1);
+    expect(store.page({ sku:'FILTER-002' }).total).toBe(1);
+    expect(store.page({ model:'MAG-12' }).total).toBe(1);
+    expect(store.page({ brand:'品牌乙' }).total).toBe(1);
+    expect(store.page({ category:lamp.id }).total).toBe(1);
+    expect(store.page({ ecosystem:'米家' }).total).toBe(1);
+    expect(store.page({ name:'磁吸', brand:'品牌乙' }).total).toBe(0);
+    expect(new Set(store.brands())).toEqual(new Set(['品牌甲','品牌乙']));
+  });
   it('客户单位原价保留，平方米按面积计量，原表状态不升级为实测', () => {
     const p=store.save(product({salesUnit:'平方米',quantityMode:'area',orderStep:.1,retailPrice:88,geometryStatus:'imported'}));
     expect(p.salesUnit).toBe('平方米'); expect(p.price).toBe(88); expect(p.geometryStatus).toBe('imported');
@@ -232,5 +245,17 @@ describe('offline product store', () => {
     const result = store.batchUpdate({ ids:[p.id], action:'archive', reason:'批量下柜' });
     expect(result.updated).toBe(1);
     expect(store.get(p.id).status).toBe('归档');
+  });
+  it('按当前筛选全量批量上架，不受100条选择上限限制', () => {
+    const targetCategory = category('筒灯').id;
+    const otherCategory = category('射灯').id;
+    for (let i = 0; i < 120; i++) store.save(product({ sku:`FILTER-${i}`, name:`筛选产品${i}`, status:'草稿', categoryId:targetCategory, canPlace:true, retailPrice:99 }));
+    const other = store.save(product({ sku:'FILTER-OTHER', name:'其他分类', status:'草稿', categoryId:otherCategory, canPlace:true, retailPrice:99 }));
+    const result = store.batchUpdate({ filters:{ status:'草稿', category:targetCategory }, action:'publish', actor:'筛选批量' });
+    expect(result).toMatchObject({ total:120, updated:120, scope:'filtered' });
+    expect(result.failed).toHaveLength(0);
+    expect(store.list({ status:'草稿', category:targetCategory })).toHaveLength(0);
+    expect(store.get(other.id).status).toBe('草稿');
+    expect(store.list({ status:'在售', category:targetCategory })).toHaveLength(120);
   });
 });

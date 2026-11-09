@@ -1,5 +1,5 @@
 $ErrorActionPreference = 'Stop'
-$product = 'QoneHome智能家电门店营销系统'
+$product = '智能家电门店管理系统'
 $exe = Join-Path $PSScriptRoot 'QoneHome.exe'
 if (-not (Test-Path $exe)) {
   Write-Host 'ERROR: 同目录下找不到 QoneHome.exe'

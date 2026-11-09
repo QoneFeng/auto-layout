@@ -4,6 +4,8 @@ import DeviceIcon from './components/DeviceIcon.vue';
 import PlanCanvas from './components/Plan2D/PlanCanvas.vue';
 import RuleDetail from './components/RuleDetail.vue';
 import SceneCanvas from './components/Scene3D/SceneCanvas.vue';
+import AdminBrandMark from './admin/components/AdminBrandMark.vue';
+import AdminActionIcon from './admin/components/AdminActionIcon.vue';
 import { CATEGORY_ORDER, DEVICES_BY_CATEGORY, DEVICE_BY_KEY, SPACE_BY_CODE, SPACES } from './data/catalog';
 import { DEMO_DEFAULTS, PENDING_BUSINESS_CONFIRMATION } from './data/defaults';
 import { SAMPLE_BUILDERS, type SampleId } from './data/samples';
@@ -532,12 +534,12 @@ onMounted(() => {
 <template>
   <div class="app-shell">
     <header class="topbar">
-      <a class="btn home-btn" href="/" title="返回统一首页">⌂ 首页</a>
+        <a class="btn home-btn" href="/" title="返回统一首页"><AdminActionIcon name="home" /><span>首页</span></a>
       <div class="brand">
-        <div class="brand-mark">⌂</div>
+        <div class="brand-mark"><AdminBrandMark /></div>
         <div>
-          <strong>全屋智能 · 自动布点</strong>
-          <span>规则驱动的空间点位 Demo</span>
+          <strong>QoneHome · 户型布点</strong>
+          <span>规则驱动的空间点位工作台</span>
         </div>
       </div>
       <div class="topbar-center">
@@ -952,7 +954,8 @@ onMounted(() => {
 <style scoped>
 .app-shell { display: flex; flex-direction: column; height: 100vh; min-height: 720px; background: #0b0d10; color: #e8e6e1; }
 .topbar { height: 62px; flex: 0 0 62px; display: flex; align-items: center; gap: 18px; padding: 0 18px; border-bottom: 1px solid #242a32; background: #101319; }
-.home-btn { display: inline-flex; align-items: center; text-decoration: none; flex: 0 0 auto; }
+        .home-btn { display: inline-flex; align-items: center; gap: 5px; text-decoration: none; flex: 0 0 auto; }
+        .home-btn .admin-action-icon { width: 14px; height: 14px; }
 .brand { display: flex; align-items: center; gap: 12px; min-width: 260px; }
 .brand-mark { width: 34px; height: 34px; border-radius: 9px; display: grid; place-items: center; background: #f5b544; color: #1a1208; font-size: 19px; font-weight: 800; }
 .brand strong { display: block; font-size: 14px; letter-spacing: .02em; }
@@ -1169,7 +1172,8 @@ onMounted(() => {
   color: var(--ui-body);
 }
 .topbar { background: var(--ui-panel); border-bottom: 1px solid var(--ui-line); box-shadow: 0 1px 2px rgba(32, 55, 77, .03); }
-.brand-mark { background: var(--ui-accent); color: #fff; }
+        .brand-mark { background: transparent; color: var(--ui-accent); }
+        .brand-mark .brand-mark-svg { width: 26px; height: 26px; }
 .brand strong { color: var(--ui-text); }
 .brand span { color: var(--ui-muted); }
 .sample-select, .search, select { background: var(--ui-panel); color: var(--ui-body); border-color: var(--ui-line); border-radius: 6px; }

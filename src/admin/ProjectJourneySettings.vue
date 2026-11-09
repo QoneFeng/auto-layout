@@ -2,6 +2,7 @@
 import { computed, onMounted, ref } from 'vue';
 import { NButton, NInput, NSelect, NTag } from 'naive-ui';
 import AdminConfirmDialog from './components/AdminConfirmDialog.vue';
+import AdminActionIcon from './components/AdminActionIcon.vue';
 
 type JourneyTask = { key: string; title: string; role: string };
 type JourneyStage = { key: string; name: string; description: string; projectStatus: string; tasks: JourneyTask[] };
@@ -99,9 +100,14 @@ function moveStage(index: number, offset: number) {
   const [stage] = draft.value.stages.splice(index, 1);
   draft.value.stages.splice(target, 0, stage);
 }
-function addTask(stage: JourneyStage) {
+function addTask(stage: JourneyStage, afterIndex = stage.tasks.length - 1) {
   if (stage.tasks.length >= 30) { error.value = '单个阶段最多配置 30 项任务'; return; }
-  stage.tasks.push({ key: taskKey(stage), title: `新任务 ${stage.tasks.length + 1}`, role: stage.tasks.at(-1)?.role || draft.value.roles[0] || '' });
+  const insertAt = Math.min(Math.max(afterIndex + 1, 0), stage.tasks.length);
+  stage.tasks.splice(insertAt, 0, {
+    key: taskKey(stage),
+    title: `新任务 ${stage.tasks.length + 1}`,
+    role: stage.tasks[afterIndex]?.role || draft.value.roles[0] || '',
+  });
 }
 async function removeTask(stage: JourneyStage, index: number) {
   const task = stage.tasks[index];
@@ -193,7 +199,7 @@ onMounted(load);
 <template>
   <div v-if="loading" class="loading-state">正在读取项目阶段与任务…</div>
   <section v-else-if="loadError" class="panel journey-load-error">
-    <div class="panel-head"><div><span class="panel-kicker">PROJECT JOURNEY</span><h3>项目阶段与任务读取失败</h3></div></div>
+    <div class="panel-head"><div><h3>项目阶段与任务读取失败</h3></div></div>
     <div class="admin-panel-body">
       <p>当前未能读取阶段任务配置，请先重新加载；在配置读取成功前不要编辑，避免覆盖原配置。</p>
       <code>{{ loadError }}</code>
@@ -204,11 +210,11 @@ onMounted(load);
   <template v-else>
     <section class="panel journey-panel">
       <div class="panel-head">
-        <div><span class="panel-kicker">PROJECT JOURNEY</span><h3>项目阶段与任务</h3></div>
+        <div><h3>项目阶段与任务</h3></div>
         <div class="journey-head-tools">
           <NTag :bordered="false">{{ draft.stages.length }} 个阶段 · {{ taskCount }} 项任务</NTag>
           <NButton size="small" secondary @click="showRoles = true">负责角色（{{ draft.roles.length }}）</NButton>
-          <NButton size="small" secondary @click="addStage">＋ 新增阶段</NButton>
+          <NButton size="small" secondary @click="addStage">新增阶段</NButton>
         </div>
       </div>
       <p class="journey-panel-note">
@@ -217,35 +223,46 @@ onMounted(load);
       <div class="journey-stage-list">
         <article v-for="(stage, stageIndex) in draft.stages" :key="stage.key" class="journey-stage-card">
           <header class="journey-stage-head">
-            <span class="journey-stage-no">{{ stageIndex + 1 }}</span>
+            <span class="journey-stage-index" aria-hidden="true">{{ stageIndex + 1 }}</span>
             <div class="journey-stage-fields">
-              <NInput v-model:value="stage.name" :maxlength="24" placeholder="阶段名称" aria-label="阶段名称" />
-              <NInput v-model:value="stage.description" :maxlength="80" size="small" placeholder="阶段说明，例如：客户、房屋与预算信息" aria-label="阶段说明" />
-            </div>
-            <label class="journey-status-field">
-              <span>对应项目状态</span>
-              <NSelect v-model:value="stage.projectStatus" :options="statusOptions" size="small" aria-label="阶段对应的项目状态" />
-            </label>
-            <div class="journey-stage-actions">
-              <button type="button" class="journey-icon-btn" title="上移阶段" aria-label="上移阶段" :disabled="stageIndex === 0" @click="moveStage(stageIndex, -1)">↑</button>
-              <button type="button" class="journey-icon-btn" title="下移阶段" aria-label="下移阶段" :disabled="stageIndex === draft.stages.length - 1" @click="moveStage(stageIndex, 1)">↓</button>
-              <button type="button" class="journey-icon-btn danger" title="删除阶段" aria-label="删除阶段" @click="removeStage(stageIndex)">×</button>
-            </div>
-          </header>
-          <div class="journey-task-list">
-            <div class="journey-task-columns" aria-hidden="true"><span></span><span>任务</span><span>负责角色</span><span></span></div>
-            <div v-for="(task, taskIndex) in stage.tasks" :key="task.key" class="journey-task-row">
-              <span class="journey-task-no">{{ stageIndex + 1 }}.{{ taskIndex + 1 }}</span>
-              <NInput v-model:value="task.title" :maxlength="40" size="small" placeholder="任务名称" aria-label="任务名称" />
-              <NSelect v-model:value="task.role" :options="roleOptions" size="small" placeholder="选择负责角色" aria-label="负责角色" />
-              <div class="journey-stage-actions">
-                <button type="button" class="journey-icon-btn" title="上移任务" aria-label="上移任务" :disabled="taskIndex === 0" @click="moveTask(stage, taskIndex, -1)">↑</button>
-                <button type="button" class="journey-icon-btn" title="下移任务" aria-label="下移任务" :disabled="taskIndex === stage.tasks.length - 1" @click="moveTask(stage, taskIndex, 1)">↓</button>
-                <button type="button" class="journey-icon-btn danger" title="删除任务" aria-label="删除任务" @click="removeTask(stage, taskIndex)">×</button>
+              <div class="journey-field">
+                <span class="journey-field-label">阶段名称</span>
+                <NInput v-model:value="stage.name" :maxlength="24" class="journey-stage-name" placeholder="例如：需求建档" aria-label="阶段名称" />
+              </div>
+              <div class="journey-field">
+                <span class="journey-field-label">阶段描述</span>
+                <NInput v-model:value="stage.description" :maxlength="80" placeholder="例如：客户、房屋与预算信息" aria-label="阶段描述" />
               </div>
             </div>
-            <p v-if="!stage.tasks.length" class="journey-task-empty">该阶段还没有任务。没有任务的阶段不会阻塞后续阶段，项目详情会显示“未配置任务”。</p>
-            <NButton size="tiny" secondary class="journey-task-add" @click="addTask(stage)">＋ 添加任务</NButton>
+            <label class="journey-status-field">
+              <span class="journey-field-label">对应项目状态</span>
+              <NSelect v-model:value="stage.projectStatus" :options="statusOptions" aria-label="阶段对应的项目状态" />
+            </label>
+            <div class="journey-stage-actions">
+              <button type="button" class="journey-icon-btn" title="上移阶段" aria-label="上移阶段" :disabled="stageIndex === 0" @click="moveStage(stageIndex, -1)"><AdminActionIcon name="up" /></button>
+              <button type="button" class="journey-icon-btn" title="下移阶段" aria-label="下移阶段" :disabled="stageIndex === draft.stages.length - 1" @click="moveStage(stageIndex, 1)"><AdminActionIcon name="down" /></button>
+              <button type="button" class="journey-icon-btn danger" title="删除阶段" aria-label="删除阶段" @click="removeStage(stageIndex)"><AdminActionIcon name="close" /></button>
+            </div>
+          </header>
+          <div class="journey-task-section">
+            <div v-if="stage.tasks.length" class="journey-task-columns" aria-hidden="true"><span></span><span>任务名称</span><span>负责角色</span><span></span></div>
+            <div v-if="stage.tasks.length" class="journey-task-rows">
+              <div v-for="(task, taskIndex) in stage.tasks" :key="task.key" class="journey-task-row">
+                <span class="journey-task-no">{{ stageIndex + 1 }}.{{ taskIndex + 1 }}</span>
+                <NInput v-model:value="task.title" :maxlength="40" size="small" placeholder="任务名称" aria-label="任务名称" />
+                <NSelect v-model:value="task.role" :options="roleOptions" size="small" placeholder="选择负责角色" aria-label="负责角色" />
+                <div class="journey-stage-actions">
+                  <button type="button" class="journey-icon-btn" title="上移任务" aria-label="上移任务" :disabled="taskIndex === 0" @click="moveTask(stage, taskIndex, -1)"><AdminActionIcon name="up" /></button>
+                  <button type="button" class="journey-icon-btn" title="下移任务" aria-label="下移任务" :disabled="taskIndex === stage.tasks.length - 1" @click="moveTask(stage, taskIndex, 1)"><AdminActionIcon name="down" /></button>
+                  <button type="button" class="journey-icon-btn" title="在下方新增任务" aria-label="在下方新增任务" @click="addTask(stage, taskIndex)"><AdminActionIcon name="plus" /></button>
+                  <button type="button" class="journey-icon-btn danger" title="删除任务" aria-label="删除任务" @click="removeTask(stage, taskIndex)"><AdminActionIcon name="close" /></button>
+                </div>
+              </div>
+            </div>
+            <div v-else class="journey-task-empty">
+              <p>该阶段还没有任务。没有任务的阶段不会阻塞后续阶段，项目详情会显示“未配置任务”。</p>
+              <NButton size="tiny" secondary @click="addTask(stage, -1)">新增任务</NButton>
+            </div>
           </div>
         </article>
       </div>

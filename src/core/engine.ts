@@ -2,6 +2,7 @@ import rulesJson from '../data/rules.generated.json';
 import { DEVICE_BY_KEY, SPACE_BY_CODE, findDevice } from '../data/catalog';
 import { CROSS_RULE_BY_CODE, CROSS_RULE_TEMPLATES } from '../data/cross-rules';
 import { DEMO_DEFAULTS } from '../data/defaults';
+import { normalizeDeviceName, ruleDeviceNames, ruleMatchesDeviceKey } from '../../shared/placement-rules.mjs';
 import type {
   AnchorSpec, DemoDefaults, DeviceDef, Furniture, LayoutResult, Opening, PlacedDevice,
   PendingDiagnostic, Point2, PointRule, Project, QuantitySpec, Room, RuleExecution, SpaceCode, UnplacedRule, Wall,
@@ -30,40 +31,18 @@ interface EngOptions {
   sources?: Array<'manual' | 'rule' | 'wholeHouse'>;
 }
 
-function normalizeDeviceName(name: string): string {
-  const s = name
-    .replaceAll('·', ' · ')
-    .replace(/\s+/g, ' ')
-    .trim();
-  // 只在原始简称时补齐，保证对 canonical 名称幂等。
-  if (s === '磁吸轨道') return '磁吸泛光灯 · 磁吸轨道';
-  if (s === '磁吸泛光灯体') return '磁吸泛光灯 · 灯体';
-  if (s === '磁吸格栅灯体') return '磁吸格栅灯 · 灯体';
-  return s;
-}
-
 /**
  * 把一条规则原文里的 device_type2 展开成设备目录里的分类。
  * 一条规则可能同时覆盖多个设备分类，例如「窗帘电机 / 卷帘电机」。
+ * 名称展开口径下沉到 shared/placement-rules.mjs，服务端布点目录共用同一份。
  */
 export function catalogDevicesForRule(rule: PointRule): DeviceDef[] {
-  const name = normalizeDeviceName(rule.deviceCanonical || rule.deviceType2);
   const found = new Map<string, DeviceDef>();
   const add = (d?: DeviceDef) => { if (d) found.set(d.key, d); };
-
-  add(DEVICE_BY_KEY[name]);
-  add(findDevice(name));
-  for (const part of name.split(/[\/;]/).map(s => s.trim()).filter(Boolean)) {
-    add(DEVICE_BY_KEY[part]);
-    add(findDevice(part));
+  for (const name of ruleDeviceNames(rule)) {
+    add(DEVICE_BY_KEY[name]);
+    add(findDevice(name));
   }
-  if (name.includes('窗帘电机')) add(DEVICE_BY_KEY['窗帘电机']);
-  if (name.includes('卷帘')) add(DEVICE_BY_KEY['卷帘电机']);
-  if (name.includes('吸顶灯')) add(DEVICE_BY_KEY['吸顶灯']);
-  if (name.includes('面板灯')) add(DEVICE_BY_KEY['面板灯']);
-  if (name.includes('筒灯')) add(DEVICE_BY_KEY['筒灯']);
-  if (name.includes('灯槽灯带')) add(DEVICE_BY_KEY['灯槽灯带']);
-  if (name.includes('直线灯带')) add(DEVICE_BY_KEY['直线灯带']);
   return [...found.values()];
 }
 
@@ -1242,14 +1221,8 @@ function genericCandidatesForDevice(room: Room, def: DeviceDef, project: Project
 }
 
 function deviceRuleMatches(rule: PointRule, def: DeviceDef): boolean {
-  if (catalogDevicesForRule(rule).some(d => d.key === def.key)) return true;
-  const name = normalizeDeviceName(rule.deviceCanonical || rule.deviceType2);
-  if (def.category2.includes('轨道') && !name.includes('轨道')) {
-    if (def.category2.includes('窗帘') && name.includes('窗帘')) return true;
-    return false;
-  }
-  if (def.category2.includes('灯带') && !name.includes('灯带')) return false;
-  return name.includes(def.category2) || def.category2.includes(name);
+  // 判定顺序与 shared/placement-rules.mjs 完全一致，改口径只改那一份。
+  return ruleMatchesDeviceKey(rule, def.key);
 }
 
 /**

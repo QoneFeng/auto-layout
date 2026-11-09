@@ -9,6 +9,9 @@ import { PRODUCT_STATUSES, productTransitionFor } from '../shared/product-state.
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const exported = fs.readFileSync(path.join(root, 'app/devices.js'), 'utf8');
 const devices = JSON.parse(exported.match(/window\.SMART_DEVICES = ([\s\S]*?);\s*window\.SMART_SPACES/)[1]);
+// 设计系统设备库的底座定义（app/devices.js）。布点目录 / 设备库卡片复用它，
+// 避免服务端再维护一份设备键与尺寸。
+export const deviceCatalog = devices;
 const spaces = JSON.parse(exported.match(/window\.SMART_SPACES = ([\s\S]*?);\s*$/)[1]).map(s => ({ code: s.code, name: s.name }));
 const mergedFamily = d => /灯带/.test(d.category2) ? '灯带' : ['开关面板', '情景面板'].includes(d.category2) ? '控制面板' : /磁吸轨道/.test(d.category2) ? '磁吸轨道' : d.productFamily || d.category2;
 const categoryMap = new Map();
@@ -109,12 +112,29 @@ export function createProductStore(db) {
   const get = id => map(db.prepare('SELECT * FROM products WHERE id=?').get(id), categoryList());
   function list(query = {}) {
     const search = String(query.search || '').trim().toLowerCase();
+    const name = String(query.name || '').trim().toLowerCase();
+    const sku = String(query.sku || '').trim().toLowerCase();
+    const model = String(query.model || '').trim().toLowerCase();
     const categories = categoryList();
     return db.prepare('SELECT * FROM products ORDER BY updated_at DESC, id').all().map(row => map(row, categories)).filter(p =>
       (!search || [p.name, p.sku, p.category, p.brand, p.model].join(' ').toLowerCase().includes(search)) &&
+      (!name || String(p.name || '').toLowerCase().includes(name)) &&
+      (!sku || String(p.sku || '').toLowerCase().includes(sku)) &&
+      (!model || String(p.model || '').toLowerCase().includes(model)) &&
       (!query.category || p.category === query.category || p.categoryId === query.category) &&
       (!query.status || p.status === query.status) && (!query.brand || p.brand === query.brand) &&
       (!query.ecosystem || p.ecosystems.includes(query.ecosystem)));
+  }
+  function brands() {
+    // brand 存在 details_json 中（历史 products 表没有独立 brand 列），只读取所需字段并去重。
+    const found = new Set();
+    for (const row of db.prepare('SELECT details_json FROM products').all()) {
+      let details = {};
+      try { details = JSON.parse(row.details_json || '{}'); } catch { details = {}; }
+      const brand = String(details.brand || '').trim();
+      if (brand) found.add(brand);
+    }
+    return [...found].sort((a, b) => a.localeCompare(b, 'zh-CN'));
   }
   function normalize(input, previous) {
     if (!input || typeof input !== 'object' || Array.isArray(input)) fail('产品必须是对象');
@@ -244,11 +264,15 @@ export function createProductStore(db) {
       const depth = Number(product?.diameterMm || product?.depthMm || base.size.depth);
       selected.push({
         ...base,
-        key: product ? `product:${product.id}:${base.key}` : base.key,
+        // 设备键必须保持规则引擎认识的裸键（＝设备分类键）；产品身份只走 productId。
+        // 曾把 key 拼成 `product:<id>:<key>`，会让 buildProject → engine 的规则匹配整段落空。
+        key: base.key,
         legacyKey: base.key,
         productId: product?.id || '',
         sku: product?.sku || '',
         productName: product?.name || '',
+        brand: product?.brand || '',
+        model: product?.model || '',
         price: product?.price ?? null,
         salesUnit: product?.salesUnit || base.salesUnit,
         size: { width: Math.max(20, width || base.size.width), depth: Math.max(20, depth || base.size.depth) },
@@ -354,8 +378,21 @@ export function createProductStore(db) {
     return counts;
   }
   function batchUpdate(input = {}) {
-    const ids = [...new Set((Array.isArray(input.ids) ? input.ids : []).map(value => String(value || '').trim()).filter(Boolean))];
-    if (!ids.length || ids.length > 100) throw new ProductError('每次批量操作需选择 1–100 个产品', 400, { ids: '选择数量无效' });
+    const requestedIds = [...new Set((Array.isArray(input.ids) ? input.ids : []).map(value => String(value || '').trim()).filter(Boolean))];
+    const filters = input.filters && typeof input.filters === 'object' ? input.filters : null;
+    const ids = requestedIds.length
+      ? requestedIds
+      : filters
+        ? list({
+          search: String(filters.search || ''),
+          category: String(filters.category || ''),
+          status: String(filters.status || ''),
+          brand: String(filters.brand || ''),
+          ecosystem: String(filters.ecosystem || ''),
+        }).map(item => item.id)
+        : [];
+    if (!ids.length) throw new ProductError(requestedIds.length ? '请选择需要操作的产品' : '当前筛选没有可操作的产品', 400, { ids: '操作范围为空' });
+    if (ids.length > 5000) throw new ProductError('单次批量操作最多 5000 个产品', 400, { ids: '数量超过上限' });
     const action = String(input.action || '');
     const actor = input.actor || '本机用户';
     const reason = String(input.reason || '').trim();
@@ -382,7 +419,7 @@ export function createProductStore(db) {
           succeeded.push(id);
         } catch (error) { failed.push({ id, name: product.name, error: error.message || '分类修改失败' }); }
       }
-      return { total: ids.length, updated: succeeded.length, failed, action };
+      return { total: ids.length, updated: succeeded.length, failed, action, scope: requestedIds.length ? 'selected' : 'filtered' };
     }
     for (const id of ids) {
       const product = get(id);
@@ -399,9 +436,9 @@ export function createProductStore(db) {
         succeeded.push(id);
       } catch (error) { failed.push({ id, name: product.name, error: error.message || '操作失败' }); }
     }
-    return { total: ids.length, updated: succeeded.length, failed, action };
+    return { total: ids.length, updated: succeeded.length, failed, action, scope: requestedIds.length ? 'selected' : 'filtered' };
   }
-  return { get, list, save, importRows, designCatalog,
+  return { get, list, save, importRows, designCatalog, brands,
     categories: categoryList, categoryOverview, updateCategoryMapping, defaultDeviceOptions,
     transition, statusHistory, statusSummary, batchUpdate,
     page(query = {}) {

@@ -1,14 +1,63 @@
-const { app, BrowserWindow, shell } = require('electron');
+const { app, BrowserWindow, Menu, Tray, nativeImage, shell } = require('electron');
 const { spawn } = require('node:child_process');
 const fs = require('node:fs');
 const path = require('node:path');
 
 const desktopLogPath = process.env.QONE_DESKTOP_LOG ? path.resolve(process.env.QONE_DESKTOP_LOG) : '';
 // 窗口标题带版本号，方便现场判断是否需要升级。
-// 命名与交付包保持一致：QoneHome-智能家电门店管理系统-v<版本>
-const WINDOW_TITLE = 'QoneHome-智能家电门店管理系统';
+// 命名与交付包保持一致：QoneHome·智能家电门店管理系统 v<版本>
+const WINDOW_TITLE = 'QoneHome·智能家电门店管理系统';
 function windowTitle() {
-  return `${WINDOW_TITLE}-v${app.getVersion()}`;
+  return `${WINDOW_TITLE} v${app.getVersion()}`;
+}
+
+let mainWindow = null;
+let tray = null;
+
+function showMainWindow() {
+  if (!mainWindow || mainWindow.isDestroyed()) return;
+  if (mainWindow.isMinimized()) mainWindow.restore();
+  mainWindow.show();
+  mainWindow.focus();
+}
+
+// 关闭窗口只收进托盘，真正退出走托盘右键菜单「退出」。
+// 托盘图标直接取 exe 自带图标（build/icon.ico 已打进 exe），不必额外携带图片资源。
+async function createTray() {
+  if (tray) return;
+  let image = nativeImage.createEmpty();
+  try {
+    image = await app.getFileIcon(process.execPath, { size: 'small' });
+  } catch (error) {
+    desktopLog('tray-icon-failed', error);
+  }
+  tray = new Tray(image);
+  tray.setToolTip(windowTitle());
+  tray.setContextMenu(Menu.buildFromTemplate([
+    { label: '显示主界面', click: () => showMainWindow() },
+    { type: 'separator' },
+    { label: `退出 ${WINDOW_TITLE}`, click: () => { app.isQuitting = true; app.quit(); } },
+  ]));
+  tray.on('click', () => showMainWindow());
+  tray.on('double-click', () => showMainWindow());
+  desktopLog('tray-ready');
+}
+
+// 收进托盘时弹一次气泡提示（Windows 托盘气泡；系统关闭通知/专注助手时会被静默）
+function showTrayBalloon() {
+  if (!tray) return;
+  try {
+    tray.displayBalloon({
+      title: WINDOW_TITLE,
+      content: '已最小化到托盘',
+      iconType: 'info',
+      noSound: true,
+      respectQuietTime: true,
+    });
+    desktopLog('tray-balloon-shown');
+  } catch (error) {
+    desktopLog('tray-balloon-failed', error);
+  }
 }
 function desktopLog(message, error) {
   if (!desktopLogPath) return;
@@ -109,6 +158,15 @@ async function createWindow() {
     title: windowTitle(),
     webPreferences: { contextIsolation: true, sandbox: true },
   });
+  mainWindow = win;
+  // 点右上角关闭 = 收进托盘（不结束本地服务，便于随时唤起）
+  win.on('close', (event) => {
+    if (app.isQuitting) return;
+    event.preventDefault();
+    win.hide();
+    showTrayBalloon();
+    desktopLog('window-hidden-to-tray');
+  });
   // 页面里的 <title> 会同步覆盖 BrowserWindow 的标题，Electron 默认允许。
   // 这里拦截它，保证标题栏始终显示带版本号的自定义标题。
   win.on('page-title-updated', (event) => {
@@ -142,6 +200,28 @@ async function createWindow() {
   win.webContents.setWindowOpenHandler(({ url }) => { if (!url.startsWith(`http://127.0.0.1:${port}`)) shell.openExternal(url); return { action: 'deny' }; });
 }
 
-app.whenReady().then(() => createWindow().catch(error => { desktopLog('create-window-failed', error); console.error(error); app.quit(); }));
-app.on('window-all-closed', () => { if (process.platform !== 'darwin') app.quit(); });
-app.on('before-quit', () => { app.isQuitting = true; if (serverProcess && !serverProcess.killed) serverProcess.kill(); });
+// 单实例锁：收进托盘后用户很可能再双击桌面图标，这里只唤醒已有窗口，
+// 不再起第二个进程（否则会重复占用 8123 端口、出现两个窗口）。
+const hasSingleInstanceLock = app.requestSingleInstanceLock();
+if (!hasSingleInstanceLock) {
+  app.quit();
+} else {
+  app.on('second-instance', () => showMainWindow());
+  app.whenReady().then(async () => {
+    try {
+      await createWindow();
+      await createTray();
+    } catch (error) {
+      desktopLog('create-window-failed', error);
+      console.error(error);
+      app.quit();
+    }
+  });
+  // 窗口只是被隐藏时不会触发这里；只有真正退出（托盘「退出」/ 系统关机）才结束进程
+  app.on('window-all-closed', () => { if (app.isQuitting) app.quit(); });
+  app.on('before-quit', () => {
+    app.isQuitting = true;
+    if (tray) { tray.destroy(); tray = null; }
+    if (serverProcess && !serverProcess.killed) serverProcess.kill();
+  });
+}

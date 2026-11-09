@@ -30,7 +30,7 @@ const target = path.resolve(getArg('--target', 'D:\\QoneHome'));
 const doUninstall = argv.includes('--uninstall');
 const dryRun = argv.includes('--dry-run');
 
-const PRODUCT = 'QoneHome智能家电门店营销系统';
+const PRODUCT = '智能家电门店管理系统';
 const EXE = 'QoneHome.exe';
 const REG_KEY = 'HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\QoneHomeSmartStore';
 const APP_VERSION = JSON.parse(fs.readFileSync(path.join(root, 'package.json'), 'utf8')).version;

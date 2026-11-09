@@ -3,6 +3,7 @@ import path from 'node:path';
 import { createHash } from 'node:crypto';
 import { decodeAsset } from './products.mjs';
 import { DEFAULT_PROJECT_JOURNEY, normalizeJourneyConfig, PROJECT_STATUS_FLOW } from './project-model.mjs';
+import { primaryProductCategory } from '../shared/category-catalog.mjs';
 
 const now = () => new Date().toISOString();
 const uid = prefix => `${prefix}-${Date.now().toString(36).toUpperCase()}-${Math.random().toString(36).slice(2, 7).toUpperCase()}`;
@@ -12,6 +13,38 @@ const parse = (value, fallback = {}) => {
 const json = value => JSON.stringify(value ?? {});
 const number = (value, fallback = 0) => Number.isFinite(Number(value)) ? Number(value) : fallback;
 const pinHash = (account, pin) => createHash('sha256').update(`qone-offline-v1:${String(account).toLowerCase()}:${pin}`).digest('hex');
+const round2 = value => Math.round(number(value) * 100) / 100;
+
+// 报价明细的空间名称是报价单内的展示标签，不代表项目户型或设计版本里的空间数据。
+const UNASSIGNED_SPACE = '未分配空间';
+const normalizeSpaceName = value => String(value ?? '').trim() || UNASSIGNED_SPACE;
+function normalizeSpaceList(list, items = []) {
+  const seen = new Set();
+  const spaces = [];
+  const push = value => {
+    const name = String(value ?? '').trim();
+    if (!name || seen.has(name)) return;
+    seen.add(name);
+    spaces.push(name);
+  };
+  if (Array.isArray(list)) list.forEach(push);
+  items.forEach(item => push(item?.space));
+  return spaces;
+}
+function normalizeFeeList(list) {
+  if (!Array.isArray(list)) return [];
+  return list.map((item, index) => ({
+    key: String(item?.key || `fee-${index + 1}`),
+    name: String(item?.name ?? '').trim() || `服务费 ${index + 1}`,
+    mode: item?.mode === 'percent' ? 'percent' : 'fixed',
+    value: Math.max(0, number(item?.value)),
+    enabled: item?.enabled !== false,
+  }));
+}
+function feeAmountOf(fee, subtotal) {
+  if (fee.enabled === false) return 0;
+  return round2(fee.mode === 'percent' ? subtotal * number(fee.value) / 100 : number(fee.value));
+}
 
 export const CAPABILITY_DOMAINS = [
   { key: 'marketing', name: '营销工具', features: ['快速报价', '智能报价', '手动报价', '报价模板库'] },
@@ -38,7 +71,7 @@ const DEFAULT_SETTINGS = {
     '模拟尺寸、IES/LDT 和配光数据不得直接用于正式施工验收。',
     '网络、照明和窗帘回路施工前需核对供电、负载和控制协议。',
   ],
-  projectConfig: { currency: 'CNY', taxRate: 13, quoteValidityDays: 30, allowNegativeMargin: false, requireDesignVersionBeforeQuote: false },
+  projectConfig: { quoteValidityDays: 30, allowNegativeMargin: false, requireDesignVersionBeforeQuote: false },
   // 项目阶段 / 任务 / 负责角色模板，新项目建档时按此生成阶段任务。
   projectJourney: DEFAULT_PROJECT_JOURNEY,
 };
@@ -162,7 +195,7 @@ export function createBusinessStore(db, { dataDir, productStore }) {
       FOREIGN KEY(project_id) REFERENCES projects(id) ON DELETE CASCADE
     );
     CREATE TABLE IF NOT EXISTS floorplan_assists (
-      id TEXT PRIMARY KEY, project_id TEXT NOT NULL, file_name TEXT NOT NULL, image_width INTEGER NOT NULL DEFAULT 0,
+      id TEXT PRIMARY KEY, project_id TEXT NOT NULL, attachment_id TEXT, file_name TEXT NOT NULL, image_width INTEGER NOT NULL DEFAULT 0,
       image_height INTEGER NOT NULL DEFAULT 0, method TEXT NOT NULL, confidence REAL NOT NULL DEFAULT 0,
       rooms_json TEXT NOT NULL DEFAULT '[]', warnings_json TEXT NOT NULL DEFAULT '[]', status TEXT NOT NULL DEFAULT '待复核',
       created_at TEXT NOT NULL, FOREIGN KEY(project_id) REFERENCES projects(id) ON DELETE CASCADE
@@ -178,6 +211,9 @@ export function createBusinessStore(db, { dataDir, productStore }) {
   `);
   const userColumns = db.prepare('PRAGMA table_info(store_users)').all().map(column => column.name);
   if (!userColumns.includes('pin_hash')) db.exec("ALTER TABLE store_users ADD COLUMN pin_hash TEXT DEFAULT ''");
+  // 户型辅助识别要能回指真正存下来的户型图附件，旧库补列，不做整表重建。
+  const assistColumns = db.prepare('PRAGMA table_info(floorplan_assists)').all().map(column => column.name);
+  if (!assistColumns.includes('attachment_id')) db.exec('ALTER TABLE floorplan_assists ADD COLUMN attachment_id TEXT');
   const quoteColumns = db.prepare('PRAGMA table_info(quotes)').all();
   const quoteProjectColumn = quoteColumns.find(column => column.name === 'project_id');
   const needsQuoteMigration = Boolean(quoteProjectColumn?.notnull) || !quoteColumns.some(column => column.name === 'customer_id') || !quoteColumns.some(column => column.name === 'quote_no');
@@ -687,6 +723,15 @@ export function createBusinessStore(db, { dataDir, productStore }) {
     return saveDesignVersion(design.id, input);
   }
 
+  // 项目「创建/打开设计方案」入口：已有方案直接复用，没有才按项目新建，
+  // 避免项目管理页和设计方案页各自建出重复方案。
+  function ensureProjectDesignFor(projectId) {
+    const project = db.prepare('SELECT * FROM projects WHERE id=?').get(projectId);
+    if (!project) throw new Error('项目不存在');
+    const design = ensureProjectDesign(projectId);
+    return getDesign(design.id);
+  }
+
   function quoteTemplates() {
     return db.prepare('SELECT * FROM quote_templates ORDER BY updated_at DESC').all().map(row => ({ id: row.id, name: row.name, schemeType: row.scheme_type, description: row.description, lines: parse(row.lines_json, []), status: row.status, updatedAt: row.updated_at }));
   }
@@ -760,11 +805,19 @@ export function createBusinessStore(db, { dataDir, productStore }) {
   function designLines(design) {
     const devices = Array.isArray(design?.snapshot?.furniture)
       ? design.snapshot.furniture.filter(item => String(item.type || '').startsWith('dev:')) : [];
+    // 设计快照里的 roomId 是内部空间键（如 master），报价行要显示方案里的空间中文名。
+    const rooms = design?.snapshot?.rooms && typeof design.snapshot.rooms === 'object' ? design.snapshot.rooms : {};
+    const roomLabel = roomId => {
+      const key = String(roomId || '');
+      if (!key) return UNASSIGNED_SPACE;
+      const room = rooms[key];
+      return String(room?.name || room?.label || key);
+    };
     const grouped = new Map();
     for (const item of devices) {
       const smart = item.smart || {}, selected = smart.product || {};
       const legacyKey = selected.legacyKey || String(item.type || '').slice(4);
-      const roomId = smart.roomId || '未分配空间';
+      const roomId = smart.roomId || '';
       const groupKey = [selected.productId || legacyKey, roomId, smart.ruleCode || 'MANUAL', smart.source || 'manual'].join('|');
       const current = grouped.get(groupKey) || { item, smart, selected, legacyKey, roomId, quantity: 0, physical: 0 };
       current.quantity += Math.max(1, number(smart.quote?.moduleQuantity || smart.quote?.inputQuantity, 1));
@@ -780,8 +833,8 @@ export function createBusinessStore(db, { dataDir, productStore }) {
         id: `design-line-${index + 1}`, productId: product?.id || entry.selected.productId || '', sku: product?.sku || entry.selected.sku || 'PENDING',
         name: product?.name || entry.selected.productName || `${entry.legacyKey}（待选产品）`, category: product?.category || entry.legacyKey,
         brand: product?.brand || '', model: product?.model || '', quantity: entry.quantity, unit, unitPrice: product?.price || number(entry.selected.price), discount: 100,
-        source, ruleCode: entry.smart.ruleCode || 'MANUAL', space: entry.roomId, status: product ? (entry.smart.status === 'pending' ? '待处理点位' : '已匹配') : '待选产品',
-        reason: `来自设计版本 V${design.versionNo}：${entry.physical} 个实体，计价数量 ${entry.quantity}${unit}；规则 ${entry.smart.ruleCode || '人工选品'}，点位状态 ${entry.smart.status || 'manual'}`,
+        source, ruleCode: entry.smart.ruleCode || 'MANUAL', space: roomLabel(entry.roomId), status: product ? (entry.smart.status === 'pending' ? '待处理点位' : '已匹配') : '待选产品',
+        reason: `来自设计版本 V${design.versionNo}：${roomLabel(entry.roomId)} ${entry.physical} 个实体，计价数量 ${entry.quantity}${unit}；规则 ${entry.smart.ruleCode || '人工选品'}，点位状态 ${entry.smart.status || 'manual'}`,
         productSnapshot: product,
       };
     });
@@ -789,23 +842,54 @@ export function createBusinessStore(db, { dataDir, productStore }) {
 
   function applyFees(subtotal, selectedFees) {
     const configured = Array.isArray(selectedFees) ? selectedFees : settings().serviceFees;
-    return configured.filter(item => item.enabled !== false).map(item => {
-      const amount = item.mode === 'percent' ? subtotal * number(item.value) / 100 : number(item.value);
-      return { ...item, amount: Math.round(amount * 100) / 100 };
+    return configured.map(item => {
+      const mode = item.mode === 'percent' ? 'percent' : 'fixed';
+      const enabled = item.enabled !== false;
+      const amount = enabled ? (mode === 'percent' ? subtotal * number(item.value) / 100 : number(item.value)) : 0;
+      return { ...item, mode, enabled, amount: Math.round(amount * 100) / 100 };
     });
   }
 
+  // 报价的设计来源解析顺序：显式版本 > 方案最新版本 > 项目最新版本。
+  // 独立方案（不挂项目）也允许报价，因此不能再把 design 解析限制在 projectId 分支里。
+  function resolveDesignForQuote(input = {}, projectId = '') {
+    const designVersionId = String(input.designVersionId || '');
+    const designId = String(input.designId || '');
+    if (designVersionId) {
+      const version = getDesignVersion(designVersionId);
+      if (!version) throw new Error('设计版本不存在');
+      if (designId && version.designId !== designId) throw new Error('设计版本不属于所选设计方案');
+      return version;
+    }
+    if (designId) {
+      if (!db.prepare('SELECT 1 FROM designs WHERE id=?').get(designId)) throw new Error('设计方案不存在');
+      const version = latestDesignVersion(designId);
+      if (!version) throw new Error('该设计方案还没有保存设计版本，请先在设计工作台保存版本');
+      return version;
+    }
+    return projectId ? latestDesign(projectId) : null;
+  }
+
   function saveQuote(input = {}) {
-    const projectId = String(input.projectId || '');
+    const requestedMode = String(input.mode || '快速报价');
+    const explicitProjectId = String(input.projectId || '');
+    const design = resolveDesignForQuote(input, explicitProjectId);
+    // 从设计方案发起报价却未指定项目时，继承方案所属项目，避免方案有项目、报价却成独立单。
+    const projectId = explicitProjectId || String(design?.projectId || '');
+    if (explicitProjectId && design?.projectId && design.projectId !== explicitProjectId) {
+      throw new Error('该设计版本属于其它项目，请调整方案或报价的项目关联');
+    }
     const project = projectId ? db.prepare('SELECT * FROM projects WHERE id=?').get(projectId) : null;
     if (projectId && !project) throw new Error('请选择有效项目');
-    const customerId = String(input.customerId || project?.customer_id || '');
+    const designRecord = design ? db.prepare('SELECT * FROM designs WHERE id=?').get(design.designId) : null;
+    const customerId = String(input.customerId || project?.customer_id || designRecord?.customer_id || '');
     if (customerId && !db.prepare('SELECT 1 FROM customers WHERE id=?').get(customerId)) throw new Error('请选择有效客户');
-    const design = projectId ? (input.designVersionId ? getDesignVersion(input.designVersionId) : latestDesign(projectId)) : null;
     const config = settings().projectConfig || {};
     if (project && config.requireDesignVersionBeforeQuote && !design) throw new Error('系统设置要求先保存设计版本，再生成报价');
-    const requestedMode = String(input.mode || '快速报价');
-    const fromDesign = requestedMode === '智能报价' && design ? designLines(design) : [];
+    const fromDesign = (input.pricingSource === 'design' || requestedMode === '智能报价') && design ? designLines(design) : [];
+    if (input.pricingSource === 'design' && design && !fromDesign.length) {
+      throw new Error('该设计版本没有可报价的智能设备，请先完成设备布点并保存版本');
+    }
     const area = Math.max(1, number(input.area, project?.area || 120));
     const schemeType = String(input.schemeType || project?.scheme_type || '全屋智能');
     let items = Array.isArray(input.items) && input.items.length
@@ -817,7 +901,19 @@ export function createBusinessStore(db, { dataDir, productStore }) {
       const discount = Math.min(100, Math.max(0, number(item.discount, 100)));
       const product = item.productSnapshot || quoteProduct(item.productId ? db.prepare('SELECT * FROM products WHERE id=?').get(item.productId) : null);
       const costPrice = Math.max(0, number(product?.productSnapshot?.costPrice));
-      return { ...item, id: item.id || `line-${index + 1}`, quantity, unitPrice, discount, amount: Math.round(quantity * unitPrice * discount) / 100, costPrice, costAmount: Math.round(quantity * costPrice * 100) / 100, productSnapshot: product || item.productSnapshot || null };
+      const category = String(product?.category || item.category || '');
+      return {
+        ...item,
+        id: item.id || `line-${index + 1}`,
+        quantity, unitPrice, discount,
+        amount: Math.round(quantity * unitPrice * discount) / 100,
+        space: normalizeSpaceName(item.space),
+        category,
+        category1: primaryProductCategory(category || item.category1),
+        costPrice,
+        costAmount: Math.round(quantity * costPrice * 100) / 100,
+        productSnapshot: product || item.productSnapshot || null,
+      };
     });
     const subtotal = Math.round(items.reduce((sum, item) => sum + item.amount, 0) * 100) / 100;
     const fees = applyFees(subtotal, input.fees);
@@ -835,17 +931,53 @@ export function createBusinessStore(db, { dataDir, productStore }) {
     const quoteId = uid('QTE');
     const row = {
       id: quoteId, projectId: projectId || null, customerId: customerId || null, quoteNo: quoteId, versionNo,
-      name: String(input.name || (project ? `${project.name} · 报价 V${versionNo}` : `独立报价单 V${versionNo}`)), mode: requestedMode, status: '草稿',
+      name: String(input.name || (project ? `${project.name} · 报价 V${versionNo}` : designRecord ? `${designRecord.name} · 报价 V${versionNo}` : `独立报价单 V${versionNo}`)), mode: requestedMode, status: '草稿',
       designVersionId: design?.id || null, subtotal, feeTotal, overallDiscount, total,
-      payload: { items, fees, explanation: input.explanation || '报价以保存时的产品、价格和方案快照为准。', designSummary: design?.summary || null, pricingBasis: fromDesign.length ? 'design_snapshot' : (Array.isArray(input.items) && input.items.length ? 'manual_selection' : 'area_template'), context: input.context || {}, priceStandard: input.priceStandard || '', costTotal, grossProfit, grossMargin, validUntil: new Date(Date.now() + number(config.quoteValidityDays, 30) * 86400000).toISOString().slice(0, 10) },
+      payload: { items, fees, spaces: normalizeSpaceList(input.spaces, items), explanation: input.explanation || '报价以保存时的产品、价格和方案快照为准。', designSummary: design?.summary || null, designId: design?.designId || '', designName: design?.designName || '', designVersionNo: design?.versionNo || 0, pricingBasis: fromDesign.length ? 'design_snapshot' : (Array.isArray(input.items) && input.items.length ? 'manual_selection' : 'area_template'), context: input.context || {}, priceStandard: input.priceStandard || '', costTotal, grossProfit, grossMargin, validUntil: new Date(Date.now() + number(config.quoteValidityDays, 30) * 86400000).toISOString().slice(0, 10) },
       createdAt: t, updatedAt: t,
     };
     db.prepare('INSERT INTO quotes (id,project_id,customer_id,quote_no,version_no,name,mode,status,design_version_id,subtotal,fee_total,discount,total,payload_json,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)')
       .run(row.id, row.projectId, row.customerId, row.quoteNo, row.versionNo, row.name, row.mode, row.status, row.designVersionId, row.subtotal, row.feeTotal, row.overallDiscount, row.total, json(row.payload), row.createdAt, row.updatedAt);
     db.prepare('INSERT INTO quote_status_history (id,quote_id,from_status,to_status,action,actor,reason,created_at) VALUES (?,?,?,?,?,?,?,?)')
       .run(uid('QSH'), row.id, '', '草稿', 'create', activeActor, '新建报价', t);
-    audit('quote.create', 'quote', row.id, `生成${row.mode} V${versionNo}，总额 ${row.total}`, { projectId: row.projectId, customerId: row.customerId, designVersionId: row.designVersionId });
-    return row;
+    audit('quote.create', 'quote', row.id, `生成${row.mode} V${versionNo}，总额 ${row.total}`, { projectId: row.projectId, customerId: row.customerId, designVersionId: row.designVersionId, designId: design?.designId || '' });
+    return getQuote(row.id);
+  }
+
+  // 报价生成前的只读预览：与 saveQuote 使用同一 designLines 口径，
+  // 让“设计版本 → 报价行”在落库前就能核对数量、待选产品与金额。
+  function designQuotePreview(input = {}) {
+    const designId = String(input.designId || '');
+    if (!designId) throw new Error('请选择设计方案');
+    const design = getDesign(designId);
+    if (!design) throw new Error('设计方案不存在');
+    const version = input.designVersionId ? getDesignVersion(input.designVersionId) : latestDesignVersion(designId);
+    if (!version) throw new Error('该设计方案还没有保存设计版本，请先在设计工作台保存版本');
+    if (version.designId !== designId) throw new Error('设计版本不属于所选设计方案');
+    const items = designLines(version).map(item => ({
+      ...item,
+      amount: Math.round(number(item.quantity) * number(item.unitPrice) * number(item.discount, 100)) / 100,
+    }));
+    const subtotal = Math.round(items.reduce((sum, item) => sum + number(item.amount), 0) * 100) / 100;
+    return {
+      design: {
+        id: design.id, name: design.name, status: design.status, projectId: design.projectId,
+        projectName: design.projectName, customerId: design.customerId, customerName: design.customerName,
+        versionCount: design.versionCount,
+      },
+      version: {
+        id: version.id, designId: version.designId, designName: version.designName, versionNo: version.versionNo,
+        name: version.name, ruleVersion: version.ruleVersion, createdAt: version.createdAt, summary: version.summary,
+      },
+      items,
+      subtotal,
+      summary: {
+        lines: items.length,
+        quantity: items.reduce((sum, item) => sum + number(item.quantity), 0),
+        pendingLines: items.filter(item => item.status === '待选产品').length,
+        pendingPoints: number(version.summary?.pending),
+      },
+    };
   }
 
   function updateQuoteAssociation(id, input = {}) {
@@ -856,18 +988,43 @@ export function createBusinessStore(db, { dataDir, productStore }) {
       error.statusCode = 409;
       throw error;
     }
-    const projectId = String(input.projectId ?? current.projectId ?? '');
+    let projectId = String(input.projectId ?? current.projectId ?? '');
+    let designVersionId = input.designVersionId === undefined ? String(current.designVersionId || '') : String(input.designVersionId || '');
+    let designVersion = designVersionId ? getDesignVersion(designVersionId) : null;
+    if (designVersionId && !designVersion) throw new Error('设计版本不存在');
+    if (designVersion && !projectId && designVersion.projectId) projectId = String(designVersion.projectId);
     const project = projectId ? db.prepare('SELECT * FROM projects WHERE id=?').get(projectId) : null;
     if (projectId && !project) throw new Error('请选择有效项目');
+    if (designVersion && projectId && designVersion.projectId && designVersion.projectId !== projectId) {
+      if (input.designVersionId === undefined) {
+        // 换项目后旧方案不再属于该项目：清空方案关联，避免报表明细出现跨项目快照
+        designVersionId = '';
+        designVersion = null;
+      } else {
+        throw new Error('该设计版本属于其它项目，请先更换项目或改选该项目的方案版本');
+      }
+    }
     const customerId = String(input.customerId ?? project?.customer_id ?? current.customerId ?? '');
     if (customerId && !db.prepare('SELECT 1 FROM customers WHERE id=?').get(customerId)) throw new Error('请选择有效客户');
     const versionNo = projectId
       ? (current.projectId === projectId ? current.versionNo : db.prepare('SELECT COALESCE(MAX(version_no),0)+1 AS value FROM quotes WHERE project_id=?').get(projectId).value)
       : current.versionNo;
     const name = String(input.name || (project ? current.name.replace(/^独立报价单/, project.name) : current.name));
-    db.prepare('UPDATE quotes SET project_id=?,customer_id=?,version_no=?,name=?,payload_json=?,updated_at=? WHERE id=?')
-      .run(projectId || null, customerId || null, versionNo, name, json({ ...current.payload, associationUpdatedAt: now() }), now(), id);
-    audit('quote.association.update', 'quote', id, project ? `报价已关联项目 ${project.name}` : '报价已解除项目关联', { projectId: projectId || null, customerId: customerId || null });
+    const payload = {
+      ...current.payload,
+      designId: designVersion?.designId || '',
+      designName: designVersion?.designName || '',
+      designVersionNo: designVersion?.versionNo || 0,
+      designSummary: designVersion?.summary || current.payload?.designSummary || null,
+      associationUpdatedAt: now(),
+    };
+    db.prepare('UPDATE quotes SET project_id=?,customer_id=?,version_no=?,name=?,design_version_id=?,payload_json=?,updated_at=? WHERE id=?')
+      .run(projectId || null, customerId || null, versionNo, name, designVersionId || null, json(payload), now(), id);
+    const summary = [
+      project ? `报价已关联项目 ${project.name}` : '报价已解除项目关联',
+      designVersion ? `关联设计版本 V${designVersion.versionNo}` : '未关联设计版本',
+    ].join(' · ');
+    audit('quote.association.update', 'quote', id, summary, { projectId: projectId || null, customerId: customerId || null, designVersionId: designVersionId || null });
     return getQuote(id);
   }
 
@@ -890,10 +1047,25 @@ export function createBusinessStore(db, { dataDir, productStore }) {
       const discount = Math.min(100, Math.max(0, number(item.discount, 100)));
       const product = item.productSnapshot || (item.productId ? quoteProduct(db.prepare('SELECT * FROM products WHERE id=?').get(item.productId)) : null);
       const costPrice = Math.max(0, number(product?.productSnapshot?.costPrice ?? item.costPrice));
-      return { ...item, id: item.id || `line-${index + 1}`, quantity, unitPrice, discount, amount: Math.round(quantity * unitPrice * discount) / 100, costPrice, costAmount: Math.round(quantity * costPrice * 100) / 100, productSnapshot: product || item.productSnapshot || null };
+      const category = String(product?.category || item.category || '');
+      return {
+        ...item,
+        id: item.id || `line-${index + 1}`,
+        quantity, unitPrice, discount,
+        amount: Math.round(quantity * unitPrice * discount) / 100,
+        space: normalizeSpaceName(item.space),
+        category,
+        category1: primaryProductCategory(category || item.category1),
+        costPrice,
+        costAmount: Math.round(quantity * costPrice * 100) / 100,
+        productSnapshot: product || item.productSnapshot || null,
+      };
     });
     const subtotal = Math.round(items.reduce((sum, item) => sum + item.amount, 0) * 100) / 100;
-    const fees = applyFees(subtotal, current.payload.fees || []);
+    const feeDefs = Array.isArray(input.fees)
+      ? normalizeFeeList(input.fees)
+      : normalizeFeeList(current.payload.fees);
+    const fees = feeDefs.map(fee => ({ ...fee, amount: feeAmountOf(fee, subtotal) }));
     const feeTotal = Math.round(fees.reduce((sum, item) => sum + item.amount, 0) * 100) / 100;
     const overallDiscount = Math.min(100, Math.max(0, number(input.overallDiscount, current.discount)));
     const total = Math.round((subtotal + feeTotal) * overallDiscount) / 100;
@@ -901,7 +1073,8 @@ export function createBusinessStore(db, { dataDir, productStore }) {
     const grossProfit = Math.round((total - costTotal) * 100) / 100;
     const grossMargin = total > 0 ? Math.round(grossProfit / total * 10000) / 100 : 0;
     const name = String(input.name || current.name);
-    const payload = { ...current.payload, items, fees, costTotal, grossProfit, grossMargin, editedAt: now() };
+    const spaces = normalizeSpaceList(input.spaces ?? current.payload.spaces, items);
+    const payload = { ...current.payload, items, fees, spaces, costTotal, grossProfit, grossMargin, editedAt: now() };
     db.prepare('UPDATE quotes SET project_id=?,customer_id=?,version_no=?,name=?,subtotal=?,fee_total=?,discount=?,total=?,payload_json=?,updated_at=? WHERE id=?')
       .run(projectId || null, customerId || null, versionNo, name, subtotal, feeTotal, overallDiscount, total, json(payload), now(), id);
     audit('quote.draft.update', 'quote', id, `编辑草稿报价 ${name}`, { projectId: projectId || null, customerId: customerId || null });
@@ -919,6 +1092,7 @@ export function createBusinessStore(db, { dataDir, productStore }) {
       name: `${source.name} · 复制`,
       items: source.payload.items,
       fees: source.payload.fees,
+      spaces: source.payload.spaces,
       overallDiscount: source.discount,
       explanation: `复制自报价 V${source.versionNo}；产品、数量和价格以复制时生成的新快照为准。`,
     });
@@ -968,7 +1142,7 @@ export function createBusinessStore(db, { dataDir, productStore }) {
 
   function mapQuote(row) {
     if (!row) return null;
-    return { id: row.id, quoteNo: row.quote_no || row.id, projectId: row.project_id || '', projectName: row.project_name || '', customerId: row.customer_id || '', customerName: row.customer_name || '', versionNo: row.version_no, name: row.name, mode: row.mode, status: row.status, confirmedBy: row.confirmed_by || '', confirmedAt: row.confirmed_at || '', voidedBy: row.voided_by || '', voidedAt: row.voided_at || '', voidReason: row.void_reason || '', designVersionId: row.design_version_id, subtotal: row.subtotal, feeTotal: row.fee_total, discount: row.discount, total: row.total, payload: parse(row.payload_json), createdAt: row.created_at, updatedAt: row.updated_at, statusHistory: quoteStatusHistory(row.id) };
+    return { id: row.id, quoteNo: row.quote_no || row.id, projectId: row.project_id || '', projectName: row.project_name || '', customerId: row.customer_id || '', customerName: row.customer_name || '', versionNo: row.version_no, name: row.name, mode: row.mode, status: row.status, confirmedBy: row.confirmed_by || '', confirmedAt: row.confirmed_at || '', voidedBy: row.voided_by || '', voidedAt: row.voided_at || '', voidReason: row.void_reason || '', designVersionId: row.design_version_id, designVersionNo: number(row.design_version_no), designId: row.design_id || '', designName: row.design_name || '', subtotal: row.subtotal, feeTotal: row.fee_total, discount: row.discount, total: row.total, payload: parse(row.payload_json), createdAt: row.created_at, updatedAt: row.updated_at, statusHistory: quoteStatusHistory(row.id) };
   }
 
   function quoteStatusHistory(quoteId) {
@@ -978,20 +1152,38 @@ export function createBusinessStore(db, { dataDir, productStore }) {
 
   function quotes(projectId = '') {
     const where = projectId ? 'WHERE q.project_id=?' : '';
-    const rows = db.prepare(`SELECT q.*, p.name AS project_name, c.name AS customer_name FROM quotes q LEFT JOIN projects p ON p.id=q.project_id LEFT JOIN customers c ON c.id=q.customer_id ${where} ORDER BY q.updated_at DESC`).all(...(projectId ? [projectId] : []));
+    const rows = db.prepare(`SELECT q.*, p.name AS project_name, c.name AS customer_name, dv.version_no AS design_version_no, d.id AS design_id, d.name AS design_name
+      FROM quotes q LEFT JOIN projects p ON p.id=q.project_id LEFT JOIN customers c ON c.id=q.customer_id
+      LEFT JOIN design_versions dv ON dv.id=q.design_version_id LEFT JOIN designs d ON d.id=dv.design_id
+      ${where} ORDER BY q.updated_at DESC`).all(...(projectId ? [projectId] : []));
     return rows.map(mapQuote);
   }
 
   function getQuote(id) {
-    return mapQuote(db.prepare('SELECT q.*, p.name AS project_name, c.name AS customer_name FROM quotes q LEFT JOIN projects p ON p.id=q.project_id LEFT JOIN customers c ON c.id=q.customer_id WHERE q.id=?').get(id));
+    return mapQuote(db.prepare(`SELECT q.*, p.name AS project_name, c.name AS customer_name, dv.version_no AS design_version_no, d.id AS design_id, d.name AS design_name
+      FROM quotes q LEFT JOIN projects p ON p.id=q.project_id LEFT JOIN customers c ON c.id=q.customer_id
+      LEFT JOIN design_versions dv ON dv.id=q.design_version_id LEFT JOIN designs d ON d.id=dv.design_id
+      WHERE q.id=?`).get(id));
+  }
+
+  // 设计方案详情的「关联报价单」：按引用的版本回溯，兼容版本被清理后用 payload.designId 兜底。
+  function designQuotes(designId) {
+    const id = String(designId || '');
+    if (!id) return [];
+    const rows = db.prepare(`SELECT q.*, p.name AS project_name, c.name AS customer_name, dv.version_no AS design_version_no, d.id AS design_id, d.name AS design_name
+      FROM quotes q LEFT JOIN projects p ON p.id=q.project_id LEFT JOIN customers c ON c.id=q.customer_id
+      LEFT JOIN design_versions dv ON dv.id=q.design_version_id LEFT JOIN designs d ON d.id=dv.design_id
+      WHERE d.id=? OR (CASE WHEN json_valid(q.payload_json) THEN json_extract(q.payload_json,'$.designId') END)=?
+      ORDER BY q.updated_at DESC`).all(id, id);
+    return rows.map(mapQuote);
   }
 
   function quoteCsv(id) {
     const quote = getQuote(id);
     if (!quote) return null;
-    const lines = [['序号','产品编码','产品名称','分类','空间','来源','数量','单位','单价','折扣','金额','状态','规则/原因']];
-    quote.payload.items.forEach((item, index) => lines.push([index + 1,item.sku,item.name,item.category,item.space,item.source,item.quantity,item.unit,item.unitPrice,item.discount,item.amount,item.status,item.reason || item.ruleCode]));
-    quote.payload.fees.forEach(fee => lines.push(['','','费用',fee.name,'','服务费',1,'项',fee.amount,100,fee.amount,'已计入',fee.mode === 'percent' ? `${fee.value}%` : '固定金额']));
+    const lines = [['序号','产品编码','产品名称','一级分类','分类','空间','来源','数量','单位','单价','折扣','金额','状态','规则/原因']];
+    quote.payload.items.forEach((item, index) => lines.push([index + 1,item.sku,item.name,item.category1 || primaryProductCategory(item.category),item.category,item.space,item.source,item.quantity,item.unit,item.unitPrice,item.discount,item.amount,item.status,item.reason || item.ruleCode]));
+    quote.payload.fees.filter(fee => fee.enabled !== false).forEach(fee => lines.push(['','','费用','','','','服务费',1,'项',fee.amount,100,fee.amount,'已计入',fee.mode === 'percent' ? `${fee.value}%` : '固定金额']));
     lines.push(['','','合计','','','','','','','',quote.total,'','']);
     return '\uFEFF' + lines.map(row => row.map(csvCell).join(',')).join('\r\n');
   }
@@ -1004,8 +1196,8 @@ export function createBusinessStore(db, { dataDir, productStore }) {
     const logo = logoFile
       ? `<img class="logo" src="data:${logoFile.mime};base64,${fs.readFileSync(logoFile.path).toString('base64')}" alt="${store.name} LOGO">`
       : '';
-    const rows = quote.payload.items.map((item, index) => `<tr><td>${index + 1}</td><td>${item.sku}</td><td>${item.name}</td><td>${item.category}</td><td>${item.quantity}${item.unit}</td><td>¥${item.unitPrice.toFixed(2)}</td><td>¥${item.amount.toFixed(2)}</td></tr>`).join('');
-    return `<!doctype html><html lang="zh-CN"><meta charset="utf-8"><title>${quote.name}</title><style>body{font-family:Arial,'Microsoft YaHei';padding:32px;color:#29231f}h1{font-size:24px}header{display:flex;justify-content:space-between;border-bottom:2px solid #9f5a36;padding-bottom:16px}.brand{display:flex;align-items:center;gap:14px}.logo{width:52px;height:52px;object-fit:contain;border-radius:6px;border:1px solid #e2d9ca;background:#fff}table{width:100%;border-collapse:collapse;margin-top:24px}th,td{border:1px solid #d8d0c8;padding:8px;text-align:left}th{background:#f3eee9}.total{text-align:right;font-size:20px;margin-top:24px}.note{color:#735f54;margin-top:20px}@media print{button{display:none}}</style><header><div class="brand">${logo}<div><h1>${quote.name}</h1><p>${store.name} · ${store.phone}</p></div></div><div>报价版本 V${quote.versionNo}<br>有效期至 ${quote.payload.validUntil}</div></header><table><thead><tr><th>#</th><th>编码</th><th>产品</th><th>分类</th><th>数量</th><th>单价</th><th>金额</th></tr></thead><tbody>${rows}</tbody></table><div class="total">报价合计：<b>¥${quote.total.toFixed(2)}</b></div><p class="note">${quote.payload.explanation}</p><button onclick="window.print()">打印 / 另存为 PDF</button></html>`;
+    const rows = quote.payload.items.map((item, index) => `<tr><td>${index + 1}</td><td>${item.sku}</td><td>${item.name}</td><td>${item.category}</td><td>${item.space || UNASSIGNED_SPACE}</td><td>${item.quantity}${item.unit}</td><td>¥${item.unitPrice.toFixed(2)}</td><td>¥${item.amount.toFixed(2)}</td></tr>`).join('');
+    return `<!doctype html><html lang="zh-CN"><meta charset="utf-8"><title>${quote.name}</title><style>body{font-family:Arial,'Microsoft YaHei';padding:32px;color:#29231f}h1{font-size:24px}header{display:flex;justify-content:space-between;border-bottom:2px solid #9f5a36;padding-bottom:16px}.brand{display:flex;align-items:center;gap:14px}.logo{width:52px;height:52px;object-fit:contain;border-radius:6px;border:1px solid #e2d9ca;background:#fff}table{width:100%;border-collapse:collapse;margin-top:24px}th,td{border:1px solid #d8d0c8;padding:8px;text-align:left}th{background:#f3eee9}.total{text-align:right;font-size:20px;margin-top:24px}.note{color:#735f54;margin-top:20px}@media print{button{display:none}}</style><header><div class="brand">${logo}<div><h1>${quote.name}</h1><p>${store.name} · ${store.phone}</p></div></div><div>报价版本 V${quote.versionNo}<br>有效期至 ${quote.payload.validUntil}</div></header><table><thead><tr><th>#</th><th>编码</th><th>产品</th><th>分类</th><th>空间</th><th>数量</th><th>单价</th><th>金额</th></tr></thead><tbody>${rows}</tbody></table><div class="total">报价合计：<b>¥${quote.total.toFixed(2)}</b></div><p class="note">${quote.payload.explanation}</p><button onclick="window.print()">打印 / 另存为 PDF</button></html>`;
   }
 
   function deliveryPackages(projectId = '') {
@@ -1030,6 +1222,19 @@ export function createBusinessStore(db, { dataDir, productStore }) {
   function getAttachmentFile(id) {
     const row = db.prepare('SELECT * FROM project_attachments WHERE id=?').get(id);
     return row && fs.existsSync(row.local_path) ? row : null;
+  }
+
+  // 分类是人工判断的业务标签（户型图 / 现场照片 / 合同…），上传后允许改，避免 mime 猜测写死。
+  const ATTACHMENT_CATEGORIES = ['户型图', '现场照片', '合同资料', '报价资料', '其他'];
+  function updateAttachment(id, input = {}) {
+    const row = db.prepare('SELECT * FROM project_attachments WHERE id=?').get(id);
+    if (!row) throw new Error('附件不存在');
+    const category = String(input.category ?? row.category ?? '').trim();
+    if (category && !ATTACHMENT_CATEGORIES.includes(category)) throw new Error(`附件分类不支持：${category}`);
+    const name = String(input.name ?? row.name ?? '').trim() || row.name;
+    db.prepare('UPDATE project_attachments SET category=?,name=? WHERE id=?').run(category || row.category, name, id);
+    audit('project.attachment.update', 'project', row.project_id, `更新附件「${name}」分类为 ${category || row.category}`, { attachmentId: id, category: category || row.category });
+    return attachments(row.project_id).find(item => item.id === id);
   }
 
   function createDelivery(projectId, input = {}) {
@@ -1257,12 +1462,19 @@ export function createBusinessStore(db, { dataDir, productStore }) {
     return db.prepare('SELECT * FROM floorplan_assists WHERE project_id=? ORDER BY created_at DESC').all(projectId).map(row => ({
       id:row.id, projectId:row.project_id, fileName:row.file_name, imageWidth:row.image_width, imageHeight:row.image_height,
       method:row.method, confidence:number(row.confidence), rooms:parse(row.rooms_json, []), warnings:parse(row.warnings_json, []), status:row.status, createdAt:row.created_at,
+      attachmentId: row.attachment_id || '',
+      imageUrl: row.attachment_id ? `/api/admin/project-attachments/${row.attachment_id}` : '',
     }));
   }
 
   function assistFloorplan(projectId, input = {}) {
     const project = db.prepare('SELECT * FROM projects WHERE id=?').get(projectId);
     if (!project) throw new Error('项目不存在');
+    // 优先使用项目里已上传的户型图附件：候选必须能对应到一张真实图片，复核才有意义。
+    const attachmentId = String(input.attachmentId || '');
+    const attachment = attachmentId ? db.prepare('SELECT * FROM project_attachments WHERE id=? AND project_id=?').get(attachmentId, projectId) : null;
+    if (attachmentId && !attachment) throw new Error('户型图附件不存在或不属于当前项目');
+    if (attachment && !String(attachment.mime || '').startsWith('image/')) throw new Error('只有图片附件可以作为户型图');
     const projectPayload = parse(project.payload_json, {}), area = number(project.area), houseType = String(projectPayload.houseType || '');
     let rooms;
     if (area >= 180) rooms = ['玄关','客厅','餐厅','厨房','主卧','卧室','儿童房','老人房','书房','卫生间','卧室卫生间','过道','阳台','衣帽间','茶室'];
@@ -1271,11 +1483,11 @@ export function createBusinessStore(db, { dataDir, productStore }) {
     const width = Math.max(0, Math.round(number(input.imageWidth))), height = Math.max(0, Math.round(number(input.imageHeight)));
     const aspect = height > 0 ? width / height : 1;
     const confidence = width && height ? Math.max(.45, Math.min(.82, .62 + Math.min(Math.abs(aspect - 1), 1) * .08)) : .45;
-    const warnings = ['离线 Demo 使用尺寸、文件名和项目资料生成候选空间，不等同于训练模型识别。','墙体、门窗、比例尺和每个空间边界必须由设计师在户型工作台复核。'];
+    const warnings = ['候选空间按项目面积与房型生成，不是图像识别结果。','置信度由图片长宽比推算，仅用于排序，不代表识别准确率。','墙体、门窗、比例尺和每个空间边界必须由设计师在户型工作台人工框选校准。'];
     const id = uid('FPA'), t = now();
-    db.prepare('INSERT INTO floorplan_assists (id,project_id,file_name,image_width,image_height,method,confidence,rooms_json,warnings_json,status,created_at) VALUES (?,?,?,?,?,?,?,?,?,?,?)')
-      .run(id, projectId, String(input.fileName || '未命名户型图'), width, height, 'local_heuristic_demo', confidence, json(rooms.map((name,index) => ({ name, index:index+1, status:'待框选' }))), json(warnings), '待复核', t);
-    audit('floorplan.assist', 'project', projectId, `生成户型辅助识别候选：${rooms.length} 个空间`, { method:'local_heuristic_demo', confidence });
+    db.prepare('INSERT INTO floorplan_assists (id,project_id,attachment_id,file_name,image_width,image_height,method,confidence,rooms_json,warnings_json,status,created_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)')
+      .run(id, projectId, attachment?.id || null, String(attachment?.name || input.fileName || '未命名户型图'), width, height, 'local_heuristic_demo', confidence, json(rooms.map((name,index) => ({ name, index:index+1, status:'待框选' }))), json(warnings), '待复核', t);
+    audit('floorplan.assist', 'project', projectId, `生成户型候选：${rooms.length} 个空间（启发式 Demo）`, { method:'local_heuristic_demo', confidence, attachmentId: attachment?.id || '' });
     return floorplanAssists(projectId).find(item => item.id === id);
   }
 
@@ -1305,9 +1517,10 @@ export function createBusinessStore(db, { dataDir, productStore }) {
   return {
     capabilities, storeProfile, updateStore, saveStoreLogo, removeStoreLogo, storeLogoFile, branding, roles, saveRole, deleteRole, users, login, saveUser, deleteUser, settings, updateSettings, projectJourney, updateProjectJourney, auditLogs,
     designPage, createDesign, updateDesign, getDesign,
-    designVersions, designVersionsByDesign, getDesignVersion, latestDesign, latestDesignVersion, saveDesign, saveDesignVersion,
+    designVersions, designVersionsByDesign, getDesignVersion, latestDesign, latestDesignVersion, saveDesign, saveDesignVersion, ensureProjectDesignFor,
     quoteTemplates, saveQuoteTemplate, quotes, getQuote, saveQuote, updateQuoteAssociation, updateQuoteDraft, transitionQuote, quoteStatusHistory, copyQuote, quoteCsv, quotePrintHtml,
-    deliveryPackages, createDelivery, getDeliveryFile, getDeliveryArtifact, attachments, addAttachment, getAttachmentFile, snapshot, restoreSnapshot, audit,
+    designQuotes, designQuotePreview,
+    deliveryPackages, createDelivery, getDeliveryFile, getDeliveryArtifact, attachments, addAttachment, updateAttachment, getAttachmentFile, ATTACHMENT_CATEGORIES, snapshot, restoreSnapshot, audit,
     productAlternatives, inventory, inventoryPage, updateInventory, deleteInventory, purchaseOrders, savePurchaseOrder, deletePurchaseOrder, payments, savePayment, deletePayment, operationsSummary,
     floorplanAssists, assistFloorplan,
   };

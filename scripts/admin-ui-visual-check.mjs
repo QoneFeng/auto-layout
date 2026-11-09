@@ -172,7 +172,13 @@ try {
     return { project: projects.projects?.[0]?.id || '', product: products.products?.[0]?.id || '', design: designs.designs?.[0]?.id || '', quote: quotes.quotes?.[0]?.id || '' };
   })()`);
 
-  const routes = [...baseRoutes, ['新建报价单', '/quotes/new'], ['新建报价单-手选', '/quotes/new/manual'], ['报价模板编辑', '/quotes/templates/new']];
+  const routes = [
+    ...baseRoutes,
+    ['新建报价单', '/quotes/new'],
+    ['新建报价单-手选', '/quotes/new/manual'],
+    ['新建报价单-按设计方案', '/quotes/new/design'],
+    ['报价模板编辑', '/quotes/templates/new'],
+  ];
   if (ids.project) routes.push(['项目详情', `/projects/${ids.project}`]);
   if (ids.design) routes.push(['设计方案详情', `/designs/${ids.design}`]);
   if (ids.product) routes.push(['产品详情', `/products/${ids.product}`], ['产品编辑', `/products/${ids.product}/edit`]);

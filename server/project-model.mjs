@@ -288,7 +288,7 @@ function derivedDeliverables(payload, project) {
     { key: 'devices', title: '智能设备方案', description: '设备选品、数量与空间清单', status: status('solution-products', 'floorplan-furniture', ['solution', '方案', '选品'], 2), action: '继续设备选品', href: `/app/?project=${project.id}` },
     { key: 'layout', title: '智能点位方案', description: '2D/3D 布点、规则命中与待处理', status: status('solution-layout', 'solution-products', ['solution', '方案', '选品'], 2), action: '继续智能布点', href: `/app/?project=${project.id}` },
     { key: 'quote', title: '项目报价清单', description: '产品价格、服务费与方案总价', status: status('quote-confirm', 'quote-pricing', ['quote', '报价'], 3), action: '进入报价中心', href: `#/quotes?project=${project.id}` },
-    { key: 'drawings', title: '施工交底资料', description: '点位图、回路表与安装说明', status: status('delivery-drawings', 'quote-confirm', ['delivery', '施工', '交付'], payload.stages.length - 1), action: '进入方案交付', href: `#/designs?project=${project.id}` },
+    { key: 'drawings', title: '施工交底资料', description: '点位图、回路表与安装说明', status: status('delivery-drawings', 'quote-confirm', ['delivery', '施工', '交付'], payload.stages.length - 1), action: '进入方案交付', href: `#/designs?projectId=${project.id}` },
   ];
 }
 

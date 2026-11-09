@@ -865,7 +865,11 @@
   }
   function catalogProductForLegacy(key) {
     const item = DEVICES.find(device => device.productId && (device.legacyKey || device.key) === key);
-    return item ? { productId: item.productId, sku: item.sku, productName: item.productName, price: item.price, salesUnit: item.salesUnit, legacyKey: item.legacyKey || item.key, dataState: item.dataState } : null;
+    return item ? {
+      productId: item.productId, sku: item.sku, productName: item.productName,
+      brand: item.brand || '', model: item.model || '',
+      price: item.price, salesUnit: item.salesUnit, legacyKey: item.legacyKey || item.key, dataState: item.dataState,
+    } : null;
   }
 
   function distToSeg(px, py, ax, ay, bx, by) {
@@ -912,6 +916,32 @@
     return dot(0, 0, Math.max(12, m * .34));
   }
 
+  // 供底座拖拽幽灵图复用：设备/分类都按真实形态画，灯带是细线、轨道带灯头、点光源是圆点。
+  window.__smartHomeDeviceSVG = function (type, w, d, color) {
+    try { return deviceSVG(type, w, d, color); } catch { return ''; }
+  };
+
+  // 给底座「属性」面板用：返回当前选中设备的分类、产品与布点信息。
+  // 只读快照，面板不负责改产品；改产品请回产品库。
+  window.__smartHomeProduct = function (f) {
+    if (!f || typeof f.type !== 'string' || !f.type.startsWith('dev:')) return null;
+    const key = f.type.slice(4);
+    const def = DEVICE_BY_KEY[key] || {};
+    const smart = f.smart || {};
+    return {
+      key,
+      category1: def.category1 || '',
+      category2: def.category2 || f.name || key,
+      visual: def.visual || '',
+      ruleCode: smart.ruleCode || 'MANUAL',
+      status: smart.status || '',
+      locked: Boolean(smart.locked),
+      product: smart.product || null,
+      productSize: smart.productSize || null,
+      quote: smart.quote || null,
+    };
+  };
+
   const originalFurnSVG = window.furnSVG;
   function smartFurnSVG(type, w, d, color) {
     if (typeof type === 'string' && type.startsWith('dev:')) return deviceSVG(type, w, d, color);
@@ -944,6 +974,483 @@
   }
   rebuildSmartCatalog();
 
+  /* ---------------- 产品库驱动的 45 分类设备库 ---------------- */
+  // 分类卡、布置关注、型号都来自只读接口 /api/admin/placement/*；
+  // 接口不可用时回退到打包时的 55 键平铺目录，界面上会明确提示。
+  const PLACEMENT = {
+    loaded: false, error: '', categories: [], byId: new Map(), detail: new Map(),
+  };
+  const CATEGORY_STATE_LABEL = { ready: '就绪', rule_only: '仅规则', product_only: '仅有产品', empty: '待补齐' };
+  const CATEGORY_CONCERNS = [
+    ['position', '位置与距离'],
+    ['height', '安装高度与基准'],
+    ['quantity', '数量 · 形态 · 计量'],
+    ['host', '宿主与几何'],
+    ['productParams', '产品参数'],
+    ['avoid', '避让与安装依赖'],
+    ['exceptions', '异常与缺资料'],
+  ];
+  // mode: browse = 只阅读规则；place = 拖拽落点后选型并放置
+  let categoryDialog = {
+    id: '', tab: 'focus', mode: 'browse', form: '',
+    search: '', brand: '', page: 1, modelData: null,
+  };
+  const MODEL_PAGE_SIZE = 12;
+  let modelSeq = 0;
+  let modelTimer = 0;
+  let categoryDropPoint = null;
+  let suppressCategoryTap = false;
+
+  function formLabel(key, family) {
+    const tail = key.includes('·') ? key.split('·').pop().trim() : key;
+    if (tail === family || key === family || tail === key) {
+      const stripped = tail.replace(family, '').trim();
+      return stripped || tail;
+    }
+    return tail.replace(family, '').trim() || tail;
+  }
+
+  function ensureCategoryStyle() {
+    if (document.querySelector('#shCategoryStyle')) return;
+    const el = document.createElement('style');
+    el.id = 'shCategoryStyle';
+    el.textContent = `
+.sh-lib-group{font-size:11px;font-weight:600;color:#8798a9;letter-spacing:.04em;margin:10px 2px 6px}
+.sh-lib-cat{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:0 8px 8px}
+.sh-cat{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-height:82px;padding:9px 6px 8px;border:1px solid #e4eaf1;border-radius:6px;background:#fff;text-align:center;cursor:grab;transition:border-color .15s,box-shadow .15s}
+.sh-cat:active{cursor:grabbing}
+.sh-cat.dragging{opacity:.5}
+.sh-cat-ico{display:flex;align-items:center;justify-content:center;width:40px;height:34px}
+.sh-cat-ico svg{width:100%;height:100%;overflow:visible}
+.sh-cat-noicon{display:flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:#f4f8fc;color:#8798a9;font-size:12px}
+.sh-cat-empty .sh-cat-name{color:#8798a9}
+.sh-cat:hover,.sh-cat:focus-visible{border-color:#bfd9f3;box-shadow:0 2px 8px rgba(20,40,70,.06);outline:none}
+.sh-cat-top{display:flex;align-items:center;gap:6px}
+.sh-cat-top .dev{font-family:"SF Mono",Consolas,monospace;font-size:10.5px;color:#8798a9;letter-spacing:.03em}
+.sh-cat .st{margin-left:auto;font-size:10px;line-height:16px;padding:0 6px;border-radius:999px;white-space:nowrap}
+.st.ready{background:#e7f6f0;color:#12886a}
+.st.rule_only{background:#fdf3e3;color:#b26a00}
+.st.product_only{background:#e8f2fe;color:#0b5cad}
+.st.empty{background:#eff3f7;color:#6b7a88}
+.sh-cat-name{font-size:12px;font-weight:500;line-height:1.35;color:#16202b}
+.sh-cat-meta{display:flex;gap:8px;font-size:11px;color:#8798a9;font-variant-numeric:tabular-nums}
+.sh-cat-forms{display:flex;flex-wrap:wrap;gap:4px}
+.sh-form{font-size:11px;line-height:20px;height:20px;padding:0 7px;border:1px solid #e4eaf1;border-radius:4px;background:#f4f8fc;color:#526579;cursor:pointer}
+.sh-form:hover{border-color:#1687f5;background:#e8f2fe;color:#0b5cad}
+.sh-form.on{border-color:#1687f5;background:#1687f5;color:#fff}
+.sh-form-row{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:10px;padding-bottom:9px;border-bottom:1px dashed #edf1f6}
+.sh-form-row .lbl{font-size:11px;color:#8798a9;margin-right:2px}
+.sh-place-hint{margin:-2px 0 8px;padding:6px 9px;border-radius:4px;background:#e8f2fe;color:#0b5cad;font-size:11.5px}
+.sh-fallback{margin:8px;padding:8px 10px;border:1px solid #f3d9b3;border-radius:6px;background:#fdf3e3;color:#b26a00;font-size:11.5px;line-height:1.6}
+.sh-cat-pick{font-size:11px;line-height:18px;padding:0 6px;border-radius:4px;background:#e8f2fe;color:#0b5cad;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sh-cat-warn{font-size:11px;color:#b26a00}
+.sh-mask{position:fixed;inset:0;background:rgba(16,30,48,.36);z-index:120;display:none;align-items:center;justify-content:center;padding:18px}
+.sh-mask.on{display:flex}
+.sh-dialog{position:relative;width:min(720px,100%);max-height:calc(100dvh - 36px);background:#fff;border-radius:8px;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 24px 60px rgba(16,30,48,.28)}
+.sh-dialog header{flex:0 0 auto;padding:14px 16px 0;border-bottom:1px solid #e4eaf1}
+.sh-dialog .head-top{display:flex;align-items:center;gap:8px}
+.sh-dialog .head-top .dev{font-family:"SF Mono",Consolas,monospace;font-size:11px;color:#8798a9}
+.sh-dialog h3{margin:5px 0 4px;font-size:18px;font-weight:600;color:#16202b;display:flex;align-items:center;gap:8px}
+.sh-dialog .chain{font-size:11px;color:#8798a9;display:flex;gap:5px;flex-wrap:wrap;margin-bottom:8px}
+.sh-dialog .chain code{background:#f4f8fc;border:1px solid #e4eaf1;border-radius:3px;padding:1px 5px;font-size:10.5px;color:#526579}
+.sh-dialog .x{margin-left:auto;width:26px;height:26px;border-radius:5px;border:0;background:transparent;color:#8798a9;font-size:18px;line-height:1;cursor:pointer}
+.sh-dialog .x:hover{background:#f4f8fc;color:#16202b}
+.sh-tabs{display:flex;gap:2px;padding:0 16px;border-bottom:1px solid #e4eaf1;overflow-x:auto;scrollbar-width:none}
+.sh-tabs::-webkit-scrollbar{display:none}
+.sh-tabs button{height:34px;padding:0 10px;border:0;border-bottom:2px solid transparent;background:none;font-size:13px;color:#526579;white-space:nowrap;cursor:pointer}
+.sh-tabs button.on{color:#0b5cad;border-bottom-color:#1687f5;font-weight:500}
+.sh-body{flex:1 1 auto;min-height:0;padding:14px 16px;overflow-y:auto;overscroll-behavior:contain;user-select:text}
+.sh-body-fixed{overflow:hidden;display:flex;flex-direction:column;padding-bottom:4px}
+.sh-model-panel{display:flex;flex-direction:column;min-height:0;flex:1 1 auto}
+.sh-model-panel .sh-filter{flex:0 0 auto}
+.sh-model-panel #shModelList{flex:1 1 auto;min-height:0;overflow-y:auto;padding-right:2px}
+.sh-model-panel #shModelList::-webkit-scrollbar{width:8px}
+.sh-model-panel #shModelList::-webkit-scrollbar-thumb{background:#d2dfea;border-radius:6px;border:2px solid #fff}
+.sh-model-panel .sh-pager{flex:0 0 auto;border-top:1px solid #edf1f6;margin-top:6px}
+.sh-body::-webkit-scrollbar{width:10px}
+.sh-body::-webkit-scrollbar-thumb{background:#d2dfea;border-radius:6px;border:3px solid #fff}
+.sh-concern{padding:9px 0;border-bottom:1px dashed #edf1f6}
+.sh-concern:last-child{border-bottom:0}
+.sh-concern b{display:flex;align-items:center;gap:6px;font-size:12px;color:#16202b}
+.sh-concern p{margin:3px 0 0;font-size:12.5px;color:#526579;line-height:1.62}
+.sh-concern .tag{font-size:10px;font-weight:500;line-height:16px;padding:0 6px;border-radius:3px;background:#e8f2fe;color:#0b5cad}
+.sh-note{margin-top:10px;padding-top:9px;border-top:1px solid #e4eaf1;font-size:11px;color:#8798a9;line-height:1.6}
+.sh-model{display:flex;align-items:flex-start;gap:8px;padding:9px 10px;border:1px solid #e4eaf1;border-radius:6px;margin-bottom:7px;cursor:default}
+.sh-model-pick{cursor:pointer}
+.sh-model:hover{border-color:#c6ddf3;background:#fbfdff}
+.sh-model .radio{display:none}
+.sh-model .body{flex:1;min-width:0}
+.sh-model .l1{display:flex;align-items:baseline;gap:8px}
+.sh-model .nm{flex:1;min-width:0;font-size:13px;font-weight:600;color:#16202b;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sh-model .pr{font-size:13px;color:#16202b;font-variant-numeric:tabular-nums}
+.sh-model .l2{font-size:11px;color:#8798a9;margin-top:3px;display:flex;gap:8px;flex-wrap:wrap;overflow:hidden}
+.sh-spaces{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.sh-filter{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.sh-filter input{flex:1 1 180px;min-width:140px;height:30px;border:1px solid #e4eaf1;border-radius:4px;background:#fff;padding:0 9px;font-size:12px;color:#16202b}
+.sh-filter input:focus{outline:none;border-color:#1687f5;box-shadow:0 0 0 2px rgba(22,135,245,.14)}
+.sh-filter select{height:30px;min-width:118px;border:1px solid #e4eaf1;border-radius:4px;background:#fff;padding:0 6px;font-size:12px;color:#526579}
+.sh-filter .sh-count{font-size:11.5px;color:#8798a9;font-variant-numeric:tabular-nums;white-space:nowrap}
+.sh-pager{display:flex;align-items:center;justify-content:center;gap:10px;padding:10px 0 2px;font-size:12px;color:#8798a9}
+.sh-pager button{height:26px;padding:0 10px;border:1px solid #e4eaf1;border-radius:4px;background:#fff;color:#526579;font-size:12px;cursor:pointer}
+.sh-pager button:hover:not(:disabled){border-color:#1687f5;color:#0b5cad}
+.sh-pager button:disabled{opacity:.45;cursor:not-allowed}
+.sh-space{border:1px solid #e4eaf1;border-radius:4px;padding:6px 8px;font-size:11px;color:#8798a9}
+.sh-space b{display:block;font-size:12px;font-weight:500;color:#526579}
+.sh-space.on{background:#f5faff;border-color:#c6ddf3}
+.sh-space.on b{color:#0b5cad}
+.sh-dialog footer{flex:0 0 auto;padding:10px 16px;border-top:1px solid #e4eaf1;display:flex;align-items:center;gap:6px;flex-wrap:wrap;background:#fbfdff}
+.sh-dialog footer .lbl{font-size:11px;color:#8798a9;margin-right:2px}
+`;
+    document.head.appendChild(el);
+  }
+
+  function categoryCardHtml(category) {
+    const forms = (category.legacyKeys || []).filter(key => DEVICE_BY_KEY[key]);
+    // 卡片只表达“产品类型”。同一类型在不同空间会用不同型号，型号必须在落点弹窗里按台选择，
+    // 因此这里不显示规则数、空间数、型号数，也不保存任何“已选型号”。
+    const primary = forms[0];
+    const def = primary ? DEVICE_BY_KEY[primary] : null;
+    const w = def?.size?.width || 80, d = def?.size?.depth || 80;
+    const pad = Math.max(w, d) * .08;
+    const icon = def
+      ? `<svg viewBox="${-w / 2 - pad} ${-d / 2 - pad} ${w + 2 * pad} ${d + 2 * pad}" aria-hidden="true">${deviceSVG('dev:' + primary, w, d, CATEGORY_COLORS[category.category1] || '#1687f5')}</svg>`
+      : `<span class="sh-cat-noicon" aria-hidden="true">${escapeHtml((category.label || '?').slice(0, 1))}</span>`;
+    const empty = category.placeableCount === 0 ? ' sh-cat-empty' : '';
+    return `<button type="button" class="sh-cat${empty}" data-cat="${escapeHtml(category.id)}" title="${escapeHtml(category.label)}${category.placeableCount === 0 ? '（暂无可布点在售型号）' : ''}">
+      <span class="sh-cat-ico">${icon}</span>
+      <span class="sh-cat-name">${escapeHtml(category.label)}</span>
+    </button>`;
+  }
+
+  function renderCategoryLibrary() {
+    ensureCategoryStyle();
+    if (!PLACEMENT.loaded) {
+      libHost.innerHTML = `<div class="hint">正在读取产品库与布置规则…${PLACEMENT.error ? `<br><span style="color:#b26a00">${escapeHtml(PLACEMENT.error)}</span>` : ''}</div>`;
+      return;
+    }
+    const groups = [];
+    for (const cat of CATEGORY_ORDER) {
+      const list = PLACEMENT.categories.filter(item => item.category1 === cat);
+      if (list.length) groups.push([cat, list]);
+    }
+    libHost.innerHTML = groups.map(([cat, list]) => `<h4 class="sh-lib-group">${escapeHtml(cat)} · ${list.length} 类</h4>
+      <div class="sh-lib-cat">${list.map(categoryCardHtml).join('')}</div>`).join('') +
+      '<div class="hint">卡片＝产品分类。点形态按钮直接加入画布；点卡片查看布置关注、选型号、看空间覆盖。</div>';
+    libHost.querySelectorAll('.sh-cat').forEach(el => {
+      el.addEventListener('click', () => {
+        // 拖拽落点已弹出选型弹窗时，pointerup 后的 click 不再重复打开
+        if (suppressCategoryTap) { suppressCategoryTap = false; return; }
+        openCategoryDialog(el.dataset.cat, 'browse');
+      });
+      // 拖分类卡到户型：拖拽由底座的 libDrag 机制接管，落点回调 __smartHomeDropCategory
+      el.addEventListener('pointerdown', event => {
+        if (event.button) return;
+        const category = PLACEMENT.byId.get(el.dataset.cat);
+        if (!category) return;
+        // 幽灵图用该分类主形态的真实尺寸与形态（灯带细线、轨道+灯头、点光源圆点），不做统一方块。
+        const primaryKey = (category.legacyKeys || []).find(key => DEVICE_BY_KEY[key]) || '';
+        const primaryDef = primaryKey ? DEVICE_BY_KEY[primaryKey] : null;
+        libDrag = {
+          el, id: event.pointerId, sx: event.clientX, sy: event.clientY,
+          it: [
+            'cat:' + category.id, category.label,
+            primaryDef?.size?.width || 600, primaryDef?.size?.depth || 600,
+            CATEGORY_COLORS[category.category1] || '#1687f5',
+            primaryKey ? 'dev:' + primaryKey : '',
+          ],
+          ghost: null, skipTap: true,
+        };
+      });
+    });
+  }
+
+  function closeCategoryDialog() {
+    const mask = document.querySelector('#shCatMask');
+    if (mask) mask.classList.remove('on');
+    categoryDropPoint = null;
+  }
+
+  function renderCategoryDialog() {
+    const mask = document.querySelector('#shCatMask');
+    const category = PLACEMENT.byId.get(categoryDialog.id);
+    if (!mask || !category) return;
+    const detail = PLACEMENT.detail.get(categoryDialog.id) || null;
+    const tabs = [
+      ['focus', '布置关注'],
+      ['models', `型号 ${category.placeableCount}`],
+      ['spaces', `空间 ${category.spaces.length}`],
+    ];
+    const head = `<header>
+      <div class="head-top"><span class="dev">${escapeHtml(category.dev || '未映射')}</span>
+        <span class="st ${escapeHtml(category.state)}">${escapeHtml(CATEGORY_STATE_LABEL[category.state] || category.state)}</span>
+        <button class="x" type="button" data-close="1" aria-label="关闭">×</button></div>
+      <h3>${escapeHtml(category.label)}${category.quantityMode ? `<span class="tag">${escapeHtml(category.quantityMode.label)}</span>` : ''}</h3>
+      <div class="chain"><code>${escapeHtml(category.id)}</code>→<code>${escapeHtml(category.dev || '未映射')}</code>→<code>${escapeHtml(category.itemCode || '')}</code>→<code>${category.ruleCount} 条规则 · ${category.spaces.length} 空间${category.derivedRuleCount ? ` · 其中宿主派生 ${category.derivedRuleCount}` : ''}</code></div>
+      ${categoryDialog.mode === 'place' ? '<div class="sh-place-hint">已指定落点：选择型号后直接放入户型</div>' : ''}
+      <div class="tabs sh-tabs">${tabs.map(([key, label]) => `<button type="button" data-tab="${key}" class="${categoryDialog.tab === key ? 'on' : ''}">${label}</button>`).join('')}</div>
+    </header>`;
+    let body = '';
+    if (categoryDialog.tab === 'focus') {
+      if (!detail) body = '<div class="sh-concern"><p>正在读取布置关注…</p></div>';
+      else if (!detail.profile) body = '<div class="sh-concern"><b>该分类没有独立的规则段落</b><p>位置由宿主设备派生，不能单独落在房间中心。</p></div>';
+      else body = CATEGORY_CONCERNS.map(([key, label]) => `<div class="sh-concern"><b>${label}${key === 'quantity' && detail.quantityMode ? `<span class="tag">${escapeHtml(detail.quantityMode.label)}</span>` : ''}</b><p>${escapeHtml(detail.profile.fields[key] || '—')}</p></div>`).join('') +
+        `<div class="sh-note">专项输出：${escapeHtml(detail.profile.fields.outputs || '—')}<br>公共算法：${escapeHtml(detail.profile.fields.algorithms || '—')}</div>`;
+    } else if (categoryDialog.tab === 'models') {
+      const forms = (category.legacyKeys || []).filter(key => DEVICE_BY_KEY[key]);
+      const formRow = categoryDialog.mode === 'place' && forms.length > 1
+        ? `<div class="sh-form-row"><span class="lbl">形态</span>${forms.map(key => `<button type="button" class="sh-form ${categoryDialog.form === key ? 'on' : ''}" data-pick-form="${escapeHtml(key)}">${escapeHtml(formLabel(key, category.family))}</button>`).join('')}</div>`
+        : '';
+      body = formRow + (category.placeableCount === 0
+        ? `<div class="sh-concern"><b>暂无可布点在售型号</b><p>型号总数 ${category.productTotal}，可布点 0。加入画布会回退到设计目录默认参数。</p></div>`
+        : modelPanelHtml(category));
+    } else {
+      const byCode = new Map((category.spaces || []).map(space => [space.code, space]));
+      body = `<div class="sh-spaces">${SPACES.map(space => {
+        const hit = byCode.get(space.code);
+        return `<div class="sh-space ${hit ? 'on' : ''}"><b>${escapeHtml(space.name)}</b>${hit ? `${hit.count} 条规则` : '无专属规则'}</div>`;
+      }).join('')}</div><div class="sh-note">无专属规则不等于不能放：缺几何或宿主时会输出待处理原因，不会用房间中心伪装落位。</div>`;
+    }
+    const forms = (category.legacyKeys || []).filter(key => DEVICE_BY_KEY[key]);
+    const footer = categoryDialog.mode === 'place'
+      ? `<footer><span class="lbl">${forms.length ? '放入户型' : ''}</span>${forms.length
+          ? forms.map(key => `<button type="button" class="sh-form ${categoryDialog.form === key ? 'on' : ''}" data-add="${escapeHtml(key)}">${escapeHtml(formLabel(key, category.family))}</button>`).join('')
+          : '<span class="sh-cat-warn">该分类没有独立设备形态，无法加入画布</span>'}</footer>`
+      : `<footer><span class="lbl">加入画布</span>${forms.length
+          ? forms.map(key => `<button type="button" class="sh-form" data-add="${escapeHtml(key)}">${escapeHtml(formLabel(key, category.family))}</button>`).join('')
+          : '<span class="sh-cat-warn">该分类没有独立设备形态</span>'}</footer>`;
+    const bodyClass = categoryDialog.tab === 'models' && category.placeableCount > 0 ? 'sh-body sh-body-fixed' : 'sh-body';
+    mask.innerHTML = `<div class="sh-dialog" role="dialog" aria-modal="true" aria-label="${escapeHtml(category.label)} 布置说明">${head}<div class="${bodyClass}">${body}</div>${footer}</div>`;
+    mask.querySelector('[data-close]').onclick = closeCategoryDialog;
+    mask.querySelectorAll('[data-tab]').forEach(button => button.onclick = () => {
+      categoryDialog.tab = button.dataset.tab; renderCategoryDialog();
+    });
+    if (categoryDialog.tab === 'models' && category.placeableCount > 0) wireModelPanel(category);
+    mask.querySelectorAll('[data-pick-form]').forEach(button => button.onclick = event => {
+      event.stopPropagation();
+      categoryDialog.form = button.dataset.pickForm;
+      renderCategoryDialog();
+    });
+    mask.querySelectorAll('[data-add]').forEach(button => button.onclick = () => {
+      const key = button.dataset.add;
+      if (categoryDialog.mode === 'place') {
+        categoryDialog.form = key;
+        placeFromDialog(category, null);
+        return;
+      }
+      addDevice(key); closeCategoryDialog(); closeDrawers();
+    });
+  }
+
+  /** 拖拽落点后放置：用当前形态 + 选中型号在落点加一台设备，再收起弹窗。 */
+  function modelRowHtml(model, canPick) {
+    return `<div class="sh-model${canPick ? ' sh-model-pick' : ''}"${canPick ? ` role="button" tabindex="0" data-model="${escapeHtml(model.id)}"` : ''}>
+      <div class="body">
+        <div class="l1"><span class="nm">${escapeHtml(model.name)}</span>
+          <span class="pr">${model.price == null ? '—' : '¥' + Number(model.price).toLocaleString('zh-CN')}<small>/${escapeHtml(model.salesUnit || '件')}</small></span></div>
+        <div class="l2"><span>${escapeHtml(model.sku)}</span>${model.brand ? `<span>${escapeHtml(model.brand)}</span>` : ''}${model.model ? `<span>${escapeHtml(model.model)}</span>` : ''}${model.mountMethods?.length ? `<span>${model.mountMethods.map(escapeHtml).join('/')}</span>` : ''}</div>
+      </div>
+    </div>`;
+  }
+
+  function brandOptionsHtml(){
+    const brands = categoryDialog.modelData?.brands || [];
+    const current = categoryDialog.brand || '';
+    return `<option value="">全部品牌</option>` +
+      brands.map(b => `<option value="${escapeHtml(b)}"${b === current ? ' selected' : ''}>${escapeHtml(b)}</option>`).join('');
+  }
+
+  function pagerHtml(){
+    const d = categoryDialog.modelData;
+    if (!d || d.totalPages <= 1) return '';
+    return `<button type="button" data-page="${d.page - 1}"${d.page <= 1 ? ' disabled' : ''}>上一页</button>
+      <span>第 ${d.page} / ${d.totalPages} 页</span>
+      <button type="button" data-page="${d.page + 1}"${d.page >= d.totalPages ? ' disabled' : ''}>下一页</button>`;
+  }
+
+  function modelPanelHtml(category){
+    const d = categoryDialog.modelData;
+    const canPick = categoryDialog.mode === 'place';
+    const items = d ? d.models : (category.models || []);
+    const total = d ? d.total : (category.placeableCount || 0);
+    return `<div class="sh-model-panel"><div class="sh-filter">
+        <input id="shModelSearch" type="search" placeholder="搜索名称 / 编码 / 型号" value="${escapeHtml(categoryDialog.search || '')}" autocomplete="off" />
+        <select id="shModelBrand" aria-label="按品牌筛选">${brandOptionsHtml()}</select>
+        <span class="sh-count" id="shModelCount">共 ${total} 个型号</span>
+      </div>
+      <div id="shModelList">${items.length
+        ? items.map(model => modelRowHtml(model, canPick)).join('')
+        : '<div class="sh-concern"><b>没有匹配的型号</b><p>换一个关键词或品牌试试。</p></div>'}</div>
+      <div id="shModelPager" class="sh-pager">${pagerHtml()}</div></div>`;
+  }
+
+  function paintModels(category){
+    const list = document.querySelector('#shModelList');
+    if (!list) return;
+    const d = categoryDialog.modelData;
+    const canPick = categoryDialog.mode === 'place';
+    list.innerHTML = d && d.models.length
+      ? d.models.map(model => modelRowHtml(model, canPick)).join('')
+      : `<div class="sh-concern"><b>没有匹配的型号</b><p>换一个关键词或品牌试试。</p></div>`;
+    const pager = document.querySelector('#shModelPager');
+    if (pager) pager.innerHTML = pagerHtml();
+    const count = document.querySelector('#shModelCount');
+    if (count) count.textContent = `共 ${d ? d.total : 0} 个型号`;
+    const brand = document.querySelector('#shModelBrand');
+    if (brand && d?.brands) brand.innerHTML = brandOptionsHtml();
+    wireModelRows(category);
+    wirePager(category);
+  }
+
+  async function loadModels(category){
+    const seq = ++modelSeq;
+    const params = new URLSearchParams({
+      categoryId: category.id,
+      page: String(categoryDialog.page || 1),
+      pageSize: String(MODEL_PAGE_SIZE),
+    });
+    if (categoryDialog.search) params.set('search', categoryDialog.search);
+    if (categoryDialog.brand) params.set('brand', categoryDialog.brand);
+    try {
+      const response = await fetch('/api/admin/placement/models?' + params.toString());
+      if (!response.ok) throw new Error('接口返回 ' + response.status);
+      const data = await response.json();
+      if (seq !== modelSeq || categoryDialog.id !== category.id) return;
+      categoryDialog.modelData = data;
+      paintModels(category);
+    } catch (error) {
+      if (seq !== modelSeq) return;
+      categoryDialog.modelData = { models: [], total: 0, page: 1, pageSize: MODEL_PAGE_SIZE, totalPages: 1, brands: [] };
+      paintModels(category);
+      console.warn('[smart-home] placement models unavailable', error);
+    }
+  }
+
+  function wireModelRows(category){
+    document.querySelectorAll('#shModelList [data-model]').forEach(row => {
+      const choose = () => {
+        const model = (categoryDialog.modelData?.models || []).find(item => item.id === row.dataset.model);
+        if (!model) return;
+        if (categoryDialog.mode === 'place') placeFromDialog(category, model);
+      };
+      row.onclick = choose;
+      row.onkeydown = event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); choose(); } };
+    });
+  }
+
+  function wirePager(category){
+    document.querySelectorAll('#shModelPager [data-page]').forEach(button => {
+      button.onclick = () => {
+        const next = Number(button.dataset.page);
+        if (!Number.isFinite(next) || next < 1) return;
+        categoryDialog.page = next;
+        loadModels(category);
+      };
+    });
+  }
+
+  function wireModelPanel(category){
+    wireModelRows(category);
+    wirePager(category);
+    const search = document.querySelector('#shModelSearch');
+    if (search) {
+      search.oninput = () => {
+        categoryDialog.search = search.value.trim();
+        clearTimeout(modelTimer);
+        modelTimer = setTimeout(() => { categoryDialog.page = 1; loadModels(category); }, 260);
+      };
+      // 输入框重绘后保持焦点与光标位置
+      if (categoryDialog.search) {
+        search.focus();
+        search.setSelectionRange(search.value.length, search.value.length);
+      }
+    }
+    const brand = document.querySelector('#shModelBrand');
+    if (brand) brand.onchange = () => {
+      categoryDialog.brand = brand.value;
+      categoryDialog.page = 1;
+      loadModels(category);
+    };
+    if (!categoryDialog.modelData) loadModels(category);
+  }
+
+  /** 拖拽落点后放置：用当前形态 + 选中型号在落点加一台设备，再收起弹窗。 */
+  function placeFromDialog(category, model) {
+    const key = categoryDialog.form || (category.legacyKeys || []).find(item => DEVICE_BY_KEY[item]) || '';
+    if (!key || !DEVICE_BY_KEY[key]) { toastSafe('该分类没有可加入画布的形态'); return; }
+    const point = categoryDropPoint;
+    closeCategoryDialog();
+    // 型号只作用于刚放下的这一台，不写任何分类级状态。
+    if (point) addDevice(key, point.x, point.y, model); else addDevice(key, undefined, undefined, model);
+    closeDrawers();
+    renderCategoryLibrary();
+  }
+  window.__smartHomeDropCategory = function (id, x, y) {
+    if (!PLACEMENT.byId.get(id)) return;
+    suppressCategoryTap = true;
+    categoryDropPoint = { x, y };
+    openCategoryDialog(id, 'place');
+  };
+
+  async function openCategoryDialog(id, mode = 'browse') {
+    const category = PLACEMENT.byId.get(id);
+    if (!category) return;
+    ensureCategoryStyle();
+    const forms = (category.legacyKeys || []).filter(key => DEVICE_BY_KEY[key]);
+    const keepTab = categoryDialog.id === id && categoryDialog.mode === mode;
+    categoryDialog = {
+      id, mode,
+      tab: keepTab ? categoryDialog.tab : (mode === 'place' ? 'models' : 'focus'),
+      form: (keepTab && categoryDialog.form) || forms[0] || '',
+      search: keepTab ? categoryDialog.search : '',
+      brand: keepTab ? categoryDialog.brand : '',
+      page: 1,
+      modelData: null,
+    };
+    modelSeq += 1; // 作废上一分类还在飞的请求
+    let mask = document.querySelector('#shCatMask');
+    if (!mask) {
+      mask = document.createElement('div');
+      mask.id = 'shCatMask';
+      mask.className = 'sh-mask';
+      mask.addEventListener('click', event => { if (event.target === mask) closeCategoryDialog(); });
+      document.body.appendChild(mask);
+    }
+    mask.classList.add('on');
+    renderCategoryDialog();
+    if (!PLACEMENT.detail.has(id)) {
+      try {
+        const response = await fetch('/api/admin/placement/categories/' + encodeURIComponent(id));
+        if (response.ok) PLACEMENT.detail.set(id, await response.json());
+      } catch (error) { /* 详情不可用时仍展示目录里的概要 */ }
+      if (categoryDialog.id === id) renderCategoryDialog();
+    }
+  }
+
+  async function loadPlacementCatalog() {
+    try {
+      const response = await fetch('/api/admin/placement/catalog');
+      if (!response.ok) throw new Error('接口返回 ' + response.status);
+      const payload = await response.json();
+      if (!payload?.categories?.length) throw new Error('布置目录为空');
+      PLACEMENT.categories = payload.categories;
+      PLACEMENT.byId = new Map(payload.categories.map(item => [item.id, item]));
+      PLACEMENT.loaded = true;
+      PLACEMENT.error = '';
+      if (libTabs.querySelector('[data-lib="smart"]')?.classList.contains('on')) buildSmartLib();
+      console.info(`[smart-home] placement catalog: ${payload.categories.length} 类，` +
+        `${payload.summary.byState.ready || 0} 就绪 / ${payload.summary.byState.rule_only || 0} 仅规则 / ` +
+        `${payload.summary.byState.product_only || 0} 仅有产品 / ${payload.summary.byState.empty || 0} 待补齐`);
+    } catch (error) {
+      PLACEMENT.loaded = false;
+      const reason = String(error?.message || error);
+      PLACEMENT.error = /401/.test(reason)
+        ? '接口返回 401（后台会话已失效）。设计工作台可只读访问布置目录，重启服务后生效。'
+        : '布置目录不可用：' + reason;
+      console.warn('[smart-home] placement catalog unavailable; falling back', error);
+      if (libTabs.querySelector('[data-lib="smart"]')?.classList.contains('on')) buildSmartLib();
+    }
+  }
+
   const libHost = document.querySelector('#lib');
   const libTabs = document.createElement('div');
   libTabs.className = 'lib-tabs';
@@ -951,7 +1458,14 @@
   libHost.parentNode.insertBefore(libTabs, libHost);
 
   function buildSmartLib() {
-    libHost.innerHTML = SMART_LIB.map((c, ci) => `<h4>${escapeHtml(c.cat)}</h4><div class="lib-grid">${c.items.map((it, ii) => {
+    // 产品库可用时按 45 个产品分类渲染；接口不可用才回退到打包的平铺目录。
+    if (PLACEMENT.loaded) { renderCategoryLibrary(); return; }
+    // 还没拿到目录也没报错：先显示读取中，避免启动时闪一下 55 个平铺旧目录
+    if (!PLACEMENT.error) { renderCategoryLibrary(); return; }
+    const fallbackBanner = PLACEMENT.error
+      ? `<div class="sh-fallback">产品库接口未连接，正在使用打包目录。${escapeHtml(PLACEMENT.error)}</div>`
+      : '';
+    libHost.innerHTML = fallbackBanner + SMART_LIB.map((c, ci) => `<h4>${escapeHtml(c.cat)}</h4><div class="lib-grid">${c.items.map((it, ii) => {
       const [type, name, w, d, col] = it;
       const pad = Math.max(w, d) * .08;
       const legacy = DEVICE_BY_KEY[String(type).slice(4)];
@@ -977,7 +1491,8 @@
     else buildLib();
   }
   libTabs.querySelectorAll('button').forEach(b => b.onclick = () => setLibTab(b.dataset.lib));
-  setLibTab('soft');
+  // 设计系统默认进「智能设备」：设备库是主入口，软装家具退到第二个页签。
+  setLibTab('smart');
   fetch('/api/admin/design-catalog').then(async response => response.ok ? response.json() : null).then(payload => {
     if (!payload?.devices?.length) return;
     DEVICES = payload.devices;
@@ -986,6 +1501,9 @@
     if (libTabs.querySelector('[data-lib="smart"]')?.classList.contains('on')) buildSmartLib();
     console.info(`[smart-home] loaded local product catalog: ${payload.mappedCount}/${payload.devices.length} mapped, ${payload.productCount} placeable products`);
   }).catch(error => console.warn('[smart-home] local product catalog unavailable; using bundled fallback', error));
+
+  // 布置目录与设备目录并行拉取：前者决定“卡片与规则”，后者决定“设备几何与默认选型”。
+  loadPlacementCatalog();
 
   /* ---------------- device panel ---------------- */
   const style = document.createElement('style');
@@ -1026,7 +1544,8 @@ aside.right>#panel{flex:1;min-height:0;overflow:auto}
 #smart-panel .sh-actions button{flex:1;height:30px;border:1px solid #c9bda9;background:#fff;border-radius:7px;cursor:pointer;font-size:11px}
 #smart-panel .sh-actions button.primary{background:#b9823e;border-color:#b9823e;color:#fff;font-weight:700}
 #smart-panel .sh-status{margin-top:8px;color:#8a8175;font-size:10.5px;line-height:1.5}
-#smart-panel .sh-rule{position:sticky;top:0;z-index:3;margin:0 0 8px;padding:8px;background:#fff;border:1px solid #e4d9c8;border-radius:7px;font-size:10.5px;line-height:1.55;box-shadow:0 4px 10px rgba(70,55,35,.10);max-height:42vh;display:flex;flex-direction:column;overflow:hidden}
+/* 规则卡跟随内容滚动，不做 sticky：面板本身可滚动，悬浮层会挡住下面的设备清单。 */
+#smart-panel .sh-rule{position:static;margin:0 0 8px;padding:8px;background:#fff;border:1px solid #e4d9c8;border-radius:7px;font-size:10.5px;line-height:1.55;display:flex;flex-direction:column}
 #smart-panel .sh-rule b{color:#a0642b}
 #smart-panel .sh-rule ol{margin:5px 0 0 16px;padding:0}
 #smart-panel .sh-rule li{margin:2px 0}
@@ -1190,6 +1709,10 @@ body.zone-drawing #plan{cursor:crosshair}
   margin:0 0 10px;padding:10px;background:var(--surface);border:1px solid var(--line);
   border-radius:var(--radius);box-shadow:var(--shadow-card);font-size:10.5px;color:var(--text-body);
 }
+/* 规则卡是 sticky 的：收起时只留标题/对账/状态一行，避免浮层挡住下面的设备清单；
+   展开后才显示完整说明，并在卡内滚动（约 38vh），不撑破面板。 */
+#smart-panel .sh-rule-body{display:none}
+#smart-panel .sh-rule.expanded .sh-rule-body{display:block;max-height:38vh;overflow-y:auto;min-height:0}
 #smart-panel .sh-rule b{color:var(--accent)}
 #smart-panel .sh-rule-head button{
   border:1px solid var(--line);background:var(--surface-subtle);border-radius:var(--radius-sm);
@@ -1732,19 +2255,41 @@ body.zone-drawing #plan{cursor:crosshair}
     return ROOMS.find(r => r.id === 'living') || ROOMS[0];
   }
 
-  function addDevice(key, x, y) {
+  function addDevice(key, x, y, model) {
     const def = DEVICE_BY_KEY[key];
     if (!def) return;
     const room = currentRoom();
     const c = typeof x === 'number' && typeof y === 'number' ? [x, y] : centroid(room.poly);
     const targetRoom = typeof x === 'number' ? roomOf(x, y) : room;
+    // 平面图符号沿用设备目录的示意尺寸（def.size）：产品实物尺寸只有 55~90mm，
+    // 直接拿来画会缩成一个小点，看不出灯型。型号的实物尺寸单独记在 smart.productSize，
+    // 供后续“尺寸参与候选点/碰撞”使用，不改变图纸符号。
     const item = F('dev:' + key, def.category2, c[0], c[1], def.size.width, def.size.depth, 0, colorFor(key));
+    const pw = Number(model?.size?.width || model?.size?.diameter || 0);
+    const pd = Number(model?.size?.depth || model?.size?.diameter || 0);
+    const productSize = pw > 0 && pd > 0
+      ? { width: pw, depth: pd, height: Number(model?.size?.height || 0) || 0 }
+      : null;
+    const product = model
+      ? {
+        productId: model.id, sku: model.sku, productName: model.name,
+        brand: model.brand || '', model: model.model || '',
+        price: model.price, salesUnit: model.salesUnit, legacyKey: key, dataState: 'store_product',
+      }
+      : def.productId
+        ? {
+          productId: def.productId, sku: def.sku, productName: def.productName,
+          brand: def.brand || '', model: def.model || '',
+          price: def.price, salesUnit: def.salesUnit, legacyKey: def.legacyKey || def.key, dataState: def.dataState,
+        }
+        : null;
     item.smart = {
       ruleCode: 'MANUAL', roomId: targetRoom.id, status: 'manual', locked: false,
       source: 'manual',
-      quote: { lineId: quoteLineIdFor(targetRoom.id, def.productId || key, 'manual'), inputQuantity: 1, unit: def.salesUnit || '件', placementForm: def.visual },
+      quote: { lineId: quoteLineIdFor(targetRoom.id, product?.productId || key, 'manual'), inputQuantity: 1, unit: product?.salesUnit || def.salesUnit || '件', placementForm: def.visual },
       binding: { kind: 'room', name: targetRoom.name },
-      product: def.productId ? { productId: def.productId, sku: def.sku, productName: def.productName, price: def.price, salesUnit: def.salesUnit, legacyKey: def.legacyKey || def.key, dataState: def.dataState } : null,
+      product,
+      ...(productSize ? { productSize } : {}),
     };
     item.smart.lighting = lightingMetaFor(item);
     state.furniture.push(item);
@@ -2086,7 +2631,11 @@ body.zone-drawing #plan{cursor:crosshair}
       quote: f.smart?.quote || { lineId: quoteLineIdFor(room.id, key, 'manual'), inputQuantity: 1, unit: '件', placementForm: def.visual },
       binding: f.smart?.binding,
       lighting: f.smart?.lighting || lightingMetaFor(f),
-      product: f.smart?.product || (def.productId ? { productId: def.productId, sku: def.sku, productName: def.productName, price: def.price, salesUnit: def.salesUnit, legacyKey: def.legacyKey || def.key, dataState: def.dataState } : null),
+      product: f.smart?.product || (def.productId ? {
+        productId: def.productId, sku: def.sku, productName: def.productName,
+        brand: def.brand || '', model: def.model || '',
+        price: def.price, salesUnit: def.salesUnit, legacyKey: def.legacyKey || def.key, dataState: def.dataState,
+      } : null),
       trace: f.smart?.trace || { anchor: 'roomCenter', candidateRank: 0, fallbackStep: 0, confidence: 1, notes: ['MANUAL_PLACEMENT'], warnings: [] },
     };
   }

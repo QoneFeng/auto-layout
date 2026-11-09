@@ -368,7 +368,7 @@ export function decodeBackupPackage(input = '') {
 }
 
 export function previewRestore(payload = {}) {
-  if (payload.schema !== 'qone-smart-home-offline-backup-v2' || !payload.raw) throw new Error('不是可识别的 Qone 门店系统备份');
+  if (payload.schema !== 'qone-smart-home-offline-backup-v2' || !payload.raw) throw new Error('不是可识别的 QoneHome·智能家电门店管理系统备份');
   return {
     valid: true,
     exportedAt: payload.exportedAt,

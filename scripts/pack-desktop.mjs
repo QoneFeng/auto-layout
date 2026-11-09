@@ -77,16 +77,26 @@ step('修正 asar 布局', process.execPath, [
   path.join(buildDir, 'win-unpacked'),
 ]);
 
-// 3.5 可选：解包完成后立刻把应用铺到目标目录。
+// 3.5 解包完成后立刻把应用铺到目标目录（绿色包来源）。
 // 必须放在生成安装包之前——electron-builder 的 --prepackaged 阶段会把源目录搬空，
 // 而本机的终端安全软件还会持续清除解包目录里的文件，时间窗很窄。
+//
+// 显式 --deploy / --zip 时按用户给的位置做「绿色部署」（写桌面/开始菜单快捷方式 + 卸载注册项）；
+// 没给时只在本次构建的临时目录里铺一份 QoneHome 供打 zip，
+// 避免在 release/ 交付目录里留一个 700MB+ 的应用目录。
+const zipArg = getArg('--zip', '');
 const deployTarget = getArg('--deploy', '');
-if (deployTarget) {
+const explicitTarget = deployTarget || zipArg;
+const stagingTarget = path.join(buildDir, 'QoneHome');
+if (explicitTarget) {
   step('部署到目标目录', process.execPath, [
     path.join(root, 'scripts', 'deploy-green.mjs'),
     '--source', path.join(buildDir, 'win-unpacked'),
-    '--target', deployTarget,
+    '--target', explicitTarget,
   ]);
+} else {
+  fs.cpSync(path.join(buildDir, 'win-unpacked'), stagingTarget, { recursive: true });
+  console.log(`绿色包暂存：${path.relative(root, stagingTarget)}`);
 }
 
 // 4. 用已解包的内容生成安装包。
@@ -112,9 +122,9 @@ for (const name of artifacts) {
   console.log(`产物：${path.relative(root, to)}（${(fs.statSync(to).size / 1024 / 1024).toFixed(0)} MB）`);
 }
 
-// 5.5 可选：打 ZIP 绿色包（解压双击即用，不经过安装器）
-const zipTarget = getArg('--zip', '');
-if (zipTarget) {
+// 5.5 打 ZIP 绿色包（解压双击即用，不经过安装器）：默认开启，--no-zip 关闭
+const zipTarget = explicitTarget || stagingTarget;
+if (zipTarget && !args.includes('--no-zip')) {
   const dirName = path.basename(path.resolve(zipTarget));
   const parentDir = path.dirname(path.resolve(zipTarget));
   const appVersion = JSON.parse(fs.readFileSync(path.join(root, 'package.json'), 'utf8')).version;

@@ -7,7 +7,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="theme-color" content="#eef6fd">
-<title>户型装修设计</title>
+<title>户型布点 · QoneHome·智能家电门店管理系统</title>
 <style>
 :root{
   /* 与管理后台 Admin UI V1.0 共用一套令牌 */
@@ -49,8 +49,8 @@ a.btn{text-decoration:none;color:inherit;display:inline-flex;align-items:center}
 .btn.chip.on{background:var(--accent-soft);color:var(--accent)}
 #langSel .btn{min-width:32px;font-weight:500}
 .btn.primary{background:var(--accent);color:#fff}
-.btn.primary:hover{background:#9f5530}
-.btn.danger{color:#b3372a}
+.btn.primary:hover{background:var(--accent-hover)}
+.btn.danger{color:var(--danger)}
 .spacer{flex:1}
 aside{background:var(--panel);overflow:auto;border-right:1px solid var(--line)}
 aside.right{border-right:0;border-left:1px solid var(--line)}
@@ -119,7 +119,7 @@ thead td{color:var(--muted);font-size:11px;border-bottom:1px solid var(--line)}
 kbd{font:11px ui-monospace,Menlo,monospace;background:var(--surface-subtle);border:1px solid var(--line);border-bottom-width:2px;border-radius:4px;padding:0 5px;color:var(--ink)}
 .big{font-size:22px;font-weight:600;font-variant-numeric:tabular-nums}
 .stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:6px}
-.stats div{background:#faf6ef;border-radius:8px;padding:8px}
+.stats div{background:var(--surface-subtle);border-radius:6px;padding:8px}
 .stats small{display:block;color:var(--muted);font-size:11px}
 #toast{position:fixed;left:50%;bottom:110px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;
   padding:8px 16px;border-radius:8px;opacity:0;transition:.25s;pointer-events:none;z-index:10}
@@ -243,7 +243,7 @@ header{padding:8px 16px;gap:6px;background:var(--surface);border-bottom:1px soli
 .tb-row{display:flex;align-items:center;gap:6px;width:100%;min-width:0}
 .tb-main{flex-wrap:wrap;row-gap:6px}
 .tb-options{flex-wrap:wrap;row-gap:6px;padding-top:6px;border-top:1px solid var(--line-soft)}
-.tb-main .spacer{flex:1;min-width:10px}
+.tb-main .spacer,.tb-options .spacer{flex:1;min-width:10px}
 .brand{flex:0 0 auto;margin-right:6px}
 .brand b{font-size:14px;font-weight:600;color:var(--text-strong);letter-spacing:.2px}
 .brand span{font-size:11px;color:var(--muted)}
@@ -256,6 +256,7 @@ header{padding:8px 16px;gap:6px;background:var(--surface);border-bottom:1px soli
 .btn:hover{background:var(--surface-hover);color:var(--accent)}
 .btn.on{background:var(--accent-soft);color:var(--accent);font-weight:600;box-shadow:inset 0 0 0 1px #d8ecff}
 .btn.chip{border-radius:var(--radius-sm)}
+.btn .chip-ico{width:14px;height:14px;margin-right:5px;flex:0 0 auto}
 .btn.chip.on{background:var(--accent-soft);color:var(--accent);box-shadow:inset 0 0 0 1px #d8ecff}
 .btn.primary{background:var(--accent);border:1px solid var(--accent);color:#fff}
 .btn.primary:hover{background:var(--accent-hover);border-color:var(--accent-hover);color:#fff}
@@ -312,6 +313,24 @@ footer b{color:var(--text-body);font-weight:600}
 #panel section{padding:14px 16px;border-bottom:1px solid var(--line)}
 #panel h3{font-size:13px;font-weight:600;color:var(--text-strong)}
 #panel h3 small{font-size:11px;color:var(--muted)}
+/* 设备属性面板 · 产品详情 */
+#devProductSection .devp{margin-top:10px}
+.devp-hero{display:flex;gap:10px;align-items:flex-start;padding:8px;border:1px solid var(--line);border-radius:6px;background:#fbfdff}
+.devp-hero img{width:86px;height:86px;flex:none;object-fit:contain;border-radius:4px;background:#fff;border:1px solid var(--line)}
+.devp-noimg{width:86px;height:86px;flex:none;display:flex;align-items:center;justify-content:center;border-radius:4px;background:#f4f8fc;border:1px dashed var(--line);color:var(--muted);font-size:11px}
+.devp-hero-meta{min-width:0;display:flex;flex-direction:column;gap:3px}
+.devp-hero-meta b{font-size:12.5px;line-height:1.4;color:var(--text-strong);word-break:break-word}
+.devp-hero-meta span{font-size:11px;color:var(--muted)}
+.devp-hero-meta em{font-style:normal;font-size:13px;font-weight:600;color:#b45309;margin-top:2px}
+.devp-hero-meta em i{font-style:normal;font-size:10.5px;font-weight:400;color:var(--muted)}
+.devp-block{margin-top:10px}
+.devp-block h4{margin:0 0 4px;font-size:11px;font-weight:600;color:var(--muted);letter-spacing:.04em}
+#devProductSection .devp table{width:100%;border-collapse:collapse;font-size:11.5px}
+#devProductSection .devp table td{padding:3px 0;vertical-align:top;line-height:1.5;border-bottom:1px dashed #eef2f7}
+#devProductSection .devp table tr:last-child td{border-bottom:0}
+#devProductSection .devp table td:first-child{width:82px;flex:none;padding-right:8px;color:var(--muted);white-space:nowrap}
+#devProductSection .devp table td:last-child{color:var(--text);word-break:break-word}
+.devp-desc{margin-top:10px;padding-top:8px;border-top:1px solid var(--line);font-size:11.5px;line-height:1.6;color:var(--muted)}
 table{font-size:12px}
 td{color:var(--text-body)}
 thead td{font-size:11px;font-weight:600;color:var(--muted);border-bottom:1px solid var(--line)}
@@ -410,27 +429,10 @@ thead td{font-size:11px;font-weight:600;color:var(--muted);border-bottom:1px sol
         <button class="btn" id="redo" title="重做 (Ctrl+Shift+Z)" data-en-title="Redo (Ctrl+Shift+Z)" data-en="Redo">重做</button>
         <button class="btn danger" id="clearAll" title="清空所有家具家电（可撤销）" data-en-title="Remove all furniture and appliances (undoable)" data-en="Clear">清空布置</button>
       </div>
-      <div class="spacer"></div>
-      <div class="grp" id="langSel" role="group" aria-label="Language / 语言">
-        <button class="btn chip" data-lang="zh" title="简体中文">简</button>
-        <button class="btn chip" data-lang="zht" title="繁體中文">繁</button>
-        <button class="btn chip" data-lang="en" title="English">EN</button>
-      </div>
-      <a class="btn" id="projectHome" href="/admin/#/projects" style="display:none;text-decoration:none">返回项目</a>
-      <button class="btn" id="saveProjectVersion" style="display:none">保存项目版本</button>
-      <button class="btn" id="fullscreen" title="全屏 (Shift+F)">⛶ 全屏</button>
-      <details class="menu"><summary class="btn" data-en="File ▾">文件 ▾</summary>
-        <div class="menu-pop">
-          <button class="btn" id="exportPng" data-en="Export image">导出图片</button>
-          <button class="btn" id="exportJson" data-en="Export plan JSON">导出方案 JSON</button>
-          <button class="btn" id="importJson" data-en="Import plan">导入方案</button>
-          <button class="btn danger" id="reset" data-en="Reset to default">重置为默认方案</button>
-        </div></details>
-      <input type="file" id="fileIn" accept=".json,application/json" hidden>
     </div>
     <div class="tb-row tb-options">
       <div class="grp" id="paneBtns">
-        <a class="btn chip" id="homeLink" href="/" data-en="⌂ Home" title="返回首页">⌂ 首页</a>
+        <a class="btn chip" id="homeLink" href="/" title="返回首页"><svg class="chip-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 7.4 8 3l5.5 4.4V13a.6.6 0 0 1-.6.6H3.1a.6.6 0 0 1-.6-.6z"/><path d="M6.4 13.6V9.8h3.2v3.8"/></svg><span data-en="Home">首页</span></a>
         <button class="btn chip" id="tgLib" data-en="◧ Library">◧ 家具库</button>
         <button class="btn chip" id="tgPanel" data-en="Properties ◨">属性 ◨</button>
       </div>
@@ -453,6 +455,23 @@ thead td{font-size:11px;font-weight:600;color:var(--muted);border-bottom:1px sol
         <button class="btn chip" data-t="night" data-en="Night">夜景</button>
       </div>
       <div class="grp only3d"><label class="range"><span data-en="Sun">日照</span> <input type="range" id="sun" min="7" max="18" step=".25" value="10" style="width:84px"><span id="sunT">10:00</span></label></div>
+      <div class="spacer"></div>
+      <div class="grp" id="langSel" role="group" aria-label="Language / 语言">
+        <button class="btn chip" data-lang="zh" title="简体中文">简</button>
+        <button class="btn chip" data-lang="zht" title="繁體中文">繁</button>
+        <button class="btn chip" data-lang="en" title="English">EN</button>
+      </div>
+      <a class="btn" id="projectHome" href="/admin/#/projects" style="display:none;text-decoration:none">返回项目</a>
+      <button class="btn" id="saveProjectVersion" style="display:none">保存项目版本</button>
+      <button class="btn" id="fullscreen" title="全屏 (Shift+F)">⛶ 全屏</button>
+      <details class="menu"><summary class="btn" data-en="File ▾">文件 ▾</summary>
+        <div class="menu-pop">
+          <button class="btn" id="exportPng" data-en="Export image">导出图片</button>
+          <button class="btn" id="exportJson" data-en="Export plan JSON">导出方案 JSON</button>
+          <button class="btn" id="importJson" data-en="Import plan">导入方案</button>
+          <button class="btn danger" id="reset" data-en="Reset to default">重置为默认方案</button>
+        </div></details>
+      <input type="file" id="fileIn" accept=".json,application/json" hidden>
     </div>
   </header>
 
@@ -467,6 +486,7 @@ thead td{font-size:11px;font-weight:600;color:var(--muted);border-bottom:1px sol
   <main id="stage">
     <svg id="plan" class="tool-select" font-family="-apple-system,'PingFang SC','Microsoft YaHei',sans-serif">
       <defs id="defs"></defs>
+      <g id="gBase" pointer-events="none"></g>
       <g id="gGrid"></g>
       <g id="gRooms"></g>
       <g id="gFurn"></g>
@@ -541,7 +561,7 @@ const nm = s => LANG === 'en' ? (NAMES_EN[s] ?? s) : LANG === 'zht' ? s2t(s) : s
 // 静态文案：元素上写 data-en / data-en-title，中文原文首次切换时存进 dataset
 function applyStaticLang(){
   document.documentElement.lang = {zh:'zh-CN', zht:'zh-TW', en:'en'}[LANG];
-  document.title = tr('家具布置报价', 'Furniture Layout & Quote');
+  document.title = tr('QoneHome·智能家电门店管理系统 · 家具布置报价', 'QoneHome Smart Store · Furniture Layout');
   document.querySelectorAll('[data-en]').forEach(el => { el.dataset.zh ??= el.textContent; el.textContent = tr(el.dataset.zh, el.dataset.en); });
   document.querySelectorAll('[data-en-title]').forEach(el => { el.dataset.zhTitle ??= el.title; el.title = tr(el.dataset.zhTitle, el.dataset.enTitle); });
   document.querySelectorAll('#langSel [data-lang]').forEach(b => { const on = b.dataset.lang === LANG; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on); });
@@ -930,7 +950,7 @@ function applySpaceMode() {
   requestAnimationFrame(() => {
     const brand = document.querySelector('header .brand b');
     if (brand) brand.textContent = info.name + ' · 空间布置';
-    document.title = info.name + ' · 空间布置 Demo';
+    document.title = info.name + ' · 空间布置 · QoneHome';
     const sel = document.createElement('select');
     sel.id = 'spaceSelect';
     sel.innerHTML = [{ code: 'ALL', name: '全屋 15 空间' }, ...SPACE_TYPES]
@@ -1043,7 +1063,7 @@ function installWholeUI(totalW, totalH) {
   const info = { code: 'ALL', name: '全屋 15 空间' };
   const brand = document.querySelector('header .brand b');
   if (brand) brand.textContent = info.name + ' · 空间布置';
-  document.title = info.name + ' · 空间布置 Demo';
+  document.title = info.name + ' · 空间布置 · QoneHome';
   document.querySelector('#spaceSelect')?.remove();
   const sel = document.createElement('select');
   sel.id = 'spaceSelect';
@@ -1330,7 +1350,7 @@ function renderLabels(){
   g.innerHTML = ROOMS.filter(r => r.at).map(r => {
     const [x,y] = r.at, halo = 'stroke="#f7fafd" stroke-width="45" paint-order="stroke" stroke-linejoin="round"';
     return `<text x="${x}" y="${y}" font-size="250" font-weight="600" text-anchor="middle" fill="#243447" ${halo}>${esc(nm(state.rooms[r.id].name))}</text>
-      <text x="${x}" y="${y+260}" font-size="175" text-anchor="middle" fill="#7d7366" ${halo}>${fmt(area(r.poly))} m²</text>`;
+      <text x="${x}" y="${y+260}" font-size="175" text-anchor="middle" fill="#7b8794" ${halo}>${fmt(area(r.poly))} m²</text>`;
   }).join('');
 }
 
@@ -1610,8 +1630,148 @@ function bindRoomPanel(){
   $('#back').onclick = () => select(null);
 }
 
+// 产品详情里用到的字典（与 shared/product-schema.mjs 保持一致）
+const PRODUCT_SPEC_LABELS = {
+  watt: ['额定功率', 'W'], lumen: ['光通量', 'lm'], cctMin: ['最低色温', 'K'], cctMax: ['最高色温', 'K'],
+  beamAngle: ['光束角', '°'], cri: ['显色指数 Ra', ''], voltage: ['工作电压', 'V'],
+  wattPerMeter: ['每米功率', 'W/m'], lumenPerMeter: ['每米光通量', 'lm/m'], cutStepMm: ['最小剪切段', 'mm'],
+  maxRunMm: ['单段允许长度', 'mm'], ratedCurrent: ['额定电流', 'A'], slotWidthMm: ['接口宽度', 'mm'],
+  keyCount: ['物理按键数', '键'], outputChannels: ['输出通道', '路'], maxLoadW: ['每路最大负载', 'W'],
+  totalLoadW: ['整机最大负载', 'W'], coverageAngle: ['探测角度', '°'], coverageDistanceMm: ['探测距离', 'mm'],
+  minHeightMm: ['最低安装高度', 'mm'], maxHeightMm: ['最高安装高度', 'mm'], ports: ['端口数', '口'],
+  poeBudgetW: ['PoE 总功率', 'W'], capacity: ['接入容量', '台'], maxWeightKg: ['最大帘重', 'kg'],
+  minLengthMm: ['最短适配长度', 'mm'], maxLengthMm: ['最长适配长度', 'mm'], inputVoltage: ['输入电压', 'V'],
+  ratedPowerW: ['额定输出功率', 'W'],
+};
+const PRODUCT_DATA_STATE = { unknown: '未提供', imported: '原表导入（未复核）', simulated: '模拟', reviewed: '已复核' };
+const PRODUCT_MOUNT_SURFACE = { ceiling: '顶面', wall: '墙面', floor: '地面', cabinet: '柜体', track: '轨道', curtain_box: '窗帘盒' };
+const PRODUCT_ROUTE = { straight: '直线', L: 'L 型', U: 'U 型', rectangle: '口字', free: '自由路径' };
+const devProductCache = new Map();
+
+function devKvTable(pairs){
+  const visible = pairs.filter(([, v]) => {
+    if (v === undefined || v === null || v === '' || v === '—') return false;
+    if (Array.isArray(v)) return v.length > 0;
+    return true;
+  });
+  if (!visible.length) return '';
+  return `<table>${visible.map(([k, v]) => `<tr><td class="muted">${esc(String(k))}</td><td>${esc(String(v))}</td></tr>`).join('')}</table>`;
+}
+
+function productDetailHtml(data){
+  const p = data.product || {};
+  const cat = data.category || {};
+  const specs = p.specs || {};
+  const image = (p.assets || []).find(a => String(a.mime || '').startsWith('image/'));
+  const join = (v, dict) => (v || []).map(x => (dict ? dict[x] || x : x)).join(' / ');
+  const size = [
+    p.diameterMm ? `φ${p.diameterMm}` : (p.widthMm ? `宽 ${p.widthMm}` : ''),
+    p.depthMm ? `深 ${p.depthMm}` : '',
+    p.heightMm ? `高 ${p.heightMm}` : '',
+  ].filter(Boolean).join(' × ');
+  const specRows = Object.entries(PRODUCT_SPEC_LABELS)
+    .filter(([key]) => specs[key] !== undefined && specs[key] !== null && specs[key] !== '')
+    .map(([key, [label, unit]]) => [label, `${specs[key]}${unit ? ' ' + unit : ''}`]);
+  const price = p.salePrice ?? p.retailPrice;
+  const hero = `<div class="devp-hero">
+    ${image ? `<img src="${esc(image.url)}" alt="${esc(p.name || '')}">` : `<div class="devp-noimg">${tr('无产品图片','No image')}</div>`}
+    <div class="devp-hero-meta">
+      <b>${esc(p.name || '—')}</b>
+      <span>${esc([p.brand, p.model].filter(Boolean).join(' · ') || '—')}</span>
+      <em>${price == null ? '—' : '¥' + Number(price).toLocaleString('zh-CN')}<i> / ${esc(p.salesUnit || '件')}</i></em>
+    </div></div>`;
+  const blocks = [
+    [tr('基础','Basics'), [
+      [tr('产品编码','SKU'), p.sku],
+      [tr('产品分类','Category'), p.category],
+      [tr('系列','Series'), p.series],
+      [tr('状态','Status'), p.status],
+      [tr('标签','Tags'), join(p.tags)],
+    ]],
+    [tr('价格与计量','Price'), [
+      [tr('建议零售价','Retail'), p.retailPrice == null ? '' : '¥' + Number(p.retailPrice).toLocaleString('zh-CN')],
+      [tr('门店售价','Sale'), p.salePrice == null ? '' : '¥' + Number(p.salePrice).toLocaleString('zh-CN')],
+      [tr('销售单位','Unit'), p.salesUnit],
+      [tr('最小起购','Min order'), p.minOrderQty],
+      [tr('数量递增','Step'), p.orderStep],
+      [tr('标准段长','Std length'), p.standardLengthMm ? p.standardLengthMm + ' mm' : ''],
+    ]],
+    [tr('尺寸与安装','Size & mount'), [
+      [tr('外形尺寸','Size'), size],
+      [tr('开孔尺寸','Cutout'), p.cutoutMm ? p.cutoutMm + ' mm' : ''],
+      [tr('嵌入深度','Recess'), p.recessDepthMm ? p.recessDepthMm + ' mm' : ''],
+      [tr('安装方式','Mount'), join(p.mountMethods)],
+      [tr('安装面','Surface'), join(p.mountSurfaces, PRODUCT_MOUNT_SURFACE)],
+      [tr('路径形态','Route'), join(p.supportedRouteShapes, PRODUCT_ROUTE)],
+      [tr('安装说明','Note'), p.installationNote],
+    ]],
+    [tr('规格参数','Specs'), specRows],
+    [tr('连接与控制','Control'), [
+      [tr('协议','Protocol'), join(p.communicationProtocols)],
+      [tr('生态','Ecosystem'), join(p.ecosystems)],
+      [tr('调光','Dimming'), join(p.dimmingInterfaces)],
+      [tr('接口系列','Interface'), p.interfaceSeries],
+    ]],
+    [tr('资料状态','Data status'), [
+      [tr('几何资料','Geometry'), PRODUCT_DATA_STATE[p.geometryStatus] || p.geometryStatus],
+      [tr('参数资料','Params'), PRODUCT_DATA_STATE[p.parameterStatus] || p.parameterStatus],
+      [tr('配光资料','Photometry'), p.photometryStatus === 'synthetic' ? tr('合成 / 模拟','Synthetic') : (p.photometryStatus === 'missing' ? tr('缺真实 IES/LDT','Missing') : p.photometryStatus)],
+    ]],
+    [tr('布点','Placement'), [
+      [tr('规则编码','Rule item'), [cat.dev, cat.itemCode].filter(Boolean).join(' · ')],
+      [tr('设备键','Device keys'), (cat.legacyKeys || []).join(' / ')],
+      [tr('命中规则','Rules'), data.rules ? `${data.rules.length} ${tr('条空间规则','spatial rules')}` : ''],
+      [tr('可布点','Placeable'), p.canPlace ? tr('是','Yes') : tr('否','No')],
+    ]],
+  ];
+  const body = blocks.map(([title, pairs]) => {
+    const table = devKvTable(pairs);
+    return table ? `<div class="devp-block"><h4>${title}</h4>${table}</div>` : '';
+  }).join('');
+  return hero + body + (p.description ? `<div class="devp-desc">${esc(p.description)}</div>` : '');
+}
+
+async function hydrateDevicePanel(f){
+  const body = $('#devProductBody');
+  if (!body) return;
+  const productId = f?.smart?.product?.productId;
+  if (!productId) {
+    body.innerHTML = `<div class="muted" style="font-size:12px">${tr('该设备未关联产品库型号（示意目录）。','Not linked to a catalog product.')}</div>`;
+    return;
+  }
+  let data = devProductCache.get(productId);
+  if (data === undefined) {
+    try {
+      const response = await fetch('/api/admin/placement/products/' + encodeURIComponent(productId));
+      data = response.ok ? await response.json() : null;
+    } catch { data = null; }
+    devProductCache.set(productId, data);
+  }
+  if (!body.isConnected) return;   // 期间已切到别的对象
+  body.innerHTML = data ? productDetailHtml(data)
+    : `<div class="muted" style="font-size:12px">${tr('产品详情读取失败，请确认服务已启动。','Failed to load product.')}</div>`;
+}
+
+// 选中设备时，先展示门店产品库里的型号信息（只读）。
+function deviceInfoPanel(f){
+  const info = window.__smartHomeProduct ? window.__smartHomeProduct(f) : null;
+  if (!info) return '';
+  const p = info.product;
+  const rows = [
+    [tr('设备类型','Type'), [info.category1, info.category2].filter(Boolean).join(' / ') || '—'],
+    [tr('数据来源','Source'), p ? (p.dataState === 'store_product' ? tr('产品库','Product library') : tr('示意目录','Catalog fallback')) : '—'],
+    [tr('命中规则','Rule'), info.ruleCode || 'MANUAL'],
+  ];
+  const quick = rows.filter(([, v]) => v && v !== '—');
+  return `<section id="devProductSection"><h3>${tr('产品信息','Product')}</h3>
+    <table>${quick.map(([k, v]) => `<tr><td class="muted">${k}</td><td>${esc(String(v))}</td></tr>`).join('')}</table>
+    <div id="devProductBody" class="devp"><div class="muted" style="font-size:12px">${tr('正在读取产品详情…','Loading product…')}</div></div>
+    <div class="muted" style="margin-top:6px;font-size:11px">${tr('产品信息来自门店产品库，此处只读；更换型号请在设备库里重新选择。', 'Product data comes from the store catalog and is read-only here.')}</div></section>`;
+}
+
 function furnPanel(f){
-  return `<section><h3>${tr('家具属性','Furniture')}</h3>
+  const isDevice = typeof f.type === 'string' && f.type.startsWith('dev:');
+  return `${isDevice ? deviceInfoPanel(f) : ''}<section><h3>${tr(isDevice ? '设备属性' : '家具属性', isDevice ? 'Device' : 'Furniture')}</h3>
     <div class="form">
       <label class="full">${tr('名称','Name')}<input id="fName" value="${esc(nm(f.name))}"></label>
       <label>${tr('宽','Width')} (mm)<input type="number" id="fW" value="${f.w}" min="50" step="10"></label>
@@ -1631,6 +1791,7 @@ function furnPanel(f){
 }
 function bindFurnPanel(f){
   const upd = (fn) => mutate(() => { const g = getF(f.id); if (g) fn(g); });
+  hydrateDevicePanel(f);
   const num = (id, fn) => $(id).onchange = e => { const v = parseFloat(e.target.value); if (!isNaN(v)) upd(g => fn(g, v)); };
   $('#fName').onchange = e => upd(g => g.name = e.target.value.trim() || g.name);
   num('#fW', (g,v) => g.w = Math.max(50, Math.round(v)));
@@ -1951,7 +2112,12 @@ addEventListener('pointermove', e => {
   if (!libDrag.ghost){
     if (Math.hypot(e.clientX-libDrag.sx, e.clientY-libDrag.sy) < TAP) return;
     const g = libDrag.ghost = document.createElement('div'); g.id = 'ghost';
-    g.innerHTML = `<svg viewBox="${-it[2]/2} ${-it[3]/2} ${it[2]} ${it[3]}">${furnSVG(it[0],it[2],it[3],it[4])}</svg>`;
+    // 设备与产品分类按真实形态预览（灯带细线、轨道带灯头、点光源圆点），家具仍走 furnSVG。
+    const ghostType = it[5] || it[0];
+    const svg = String(ghostType).startsWith('dev:') && window.__smartHomeDeviceSVG
+      ? window.__smartHomeDeviceSVG(ghostType, it[2], it[3], it[4])
+      : furnSVG(ghostType, it[2], it[3], it[4]);
+    g.innerHTML = `<svg viewBox="${-it[2]/2} ${-it[3]/2} ${it[2]} ${it[3]}">${svg}</svg>`;
     document.body.appendChild(g); libDrag.el.classList.add('dragging');
   }
   // 幽灵图按落点处的比例显示真实大小（3D 中近大远小）
@@ -1968,7 +2134,8 @@ function endLibDrag(e, ok){
     d.ghost.remove();
     if (!ok) return;
     const p = dropPoint(e.clientX, e.clientY);
-    if (p && String(d.it[0]).startsWith('dev:') && window.__smartHomeDropDevice) window.__smartHomeDropDevice(String(d.it[0]).slice(4), p.x, p.y);
+    if (p && String(d.it[0]).startsWith('cat:') && window.__smartHomeDropCategory) window.__smartHomeDropCategory(String(d.it[0]).slice(4), p.x, p.y);
+    else if (p && String(d.it[0]).startsWith('dev:') && window.__smartHomeDropDevice) window.__smartHomeDropDevice(String(d.it[0]).slice(4), p.x, p.y);
     else if (p) addItem(d.it, p.x, p.y);
     else if (is3D() && e.clientX > $('#stage').getBoundingClientRect().left) toast(tr('请拖到地面上', 'Drop it on the floor'));
     return;
@@ -2129,6 +2296,32 @@ applyStaticLang(); syncFullscreen();
 buildDefs(); buildLib(); renderOpenings(); renderDims();
 $('#tip').textContent = TIPS()['2d'];
 fitView(); renderAll();
+
+/* 户型底图：只有从后台「户型图复核」带 ?bg=<附件ID> 进来时才挂载。
+   底图铺满当前 BOUNDS，仅作描图参考，比例尺与墙体仍需人工校准。 */
+const BG_ASSET_ID = QUERY.get('bg') || '';
+if (BG_ASSET_ID) {
+  const base = $('#gBase');
+  const image = document.createElementNS('http://www.w3.org/2000/svg', 'image');
+  image.setAttribute('href', `/api/admin/project-attachments/${encodeURIComponent(BG_ASSET_ID)}`);
+  image.setAttribute('x', BOUNDS.x); image.setAttribute('y', BOUNDS.y);
+  image.setAttribute('width', BOUNDS.w); image.setAttribute('height', BOUNDS.h);
+  image.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+  base.appendChild(image);
+  base.setAttribute('opacity', '.42');
+  const chip = document.createElement('button');
+  chip.className = 'btn chip on';
+  chip.textContent = '底图';
+  chip.title = '显示 / 隐藏户型底图（仅作描图参考）';
+  chip.onclick = () => {
+    const on = base.style.display === 'none';
+    base.style.display = on ? '' : 'none';
+    chip.classList.toggle('on', on);
+  };
+  $('#layers').appendChild(chip);
+  toast(tr('已载入户型底图，仅作描图参考；比例尺与墙体需人工校准', 'Floor plan underlay loaded for tracing only — calibrate scale and walls manually'));
+}
+
 const initialVersionUrl = ACTIVE_VERSION_ID
   ? `/api/admin/design-versions/${encodeURIComponent(ACTIVE_VERSION_ID)}`
   : ACTIVE_DESIGN_ID

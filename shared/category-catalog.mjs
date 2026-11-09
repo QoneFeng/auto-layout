@@ -90,3 +90,57 @@ export const RULE_CATEGORY_LABELS = {
   HVAC: '暖通',
   Accessory: '配件',
 };
+
+// 报价“品类明细”使用的一级分类顺序。与产品库分类口径保持一致：
+// 新产品的分类形如“灯光 / 筒灯”，演示/历史产品仍可能是“智能照明”这类旧名称。
+export const PRIMARY_CATEGORY_ORDER = ['灯光', '控制', '环境', '安防监控', '网络', '音乐', '遮阳', '暖通', '配件'];
+
+const LEGACY_PRIMARY_CATEGORY_MAP = {
+  智能照明: '灯光',
+  照明: '灯光',
+  灯光: '灯光',
+  灯具: '灯光',
+  智能电工: '控制',
+  电工: '控制',
+  控制: '控制',
+  面板: '控制',
+  智能感知: '环境',
+  感知: '环境',
+  传感器: '环境',
+  环境: '环境',
+  智能安防: '安防监控',
+  安防: '安防监控',
+  安防监控: '安防监控',
+  监控: '安防监控',
+  家庭网络: '网络',
+  网络: '网络',
+  智能影音: '音乐',
+  影音: '音乐',
+  音乐: '音乐',
+  音频: '音乐',
+  智能遮阳: '遮阳',
+  遮阳: '遮阳',
+  窗帘: '遮阳',
+  智能暖通: '暖通',
+  暖通: '暖通',
+  空调: '暖通',
+  配件: '配件',
+};
+
+const LEGACY_KEYS_BY_LENGTH = Object.keys(LEGACY_PRIMARY_CATEGORY_MAP).sort((a, b) => b.length - a.length);
+
+/**
+ * 把产品分类归一为报价“品类明细”的一级分类。
+ * - “灯光 / 筒灯” → 灯光
+ * - “智能照明” → 灯光
+ * - 无法识别的分类原样返回，不臆造归并。
+ */
+export function primaryProductCategory(value) {
+  const text = String(value ?? '').replace(/\s+/g, ' ').trim();
+  if (!text) return '未分类';
+  const [head, second] = text.split('/').map(part => part.trim());
+  if (second && head) return LEGACY_PRIMARY_CATEGORY_MAP[head] || head;
+  if (LEGACY_PRIMARY_CATEGORY_MAP[text]) return LEGACY_PRIMARY_CATEGORY_MAP[text];
+  const matched = LEGACY_KEYS_BY_LENGTH.find(key => text.includes(key));
+  return matched ? LEGACY_PRIMARY_CATEGORY_MAP[matched] : text;
+}

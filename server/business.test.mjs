@@ -116,7 +116,7 @@ describe('offline store business capabilities', () => {
   });
 
   it('keeps settings, users, templates and audit events in sqlite', () => {
-    store.updateSettings({ projectConfig:{ quoteValidityDays:45, currency:'CNY' } });
+    store.updateSettings({ projectConfig:{ quoteValidityDays:45 } });
     store.saveUser({ name:'新设计师', account:'new-designer', roleId:'ROLE-DESIGNER' });
     store.saveRole({ name:'方案设计师', description:'设计与交付', permissions:['project.read','design.write','delivery.read'] }, 'ROLE-DESIGNER');
     store.saveQuoteTemplate({ name:'门店自定义模板', schemeType:'全屋智能', lines:[] });
@@ -218,7 +218,26 @@ describe('offline store business capabilities', () => {
     expect(assist.method).toBe('local_heuristic_demo');
     expect(assist.status).toBe('待复核');
     expect(assist.rooms.some(room => room.name === '客厅')).toBe(true);
-    expect(assist.warnings.join('')).toContain('不等同于训练模型识别');
+    expect(assist.warnings.join('')).toContain('不是图像识别结果');
+    expect(assist.warnings.join('')).toContain('长宽比');
+    expect(assist.attachmentId).toBe('');
+  });
+
+  it('keeps attachments categorised by hand and ties floorplan candidates to a real image', () => {
+    const png = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+ip1sAAAAASUVORK5CYII=', 'base64');
+    const attachment = store.addAttachment('P1', { name:'户型图.png', mime:'image/png', size:png.length }, png, '现场照片');
+    const updated = store.updateAttachment(attachment.id, { category:'户型图' });
+    expect(updated).toMatchObject({ id: attachment.id, category:'户型图' });
+    expect(() => store.updateAttachment(attachment.id, { category:'随便写' })).toThrow('不支持');
+
+    const assist = store.assistFloorplan('P1', { attachmentId: attachment.id, imageWidth:1600, imageHeight:1000 });
+    expect(assist.attachmentId).toBe(attachment.id);
+    expect(assist.imageUrl).toBe(`/api/admin/project-attachments/${attachment.id}`);
+    expect(assist.fileName).toBe('户型图.png');
+    expect(store.floorplanAssists('P1')[0].attachmentId).toBe(attachment.id);
+
+    db.prepare("INSERT INTO projects VALUES ('P2','另一个项目',NULL,90,'待设计','全屋智能','2026-11-02T00:00:00.000Z','{}')").run();
+    expect(() => store.assistFloorplan('P2', { attachmentId: attachment.id })).toThrow('不属于当前项目');
   });
 
   it('quotes the saved design device snapshot and exposes cost and profit', () => {
@@ -237,7 +256,8 @@ describe('offline store business capabilities', () => {
   it('creates a standalone quote and assigns it to a project later', () => {
     db.prepare("INSERT INTO customers VALUES ('CUST-1','王先生')").run();
     const standalone = store.saveQuote({ mode:'快速报价', customerId:'CUST-1', area:120, name:'独立报价验收' });
-    expect(standalone).toMatchObject({ projectId:null, customerId:'CUST-1', mode:'快速报价' });
+    // 报价详情与列表现在共用同一投影：未关联项目统一为 ''（不再是裸行里的 null）。
+    expect(standalone).toMatchObject({ projectId:'', customerId:'CUST-1', mode:'快速报价' });
     expect(standalone.quoteNo).toMatch(/^QTE-/);
     expect(standalone.payload.items.length).toBeGreaterThan(0);
     const assigned = store.updateQuoteAssociation(standalone.id, { projectId:'P1' });
@@ -276,6 +296,37 @@ describe('offline store business capabilities', () => {
     expect(store.quotes('P1').filter(item => item.id === draft.id)).toHaveLength(1);
   });
 
+  it('edits quote spaces, discounts and service fees in the draft breakdown', () => {
+    const draft = store.saveQuote({ projectId:'P1', mode:'手动报价', items:[
+      { productId:'L1', name:'演示智能筒灯', category:'灯光 / 筒灯', quantity:2, unitPrice:199, discount:100, unit:'个', space:'客厅', source:'手动选品报价', status:'已匹配' },
+      { productId:'C1', name:'四键控制面板', category:'控制 / 控制面板', quantity:1, unitPrice:399, discount:100, unit:'个', space:'卧室', source:'手动选品报价', status:'已匹配' },
+    ]});
+    expect(draft.payload.spaces).toEqual(['客厅','卧室']);
+    const updated = store.updateQuoteDraft(draft.id, {
+      overallDiscount: 90,
+      spaces: ['客厅','主卧','卧室','书房'],
+      items: [
+        { ...draft.payload.items[0], space:'主卧', quantity:3, discount:80 },
+        draft.payload.items[1],
+      ],
+      fees: [
+        { key:'install', name:'安装调试费', mode:'fixed', value:500, enabled:true },
+        { key:'service', name:'门店服务费', mode:'percent', value:10, enabled:true },
+        { key:'paused', name:'暂停服务费', mode:'fixed', value:100, enabled:false },
+      ],
+    });
+    expect(updated.payload.spaces).toEqual(['客厅','主卧','卧室','书房']);
+    expect(updated.payload.items.find(item => item.productId === 'L1')).toMatchObject({ space:'主卧', quantity:3, discount:80, category1:'灯光' });
+    expect(updated.payload.items.find(item => item.productId === 'C1')).toMatchObject({ space:'卧室', category1:'控制' });
+    expect(updated.subtotal).toBe(876.6);
+    expect(updated.feeTotal).toBeCloseTo(587.66, 2);
+    expect(updated.payload.fees.find(fee => fee.key === 'paused')).toMatchObject({ enabled:false, amount:0 });
+    expect(updated.discount).toBe(90);
+    expect(updated.total).toBeCloseTo(1317.83, 2);
+    expect(store.quoteCsv(draft.id)).not.toContain('暂停服务费');
+    expect(store.copyQuote(draft.id).payload.spaces).toEqual(['客厅','主卧','卧室','书房']);
+  });
+
   it('runs the quote state machine with conflict protection and audit history', () => {
     const quote = store.saveQuote({ projectId:'P1', mode:'快速报价' });
     expect(() => store.transitionQuote(quote.id, { action:'submit', expectedStatus:'草稿', _permissions:['quote.read'] })).toThrow('权限');
@@ -305,5 +356,60 @@ describe('offline store business capabilities', () => {
     const artifact = store.getDeliveryArtifact(delivery.id, 'smart-points');
     expect(artifact.name).toContain('智能点位');
     expect(artifact.content).toContain('KT-DL-01');
+  });
+
+  it('closes the design → quote loop for a standalone design without a project', () => {
+    db.prepare("INSERT INTO customers VALUES ('CUST-2','李女士')").run();
+    const design = store.createDesign({ name:'李女士 · 独立方案', customerId:'CUST-2' });
+    expect(design.projectId).toBe('');
+    expect(() => store.designQuotePreview({ designId: design.id })).toThrow('还没有保存设计版本');
+
+    const version = store.saveDesignVersion(design.id, { snapshot: { furniture: [
+      { id:'dev1', type:'dev:筒灯', cx:100, cy:100, smart:{ status:'placed', source:'manual', roomId:'living', ruleCode:'KT-DL-01', product:{ productId:'L1', sku:'LIGHT-1', productName:'演示智能筒灯', legacyKey:'筒灯' }, quote:{ inputQuantity:3 } } },
+      { id:'dev2', type:'dev:控制面板', cx:120, cy:100, smart:{ status:'pending', source:'rule', roomId:'living', ruleCode:'KT-PN-01', product:{ productId:'C1', sku:'CTRL-1', productName:'四键控制面板', legacyKey:'控制面板' }, quote:{ inputQuantity:1 } } },
+    ] } });
+
+    const preview = store.designQuotePreview({ designId: design.id });
+    expect(preview.design).toMatchObject({ id: design.id, projectId:'', customerName:'李女士' });
+    expect(preview.version).toMatchObject({ id: version.id, versionNo:1 });
+    expect(preview.summary).toMatchObject({ lines:2, quantity:4, pendingLines:0, pendingPoints:1 });
+    expect(preview.subtotal).toBe(199 * 3 + 399);
+
+    const quote = store.saveQuote({ designId: design.id, pricingSource:'design', mode:'智能报价' });
+    expect(quote.projectId).toBe('');
+    expect(quote.customerId).toBe('CUST-2');
+    expect(quote.designVersionId).toBe(version.id);
+    expect(quote.payload).toMatchObject({ pricingBasis:'design_snapshot', designId: design.id, designVersionNo:1 });
+    expect(quote.payload.items).toHaveLength(preview.items.length);
+    expect(quote.subtotal).toBe(preview.subtotal);
+    expect(quote.total).toBeGreaterThanOrEqual(quote.subtotal);
+    expect(quote.name).toContain('独立方案');
+
+    // 历史数据补齐：已存在的草稿报价可以事后补挂设计方案版本
+    const draft = store.saveQuote({ mode:'手动报价', customerId:'CUST-2', items:[{ name:'手工行', quantity:1, unitPrice:100, discount:100 }] });
+    expect(draft.payload.designId).toBe('');
+    const linked = store.updateQuoteAssociation(draft.id, { designVersionId: version.id });
+    expect(linked.designVersionId).toBe(version.id);
+    expect(linked.designId).toBe(design.id);
+    expect(linked.payload.designVersionNo).toBe(1);
+    expect(store.designQuotes(design.id).map(item => item.id).sort()).toEqual([draft.id, quote.id].sort());
+  });
+
+  it('reuses the project design instead of creating duplicates', () => {
+    const first = store.ensureProjectDesignFor('P1');
+    const second = store.ensureProjectDesignFor('P1');
+    expect(second.id).toBe(first.id);
+    const version = store.saveDesign('P1', { snapshot: { furniture: [{ id:'dev1', type:'dev:筒灯', smart:{ status:'placed', roomId:'living', product:{ productId:'L1' }, quote:{ inputQuantity:1 } } }] } });
+    const quote = store.saveQuote({ projectId:'P1', mode:'智能报价', designVersionId: version.id });
+    expect(quote.designId).toBe(first.id);
+    expect(store.quotes('P1').find(item => item.id === quote.id)).toMatchObject({ designId: first.id, designVersionNo:1 });
+  });
+
+  it('refuses to bind a design version that belongs to another project', () => {
+    db.prepare("INSERT INTO projects VALUES ('P2','另一个项目',NULL,90,'待设计','全屋智能','2026-11-02T00:00:00.000Z','{}')").run();
+    const version = store.saveDesign('P1', { snapshot: { furniture: [{ id:'dev1', type:'dev:筒灯', smart:{ status:'placed', roomId:'living', product:{ productId:'L1' }, quote:{ inputQuantity:1 } } }] } });
+    expect(() => store.saveQuote({ projectId:'P2', designVersionId: version.id, mode:'智能报价' })).toThrow('属于其它项目');
+    const quote = store.saveQuote({ projectId:'P2', mode:'快速报价' });
+    expect(() => store.updateQuoteAssociation(quote.id, { designVersionId: version.id })).toThrow('属于其它项目');
   });
 });

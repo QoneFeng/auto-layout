@@ -19,9 +19,14 @@ type Design = {
   status: string; ruleVersion: string; latestVersionNo: number; versionCount: number;
   summary: DesignSummary; createdAt: string; updatedAt: string; versions?: DesignVersion[];
 };
+type DesignQuote = {
+  id: string; quoteNo: string; name: string; mode: string; status: string;
+  designVersionId: string; designVersionNo?: number; projectId: string; projectName: string;
+  total: number; createdAt: string; updatedAt: string;
+};
 
 const props = defineProps<{ path: string; projects: Project[]; customers: Customer[] }>();
-const emit = defineEmits<{ navigate: [path: string]; changed: []; notice: [message: string] }>();
+const emit = defineEmits<{ navigate: [path: string]; changed: []; notice: [message: string]; pageTitle: [payload: { title: string; path: string }] }>();
 
 const designs = ref<Design[]>([]);
 const total = ref(0);
@@ -34,6 +39,8 @@ const projectFilter = ref('');
 const loading = ref(false);
 const detailLoading = ref(false);
 const detail = ref<Design | null>(null);
+const detailQuotes = ref<DesignQuote[]>([]);
+const quotesLoading = ref(false);
 const saving = ref(false);
 const formError = ref('');
 const showForm = ref(false);
@@ -54,6 +61,7 @@ const projectOptions = computed(() => [{ label: '不关联项目', value: '' }, 
 const customerOptions = computed(() => [{ label: '不关联客户', value: '' }, ...props.customers.map(item => ({ label: `${item.name}${item.phone ? ` · ${item.phone}` : ''}`, value: item.id }))]);
 const dateTime = (value: string) => value ? new Date(value).toLocaleString('zh-CN') : '—';
 const fullDate = (value: string) => value ? new Date(value).toLocaleDateString('zh-CN') : '—';
+const money = (value: number) => `¥${Number(value || 0).toLocaleString('zh-CN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 const summaryText = (summary: DesignSummary = {}) => `家具 ${summary.furniture || 0} · 设备 ${summary.devices || 0} · 已布置 ${summary.placed || 0} · 待处理 ${summary.pending || 0} · 回路 ${summary.circuits || 0}`;
 // 列表列宽有限，只保留最能判断方案规模的三个口径；完整口径在方案详情里展示。
 const listSummaryText = (summary: DesignSummary = {}) => `家具 ${summary.furniture || 0} · 设备 ${summary.devices || 0} · 待处理 ${summary.pending || 0}`;
@@ -79,6 +87,11 @@ function applyRoute(path: string) {
   page.value = queryPage(query.get('page'));
   pageSize.value = queryPageSize(query.get('pageSize'));
   loadList();
+  // 项目页「新建设计方案」带 ?new=1 进入：直接开建档弹窗并预填项目，支持同一项目多方案。
+  if (query.get('new') === '1') {
+    updateRouteQuery({ new: null });
+    openCreate();
+  }
 }
 
 async function loadList() {
@@ -105,13 +118,19 @@ async function loadList() {
 async function loadDetail() {
   if (!detailId.value) { detail.value = null; return; }
   detailLoading.value = true;
+  quotesLoading.value = true;
   try {
     detail.value = await api<Design>(`/api/admin/designs/${encodeURIComponent(detailId.value)}`);
+    const quoteData = await api<{ quotes: DesignQuote[] }>(`/api/admin/designs/${encodeURIComponent(detailId.value)}/quotes`);
+    detailQuotes.value = quoteData.quotes || [];
+    if (detail.value?.name) emit('pageTitle', { title: `方案 · ${detail.value.name}`, path: props.path });
   } catch (error) {
     detail.value = null;
+    detailQuotes.value = [];
     emit('notice', error instanceof Error ? error.message : '设计方案详情读取失败');
   } finally {
     detailLoading.value = false;
+    quotesLoading.value = false;
   }
 }
 
@@ -144,7 +163,13 @@ function openCreate() {
   formError.value = '';
   form.value = { name: '', projectId: projectFilter.value || '', customerId: '', status: '设计中', ruleVersion: '2026-10-21-V1' };
   syncCustomerFromProject();
+  suggestNameFromProject();
   showForm.value = true;
+}
+function suggestNameFromProject() {
+  if (form.value.name.trim() || !form.value.projectId) return;
+  const project = props.projects.find(item => item.id === form.value.projectId);
+  if (project) form.value.name = `${project.name} · 设计方案`;
 }
 function openEdit(design: Design) {
   editingId.value = design.id;
@@ -156,6 +181,7 @@ function syncCustomerFromProject() {
   if (!form.value.projectId) return;
   const project = props.projects.find(item => item.id === form.value.projectId);
   if (project?.customerId) form.value.customerId = project.customerId;
+  suggestNameFromProject();
 }
 async function saveDesign() {
   if (saving.value) return;
@@ -185,6 +211,14 @@ function openDesign(design: Design, version?: DesignVersion) {
   if (version) params.set('version', version.id);
   window.location.href = `/app/?${params.toString()}`;
 }
+
+// 设计方案 → 报价单：带上方案与指定版本，报价页会按该版本快照生成报价行。
+function openQuoteForDesign(design: Design, version?: DesignVersion) {
+  const params = new URLSearchParams({ design: design.id });
+  if (version) params.set('version', version.id);
+  emit('navigate', `/quotes/new/design?${params.toString()}`);
+}
+function canQuote(design: Design) { return Number(design.latestVersionNo || 0) > 0; }
 
 function confirmAction(options: { title: string; message: string; detail?: string; confirmText?: string; danger?: boolean }) {
   confirmState.value = { show: true, title: options.title, message: options.message, detail: options.detail || '', confirmText: options.confirmText || '确认归档', danger: options.danger !== false };
@@ -233,6 +267,7 @@ onMounted(() => applyRoute(props.path));
           <NButton v-if="detail.status === '设计中'" @click="setStatus(detail, '已定稿')">标记定稿</NButton>
           <NButton v-if="detail.status !== '已归档'" @click="setStatus(detail, '已归档')">归档</NButton>
           <NButton v-else @click="setStatus(detail, '设计中')">恢复设计</NButton>
+                <NButton :disabled="!canQuote(detail)" @click="openQuoteForDesign(detail)">生成报价单</NButton>
           <NButton type="primary" @click="openDesign(detail)">打开设计</NButton>
         </template>
       </AdminPageHeader>
@@ -250,7 +285,7 @@ onMounted(() => applyRoute(props.path));
       </section>
 
       <section class="panel table-panel design-version-panel">
-        <div class="panel-head"><div><span class="panel-kicker">DESIGN VERSIONS</span><h3>历史版本</h3></div><span class="panel-note">从任意版本继续设计会生成新的版本，不覆盖历史快照</span></div>
+        <div class="panel-head"><div><h3>历史版本</h3></div><span class="panel-note">从任意版本继续设计会生成新的版本，不覆盖历史快照</span></div>
         <table>
           <thead><tr><th>版本</th><th>版本名称</th><th>方案规模</th><th>规则版本</th><th>状态</th><th>创建时间</th><th>操作</th></tr></thead>
           <tbody>
@@ -261,9 +296,35 @@ onMounted(() => applyRoute(props.path));
               <td>{{ version.ruleVersion }}</td>
               <td><NTag size="small" :bordered="false">{{ version.status }}</NTag></td>
               <td>{{ dateTime(version.createdAt) }}</td>
-              <td><div class="table-actions"><button class="table-link" @click="openDesign(detail)">打开最新</button><button class="table-link" @click="openDesign(detail, version)">从此版本继续</button></div></td>
+              <td><div class="table-actions"><button class="table-link" @click="openDesign(detail)">打开最新</button><button class="table-link" @click="openDesign(detail, version)">从此版本继续</button><button class="table-link" @click="openQuoteForDesign(detail, version)">此版本报价</button></div></td>
             </tr>
             <tr v-if="!detail.versions?.length"><td colspan="7"><div class="empty">还没有设计版本。打开设计后点击「保存方案版本」生成第一个版本。</div></td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="panel table-panel design-quote-panel">
+        <div class="panel-head">
+          <div><h3>关联报价单</h3></div>
+          <div class="design-quote-head-actions">
+            <span class="panel-note">报价按设计版本快照生成，产品、数量与规则可回溯</span>
+            <NButton size="small" :disabled="!canQuote(detail)" @click="openQuoteForDesign(detail)">按此方案生成报价</NButton>
+          </div>
+        </div>
+        <table>
+          <thead><tr><th>报价单</th><th>引用版本</th><th>关联项目</th><th>报价金额</th><th>状态</th><th>最近更新</th><th>操作</th></tr></thead>
+          <tbody>
+            <tr v-for="quote in detailQuotes" :key="quote.id">
+              <td><strong>{{ quote.name }}</strong><small>{{ quote.quoteNo || quote.id }} · {{ quote.mode }}</small></td>
+              <td><span class="design-version-badge">{{ quote.designVersionNo ? `V${quote.designVersionNo}` : '—' }}</span></td>
+              <td>{{ quote.projectName || (quote.projectId ? quote.projectId : '独立报价') }}</td>
+              <td>{{ money(quote.total) }}</td>
+              <td><NTag size="small" :type="quote.status === '已确认' ? 'success' : quote.status === '已作废' ? 'default' : 'warning'" :bordered="false">{{ quote.status }}</NTag></td>
+              <td>{{ dateTime(quote.updatedAt) }}</td>
+              <td><div class="table-actions"><button class="table-link" @click="emit('navigate', `/quotes/${quote.id}`)">查看报价</button></div></td>
+            </tr>
+            <tr v-if="!quotesLoading && !detailQuotes.length"><td colspan="7"><div class="empty">{{ canQuote(detail) ? '这个方案还没有报价单，点击右上角「按此方案生成报价」创建第一张。' : '保存第一个设计版本后才能按方案生成报价。' }}</div></td></tr>
+            <tr v-if="quotesLoading"><td colspan="7"><div class="empty">正在读取关联报价…</div></td></tr>
           </tbody>
         </table>
       </section>
@@ -272,7 +333,7 @@ onMounted(() => applyRoute(props.path));
 
   <template v-else>
     <AdminPageHeader title="设计方案" description="2D 布置方案独立管理；可关联客户项目，也可作为独立方案单独保存版本。">
-      <template #actions><NButton type="primary" @click="openCreate">＋ 新建设计方案</NButton></template>
+      <template #actions><NButton type="primary" @click="openCreate">新建设计方案</NButton></template>
     </AdminPageHeader>
     <AdminFilterBar label="设计方案筛选">
       <NInput v-model:value="search" clearable placeholder="搜索方案、项目或客户" @keyup.enter="queryList" />
@@ -295,7 +356,7 @@ onMounted(() => applyRoute(props.path));
             <td><span class="design-summary-cell design-nowrap">{{ listSummaryText(design.summary) }}</span></td>
             <td><NTag size="small" :type="statusType(design.status)" :bordered="false">{{ design.status }}</NTag></td>
             <td class="design-nowrap">{{ fullDate(design.updatedAt) }}</td>
-            <td><div class="table-actions"><button class="table-link" @click="emit('navigate', `/designs/${design.id}`)">查看</button><button class="table-link" @click="openDesign(design)">打开设计</button><button class="table-link" @click="openEdit(design)">编辑</button></div></td>
+            <td><div class="table-actions"><button class="table-link" @click="emit('navigate', `/designs/${design.id}`)">查看</button><button class="table-link" @click="openDesign(design)">打开设计</button><button class="table-link" :disabled="!canQuote(design)" @click="openQuoteForDesign(design)">生成报价</button></div></td>
           </tr>
           <tr v-if="!designs.length"><td colspan="7"><div class="empty">{{ search || projectFilter || linked !== 'all' || statusFilter !== '全部' ? '没有匹配的设计方案，请调整筛选条件。' : '还没有设计方案，先新建一个独立方案或从项目进入设计。' }}</div></td></tr>
         </tbody>

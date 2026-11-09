@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#eef6fd">
-<title>全屋智能空间点位 · Demo 入口</title>
+<title>QoneHome·智能家电门店管理系统</title>
 <style>
 :root{
   /* Admin UI V1.0 令牌 */
@@ -39,8 +39,8 @@ h1{font-size:26px;line-height:1.25;margin:0 0 6px;letter-spacing:.01em}
 .status{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
 .pill{display:inline-flex;align-items:center;gap:6px;padding:3px 9px;border:1px solid var(--line);border-radius:999px;
   background:rgba(255,255,255,.55);color:var(--muted);font-size:11.5px}
-.pill.link{color:var(--accent);border-color:#d9b08a;background:#fff6ea;text-decoration:none;font-weight:600}
-.pill.link:hover{background:#ffeeda}
+.pill.link{color:var(--accent);border-color:#cfe5f7;background:var(--accent-soft);text-decoration:none;font-weight:600}
+.pill.link:hover{background:#dcefff}
 .dot{width:7px;height:7px;border-radius:50%;background:#b9b0a3}
 .dot.ok{background:var(--green);box-shadow:0 0 0 3px rgba(63,122,88,.12)}
 .dot.warn{background:var(--amber)}
@@ -48,7 +48,7 @@ h1{font-size:26px;line-height:1.25;margin:0 0 6px;letter-spacing:.01em}
 .card{grid-column:span 6;display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:18px;
   padding:22px 22px 18px;text-decoration:none;color:inherit;position:relative;overflow:hidden;min-height:250px;
   transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease}
-.card:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:#cdbca4}
+.card:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:#cfe5f7}
 .card:focus-visible{outline:3px solid rgba(181,101,58,.35);outline-offset:3px}
 .card.wide{grid-column:span 12;min-height:0}
 .card::before{content:"";position:absolute;inset:0 0 auto 0;height:4px;background:var(--accent);opacity:.85}
@@ -61,19 +61,19 @@ h1{font-size:26px;line-height:1.25;margin:0 0 6px;letter-spacing:.01em}
 h2{font-size:19px;line-height:1.3;margin:9px 0 8px}
 .desc{margin:0 0 14px;color:var(--muted);font-size:13px;max-width:560px}
 .chips{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 18px}
-.chip{padding:3px 8px;border-radius:6px;background:#f1ebe1;color:#6d6255;font-size:11px}
+.chip{padding:3px 8px;border-radius:4px;background:var(--surface-subtle);color:var(--text-body);font-size:11px}
 .cta{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:10px;font-weight:700;font-size:13.5px;color:var(--accent)}
 .teal .cta{color:var(--teal)}.amber .cta{color:#9a6a13}.green .cta{color:var(--green)}
 .cta span{display:inline-flex;align-items:center;gap:7px;transition:gap .18s ease}
 .card:hover .cta span{gap:12px}
 .arrow{font-size:16px;line-height:1}
 .card.wide .body{display:grid;grid-template-columns:1.35fr .65fr;gap:22px;align-items:center}
-.thumb{border:1px solid var(--line);border-radius:14px;background:#f7f1e7;padding:10px;color:#8a7a66}
+.thumb{border:1px solid var(--line);border-radius:var(--radius);background:var(--surface-subtle);padding:10px;color:var(--faint)}
 .thumb svg{width:100%;height:auto;display:block}
 .thumb.space-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:14px;align-content:center}
-.thumb.space-grid span{display:block;padding:6px 4px;border:1px solid #e3d7c5;border-radius:6px;background:#fffdf8;color:#7b6b58;font-size:11px;text-align:center;white-space:nowrap}
+.thumb.space-grid span{display:block;padding:6px 4px;border:1px solid var(--line);border-radius:4px;background:var(--surface);color:var(--text-body);font-size:11px;text-align:center;white-space:nowrap}
 .codebox{font:12px/1.8 ui-monospace,SFMono-Regular,Consolas,"Liberation Mono",monospace;color:#5f5548;padding:16px}
-.codebox b{display:block;color:#3f7a58;font-size:11px;letter-spacing:.08em;margin-bottom:8px}
+.codebox b{display:block;color:var(--accent);font-size:11px;letter-spacing:.08em;margin-bottom:8px}
 .codebox div{display:flex;justify-content:space-between;gap:12px;border-bottom:1px dashed #e3d9c9;padding:4px 0}
 .codebox div:last-child{border-bottom:0}
 .codebox span{color:#8a8174}
@@ -148,8 +148,8 @@ h2{font-size:18px;font-weight:600;color:var(--text-strong);margin:10px 0 8px}
       </svg>
     </div>
     <div>
-      <h1>全屋智能空间点位 · Demo 入口</h1>
-      <p class="lede">一个服务、一个端口，用目录区分场景。首页只做导航，规则执行、2D/3D 户型、报价与设备状态都在各自工作台里。</p>
+      <h1>QoneHome·智能家电门店管理系统</h1>
+      <p class="lede">一个服务、一个端口，用目录区分场景。门店管理、户型布点、2D/3D 方案与报价都在同一个系统里。</p>
       <div class="status" aria-live="polite">
         <span class="pill"><i class="dot ok" id="api-dot"></i><span id="api-state">API 检查中</span></span>
         <span class="pill" id="meta-rules">183 条点位规则</span>
@@ -159,12 +159,12 @@ h2{font-size:18px;font-weight:600;color:var(--text-strong);margin:10px 0 8px}
     </div>
   </header>
 
-  <section class="grid" aria-label="Demo 入口">
+  <section class="grid" aria-label="系统入口">
     <a class="card green wide" href="./admin/">
       <div class="body">
         <div>
           <div class="kicker"><b>00 / 后台</b><span>单机版门店工作台</span></div>
-          <h2>智能家电门店后台</h2>
+          <h2>门店管理后台</h2>
           <p class="desc">管理客户、项目和本地产品库。数据保存在本机 SQLite，后台可以直接进入户型设计、报价和智能布点工作台。</p>
           <div class="chips"><span class="chip">客户管理</span><span class="chip">项目管理</span><span class="chip">产品库</span><span class="chip">本地备份</span></div>
           <div class="cta"><span>打开门店后台 <b class="arrow">→</b></span><small>./admin/</small></div>
@@ -268,7 +268,7 @@ h2{font-size:18px;font-weight:600;color:var(--text-strong);margin:10px 0 8px}
   </section>
 
   <footer class="foot">
-    <span><b>全屋智能空间点位 Demo</b> · 规则版本 2026-10-21-V1</span>
+    <span><b>QoneHome·智能家电门店管理系统</b> · 规则版本 2026-10-21-V1</span>
     <span>入口按目录区分，不使用多个端口</span>
   </footer>
 </main>
